@@ -21,6 +21,7 @@ import com.nhom2.entity.THIETBI;
 @Controller
 @RequestMapping("/")
 public class ThietbiController {
+	//test git 
 
 	@Autowired
 	SessionFactory factory;
