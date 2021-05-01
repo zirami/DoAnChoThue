@@ -29,6 +29,7 @@ import com.nhom2.entity.THIETBI;
 public class NguoimuonController {
 	///Test thử!!!
 	/// Test Nhiều cái thử!!!
+	/// Test lần 3!!!
 
 	@Autowired
 	SessionFactory factory;
