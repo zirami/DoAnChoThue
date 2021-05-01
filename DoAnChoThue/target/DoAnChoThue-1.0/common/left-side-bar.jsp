@@ -1,0 +1,69 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="left-side-bar">
+	<div class="brand-logo">
+		<a href="${pageContext.servletContext.contextPath}/home"> <img
+			src="${pageContext.servletContext.contextPath}/resources/vendors/images/deskapp-logo.svg"
+			alt="" class="dark-logo"> <img
+			src="${pageContext.servletContext.contextPath}/resources/vendors/images/deskapp-logo-white.svg"
+			alt="" class="light-logo">
+		</a>
+		<div class="close-sidebar" data-toggle="left-sidebar-close">
+			<i class="ion-close-round"></i>
+		</div>
+	</div>
+	<div class="menu-block customscroll">
+		<div class="sidebar-menu">
+			<ul id="accordion-menu">
+				<li class="dropdown"><a  href = "${pageContext.servletContext.contextPath}/muonthietbi.htm"
+					class="dropdown-toggle no-arrow"> <span class="micon dw dw-house-1"></span><span
+						class="mtext" >MƯỢN THIẾT BỊ</span>
+				</a>		
+				</li>
+				<li class="dropdown"><a href="${pageContext.servletContext.contextPath}/themthietbi.htm"
+					class="dropdown-toggle no-arrow"> <span class="micon dw dw-edit2"></span><span
+						class="mtext">THÊM THIẾT BỊ</span>
+				</a>
+				</li>
+					<li class="dropdown"><a href="${pageContext.servletContext.contextPath}/themnguoimuon.htm"
+					class="dropdown-toggle no-arrow"> <span class="micon dw dw-invoice"></span><span
+						class="mtext">THÊM NGƯỜI MƯỢN</span>
+				</a>
+				</li>
+				<li class="dropdown"><a href="${pageContext.servletContext.contextPath}/thanhli.htm"
+					class="dropdown-toggle no-arrow"> <span class="micon dw dw-library"></span><span
+						class="mtext">THANH LÝ</span>
+				</a>
+					<li>
+					<div class="dropdown-divider"></div>
+				</li>
+		
+				<li><a href="${pageContext.servletContext.contextPath}/thanhli.htm" 
+						class="dropdown-toggle no-arrow">
+						<span class="micon dw dw-diagram"></span><span class="mtext">THỐNG KÊ</span>
+				</a></li>
+				
+				<li>
+					<div class="dropdown-divider"></div>
+				</li>
+				<li>
+					<div class="sidebar-small-cap">MỞ RỘNG</div>
+				</li>
+				<li><a href="javascript:;" class="dropdown-toggle"> <span
+						class="micon dw dw-edit-2"></span><span class="mtext">QUẢN LÍ NHÂN VIÊN</span>
+				</a>
+				</li>
+				
+				<li><a
+					href="https://dropways.github.io/deskapp-free-single-page-website-template/"
+					target="_blank" class="dropdown-toggle no-arrow"> <span
+						class="micon dw dw-paper-plane1"></span> <span class="mtext	">Thông tin chi tiết <img
+							src="${pageContext.servletContext.contextPath}/resources/vendors/images/coming-soon.png"
+							alt="" width="25">
+					</span>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
