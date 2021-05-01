@@ -28,6 +28,7 @@ import com.nhom2.entity.THIETBI;
 @RequestMapping("/")
 public class NguoimuonController {
 	///Test thử!!!
+	/// Test Nhiều cái thử!!!
 
 	@Autowired
 	SessionFactory factory;
