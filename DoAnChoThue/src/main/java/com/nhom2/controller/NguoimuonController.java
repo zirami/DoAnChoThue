@@ -27,6 +27,7 @@ import com.nhom2.entity.THIETBI;
 @Controller
 @RequestMapping("/")
 public class NguoimuonController {
+	///Test thử!!!
 
 	@Autowired
 	SessionFactory factory;
@@ -98,6 +99,7 @@ public class NguoimuonController {
 		System.out.println("id = " + id);
 		model.addAttribute("form_edit", true);
 		model.addAttribute("nguoimuon_sua", new NguoiMuonDAO().getById(id, factory));
+		model.addAttribute("gioitinh_sua",new NguoiMuonDAO().getById(id, factory).getGioitinh());
 		return home(model);
 	}
 

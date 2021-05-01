@@ -303,10 +303,12 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Giới
 									tính</label>
 								<div class="col-sm-12 col-md-10">
-									<select class="form-control" style="width: 100%; height: 38px;">
-										<option value="NAM" path="gioitinh">NAM</option>
-										<option value="NỮ" path="gioitinh">NỮ</option>
-									</select>
+									<form:select path="gioitinh" class="form-control selectpicker"
+										style="width: 100%; height: 38px;">
+											<option value="${gioitinh_sua}" selected>${gioitinh_sua }</option>
+											<option value="NAM" >NAM</option>
+											<option value="NỮ"  >NỮ</option>
+									</form:select>
 								</div>
 							</div>
 
