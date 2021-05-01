@@ -22,7 +22,8 @@ import com.nhom2.entity.NGUOIMUON;
 @RequestMapping("/")
 public class NguoimuonController {
 	///Test thử!!!
-	//Khang đã đến đây
+	/// Test Nhiều cái thử!!!
+
 	@Autowired
 	SessionFactory factory;
 
