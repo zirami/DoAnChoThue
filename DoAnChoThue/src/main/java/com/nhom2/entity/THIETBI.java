@@ -6,62 +6,61 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="THIETBI")
 public class THIETBI {
 	@Id
 	@Column(name="MATB")
+	@NotNull(message="Trường này không được bỏ trống!")
+	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String matb;
 	
-	@NotNull
+	@NotNull(message="Trường này không được bỏ trống!")
+	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="TEN")
 	private String ten;
 	
-	@NotNull
-	@Column(name="LOAI")
-	private String loai;
+	@NotNull(message="Trường này không được bỏ trống!")	
+	@ManyToOne	
+	@JoinColumn(name = "LOAI")
+	private LOAITHIETBI loai;
 	
-	@NotNull
+	@NotNull(message="Trường này không được bỏ trống!")
 	@Column(name="SOLUONG")
 	private Integer soluong;
 	
-	@NotNull
+	@NotNull(message="Trường này không được bỏ trống!")
+	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="TINHTRANG")
 	private String tinhtrang;
 	
 	@Column(name="GHICHU")
 	private String ghichu;
 
-	@OneToMany(mappedBy = "thietbi_muon", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "thietbi_muon", fetch = FetchType.EAGER)
 	private Collection<CT_PHIEUMUON> ct_phieumuons;
-	
-	@OneToMany(mappedBy = "matb", fetch = FetchType.LAZY)
-	private Collection<CT_PHIEUNHAP> ct_phieunhaps;
 	
 	public THIETBI() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public THIETBI(String matb, String ten, String loai, Integer soluong, String tinhtrang, String ghichu,
-			Collection<CT_PHIEUMUON> ct_phieumuons) {
-		super();
-		this.matb = matb;
-		this.ten = ten;
-		this.loai = loai;
-		this.soluong = soluong;
-		this.tinhtrang = tinhtrang;
-		this.ghichu = ghichu;
-		this.ct_phieumuons = ct_phieumuons;
+	public LOAITHIETBI getLoai() {
+		return loai;
 	}
 
+
+	public void setLoai(LOAITHIETBI loai) {
+		this.loai = loai;
+	}
 
 
 	public String getMatb() {
@@ -80,13 +79,7 @@ public class THIETBI {
 		this.ten = ten;
 	}
 
-	public String getLoai() {
-		return loai;
-	}
-
-	public void setLoai(String loai) {
-		this.loai = loai;
-	}
+	
 
 	public Integer getSoluong() {
 		return soluong;
@@ -123,6 +116,10 @@ public class THIETBI {
 	public void setCt_phieumuons(Collection<CT_PHIEUMUON> ct_phieumuons) {
 		this.ct_phieumuons = ct_phieumuons;
 	}
+
+
+
+	
 
 	
 	

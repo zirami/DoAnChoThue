@@ -1,5 +1,8 @@
 package com.nhom2.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
@@ -14,17 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nhom2.DAO.LoaiThietBiDAO;
 import com.nhom2.DAO.ThietBiDAO;
+import com.nhom2.entity.LOAITHIETBI;
 import com.nhom2.entity.THIETBI;
 
 @Transactional
 @Controller
 @RequestMapping("/")
 public class ThietbiController {
-	//test git 
-	//test git 2
-	//test git 3
-	//test git 4
 
 	@Autowired
 	SessionFactory factory;
@@ -35,14 +36,32 @@ public class ThietbiController {
 		return "thiet_bi/ds_thiet_bi";
 	}
 
+	//THIẾT BỊ ĐỂ THÊM
 	@ModelAttribute("thietbi_moi")
 	public THIETBI thietbi_moi() {
 		return new THIETBI();
 	}
-
+	
+	//THIẾT BỊ ĐỂ SỬA
 	@ModelAttribute("thietbi_sua")
 	public THIETBI thietbi_sua() {
 		return new THIETBI();
+	}
+	
+	//DANH SÁCH LOẠI THIẾT BỊ ĐỂ SELECT
+	@ModelAttribute("loaiThietBis")
+	public List<LOAITHIETBI> getLoaiThietBis() {
+		List<LOAITHIETBI> list = new LoaiThietBiDAO().getAll(factory);
+		return list;
+	}
+	
+	//DANH SÁCH TÌNH TRẠNG ĐỂ SELECT
+	@ModelAttribute("tinhTrangs")
+	public List<String> getTinhTrangs() {
+		List<String> list = new ArrayList<>();
+		list.add("Tốt");
+		list.add("Hỏng");
+		return list;
 	}
 
 	// THÊM
@@ -64,7 +83,7 @@ public class ThietbiController {
 	// LẤY RA THIẾT BỊ BẰNG ID ĐỂ SHOW FORM EDIT
 	@RequestMapping(value = "thiet-bi/edit/{id}", method = RequestMethod.GET)
 	public String show_form_edit(ModelMap model, @ModelAttribute("thietbi_sua") THIETBI thietbi_sua, @PathVariable String id) {
-		System.out.println("id = " + id);
+		
 		model.addAttribute("form_edit", true);
 		model.addAttribute("thietbi_sua", new ThietBiDAO().getById(id, factory));
 		return home(model);

@@ -1,5 +1,3 @@
-<%@page import="org.springframework.web.context.request.RequestScope"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
@@ -27,7 +25,8 @@
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -72,7 +71,7 @@
 									<tr>
 										<td class="table-plus">${thietbi.matb}</td>
 										<td>${thietbi.ten}</td>
-										<td>${thietbi.loai}</td>
+										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
 										<td>${thietbi.tinhtrang}</td>
 										<%-- <td>${thietbi.ghichu }</td> --%>
@@ -86,45 +85,42 @@
 											</c:otherwise>
 										</c:choose>
 										<td>
-											<div class="row clearfix btn-list">
-												<!-- 												<div class="col "> -->
-												<form action="thiet-bi/edit/${thietbi.matb}">
-													<button class="btn btn-primary" type="submit"
-														data-toggle="tooltip" data-placement="top" title="Sửa">
-														<i class="material-icons">edit</i>
+											<div class="row clearfix">
+												<div class="col ">
+													<form action="thiet-bi/edit/${thietbi.matb}">
+														<button class="btn btn-primary" type="submit"
+															data-toggle="tooltip" data-placement="top" title="Sửa">
+															<i class="material-icons">edit</i>
+														</button>
+														<!--  -->
+													</form>
+												</div>
+												<div class="col">
+													<form action="thiet-bi/delete" method="post" hidden="true">
+														<!-- Dùng để hiển thị tên lên form -->
+														<input type="hidden" name="ten" value="${thietbi.ten}" />
+														<!-- Dùng để gửi về controller -->
+														<input type="hidden" name="id" value="${thietbi.matb}" />
+														<button type="submit" class="submit_del_btn"></button>
+													</form>
+													<button class="btn btn-danger delete_btn"
+														data-toggle="tooltip" data-placement="top" title="Xoá"
+														type="button">
+														<i class="material-icons">delete</i>
 													</button>
-													<!--  -->
-												</form>
-												<!-- 												</div> -->
-												<!-- 												<div class="col"> -->
-												<form action="thiet-bi/delete" method="post">
-													<!-- Dùng để hiển thị tên lên form -->
-													<input type="hidden" name="ten" value="${thietbi.ten}" />
-
-													<!-- Dùng để gửi về controller -->
-													<input type="hidden" name="id" value="${thietbi.matb}" />
-													<button type="submit" style="display: none"
-														class="submit_del_btn"></button>
-												</form>
-												<button class="btn btn-danger delete_btn"
-													data-toggle="tooltip" data-placement="top" title="Xoá"
-													type="button">
-													<i class="material-icons">delete</i>
-												</button>
-												<!-- 												</div> -->
-												<!-- 												<div class="col"> -->
-												<form action="thiet-bi/lock" method="post">
-
-													<input type="hidden" name="id" value="${thietbi.matb}" />
-													<button type="submit" style="display: none"
-														class="submit_lock_btn"></button>
-												</form>
-												<button id="lock_btn" class="btn btn-danger"
-													data-toggle="tooltip" data-placement="top" title="Khoá"
-													type="button">
-													<i class="material-icons">lock</i>
-												</button>
-											</div> <!-- 											</div> -->
+												</div>
+												<div class="col">
+													<form action="thiet-bi/lock" method="post" hidden="true">
+														<input type="hidden" name="id" value="${thietbi.matb}" />
+														<button type="submit" class="submit_lock_btn"></button>
+													</form>
+													<button id="lock_btn" class="btn btn-danger"
+														data-toggle="tooltip" data-placement="top" title="Khoá"
+														type="button">
+														<i class="material-icons">lock</i>
+													</button>
+												</div>
+											</div>
 										</td>
 									</tr>
 								</c:forEach>
@@ -153,7 +149,6 @@
 						</div>
 						<form:form action="thiet-bi" modelAttribute="thietbi_moi"
 							method="post">
-
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
 									thiết bị</label>
@@ -162,7 +157,6 @@
 										placeholder="Nhập mã thiết bị" />
 									<form:errors path="matb" />
 								</div>
-
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Tên
@@ -176,14 +170,13 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Loại</label>
 								<div class="col-sm-12 col-md-10">
-									<form:select class="selectpicker form-control" path="loai"
+									<form:select class="selectpicker form-control" path="loai.id"
 										style="width: 100%; height: 38px;">
-										<option value="" selected>Chọn loại thiết bị</option>
-										<option value="mic">Micro</option>
-										<option value="cap">Cáp</option>
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${loaiThietBis}" itemValue="id"
+											itemLabel="ten" />
 									</form:select>
-									<form:errors path="loai" />
-
+									<form:errors path="loai.id" />
 								</div>
 							</div>
 							<div class="form-group row">
@@ -201,9 +194,8 @@
 								<div class="col-sm-12 col-md-10">
 									<form:select path="tinhtrang" class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
-										<option value="" selected>Chọn tình trạng thiết bị</option>
-										<option value="moi">Mới</option>
-										<option value="cu">Cũ</option>
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${tinhTrangs}" />
 									</form:select>
 									<form:errors path="tinhtrang"></form:errors>
 								</div>
@@ -213,7 +205,6 @@
 								<div class="col-sm-12 col-md-10">
 									<form:input path="ghichu" class="form-control" type="text"
 										placeholder="Ghi chú" />
-
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -228,11 +219,9 @@
 			</div>
 		</div>
 	</div>
-
 	<button hidden="true" id="update_modal_btn" data-toggle="modal"
 		data-target="#bd-edit-modal-lg"></button>
 	<!--======================================================== Dùng để update ============================================================ -->
-
 	<div class="modal fade bs-example-modal-lg" id="bd-edit-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
@@ -249,16 +238,16 @@
 						</div>
 						<form:form action="thiet-bi/update" modelAttribute="thietbi_sua"
 							method="post">
-
-<%-- 							<form:input path="matb" class="form-control" type="hidden" /> --%>
-							<div class="form-group row">
+							<form:input path="matb" class="form-control" type="hidden" />
+							<%-- <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
 									thiết bị</label>
 								<div class="col-sm-12 col-md-10">
-									<form:input path="matb" class="form-control" type="hidden"
+									<form:input path="matb" class="form-control" type="text"
 										placeholder="Nhập mã thiết bị" />
+									<form:errors path="matb" />
 								</div>
-							</div>
+							</div> --%>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Tên
 									thiết bị</label>
@@ -271,11 +260,9 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Loại</label>
 								<div class="col-sm-12 col-md-10">
-									<form:select class="selectpicker form-control" path="loai"
-										style="width: 100%; height: 38px;">
-										<option value="" selected>Chọn loại thiết bị</option>
-										<option value="mic">Micro</option>
-										<option value="cap">Cáp</option>
+									<form:select class="selectpicker form-control" path="loai.id"
+										style="width: 100%; height: 38px;" items="${loaiThietBis}"
+										itemValue="id" itemLabel="ten">
 									</form:select>
 									<form:errors path="loai" />
 								</div>
@@ -293,11 +280,9 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Tình
 									trạng</label>
 								<div class="col-sm-12 col-md-10">
-									<form:select path="tinhtrang" class="selectpicker form-control"
+									<form:select path="tinhtrang" items="${tinhTrangs}"
+										class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
-										<option value="" selected>Chọn tình trạng thiết bị</option>
-										<option value="moi">Mới</option>
-										<option value="cu">Cũ</option>
 									</form:select>
 									<form:errors path="tinhtrang" />
 								</div>
@@ -321,7 +306,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- <script>
 		let input = document.getElementById('maThietbi_modal');
 		let btnTest = document.querySelector('.btn-test');
@@ -335,7 +319,6 @@
 	</c:if>
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
-
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -345,8 +328,15 @@
 			});
 		</script>
 	</c:if>
-
-
+	<!-- DÙNG ĐỂ SHOW FORM DELETE -->
+	<c:if test="${form_del}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#update_modal_btn').click();
+				console.log("Hiển thị del form")
+			});
+		</script>
+	</c:if>
 	<!-- HIỂN THỊ THÔNG BÁO THÊM THÀNH CÔNG / THẤT BẠI -->
 	<c:if test="${insert || update || delete}">
 		<script type="text/javascript">
@@ -356,7 +346,6 @@
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC THÊM -->
 	<c:if test="${them_saidinhdang}">
 		<script type="text/javascript">
@@ -367,7 +356,6 @@
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
 	<c:if test="${sua_saidinhdang}">
 		<script type="text/javascript">
@@ -377,7 +365,6 @@
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI XẢY RA-->
 	<c:if test="${insert == false || update == false || delete == false}">
 		<script type="text/javascript">
@@ -396,7 +383,7 @@
 			let ten = $(this).parent().find("input[name='ten']").val();
 			let delete_btn = $(this).parent().find('.submit_del_btn');
 			Swal.fire({
-				title: 'Xoá ' + ten + ' ?',
+				title: 'Xoá [' + ten + '] ?',
 				text: "Dữ liệu không thể khôi phục sau thao tác này!",
 				icon: 'warning',
 				showCancelButton: true,
