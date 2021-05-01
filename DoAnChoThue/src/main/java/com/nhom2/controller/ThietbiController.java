@@ -23,6 +23,7 @@ import com.nhom2.entity.THIETBI;
 public class ThietbiController {
 	//test git 
 	//test git 2
+	//test git 3
 
 	@Autowired
 	SessionFactory factory;

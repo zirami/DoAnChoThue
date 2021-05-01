@@ -1,13 +1,9 @@
 package com.nhom2.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,16 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhom2.DAO.NguoiMuonDAO;
-import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.NGUOIMUON;
-import com.nhom2.entity.THIETBI;
 
 @Transactional
 @Controller
 @RequestMapping("/")
 public class NguoimuonController {
 	///Test thử!!!
-
+	//Khang đã đến đây
 	@Autowired
 	SessionFactory factory;
 
