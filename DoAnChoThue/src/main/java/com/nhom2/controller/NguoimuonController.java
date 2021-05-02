@@ -25,7 +25,9 @@ public class NguoimuonController {
 	/// Test Nhiều cái thử!!!
 	/// Test lần 3!!!
 	///test lần 4
-
+	public NguoimuonController(){
+		super();
+	}
 	@Autowired
 	SessionFactory factory;
 

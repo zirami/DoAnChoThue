@@ -27,6 +27,7 @@ import com.nhom2.entity.THIETBI;
 @RequestMapping("/")
 public class ThietbiController {
 
+	public ThietbiController(){super();}
 	@Autowired
 	SessionFactory factory;
 

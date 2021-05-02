@@ -1,4 +1,4 @@
-	package com.nhom2.entity;
+package com.nhom2.entity;
 
 import java.util.Collection;
 import java.util.Date;
