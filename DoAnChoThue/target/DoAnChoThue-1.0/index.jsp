@@ -1,5 +1,5 @@
 <%@include file="/common/taglib.jsp" %>
-<%-- <c:redirect url="/login"/> --%>
+<%-- <c:redirect url="/qlnguoimuon"/> --%>
 <a href="${pageContext.servletContext.contextPath}/home">Home page</a>
 <br/>
 <a href="${pageContext.servletContext.contextPath}/login">Login page</a>

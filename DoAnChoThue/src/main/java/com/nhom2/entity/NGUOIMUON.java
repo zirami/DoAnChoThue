@@ -11,10 +11,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "NGUOIMUON")
@@ -23,11 +23,11 @@ public class NGUOIMUON {
 		@Column(name = "MANM")
 		private String manm;
 		
-		@NotNull
+		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "HO")
 		private String ho;
 		
-		@NotNull
+		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "TEN")
 		private String ten;
 
@@ -39,11 +39,11 @@ public class NGUOIMUON {
 		@Column(name = "NGAYSINH")
 		private Date ngaysinh;
 
-		@NotNull
+		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "DIACHI")
 		private String diachi;
 		
-		@NotNull
+		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "CMND")
 		private String cmnd;	
 		
