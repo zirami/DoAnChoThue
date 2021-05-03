@@ -24,18 +24,7 @@ import com.nhom2.entity.NGUOIMUON;
 @Controller
 @RequestMapping("/")
 public class NguoimuonController {
-<<<<<<< HEAD
 
-
-=======
-	///Test thử!!!
-	/// Test Nhiều cái thử!!!
-	/// Test lần 3!!!
-	///test lần 4
-	public NguoimuonController(){
-		super();
-	}
->>>>>>> 98ce3a0d27908f21fa3bde9c1b4562a08880a8ee
 	@Autowired
 	SessionFactory factory;
 

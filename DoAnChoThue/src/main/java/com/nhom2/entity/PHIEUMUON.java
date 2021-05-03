@@ -43,7 +43,7 @@ public class PHIEUMUON {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "MANM")
-	private NGUOIMUON manm;
+	private NGUOIMUON nm;
 
 	@NotNull
 	@Column(name = "MANV")
@@ -57,38 +57,28 @@ public class PHIEUMUON {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PHIEUMUON(String maPM, Date thoigianmuon, Date thoigiantra, String ghiChu, NGUOIMUON manm, String maNV) {
-		super();
-		this.mapm = maPM;
-		this.thoigianmuon = thoigianmuon;
-		this.thoigiantra = thoigiantra;
-		this.ghiChu = ghiChu;
-		this.manm = manm;
-		this.manv = maNV;
-	}
-
-	public String getMaPM() {
+	public String getMapm() {
 		return mapm;
 	}
 
-	public void setMaPM(String maPM) {
-		this.mapm = maPM;
+	public void setMapm(String mapm) {
+		this.mapm = mapm;
 	}
 
-	public Date getTgMuon() {
+	public Date getThoigianmuon() {
 		return thoigianmuon;
 	}
 
-	public void setTgMuon(Date tgMuon) {
-		this.thoigianmuon = tgMuon;
+	public void setThoigianmuon(Date thoigianmuon) {
+		this.thoigianmuon = thoigianmuon;
 	}
 
-	public Date getTgTra() {
+	public Date getThoigiantra() {
 		return thoigiantra;
 	}
 
-	public void setTgTra(Date tgTra) {
-		this.thoigiantra = tgTra;
+	public void setThoigiantra(Date thoigiantra) {
+		this.thoigiantra = thoigiantra;
 	}
 
 	public String getGhiChu() {
@@ -99,20 +89,31 @@ public class PHIEUMUON {
 		this.ghiChu = ghiChu;
 	}
 
-	public NGUOIMUON getMaNM() {
-		return manm;
+	public NGUOIMUON getNm() {
+		return nm;
 	}
 
-	public void setMaNM(NGUOIMUON maNM) {
-		this.manm = maNM;
+	public void setNm(NGUOIMUON nm) {
+		this.nm = nm;
 	}
 
-	public String getMaNV() {
+	public String getManv() {
 		return manv;
 	}
 
-	public void setMaNV(String maNV) {
-		this.manv = maNV;
+	public void setManv(String manv) {
+		this.manv = manv;
 	}
 
+	public Collection<CT_PHIEUMUON> getCt_phieumuons() {
+		return ct_phieumuons;
+	}
+
+	public void setCt_phieumuons(Collection<CT_PHIEUMUON> ct_phieumuons) {
+		this.ct_phieumuons = ct_phieumuons;
+	}
+	
+	
 }
+
+	

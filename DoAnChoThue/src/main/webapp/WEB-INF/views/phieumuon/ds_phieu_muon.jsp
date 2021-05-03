@@ -63,7 +63,7 @@
 									<th>Thời gian mượn</th>
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
-								
+									<th>Hành động</th>
 								</tr>		
 							</thead>
 							<tbody>
@@ -72,7 +72,7 @@
 									<tr>
 										<td class="table-plus">${pm.mapm}</td>
 										<td>${pm.manv}</td>
-										<td>${pm.manm}</td>
+										<td>${pm.pm.nm.manm}</td>
 										<td>${pm.thoigianmuon}</td>
 										<td>${pm.thoigiantra}</td>
 										<td>${pm.ghichu}</td>
