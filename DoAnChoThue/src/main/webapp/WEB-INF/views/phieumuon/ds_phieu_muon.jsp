@@ -64,7 +64,7 @@
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
 								
-								</tr>	
+								</tr>		
 							</thead>
 							<tbody>
 								<c:forEach var="pm" items="${listPhieuMuon}"

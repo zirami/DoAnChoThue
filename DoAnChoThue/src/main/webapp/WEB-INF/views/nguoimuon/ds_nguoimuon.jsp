@@ -64,7 +64,7 @@
 									<th>Ngày sinh</th>
 									<th>Địa chỉ</th>
 									<th>CMND</th>
-									<th class="datatable-nosort">Ghi chú</th>
+									<th>Ghi chú</th>
 									<th>Hành động</th>
 								</tr>	
 							</thead>
@@ -145,6 +145,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
 									người mượn</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="manm" />
 									<form:input class="form-control" type="text" path="manm"
 										placeholder="Nhập mã người mượn" />
 								</div>
@@ -153,6 +154,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Họ và
 									chữ lót</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ho" />
 									<form:input class="form-control" type="text" path="ho"
 										placeholder="Nhập họ và chữ lót" />
 								</div>
@@ -160,6 +162,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Tên</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ten" />
 									<form:input class="form-control" type="text" path="ten"
 										placeholder="Nhập tên" />
 								</div>
@@ -168,11 +171,12 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Giới
 									tính</label>
 								<div class="col-sm-12 col-md-10">
-									<select class="form-control" name="gioitinh"
+									<form:errors path="gioitinh" />
+									<form:select path="gioitinh" class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
-										<option value="NAM">NAM</option>
-										<option value="NỮ">NỮ</option>
-									</select>
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${gioiTinhs}" />
+									</form:select>
 								</div>
 							</div>
 
@@ -180,6 +184,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Ngày
 									sinh</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ngaysinh" />
 									<form:input class="form-control" path="ngaysinh"
 										placeholder="Chọn ngày sinh" type="date" />
 								</div>
@@ -187,6 +192,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="diachi" />
 									<form:input class="form-control" type="text" path="diachi"
 										placeholder="Nhập địa chỉ" />
 								</div>
@@ -194,6 +200,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="cmnd" />
 									<form:input path="cmnd" class="form-control" type="text"
 										placeholder="Nhập chứng minh nhân dân" />
 								</div>
@@ -244,6 +251,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
 									người mượn</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="manm" />
 									<form:input class="form-control" type="text" path="manm"
 										placeholder="Nhập mã người mượn" />
 								</div>
@@ -252,6 +260,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Họ và
 									chữ lót</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ho" />
 									<form:input class="form-control" type="text" path="ho"
 										placeholder="Nhập họ và chữ lót" />
 								</div>
@@ -259,6 +268,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Tên</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ten" />
 									<form:input class="form-control" type="text" path="ten"
 										placeholder="Nhập tên" />
 								</div>
@@ -267,11 +277,10 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Giới
 									tính</label>
 								<div class="col-sm-12 col-md-10">
-									<form:select path="gioitinh" class="form-control selectpicker"
+									<form:errors path="gioitinh" />
+										<form:select path="gioitinh" items="${gioiTinhs}"
+										class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
-											<option value="${gioitinh_sua}" selected>${gioitinh_sua }</option>
-											<option value="NAM" >NAM</option>
-											<option value="NỮ"  >NỮ</option>
 									</form:select>
 								</div>
 							</div>
@@ -280,6 +289,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Ngày
 									sinh</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="ngaysinh" />
 									<form:input class="form-control" path="ngaysinh"
 										placeholder="Chọn ngày sinh" type="date" />
 								</div>
@@ -287,6 +297,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="diachi" />
 									<form:input class="form-control" type="text" path="diachi"
 										placeholder="Nhập địa chỉ" />
 								</div>
@@ -294,6 +305,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
 								<div class="col-sm-12 col-md-10">
+									<form:errors path="cmnd" />
 									<form:input path="cmnd" class="form-control" type="text"
 										placeholder="Nhập chứng minh nhân dân" />
 								</div>

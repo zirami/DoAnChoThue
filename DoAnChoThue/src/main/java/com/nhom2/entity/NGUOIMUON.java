@@ -11,26 +11,32 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "NGUOIMUON")
 public class NGUOIMUON {
 		@Id
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "MANM")
 		private String manm;
 		
-		@NotNull
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "HO")
 		private String ho;
 		
-		@NotNull
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "TEN")
 		private String ten;
 
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "GIOITINH")
 		private String gioitinh;
 		
@@ -39,11 +45,13 @@ public class NGUOIMUON {
 		@Column(name = "NGAYSINH")
 		private Date ngaysinh;
 
-		@NotNull
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "DIACHI")
 		private String diachi;
 		
-		@NotNull
+		@NotNull(message = "Trường này không được bỏ trống!")
+		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "CMND")
 		private String cmnd;	
 		

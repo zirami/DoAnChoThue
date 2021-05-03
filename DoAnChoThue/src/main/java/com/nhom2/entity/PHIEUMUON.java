@@ -19,41 +19,38 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="PHIEUMUON")
+@Table(name = "PHIEUMUON")
 public class PHIEUMUON {
 	@Id
 	@Column(name = "MAPM")
 	private String mapm;
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
-	@Column(name="THOIGIANMUON")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "THOIGIANMUON")
 	private Date thoigianmuon;
-	
+
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
-	@Column(name="THOIGIANTRA")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "THOIGIANTRA")
 	private Date thoigiantra;
-	
-	@Column(name="GHICHU")
+
+	@Column(name = "GHICHU")
 	private String ghiChu;
-	
-	
-	//Nhập thí người mượn trước, test, từ từ thêm obj người mượn vào sau
+
+	// Nhập thí người mượn trước, test, từ từ thêm obj người mượn vào sau
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "MANM" )
+	@JoinColumn(name = "MANM")
 	private NGUOIMUON manm;
-	
+
 	@NotNull
-	@Column(name="MANV")
+	@Column(name = "MANV")
 	private String manv;
-	
+
 	@OneToMany(mappedBy = "phieumuon", fetch = FetchType.EAGER)
 	private Collection<CT_PHIEUMUON> ct_phieumuons;
-	
-
 
 	public PHIEUMUON() {
 		super();
@@ -117,7 +114,5 @@ public class PHIEUMUON {
 	public void setMaNV(String maNV) {
 		this.manv = maNV;
 	}
-	
-	
-	
+
 }

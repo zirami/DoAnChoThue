@@ -1,5 +1,8 @@
 package com.nhom2.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -21,10 +24,7 @@ import com.nhom2.entity.NGUOIMUON;
 @Controller
 @RequestMapping("/")
 public class NguoimuonController {
-	///Test thử!!!
-	/// Test Nhiều cái thử!!!
-	/// Test lần 3!!!
-	///test lần 4
+
 
 	@Autowired
 	SessionFactory factory;
@@ -44,32 +44,20 @@ public class NguoimuonController {
 	public NGUOIMUON nguoimuon_sua() {
 		return new NGUOIMUON();
 	}
+	//DANH SÁCH GIỚI TÍNH ĐỂ SELECT
+		@ModelAttribute("gioiTinhs")
+		public List<String> getGioiTinhs() {
+			List<String> list = new ArrayList<>();
+			list.add("NAM");
+			list.add("NỮ");
+			return list;
+		}
 
 	@RequestMapping(value = "qlnguoimuon", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listNguoiMuon", new NguoiMuonDAO().getAll(factory));
 		return "nguoimuon/ds_nguoimuon";
 	}
-
-//	// THÊM
-//	@RequestMapping(value = "qlnguoimuon", method = RequestMethod.POST)
-//	public String insert(ModelMap model, @ModelAttribute("nguoimuonmoi") NGUOIMUON nguoimuonmoi) {
-//		Session session = factory.openSession();
-//		Transaction t = session.beginTransaction();
-//		try {
-//			session.save(nguoimuonmoi);
-//			t.commit();
-//			model.addAttribute("message", "Thêm mới thành công!");
-//
-//		} catch (Exception e) {
-//			t.rollback();
-//			model.addAttribute("message", "Thêm mới thất bại!");
-//		} finally {
-//			
-//			session.close();
-//		}
-//		return "redirect: qlnguoimuon";
-//	}
 
 	// THÊM
 	@RequestMapping(value = "qlnguoimuon", method = RequestMethod.POST)
@@ -96,7 +84,6 @@ public class NguoimuonController {
 		System.out.println("id = " + id);
 		model.addAttribute("form_edit", true);
 		model.addAttribute("nguoimuon_sua", new NguoiMuonDAO().getById(id, factory));
-		model.addAttribute("gioitinh_sua",new NguoiMuonDAO().getById(id, factory).getGioitinh());
 		return home(model);
 	}
 
