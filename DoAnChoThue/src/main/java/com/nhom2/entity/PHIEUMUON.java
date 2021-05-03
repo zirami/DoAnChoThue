@@ -37,13 +37,29 @@ public class PHIEUMUON {
 	private Date thoigiantra;
 
 	@Column(name = "GHICHU")
-	private String ghiChu;
+	private String ghichu;
+
+	public String getGhichu() {
+		return ghichu;
+	}
+
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
+	}
 
 	// Nhập thí người mượn trước, test, từ từ thêm obj người mượn vào sau
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "MANM")
 	private NGUOIMUON nm;
+
+	public NGUOIMUON getNm() {
+		return nm;
+	}
+
+	public void setNm(NGUOIMUON nm) {
+		this.nm = nm;
+	}
 
 	@NotNull
 	@Column(name = "MANV")
@@ -81,22 +97,6 @@ public class PHIEUMUON {
 		this.thoigiantra = thoigiantra;
 	}
 
-	public String getGhiChu() {
-		return ghiChu;
-	}
-
-	public void setGhiChu(String ghiChu) {
-		this.ghiChu = ghiChu;
-	}
-
-	public NGUOIMUON getNm() {
-		return nm;
-	}
-
-	public void setNm(NGUOIMUON nm) {
-		this.nm = nm;
-	}
-
 	public String getManv() {
 		return manv;
 	}
@@ -112,8 +112,5 @@ public class PHIEUMUON {
 	public void setCt_phieumuons(Collection<CT_PHIEUMUON> ct_phieumuons) {
 		this.ct_phieumuons = ct_phieumuons;
 	}
-	
-	
-}
 
-	
+}

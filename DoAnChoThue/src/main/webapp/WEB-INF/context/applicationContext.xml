@@ -28,7 +28,7 @@
 		<!--max up load size = 20MB -->
 		<property name="maxUploadSize" value="20971520" />
 	</bean>
-	
+
 
 	<!-- Mail -->
 	<bean id="mailSender"
@@ -67,7 +67,8 @@
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
-		<property name="packagesToScan" value="com.nhom2, com.nhom2.DAO" />
+		<property name="packagesToScan"
+			value="com.nhom2, com.nhom2.DAO" />
 	</bean>
 
 	<!-- Transaction Config -->

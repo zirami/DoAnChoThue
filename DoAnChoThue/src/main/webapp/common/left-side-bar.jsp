@@ -18,7 +18,7 @@
 			<ul id="accordion-menu">
 				<li class="dropdown">
 					<div>
-						<a href="qlphieumuon" class="dropdown-toggle no-arrow"
+						<a href="phieumuon" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
 							data-original-title="QUẢN LÍ PHIẾU MƯỢN"> <span
 							class="micon dw dw-house-1"></span> <span>QUẢN LÝ PHIẾU
