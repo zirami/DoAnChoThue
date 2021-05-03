@@ -50,7 +50,6 @@ public class THIETBI {
 	
 	public THIETBI() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public LOAITHIETBI getLoai() {
