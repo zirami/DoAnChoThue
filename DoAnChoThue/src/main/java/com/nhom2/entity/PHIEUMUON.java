@@ -37,7 +37,7 @@ public class PHIEUMUON {
 	private Date thoigiantra;
 
 	@Column(name = "GHICHU")
-	private String ghiChu;
+	private String ghichu;
 
 	// Nhập thí người mượn trước, test, từ từ thêm obj người mượn vào sau
 	@NotNull
@@ -81,12 +81,15 @@ public class PHIEUMUON {
 		this.thoigiantra = thoigiantra;
 	}
 
-	public String getGhiChu() {
-		return ghiChu;
+	
+	
+
+	public String getGhichu() {
+		return ghichu;
 	}
 
-	public void setGhiChu(String ghiChu) {
-		this.ghiChu = ghiChu;
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
 	}
 
 	public NGUOIMUON getNm() {

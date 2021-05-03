@@ -72,7 +72,7 @@
 									<tr>
 										<td class="table-plus">${pm.mapm}</td>
 										<td>${pm.manv}</td>
-										<td>${pm.pm.nm.manm}</td>
+										<td>${pm.nm.manm}</td>
 										<td>${pm.thoigianmuon}</td>
 										<td>${pm.thoigiantra}</td>
 										<td>${pm.ghichu}</td>

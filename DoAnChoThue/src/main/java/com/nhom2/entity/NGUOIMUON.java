@@ -55,7 +55,7 @@ public class NGUOIMUON {
 		@Column(name = "GHICHU")
 		private String ghichu;
 		
-		@OneToMany(mappedBy="manm",fetch=FetchType.EAGER)
+		@OneToMany(mappedBy="nm",fetch=FetchType.EAGER)
 		private Collection <PHIEUMUON> phieumuons;
 		
 		public NGUOIMUON() {
@@ -121,4 +121,11 @@ public class NGUOIMUON {
 		public void setGhichu(String ghichu) {
 			this.ghichu = ghichu;
 		}
+		public Collection<PHIEUMUON> getPhieumuons() {
+			return phieumuons;
+		}
+		public void setPhieumuons(Collection<PHIEUMUON> phieumuons) {
+			this.phieumuons = phieumuons;
+		}
+		
 }	
