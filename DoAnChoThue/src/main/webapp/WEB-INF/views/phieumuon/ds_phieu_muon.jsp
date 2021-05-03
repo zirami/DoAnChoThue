@@ -69,6 +69,7 @@
 								<c:forEach var="phieumuon" items="${listPhieuMuon}"
 									varStatus="row">
 									<tr>
+<<<<<<< HEAD
 										<td class="table-plus">${phieumuon.mapm}</td>
 										<td>${phieumuon.nm.ten}</td>
 										<td>${phieumuon.manv}</td>
@@ -81,6 +82,14 @@
 												<td>-</td>
 											</c:otherwise>
 										</c:choose>
+=======
+										<td class="table-plus">${pm.mapm}</td>
+										<td>${pm.manv}</td>
+										<td>${pm.nm.manm}</td>
+										<td>${pm.thoigianmuon}</td>
+										<td>${pm.thoigiantra}</td>
+										<td>${pm.ghichu}</td>
+>>>>>>> 6743cad2a1fc8bcc2efe59342117a4819f554b31
 										<c:choose>
 											<c:when test="${phieumuon.ghichu.isEmpty()}">
 												<td>${phieumuon.ghichu}</td>
