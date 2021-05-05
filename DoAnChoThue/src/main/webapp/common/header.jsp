@@ -261,3 +261,11 @@
 		</div>
 	</div>
 </div>
+
+	
+	<!-- bootstrap-tagsinput css -->
+	<link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+	<!-- bootstrap-touchspin css -->
+	<link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+
