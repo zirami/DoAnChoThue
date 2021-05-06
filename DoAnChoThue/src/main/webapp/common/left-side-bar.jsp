@@ -60,8 +60,11 @@
 				<li>
 					<div class="sidebar-small-cap">MỞ RỘNG</div>
 				</li>
-				<li><a href="javascript:;" class="dropdown-toggle"> <span
-						class="micon dw dw-edit-2"></span> <span class="mtext">QUẢN
+				<li class="dropdown"><a href="nhan-vien"
+					class="dropdown-toggle no-arrow" data-toggle="tooltip"
+					data-placement="right" title=""
+					data-original-title="QUẢN LÍ NHÂN VIÊN"> <span
+						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
 							LÍ NHÂN VIÊN</span>
 				</a></li>
 				<li><a
