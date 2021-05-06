@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Table(name="CT_PHIEUMUON")
 public class CT_PHIEUMUON {
 	@Id
-	@GeneratedValue
 	private Integer id;
 	
 	@ManyToOne

@@ -75,22 +75,7 @@
 										<td>${phieumuon.nm.ten}</td>
 										<td>${phieumuon.manv}</td>
 										<td>${phieumuon.thoigianmuon}</td>
-										<c:choose>
-											<c:when test="${phieumuon.thoigiantra.isEmpty()}">
-												<td>${phieumuon.thoigiantra}</td>
-											</c:when>
-											<c:otherwise>
-												<td>-</td>
-											</c:otherwise>
-										</c:choose>
-
-										<td class="table-plus">${pm.mapm}</td>
-										<td>${pm.manv}</td>
-										<td>${pm.nm.manm}</td>
-										<td>${pm.thoigianmuon}</td>
-										<td>${pm.thoigiantra}</td>
-										<td>${pm.ghichu}</td>
-
+										<td>${phieumuon.thoigiantra}</td>
 										<c:choose>
 											<c:when test="${phieumuon.ghichu.isEmpty()}">
 												<td>${phieumuon.ghichu}</td>
@@ -186,7 +171,7 @@
 											<select class="selectpicker form-control" name="manv"	style="width: 100%; height: 38px;">
 												<option value="">Chọn Nhân viên</option>
 												<c:forEach var="nv" items="${listNhanViens }">
-													<option value="nv">${nv}</option>
+													<option value="${nv }">${nv}</option>
 												</c:forEach>
 												
 											</select>
@@ -233,7 +218,7 @@
 												style="width: 100%; height: 38px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="tb1.matb">${tb1.matb}</option>
+													<option value="${tb1.matb}">${tb1.matb}</option>
 												</c:forEach>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>

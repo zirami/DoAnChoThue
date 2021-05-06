@@ -13,19 +13,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PHIEUMUON")
 public class PHIEUMUON {
 	@Id
 	@Column(name = "MAPM")
+	@NotNull(message="Trường này không được bỏ trống!")
+	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String mapm;
 
-	@NotNull
+	@NotNull(message="Trường này không được bỏ trống!")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIANMUON")
@@ -43,10 +45,12 @@ public class PHIEUMUON {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "MANM")
+	@NotNull(message="Trường này không được bỏ trống!")
 	private NGUOIMUON nm;
 
 	@NotNull
 	@Column(name = "MANV")
+	@NotNull(message="Trường này không được bỏ trống!")
 	private String manv;
 
 	@OneToMany(mappedBy = "phieumuon", fetch = FetchType.EAGER)
