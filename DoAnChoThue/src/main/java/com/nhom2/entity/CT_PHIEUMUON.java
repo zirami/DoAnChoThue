@@ -11,7 +11,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="CT_PHIEUMUON")
 public class CT_PHIEUMUON {
-	@Id
+	@Id @GeneratedValue
+	@Column(name = "ID")
 	private Integer id;
 	
 	@ManyToOne
