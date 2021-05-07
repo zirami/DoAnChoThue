@@ -338,16 +338,17 @@
 							</div>
 
 						</div>
-						<form:form action="phieumuon/update" modelAttribute="phieumuon_sua" method="post">
+						<form:form action="phieumuon/update"
+							modelAttribute="phieumuon_sua" method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
 							<div class="row">
 								<div class="col-sm-12 col-md-6">
 									<div class="form-group row">
-										<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu mượn</label>
+										<label class="col-sm-4 col-md-4 col-form-label">Mã
+											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
-<%-- 											<form:errors path="mapm" /> --%>
-											<input class="form-control" type="text" readonly
-												name="${phieumuon_sua.mapm }" value="${phieumuon_sua.mapm }"
+											<%-- 											<form:errors path="mapm" /> --%>
+											<form:input class="form-control" type="text" path="mapm"
 												placeholder="Nhập mã phiếu mượn" />
 										</div>
 									</div>
@@ -355,32 +356,28 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Người
 											mượn</label>
 										<div class="col-sm-4 col-md-8">
-											<!-- 											Đối tượng này dễ sai khi không .manm -->
-<%-- 											<form:errors path="nm.manm" /> --%>
-											<form:select class="selectpicker form-control"
-												path="nm.manm"
-												style="width: 100%;height: 38px;">
-												<form:option value="${phieumuon_sua.nm.manm}"
-													label="${phieumuon_sua.nm.manm}"></form:option>
-												<form:options items="${listNguoiMuons}" itemValue="manm"
-													itemLabel="ten"></form:options>
-											</form:select>
+
+
+											<form:select class="selectpicker form-control" path="nm.manm" 
+ 												style="width: 100%; height: 38px;" items="${listNguoiMuons}" 
+ 												itemValue="manm" itemLabel="ten"> 
+ 											</form:select> 
+
+
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-<%-- 											<form:errors path="manv" /> --%>
-											<select class="selectpicker form-control"
-												name="${phieumuon_sua.manv }"
-												style="width: 100%; height: 38px;">
-												<option value="${phieumuon_sua.manv }">${phieumuon_sua.manv}</option>
-												<c:forEach var="nv" items="${listNhanViens }">
-													<option value="${nv }">${nv}</option>
-												</c:forEach>
 
-											</select>
+
+												<form:select path="manv" items="${listNhanViens}"
+													class="selectpicker form-control"
+													style="width: 100%; height: 38px;">
+												</form:select>
+
+
 										</div>
 									</div>
 
@@ -388,7 +385,7 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
 										<div class="col-sm-4 col-md-8">
-<%-- 											<form:errors path="thoigianmuon" /> --%>
+											<%-- 											<form:errors path="thoigianmuon" /> --%>
 											<form:input class="form-control" path="thoigianmuon"
 												placeholder="Chọn thời gian mượn" type="date" />
 										</div>

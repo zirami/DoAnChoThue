@@ -42,7 +42,6 @@ public class PHIEUMUON {
 	private String ghichu;
 
 	// Nhập thí người mượn trước, test, từ từ thêm obj người mượn vào sau
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "MANM")
 	@NotNull(message="Trường này không được bỏ trống!")

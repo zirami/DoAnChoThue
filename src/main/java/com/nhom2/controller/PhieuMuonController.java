@@ -183,10 +183,10 @@ public class PhieuMuonController {
 		if (result.hasErrors())
 			return home(model);
 
-//		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
-//		for(CT_PHIEUMUON elem: phieumuon_cansua.getCt_phieumuons()) {
-//			new CT_PhieuMuonDAO().update(factory,elem);
-//		}
+		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
+		for(CT_PHIEUMUON elem: phieumuon_cansua.getCt_phieumuons()) {
+			new CT_PhieuMuonDAO().update(factory,elem);
+		}
 		model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
 		return home(model);
 	}
