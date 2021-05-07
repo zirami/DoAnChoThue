@@ -64,6 +64,7 @@
 									<th>Thời gian mượn</th>
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -76,46 +77,40 @@
 										<td>${phieumuon.manv}</td>
 										<td>${phieumuon.thoigianmuon}</td>
 										<td>${phieumuon.thoigiantra}</td>
-										<c:choose>
-											<c:when test="${phieumuon.ghichu.isEmpty()}">
-												<td>${phieumuon.ghichu}</td>
-											</c:when>
-											<c:otherwise>
-												<td>-</td>
-											</c:otherwise>
-										</c:choose>
-										<!-- 										<td> -->
-										<!-- 											<div class="row clearfix btn-list"> -->
-										<!-- 																								<div class=""> -->
-										<%-- 												<form action="qlnguoimuon/edit/${nguoimuon.manm}"> --%>
-										<!-- 													<button class="btn btn-primary" type="submit" -->
-										<!-- 														data-toggle="tooltip" data-placement="top" title="Sửa"> -->
-										<!-- 														<i class="material-icons">edit</i> -->
-										<!-- 													</button> -->
-										<!-- 													 -->
-										<!-- 												</form> -->
+										<td>${phieumuon.ghichu }</td>
+										<td>
+											<div class="row clearfix btn-list">
 
-										<!-- 												<form action="qlnguoimuon/delete" method="post"> -->
-										<!-- 													Dùng để hiển thị tên lên form -->
-										<%-- 													<input type="hidden" name="ten" value="${nguoimuon.ten}" /> --%>
+												<form action="phieumuon/edit/${phieumuon.mapm}">
+													<button class="btn btn-primary" type="submit"
+														data-toggle="tooltip" data-placement="top" title="Sửa">
+														<i class="material-icons">edit</i>
+													</button>
 
-										<!-- 													Dùng để gửi về controller -->
-										<%-- 													<input type="hidden" name="manm" value="${nguoimuon.manm}" /> --%>
-										<!-- 													<button type="submit" style="display: none" -->
-										<!-- 														class="submit_del_btn"></button> -->
-										<!-- 												</form> -->
-										<!-- 												<button class="btn btn-danger delete_btn" -->
-										<!-- 													data-toggle="tooltip" data-placement="top" title="Xoá" -->
-										<!-- 													type="button"> -->
-										<!-- 													<i class="material-icons">delete</i> -->
-										<!-- 												</button> -->
-										<!-- 											</div> 											</div> -->
-										<!-- 										</td> -->
+												</form>
+
+												<form action="phieumuon/delete" method="post">
+													<!-- 														Dùng để hiển thị tên lên form  -->
+													<input type="hidden" name="ten" value="${phieumuon.nm.ten}" />
+													<!-- 														Dùng để gửi về controller  -->
+													<input type="hidden" name="mapm" value="${phieumuon.mapm}" />
+													<button type="submit" style="display: none"
+														class="submit_del_btn"></button>
+												</form>
+												<button class="btn btn-danger delete_btn"
+													data-toggle="tooltip" data-placement="top" title="Xoá"
+													type="button">
+													<i class="material-icons">delete</i>
+												</button>
+											</div>
+
+
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						
+
 
 					</div>
 				</div>
@@ -148,7 +143,7 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Mã
 											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
-											<%-- 									<form:errors path="mapm" /> --%>
+											<form:errors path="mapm" />
 											<form:input class="form-control" type="text" path="mapm"
 												placeholder="Nhập mã phiếu mượn" />
 										</div>
@@ -157,10 +152,13 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Người
 											mượn</label>
 										<div class="col-sm-4 col-md-8">
+											<!-- 											Đối tượng này dễ sai khi không .manm -->
+											<form:errors path="nm" />
 											<form:select class="selectpicker form-control" path="nm.manm"
-											style="width: 100%;height: 38px;">
+												style="width: 100%;height: 38px;">
 												<form:option value="" label="Chọn người mượn"></form:option>
-												<form:options items="${listNguoiMuons}" itemValue="manm" itemLabel="ten"></form:options>
+												<form:options items="${listNguoiMuons}" itemValue="manm"
+													itemLabel="ten"></form:options>
 											</form:select>
 										</div>
 									</div>
@@ -168,12 +166,14 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-											<select class="selectpicker form-control" name="manv"	style="width: 100%; height: 38px;">
+											<form:errors path="manv" />
+											<select class="selectpicker form-control" name="manv"
+												style="width: 100%; height: 38px;">
 												<option value="">Chọn Nhân viên</option>
 												<c:forEach var="nv" items="${listNhanViens }">
 													<option value="${nv }">${nv}</option>
 												</c:forEach>
-												
+
 											</select>
 										</div>
 									</div>
@@ -182,7 +182,7 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
 										<div class="col-sm-4 col-md-8">
-											<%-- 									<form:errors path="ngaysinh" /> --%>
+											<form:errors path="thoigianmuon" />
 											<form:input class="form-control" path="thoigianmuon"
 												placeholder="Chọn thời gian mượn" type="date" />
 										</div>
@@ -191,7 +191,6 @@
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian trả</label>
 										<div class="col-sm-4 col-md-8">
-											<%-- 									<form:errors path="ngaysinh" /> --%>
 											<form:input class="form-control" path="thoigiantra"
 												placeholder="Chọn thời gian trả" type="date" />
 										</div>
@@ -225,7 +224,8 @@
 										</div>
 
 										<div class="col-sm-6 col-md-3">
-										<input type="text" value="" name="slThietBi1" class="form-control" placeholder="Số lượng" />
+											<input type="text" value="" name="slThietBi1"
+												class="form-control" placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -238,13 +238,14 @@
 												style="width: 100%; height: 38px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb2" items="${loaiThietBis}">
-													<option value="tb2.matb">${tb2.matb}</option>
+													<option value="${tb2.matb}">${tb2.matb}</option>
 												</c:forEach>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 										<div class="col-sm-6 col-md-3">
-										<input type="text" value="" name="slThietBi2" class="form-control" placeholder="Số lượng" />
+											<input type="text" value="" name="slThietBi2"
+												class="form-control" placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -256,13 +257,14 @@
 												style="width: 100%; height: 38px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb3" items="${loaiThietBis}">
-													<option value="tb3.matb">${tb3.matb}</option>
+													<option value="${tb3.matb}">${tb3.matb}</option>
 												</c:forEach>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 										<div class="col-sm-6 col-md-3">
-										<input type="text" value="" name="slThietBi3" class="form-control" placeholder="Số lượng" />
+											<input type="text" value="" name="slThietBi3"
+												class="form-control" placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -274,13 +276,14 @@
 												style="width: 100%; height: 38px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb4" items="${loaiThietBis}">
-													<option value="tb4.matb">${tb4.matb}</option>
+													<option value="${tb4.matb}">${tb4.matb}</option>
 												</c:forEach>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 										<div class="col-sm-6 col-md-3">
-										<input type="text" value="" name="slThietBi4" class="form-control" placeholder="Số lượng" />
+											<input type="text" value="" name="slThietBi4"
+												class="form-control" placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -292,13 +295,14 @@
 												style="width: 100%; height: 38px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb5" items="${loaiThietBis}">
-													<option value="tb5.matb">${tb5.matb}</option>
+													<option value="${tb5.matb}">${tb5.matb}</option>
 												</c:forEach>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 										<div class="col-sm-6 col-md-3">
-										<input type="text" value="" name="slThietBi5" class="form-control" placeholder="Số lượng" />
+											<input type="text" value="" name="slThietBi5"
+												class="form-control" placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -316,6 +320,232 @@
 		</div>
 	</div>
 
+	<button hidden="true" id="update_modal_btn" data-toggle="modal"
+		data-target="#bd-edit-modal-lg"></button>
+	<!--======================================================== Sửa phiếu mượn ============================================================ -->
+	<div class="modal fade bs-example-modal-lg" id="bd-edit-modal-lg"
+		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<!-- Default Basic Forms Start -->
+					<div class="pd-20 card-box mb-30">
+						<div class="clearfix">
+							<div class="pull-left">
+								<h4 class="text-blue h4">Sửa phiếu mượn</h4>
+								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+							</div>
+
+						</div>
+						<form:form action="phieumuon/update" modelAttribute="phieumuon_sua" method="post">
+							<!-- 							=================================== cột 1 ========================================= -->
+							<div class="row">
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu mượn</label>
+										<div class="col-sm-4 col-md-8">
+<%-- 											<form:errors path="mapm" /> --%>
+											<input class="form-control" type="text" readonly
+												name="${phieumuon_sua.mapm }" value="${phieumuon_sua.mapm }"
+												placeholder="Nhập mã phiếu mượn" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Người
+											mượn</label>
+										<div class="col-sm-4 col-md-8">
+											<!-- 											Đối tượng này dễ sai khi không .manm -->
+<%-- 											<form:errors path="nm.manm" /> --%>
+											<form:select class="selectpicker form-control"
+												path="nm.manm"
+												style="width: 100%;height: 38px;">
+												<form:option value="${phieumuon_sua.nm.manm}"
+													label="${phieumuon_sua.nm.manm}"></form:option>
+												<form:options items="${listNguoiMuons}" itemValue="manm"
+													itemLabel="ten"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Nhân
+											viên</label>
+										<div class="col-sm-4 col-md-8">
+<%-- 											<form:errors path="manv" /> --%>
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.manv }"
+												style="width: 100%; height: 38px;">
+												<option value="${phieumuon_sua.manv }">${phieumuon_sua.manv}</option>
+												<c:forEach var="nv" items="${listNhanViens }">
+													<option value="${nv }">${nv}</option>
+												</c:forEach>
+
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Thời
+											gian mượn</label>
+										<div class="col-sm-4 col-md-8">
+<%-- 											<form:errors path="thoigianmuon" /> --%>
+											<form:input class="form-control" path="thoigianmuon"
+												placeholder="Chọn thời gian mượn" type="date" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Thời
+											gian trả</label>
+										<div class="col-sm-4 col-md-8">
+											<form:input class="form-control" path="thoigiantra"
+												placeholder="Chọn thời gian trả" type="date" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Ghi
+											chú</label>
+										<div class="col-sm-4 col-md-8">
+											<%-- 									<form:errors path="diachi" /> --%>
+											<form:input class="form-control" type="text" path="ghichu"
+												placeholder="Nhập ghi chú" />
+										</div>
+									</div>
+
+								</div>
+								<!-- 							====================================== Cột 2 =================================================== -->
+								<div class="col-sm-12 col-md-6">
+
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-3 col-form-label">Thiết
+											bị 1</label>
+										<div class="col-sm-4 col-md-6	">
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}"
+												style="width: 100%; height: 38px;">
+												<option
+													value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
+												<c:forEach var="tb1" items="${loaiThietBis}">
+													<option value="${tb1.matb}">${tb1.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+
+										<div class="col-sm-6 col-md-3">
+											<input type="text"
+												value="${phieumuon_sua.ct_phieumuons[0].soluong}"
+												name="${phieumuon_sua.ct_phieumuons[0].soluong}"
+												class="form-control" placeholder="Số lượng" />
+										</div>
+
+									</div>
+
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-3 col-form-label">Thiết
+											bị 2</label>
+										<div class="col-sm-4 col-md-6	">
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}"
+												style="width: 100%; height: 38px;">
+												<option
+													value="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}</option>
+												<c:forEach var="tb2" items="${loaiThietBis}">
+													<option value="${tb2.matb}">${tb2.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<input type="text"
+												value="${phieumuon_sua.ct_phieumuons[1].soluong}"
+												name="${phieumuon_sua.ct_phieumuons[1].soluong}"
+												class="form-control" placeholder="Số lượng" />
+										</div>
+
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-3 col-form-label">Thiết
+											bị 3</label>
+										<div class="col-sm-4 col-md-6	">
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}"
+												style="width: 100%; height: 38px;">
+												<option
+													value="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}</option>
+												<c:forEach var="tb3" items="${loaiThietBis}">
+													<option value="${tb3.matb}">${tb3.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<input type="text"
+												value="${phieumuon_sua.ct_phieumuons[2].soluong}"
+												name="${phieumuon_sua.ct_phieumuons[2].soluong}"
+												class="form-control" placeholder="Số lượng" />
+										</div>
+
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-3 col-form-label">Thiết
+											bị 4</label>
+										<div class="col-sm-4 col-md-6	">
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}"
+												style="width: 100%; height: 38px;">
+												<option
+													value="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}</option>
+												<c:forEach var="tb4" items="${loaiThietBis}">
+													<option value="${tb4.matb}">${tb4.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<input type="text"
+												value="${phieumuon_sua.ct_phieumuons[3].soluong}"
+												name="${phieumuon_sua.ct_phieumuons[3].soluong}"
+												class="form-control" placeholder="Số lượng" />
+										</div>
+
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-3 col-form-label">Thiết
+											bị 5</label>
+										<div class="col-sm-4 col-md-6	">
+											<select class="selectpicker form-control"
+												name="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}"
+												style="width: 100%; height: 38px;">
+												<option
+													value="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}</option>
+												<c:forEach var="tb5" items="${loaiThietBis}">
+													<option value="${tb5.matb}">${tb5.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<input type="text"
+												value="${phieumuon_sua.ct_phieumuons[4].soluong}"
+												name="${phieumuon_sua.ct_phieumuons[4].soluong}"
+												class="form-control" placeholder="Số lượng" />
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<button type="submit" class="btn btn-info">Sửa</button>
+							</div>
+						</form:form>
+
+					</div>
+					<!-- Default Basic Forms Start -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>

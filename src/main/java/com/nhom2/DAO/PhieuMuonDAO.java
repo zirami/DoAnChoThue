@@ -66,7 +66,47 @@ public class PhieuMuonDAO {
 
 		Query<PHIEUMUON> query = session.createQuery(hql);		
 		query.setParameter("id", id.toString()	);
-		PHIEUMUON list = query.list().get(0); //Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 thiết bị
+		PHIEUMUON list = query.list().get(0); //Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 phiếu mượn
 		return list;
+	}
+	
+	//Update
+	public Boolean update(SessionFactory factory,PHIEUMUON phieumuon_sua) {
+		Boolean result=false;
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.update(phieumuon_sua);
+			t.commit();
+			result = true;
+		}
+		catch(Exception e) {
+			t.rollback();
+			result=false;
+		}
+		finally {
+			session.close();
+		}
+		return result;
+	}
+	//Delete
+	public Boolean delete(SessionFactory factory,PHIEUMUON phieumuon_xoa) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		Boolean result = false;
+		try {
+			session.delete(phieumuon_xoa);
+			t.commit();
+			result = true;
+		}
+		catch(Exception e) {
+			t.rollback();
+			result=false;
+		}
+		finally {
+			session.close();
+		}
+		return result;
+		
 	}
 }

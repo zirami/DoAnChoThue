@@ -31,4 +31,42 @@ public class CT_PhieuMuonDAO {
 		}
 		return result;
 	}
+	//Update
+	public Boolean update(SessionFactory factory, CT_PHIEUMUON ct_phieumuon_sua) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		Boolean result = false;
+		try {
+			session.update(ct_phieumuon_sua);
+			t.commit();
+			result=true;
+		}
+		catch(Exception e) {
+			t.rollback();
+			result = false;
+		}
+		finally {
+			session.close();
+		}
+		return result;
+	}
+	//Xoa CT_PHIEUMUON
+	public Boolean delete(SessionFactory factory,CT_PHIEUMUON ct_phieumuon_xoa) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		Boolean result = false;
+		try {
+			session.delete(ct_phieumuon_xoa);
+			t.commit();
+			result = true;
+		}
+		catch(Exception e) {
+			t.rollback();
+			result = false;
+		}
+		finally {
+			session.close();
+		}
+		return result;
+	}
 }

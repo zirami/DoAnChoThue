@@ -1,18 +1,23 @@
 package com.nhom2.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="CT_PHIEUMUON")
 public class CT_PHIEUMUON {
-	@Id @GeneratedValue
-	@Column(name = "ID")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "Id")
 	private Integer id;
 	
 	@ManyToOne
@@ -23,27 +28,9 @@ public class CT_PHIEUMUON {
 	@JoinColumn(name = "MAPM")
 	private PHIEUMUON phieumuon;
 	
+	@NotNull(message="Trường này không được bỏ trống!")
 	@Column(name="SOLUONG")
 	private Integer soluong;
-	
-	
-
-	public CT_PHIEUMUON() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-
-	public CT_PHIEUMUON(Integer id, THIETBI thietbi_muon, PHIEUMUON phieumuon, Integer soluong) {
-		super();
-		this.id = id;
-		this.thietbi_muon = thietbi_muon;
-		this.phieumuon = phieumuon;
-		this.soluong = soluong;
-	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -76,7 +63,13 @@ public class CT_PHIEUMUON {
 	public void setSoluong(Integer soluong) {
 		this.soluong = soluong;
 	}
+
+	public CT_PHIEUMUON() {
+		super();
+	}
 	
+	
+
 	
 	
 }
