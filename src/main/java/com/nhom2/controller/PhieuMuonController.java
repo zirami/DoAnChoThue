@@ -2,6 +2,7 @@
 package com.nhom2.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -169,27 +170,70 @@ public class PhieuMuonController {
 	@RequestMapping(value = "phieumuon/edit/{mapm}", method = RequestMethod.GET)
 	public String update(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua, @PathVariable("mapm") String mapm) {
 		model.addAttribute("form_edit", true);
-		model.addAttribute("phieumuon_sua", new PhieuMuonDAO().getById(mapm, factory));
+		phieumuon_sua = new PhieuMuonDAO().getById(mapm, factory);
+		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		return home(model);
 	}
+	
+	
+	
+	
 
 	@RequestMapping(value = "phieumuon/update", method = RequestMethod.POST)
 	public String update(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua,
+			@RequestParam("thietBi1") String thietBi1, @RequestParam("slThietBi1") Integer slThietBi1,
+			@RequestParam("thietBi2") String thietBi2, @RequestParam("slThietBi2") Integer slThietBi2,
+			@RequestParam("thietBi3") String thietBi3, @RequestParam("slThietBi3") Integer slThietBi3,
+			@RequestParam("thietBi4") String thietBi4, @RequestParam("slThietBi4") Integer slThietBi4,
+			@RequestParam("thietBi5") String thietBi5, @RequestParam("slThietBi5") Integer slThietBi5,
 			BindingResult result) {
 
 		System.out.println("has error: " + result.getFieldErrors().toString());
 		model.addAttribute("sua_saidinhdang", result.hasErrors());
-		model.addAttribute("thietbi_sua", phieumuon_sua);
+		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		if (result.hasErrors())
 			return home(model);
 
 		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
+		
+		
+		int index = 1;
+		
 		for(CT_PHIEUMUON elem: phieumuon_cansua.getCt_phieumuons()) {
-			new CT_PhieuMuonDAO().update(factory,elem);
+			if(index == 1) {
+				elem.setSoluong(slThietBi1);
+				elem.getThietbi_muon().setMatb(thietBi1);
+				new CT_PhieuMuonDAO().update(factory,elem);
+			}
+			else if(index == 2) {
+				elem.setSoluong(slThietBi2);
+				elem.getThietbi_muon().setMatb(thietBi2);
+				new CT_PhieuMuonDAO().update(factory,elem);
+			}
+			else if(index == 3) {
+				elem.setSoluong(slThietBi3);
+				elem.getThietbi_muon().setMatb(thietBi3);
+				new CT_PhieuMuonDAO().update(factory,elem);
+			}
+			else if(index == 4) {
+				elem.setSoluong(slThietBi4);
+				elem.getThietbi_muon().setMatb(thietBi4);
+				new CT_PhieuMuonDAO().update(factory,elem);
+			}
+			else if(index == 5) {
+				elem.setSoluong(slThietBi5);
+				elem.getThietbi_muon().setMatb(thietBi5);
+				new CT_PhieuMuonDAO().update(factory,elem);
+			}
+			index = index + 1;
 		}
 		model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
 		return home(model);
 	}
+	
+	
+	
+	
 
 	// Delete
 	@RequestMapping(value = "phieumuon/delete", method = RequestMethod.POST)

@@ -358,10 +358,10 @@
 										<div class="col-sm-4 col-md-8">
 
 
-											<form:select class="selectpicker form-control" path="nm.manm" 
- 												style="width: 100%; height: 38px;" items="${listNguoiMuons}" 
- 												itemValue="manm" itemLabel="ten"> 
- 											</form:select> 
+											<form:select class="selectpicker form-control" path="nm.manm"
+												style="width: 100%; height: 38px;" items="${listNguoiMuons}"
+												itemValue="manm" itemLabel="ten">
+											</form:select>
 
 
 										</div>
@@ -372,10 +372,10 @@
 										<div class="col-sm-4 col-md-8">
 
 
-												<form:select path="manv" items="${listNhanViens}"
-													class="selectpicker form-control"
-													style="width: 100%; height: 38px;">
-												</form:select>
+											<form:select path="manv" items="${listNhanViens}"
+												class="selectpicker form-control"
+												style="width: 100%; height: 38px;">
+											</form:select>
 
 
 										</div>
@@ -417,7 +417,7 @@
 											bị 1</label>
 										<div class="col-sm-4 col-md-6	">
 											<select class="selectpicker form-control"
-												name="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}"
+												name="thietBi1"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
@@ -425,14 +425,22 @@
 													<option value="${tb1.matb}">${tb1.matb}</option>
 												</c:forEach>
 											</select>
+
+<%-- 																						<form:select class="selectpicker form-control" path="ct_phieumuons"   --%>
+<%-- 											  												style="width: 100%; height: 38px;" items="${loaiThietBis}"   --%>
+<%-- 											  												itemValue="matb" itemLabel="ten">   --%>
+<%-- 											  											</form:select>  --%>
+
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[0].soluong}"
-												name="${phieumuon_sua.ct_phieumuons[0].soluong}"
+												name="slThietBi1"
 												class="form-control" placeholder="Số lượng" />
+											<%-- 												<form:input class="form-control" type="text" path="ct_phieumuons[0].soluong" --%>
+											<%-- 												placeholder="Nhập ghi chú" /> --%>
 										</div>
 
 									</div>
@@ -442,7 +450,7 @@
 											bị 2</label>
 										<div class="col-sm-4 col-md-6	">
 											<select class="selectpicker form-control"
-												name="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}"
+												name="thietBi2"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}</option>
@@ -455,7 +463,7 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[1].soluong}"
-												name="${phieumuon_sua.ct_phieumuons[1].soluong}"
+												name="slThietBi2"
 												class="form-control" placeholder="Số lượng" />
 										</div>
 
@@ -465,7 +473,7 @@
 											bị 3</label>
 										<div class="col-sm-4 col-md-6	">
 											<select class="selectpicker form-control"
-												name="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}"
+												name="thietBi3"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}</option>
@@ -478,7 +486,7 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[2].soluong}"
-												name="${phieumuon_sua.ct_phieumuons[2].soluong}"
+												name="slThietBi3"
 												class="form-control" placeholder="Số lượng" />
 										</div>
 
@@ -488,7 +496,7 @@
 											bị 4</label>
 										<div class="col-sm-4 col-md-6	">
 											<select class="selectpicker form-control"
-												name="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}"
+												name="thietBi4"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}</option>
@@ -501,7 +509,7 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[3].soluong}"
-												name="${phieumuon_sua.ct_phieumuons[3].soluong}"
+												name="slThietBi4"
 												class="form-control" placeholder="Số lượng" />
 										</div>
 
@@ -511,7 +519,7 @@
 											bị 5</label>
 										<div class="col-sm-4 col-md-6	">
 											<select class="selectpicker form-control"
-												name="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}"
+												name="thietBi5"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}</option>
@@ -524,7 +532,7 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[4].soluong}"
-												name="${phieumuon_sua.ct_phieumuons[4].soluong}"
+												name="slThietBi5"
 												class="form-control" placeholder="Số lượng" />
 										</div>
 
