@@ -70,12 +70,13 @@ public class PhieuMuonController {
 		return list;
 	}
 
+	
 	@RequestMapping(value = "phieumuon", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
 		return "phieumuon/ds_phieu_muon";
 	}
-
+	
 	@RequestMapping(value = "phieumuon", method = RequestMethod.POST)
 	public String insert(ModelMap model, @Valid @ModelAttribute("phieumuon_moi") PHIEUMUON phieumuon_moi,
 			BindingResult reusult, @RequestParam("thietBi1") String thietBi1,
@@ -168,16 +169,13 @@ public class PhieuMuonController {
 	}
 
 	@RequestMapping(value = "phieumuon/edit/{mapm}", method = RequestMethod.GET)
-	public String update(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua, @PathVariable("mapm") String mapm) {
+	public String show_form_edit(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua,
+			@PathVariable("mapm") String mapm) {
 		model.addAttribute("form_edit", true);
 		phieumuon_sua = new PhieuMuonDAO().getById(mapm, factory);
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		return home(model);
 	}
-	
-	
-	
-	
 
 	@RequestMapping(value = "phieumuon/update", method = RequestMethod.POST)
 	public String update(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua,
@@ -188,52 +186,98 @@ public class PhieuMuonController {
 			@RequestParam("thietBi5") String thietBi5, @RequestParam("slThietBi5") Integer slThietBi5,
 			BindingResult result) {
 
-		System.out.println("has error: " + result.getFieldErrors().toString());
+		System.out.println("has error: " + result.hasErrors());
 		model.addAttribute("sua_saidinhdang", result.hasErrors());
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		if (result.hasErrors())
 			return home(model);
 
 		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
-		
-		
-		int index = 1;
-		
-		for(CT_PHIEUMUON elem: phieumuon_cansua.getCt_phieumuons()) {
-			if(index == 1) {
-				elem.setSoluong(slThietBi1);
-				elem.getThietbi_muon().setMatb(thietBi1);
-				new CT_PhieuMuonDAO().update(factory,elem);
+
+		/// Cập nhật bổ sung
+		if (phieumuon_cansua.getThoigiantra() != null) {
+			model.addAttribute("update", false);
+		} else {
+
+			for (CT_PHIEUMUON elem : phieumuon_cansua.getCt_phieumuons()) {
+				new CT_PhieuMuonDAO().delete(factory, elem);
 			}
-			else if(index == 2) {
-				elem.setSoluong(slThietBi2);
-				elem.getThietbi_muon().setMatb(thietBi2);
-				new CT_PhieuMuonDAO().update(factory,elem);
+
+			if (thietBi1 == "" && thietBi2 == "" && thietBi3 == "" && thietBi4 == "" && thietBi5 == "") {
+				// Xử lý thông báo thêm thành công
+				model.addAttribute("update", new PhieuMuonDAO().delete(factory, phieumuon_sua));
+				return home(model);
 			}
-			else if(index == 3) {
-				elem.setSoluong(slThietBi3);
-				elem.getThietbi_muon().setMatb(thietBi3);
-				new CT_PhieuMuonDAO().update(factory,elem);
+
+			if (thietBi1 != "" && slThietBi1 != null) {
+				// in thiết bị và số lượng nhận được.
+				System.out.println("ThietBi1: " + thietBi1 + " So luong: " + slThietBi1);
+
+				CT_PHIEUMUON tb1 = new CT_PHIEUMUON();
+				tb1.setPhieumuon(phieumuon_cansua);
+				tb1.setSoluong(slThietBi1);
+				tb1.setThietbi_muon(new ThietBiDAO().getById(thietBi1, factory));
+				System.out.println("TB1 :" + tb1.getId() + "," + tb1.getSoluong() + "," + tb1.getPhieumuon().getMapm()
+						+ "," + tb1.getThietbi_muon().getMatb());
+
+				new CT_PhieuMuonDAO().save(factory, tb1);
 			}
-			else if(index == 4) {
-				elem.setSoluong(slThietBi4);
-				elem.getThietbi_muon().setMatb(thietBi4);
-				new CT_PhieuMuonDAO().update(factory,elem);
+
+			if (thietBi2 != "" && slThietBi2 != null) {
+				// in thiết bị và số lượng nhận được.
+				System.out.println("ThietBi2: " + thietBi2 + " So luong: " + slThietBi2);
+
+				CT_PHIEUMUON tb2 = new CT_PHIEUMUON();
+				tb2.setPhieumuon(phieumuon_cansua);
+				tb2.setSoluong(slThietBi2);
+				tb2.setThietbi_muon(new ThietBiDAO().getById(thietBi2, factory));
+				System.out.println("TB2 :" + tb2.getId() + "," + tb2.getSoluong() + "," + tb2.getPhieumuon().getMapm()
+						+ "," + tb2.getThietbi_muon().getMatb());
+
+				new CT_PhieuMuonDAO().save(factory, tb2);
 			}
-			else if(index == 5) {
-				elem.setSoluong(slThietBi5);
-				elem.getThietbi_muon().setMatb(thietBi5);
-				new CT_PhieuMuonDAO().update(factory,elem);
+			if (thietBi3 != "" && slThietBi3 != null) {
+				// in thiết bị và số lượng nhận được.
+				System.out.println("ThietBi3: " + thietBi3 + " So luong: " + slThietBi3);
+
+				CT_PHIEUMUON tb3 = new CT_PHIEUMUON();
+				tb3.setPhieumuon(phieumuon_cansua);
+				tb3.setSoluong(slThietBi3);
+				tb3.setThietbi_muon(new ThietBiDAO().getById(thietBi3, factory));
+				System.out.println("TB3 :" + tb3.getId() + "," + tb3.getSoluong() + "," + tb3.getPhieumuon().getMapm()
+						+ "," + tb3.getThietbi_muon().getMatb());
+				new CT_PhieuMuonDAO().save(factory, tb3);
 			}
-			index = index + 1;
+			if (thietBi4 != "" && slThietBi4 != null) {
+				// in thiết bị và số lượng nhận được.
+				System.out.println("ThietBi4: " + thietBi4 + " So luong: " + slThietBi4);
+
+				CT_PHIEUMUON tb4 = new CT_PHIEUMUON();
+				tb4.setPhieumuon(phieumuon_cansua);
+				tb4.setSoluong(slThietBi4);
+				tb4.setThietbi_muon(new ThietBiDAO().getById(thietBi4, factory));
+				System.out.println("TB4 :" + tb4.getId() + "," + tb4.getSoluong() + "," + tb4.getPhieumuon().getMapm()
+						+ "," + tb4.getThietbi_muon().getMatb());
+				new CT_PhieuMuonDAO().save(factory, tb4);
+			}
+			if (thietBi5 != "" && slThietBi5 != null) {
+				// in thiết bị và số lượng nhận được.
+				System.out.println("ThietBi5: " + thietBi5 + " So luong: " + slThietBi5);
+
+				CT_PHIEUMUON tb5 = new CT_PHIEUMUON();
+				tb5.setPhieumuon(phieumuon_cansua);
+				tb5.setSoluong(slThietBi5);
+				tb5.setThietbi_muon(new ThietBiDAO().getById(thietBi5, factory));
+				System.out.println("TB5 :" + tb5.getId() + "," + tb5.getSoluong() + "," + tb5.getPhieumuon().getMapm()
+						+ "," + tb5.getThietbi_muon().getMatb());
+				new CT_PhieuMuonDAO().save(factory, tb5);
+
+			}
+			model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
+			
 		}
-		model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
-		return home(model);
+		return "redirect: ../phieumuon";
 	}
-	
-	
-	
-	
 
 	// Delete
 	@RequestMapping(value = "phieumuon/delete", method = RequestMethod.POST)
@@ -242,7 +286,7 @@ public class PhieuMuonController {
 		if (phieumuon_xoa.getThoigiantra() != null) {
 			model.addAttribute("delete", false);
 		} else {
-			// Nó có thể vướng những cái ct_phieumuon nên không xóa được. kiểm tra.
+			// Nó có thể vướng những cái ct_phieumuon nên không xóa được. kiểm tra. done
 			for (CT_PHIEUMUON elem : phieumuon_xoa.getCt_phieumuons()) {
 				new CT_PhieuMuonDAO().delete(factory, elem);
 			}
@@ -251,5 +295,6 @@ public class PhieuMuonController {
 			model.addAttribute("delete", new PhieuMuonDAO().delete(factory, phieumuon_canxoa));
 		}
 		return home(model);
+		
 	}
 }

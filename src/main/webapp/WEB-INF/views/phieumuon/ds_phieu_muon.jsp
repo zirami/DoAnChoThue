@@ -419,11 +419,11 @@
 											<select class="selectpicker form-control"
 												name="thietBi1"
 												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
+												<option value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
 												<c:forEach var="tb1" items="${loaiThietBis}">
 													<option value="${tb1.matb}">${tb1.matb}</option>
 												</c:forEach>
+												<option value="">Nothing selected</option>
 											</select>
 
 <%-- 																						<form:select class="selectpicker form-control" path="ct_phieumuons"   --%>
@@ -457,6 +457,7 @@
 												<c:forEach var="tb2" items="${loaiThietBis}">
 													<option value="${tb2.matb}">${tb2.matb}</option>
 												</c:forEach>
+												<option value="">Nothing selected</option>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
@@ -480,6 +481,7 @@
 												<c:forEach var="tb3" items="${loaiThietBis}">
 													<option value="${tb3.matb}">${tb3.matb}</option>
 												</c:forEach>
+												<option value="">Nothing selected</option>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
@@ -503,6 +505,7 @@
 												<c:forEach var="tb4" items="${loaiThietBis}">
 													<option value="${tb4.matb}">${tb4.matb}</option>
 												</c:forEach>
+												<option value="">Nothing selected</option>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
@@ -526,6 +529,7 @@
 												<c:forEach var="tb5" items="${loaiThietBis}">
 													<option value="${tb5.matb}">${tb5.matb}</option>
 												</c:forEach>
+												<option value="">Nothing selected</option>
 											</select>
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
@@ -566,6 +570,15 @@
 		</script>
 	</c:if>
 
+		<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
+	<c:if test="${sua_saidinhdang}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#update_modal_btn').click();
+				console.log("Sửa sai định dạng")
+			});
+		</script>
+	</c:if>
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC THÊM -->
 	<c:if test="${them_saidinhdang}">
 		<script type="text/javascript">
