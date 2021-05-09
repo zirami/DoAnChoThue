@@ -1,15 +1,14 @@
 package com.nhom2.controller;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,12 +28,6 @@ public class NhanVienController {
 	@Autowired
 	SessionFactory factory;
 
-	@RequestMapping(value = "nhan-vien", method = RequestMethod.GET)
-	public String home(ModelMap model) {
-		model.addAttribute("listNhanvien", new NhanVienDAO().getAll(factory));
-		return "nhanvien/ds_nhanvien";
-	}
-
 	@ModelAttribute("nhanvien_moi")
 	public NHANVIEN nhanvien_moi() {
 		return new NHANVIEN();
@@ -44,63 +37,68 @@ public class NhanVienController {
 	public NHANVIEN nhanvien_sua() {
 		return new NHANVIEN();
 	}
-	
-	@ModelAttribute("gioiTinhs")
-	public List<String> getGioiTinhs() {
-		List<String> list = new ArrayList<>();
-		list.add("Nam");
-		list.add("Nữ");
-		return list;
+	//DANH SÁCH GIỚI TÍNH ĐỂ SELECT
+		@ModelAttribute("gioiTinhs")
+		public List<String> getGioiTinhs() {
+			List<String> list = new ArrayList<>();
+			list.add("Nam");
+			list.add("Nữ");
+			return list;
+		}
+
+	@RequestMapping(value = "qlnhanvien", method = RequestMethod.GET)
+	public String home(ModelMap model) {
+		model.addAttribute("listNhanVien", new NhanVienDAO().getAll(factory));
+		return "nhanvien/ds_nhanvien";
 	}
+
 	// THÊM
-	@RequestMapping(value = "nhan-vien", method = RequestMethod.POST)
+	@RequestMapping(value = "qlnhanvien", method = RequestMethod.POST)
 	public String insert(ModelMap model, @Valid @ModelAttribute("nhanvien_moi") NHANVIEN nhanvien_moi,
 			BindingResult reusult) {
 		System.out.println("has error: " + reusult.hasErrors());
 		model.addAttribute("them_saidinhdang", reusult.hasErrors());
 		model.addAttribute("nhanvien_moi", nhanvien_moi);
-		Date ngaysinh = nhanvien_moi.getNgaysinh();
-		System.out.println("ngay sinh: " + ngaysinh);
 
 		if (reusult.hasErrors())
 			return home(model);
 
-		model.addAttribute("insert", new NhanVienDAO().save(factory, nhanvien_moi)); // Xá»­ lÃ½ thÃ´ng bÃ¡o thÃªm thÃ nh cÃ´ng
+		model.addAttribute("insert", new NhanVienDAO().save(factory, nhanvien_moi)); // Xử lý thông báo thêm thành
+																						// công
 
 		return home(model);
 	}
 
-	// 
-	@RequestMapping(value = "nhan-vien/edit/{id}", method = RequestMethod.GET)
-	public String show_form_edit(ModelMap model, @ModelAttribute("nhanvien_sua") NHANVIEN nhanvien_sua, @PathVariable String id) {
-		
+	// Sửa
+	// LẤY RA THIẾT BỊ BẰNG ID ĐỂ SHOW FORM EDIT
+	@RequestMapping(value = "qlnhanvien/edit/{id}", method = RequestMethod.GET)
+	public String show_form_edit(ModelMap model, @ModelAttribute("nhanvien_sua") NHANVIEN nhanvien_sua,
+			@PathVariable String id) {
+		System.out.println("id = " + id);
 		model.addAttribute("form_edit", true);
 		model.addAttribute("nhanvien_sua", new NhanVienDAO().getById(id, factory));
 		return home(model);
 	}
-	
 
-	// UPDATE
-	@RequestMapping(value = "nhan-vien/update", method = RequestMethod.POST)
-	public String update(ModelMap model, @Valid @ModelAttribute("nhanvien_sua") NHANVIEN nhanvien_sua, BindingResult result) {
-		System.out.println("has error: " + result.getFieldErrors().toString());
-		model.addAttribute("sua_saidinhdang", result.hasErrors());
-		model.addAttribute("nhanvien_sua", nhanvien_sua);
-		if (result.hasErrors())
+		// UPDATE
+		@RequestMapping(value = "qlnhanvien/update", method = RequestMethod.POST)
+		public String update(ModelMap model, @Valid @ModelAttribute("nhanvien_sua") NHANVIEN nhanvien_sua, BindingResult reusult) {
+			System.out.println("has error: " + reusult.getFieldErrors().toString());
+			model.addAttribute("sua_saidinhdang", reusult.hasErrors());
+			model.addAttribute("nhanvien_sua", nhanvien_sua);
+			if (reusult.hasErrors())
+				return home(model);
+
+			model.addAttribute("update", new NhanVienDAO().update(factory, nhanvien_sua));
 			return home(model);
+		}
 
-		model.addAttribute("update", new NhanVienDAO().update(factory, nhanvien_sua));
-		return home(model);
-	}
-
-	// DELETE
-	@RequestMapping(value = "nhan-vien/delete", method = RequestMethod.POST)
-	public String del(ModelMap model, @RequestParam("id") String id) {
-		System.out.println("id = " + id);
+	@RequestMapping(value = "qlnhanvien/delete", method = RequestMethod.POST)
+	public String del(ModelMap model, @RequestParam("manv") String manv) {
+		System.out.println("manv = " + manv);
 		NHANVIEN nhanvien_xoa = new NHANVIEN();
-		nhanvien_xoa.setManv(id);
+		nhanvien_xoa.setManv(manv);
 		model.addAttribute("delete", new NhanVienDAO().del(factory, nhanvien_xoa));
 		return home(model);
 	}
-
 }
