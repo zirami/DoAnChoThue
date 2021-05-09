@@ -58,31 +58,79 @@ public class NHANVIEN {
 	
 	@ManyToOne	
 	@JoinColumn(name = "MAQL")
-	private QUANLI quanli;
+	private QUANLI ql;
 	
-	@NotNull
-	@Column(name="USERNAME")
-	private String username;
+	@ManyToOne	
+	@JoinColumn(name = "USERNAME")
+	private ACCOUNT acc;
+
 
 	public NHANVIEN() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
-	public NHANVIEN(String manv, String ho, String ten, String gioitinh, Date ngaysinh, String diachi,QUANLI quanli,  String username) {
-		super();
-		this.manv = manv;
-		this.ho = ho;
-		this.ten = ten;
-		this.gioitinh = gioitinh;
-		this.ngaysinh = ngaysinh;
-		this.diachi = diachi;
-		this.quanli = quanli;
-		this.username = username;
+
+	public String getManv() {
+		return manv;
 	}
 
-	
+
+	public void setManv(String manv) {
+		this.manv = manv;
+	}
+
+
+	public String getHo() {
+		return ho;
+	}
+
+
+	public void setHo(String ho) {
+		this.ho = ho;
+	}
+
+
+	public String getTen() {
+		return ten;
+	}
+
+
+	public void setTen(String ten) {
+		this.ten = ten;
+	}
+
+
+	public String getGioitinh() {
+		return gioitinh;
+	}
+
+
+	public void setGioitinh(String gioitinh) {
+		this.gioitinh = gioitinh;
+	}
+
+
+	public Date getNgaysinh() {
+		return ngaysinh;
+	}
+
+
+	public void setNgaysinh(Date ngaysinh) {
+		this.ngaysinh = ngaysinh;
+	}
+
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+
 	public String getCmnd() {
 		return cmnd;
 	}
@@ -93,71 +141,27 @@ public class NHANVIEN {
 	}
 
 
-	public String getManv() {
-		return manv;
+	public QUANLI getQl() {
+		return ql;
 	}
 
-	public void setManv(String manv) {
-		this.manv = manv;
+
+	public void setQl(QUANLI ql) {
+		this.ql = ql;
 	}
 
-	public String getHo() {
-		return ho;
+
+	public ACCOUNT getAcc() {
+		return acc;
 	}
 
-	public void setHo(String ho) {
-		this.ho = ho;
+
+	public void setAcc(ACCOUNT acc) {
+		this.acc = acc;
 	}
 
-	public String getTen() {
-		return ten;
-	}
 
-	public void setTen(String ten) {
-		this.ten = ten;
-	}
-
-	public String getGioitinh() {
-		return gioitinh;
-	}
-
-	public void setGioitinh(String gioitinh) {
-		this.gioitinh = gioitinh;
-	}
-
-	public Date getNgaysinh() {
-		return ngaysinh;
-	}
-
-	public void setNgaysinh(Date ngaysinh) {
-		this.ngaysinh = ngaysinh;
-	}
-
-	public String getDiachi() {
-		return diachi;
-	}
-
-	public void setDiachi(String diachi) {
-		this.diachi = diachi;
-	}
-
-	public QUANLI getQuanli() {
-		return quanli;
-	}
-
-	public void setQuanli(QUANLI quanli) {
-		this.quanli = quanli;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
-	
-	
+
 	
 }

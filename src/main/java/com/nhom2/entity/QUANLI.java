@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,10 +51,9 @@ public class QUANLI {
 	@Column(name="NGAYTIEPNHAN")
 	private Date ngaytiepnhan;
 	
-	@NotNull(message="Trường này không được bỏ trống!")
-	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="USERNAME")
-	private String username;
+	@ManyToOne	
+	@JoinColumn(name = "USERNAME")
+	private ACCOUNT acc;
 
 	public QUANLI() {
 		super();
@@ -107,13 +108,15 @@ public class QUANLI {
 		this.ngaytiepnhan = ngaytiepnhan;
 	}
 
-	public String getUsername() {
-		return username;
+	public ACCOUNT getAcc() {
+		return acc;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setAcc(ACCOUNT acc) {
+		this.acc = acc;
 	}
+
+	
 	
 	
 }

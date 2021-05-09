@@ -42,11 +42,16 @@
 						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
 							LÍ NGƯỜI MƯỢN</span>
 				</a></li>
-				<li class="dropdown"><a href="thanhli.htm"
-					class="dropdown-toggle no-arrow"> <span
-						class="micon dw dw-library"></span> <span class="mtext">THANH
-							LÝ</span>
-				</a>
+				<li class="dropdown">
+					<div>
+						<a href="phieuthanhly" class="dropdown-toggle no-arrow"
+							data-toggle="tooltip" data-placement="right" title=""
+							data-original-title="THANH LÝ THIẾT BỊ"> <span
+							class="micon dw dw-house-1"></span> <span>THANH LÝ
+								THIẾT BỊ</span>
+						</a>
+					</div>
+				</li>
 				<li>
 					<div class="dropdown-divider"></div>
 				</li>
@@ -60,12 +65,19 @@
 				<li>
 					<div class="sidebar-small-cap">MỞ RỘNG</div>
 				</li>
-				<li class="dropdown"><a href="nhan-vien"
+				<li class="dropdown"><a href="qlnhanvien"
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
 					data-placement="right" title=""
 					data-original-title="QUẢN LÍ NHÂN VIÊN"> <span
+						class="micon dw dw-invoice"></span> <span class="mtext">NHÂN
+							  VIÊN</span>
+				</a></li>
+				<li class="dropdown"><a href="qlquanli"
+					class="dropdown-toggle no-arrow" data-toggle="tooltip"
+					data-placement="right" title=""
+					data-original-title="QUẢN LÍ "> <span
 						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
-							LÍ NHÂN VIÊN</span>
+							  LÍ</span>
 				</a></li>
 				<li><a
 					href="https://dropways.github.io/deskapp-free-single-page-website-template/"

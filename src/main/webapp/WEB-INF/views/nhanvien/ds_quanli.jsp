@@ -29,7 +29,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Danh sách nhân viên</h4>
+								<h4>Danh sách người quản lí</h4>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
@@ -44,12 +44,12 @@
 						<div class="col-md-6 col-sm-12 text-right">
 							<a href="#" id="insert_btn" class="btn btn-primary"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
-								type="button">Thêm nhân viên </a>
+								type="button">Thêm người quản lí </a>
 						</div>
 					</div>
 				</div>
 
-				<!-- Hiển thị danh sách nhân viên -->
+				<!-- Hiển thị danh sách người quản lí -->
 				<div class="card-box mb-30">
 					${message}
 					<hr>
@@ -57,35 +57,29 @@
 						<table class="data-table table stripe hover nowrap" id="myTable">
 							<thead>
 								<tr>
-									<th class="table-plus datatable-nosort">Mã nhân viên</th>
-									<th>Họ</th>
-									<th>Tên</th>
-									<th>Giới tính</th>
+									<th class="table-plus datatable-nosort">Mã người QL</th>
+									<th>Họ và Tên</th>
 									<th>Ngày sinh</th>
-									<th>Địa chỉ</th>
-									<th>CMND</th>
-									<th>Mã quản lí</th>
+									<th>Giới tính</th>
+									<th>Ngày tiếp nhận</th>
 									<th>Username</th>
 									<th>Hành động</th>
-								</tr>	
+								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="nhanvien" items="${listNhanVien}"
-									varStatus="row">
+								<c:forEach var="quanli" items="${listQuanLi}" varStatus="row">
 									<tr>
-										<td class="table-plus">${nhanvien.manv}</td>
-										<td>${nhanvien.ho}</td>
-										<td>${nhanvien.ten}</td>
-										<td>${nhanvien.gioitinh}</td>
-										<td>${nhanvien.ngaysinh}</td>
-										<td>${nhanvien.diachi}</td>
-										<td>${nhanvien.cmnd}</td>
-										<td>${nhanvien.ql.maql}
-										<td>${nhanvien.acc.username}</td>
+										<td class="table-plus">${quanli.maql}</td>
+										<td>${quanli.ho} ${quanli.ten}</td>
+										<td>${quanli.ngaysinh}</td>
+										<td>${quanli.gioitinh}</td>
+										
+										<td>${quanli.ngaytiepnhan}</td>
+										<td>${quanli.acc.username}</td>
 										<td>
 											<div class="row clearfix btn-list">
 												<!-- 												<div class=""> -->
-												<form action="qlnhanvien/edit/${nhanvien.manv}">
+												<form action="qlquanli/edit/${quanli.maql}">
 													<button class="btn btn-primary" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
 														<i class="material-icons">edit</i>
@@ -93,12 +87,12 @@
 													<!--  -->
 												</form>
 
-												<form action="qlnhanvien/delete" method="post">
+												<form action="qlquanli/delete" method="post">
 													<!-- Dùng để hiển thị tên lên form -->
-													<input type="hidden" name="ten" value="${nhanvien.ten}" />
+													<input type="hidden" name="ten" value="${quanli.ten}" />
 
 													<!-- Dùng để gửi về controller -->
-													<input type="hidden" name="manv" value="${nhanvien.manv}" />
+													<input type="hidden" name="maql" value="${quanli.maql}" />
 													<button type="submit" style="display: none"
 														class="submit_del_btn"></button>
 												</form>
@@ -119,7 +113,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 	======================   Thêm Nhân Viên ============================ -->
+	<!-- 	======================   Thêm Người Quản Lý ============================ -->
 	<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
@@ -130,19 +124,19 @@
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-blue h4">Thêm nhân viên</h4>
+								<h4 class="text-blue h4">Thêm người quản lí</h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>
-						<form:form action="qlnhanvien" modelAttribute="nhanvien_moi"
+						<form:form action="qlquanli" modelAttribute="quanli_moi"
 							method="post">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									nhân viên</label>
+									quản lí</label>
 								<div class="col-sm-12 col-md-10">
-									<form:errors path="manv" />
-									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên" />
+									<form:errors path="maql" />
+									<form:input class="form-control" type="text" path="maql"
+										placeholder="Nhập mã quản lí" />
 								</div>
 							</div>
 							<div class="form-group row">
@@ -163,6 +157,15 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Ngày
+									sinh</label>
+								<div class="col-sm-12 col-md-10">
+									<form:errors path="ngaysinh" />
+									<form:input class="form-control" path="ngaysinh"
+										placeholder="Chọn ngày sinh" type="date" />
+								</div>
+							</div>
+							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Giới
 									tính</label>
 								<div class="col-sm-12 col-md-10">
@@ -174,48 +177,15 @@
 									</form:select>
 								</div>
 							</div>
-
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Ngày
-									sinh</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ngaysinh" />
-									<form:input class="form-control" path="ngaysinh"
-										placeholder="Chọn ngày sinh" type="date" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="diachi" />
-									<form:input class="form-control" type="text" path="diachi"
-										placeholder="Nhập địa chỉ" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="cmnd" />
-									<form:input path="cmnd" class="form-control" type="text"
-										placeholder="Nhập chứng minh nhân dân" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã QL</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ql.maql" />
-									<form:input path="ql.maql" class="form-control" type="text"
-										placeholder="Nhập mã quản lí" />
-								</div>
-							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Username</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />
 									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập username" />
+										placeholder="Nhập Username" />
 								</div>
 							</div>
+
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
@@ -245,19 +215,19 @@
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-blue h4">Sửa thông tin nhân viên</h4>
+								<h4 class="text-blue h4">Sửa thông tin người mượn</h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>
-						<form:form action="qlnhanvien/update"
-							modelAttribute="nhanvien_sua" method="post">
+						<form:form action="qlquanli/update" modelAttribute="quanli_sua"
+							method="post">
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									nhân viên</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Mã quản
+									lí</label>
 								<div class="col-sm-12 col-md-10">
-									<form:errors path="manv" />
-									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên" />
+									<form:errors path="maql" />
+									<form:input class="form-control" type="text" path="maql"
+										placeholder="Nhập mã người quản lí" />
 								</div>
 							</div>
 							<div class="form-group row">
@@ -278,18 +248,6 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Giới
-									tính</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="gioitinh" />
-										<form:select path="gioitinh" items="${gioiTinhs}"
-										class="selectpicker form-control"
-										style="width: 100%; height: 38px;">
-									</form:select>
-								</div>
-							</div>
-
-							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ngày
 									sinh</label>
 								<div class="col-sm-12 col-md-10">
@@ -299,27 +257,23 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Giới
+									tính</label>
 								<div class="col-sm-12 col-md-10">
-									<form:errors path="diachi" />
-									<form:input class="form-control" type="text" path="diachi"
-										placeholder="Nhập địa chỉ" />
+									<form:errors path="gioitinh" />
+									<form:select path="gioitinh" items="${gioiTinhs}"
+										class="selectpicker form-control"
+										style="width: 100%; height: 38px;">
+									</form:select>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Ngày
+									tiếp nhận</label>
 								<div class="col-sm-12 col-md-10">
-									<form:errors path="cmnd" />
-									<form:input path="cmnd" class="form-control" type="text"
-										placeholder="Nhập chứng minh nhân dân" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã QL</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ql.maql" />
-									<form:input path="ql.maql" class="form-control" type="text"
-										placeholder="Nhập mã quản lí" />
+									<form:errors path="ngaytiepnhan" />
+									<form:input class="form-control" path="ngaytiepnhan"
+										placeholder="Chọn ngày sinh" type="date" />
 								</div>
 							</div>
 							<div class="form-group row">
@@ -327,9 +281,10 @@
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />
 									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập username" />
+										placeholder="Nhập Username" />
 								</div>
 							</div>
+
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
