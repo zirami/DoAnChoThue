@@ -178,6 +178,14 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Ngày tiếp nhận</label>
+								<div class="col-sm-12 col-md-10">
+									<form:errors path="ngaysinh" />
+									<form:input class="form-control" path="ngaytiepnhan"
+										placeholder="Chọn ngày sinh" type="date" />
+								</div>
+							</div>
+							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Username</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />

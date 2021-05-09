@@ -36,7 +36,7 @@ public class QUANLI {
 	
 	@NotNull(message="Trường này không được bỏ trống!")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="NGAYSINH")
 	private Date ngaysinh;
 	 
@@ -47,7 +47,7 @@ public class QUANLI {
 	
 	@NotNull(message="Trường này không được bỏ trống!")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="NGAYTIEPNHAN")
 	private Date ngaytiepnhan;
 	
