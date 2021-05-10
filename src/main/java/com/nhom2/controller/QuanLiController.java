@@ -93,7 +93,7 @@ public class QuanLiController {
 		model.addAttribute("update", new QuanLiDAO().update(factory, quanli_sua));
 		return home(model);
 	}
-
+// XÓA
 	@RequestMapping(value = "qlquanli/delete", method = RequestMethod.POST)
 	public String del(ModelMap model, @RequestParam("maql") String maql) {
 		System.out.println("maql = " + maql);
