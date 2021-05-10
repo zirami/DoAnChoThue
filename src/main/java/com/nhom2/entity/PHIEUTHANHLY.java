@@ -19,26 +19,26 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="PHIEUTHANHLY")
+@Table(name = "PHIEUTHANHLY")
 public class PHIEUTHANHLY {
 	@Id
 	@Column(name = "MAPTL")
-	@NotNull(message="Trường này không được bỏ trống!")
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String maptl;
-	
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIAN")
 	private Date thoigian;
-	
+
 	@Column(name = "GHICHU")
 	private String ghichu;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "MANV")
 	private NHANVIEN nv;
-	
+
 	@OneToMany(mappedBy = "phieuthanhly", fetch = FetchType.EAGER)
 	private Collection<CT_PHIEUTHANHLY> ct_phieuthanhlys;
 
@@ -87,4 +87,6 @@ public class PHIEUTHANHLY {
 		this.ct_phieuthanhlys = ct_phieuthanhlys;
 	}
 
-	}
+	
+
+}

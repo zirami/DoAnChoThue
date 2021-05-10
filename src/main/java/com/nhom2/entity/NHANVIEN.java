@@ -1,12 +1,15 @@
 package com.nhom2.entity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -63,12 +66,28 @@ public class NHANVIEN {
 	@ManyToOne	
 	@JoinColumn(name = "USERNAME")
 	private ACCOUNT acc;
+	
+	@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
+	private Collection<PHIEUTHANHLY> phieuthanhlys ;
 
 
 	public NHANVIEN() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
+
+	public Collection<PHIEUTHANHLY> getPhieuthanhlys() {
+		return phieuthanhlys;
+	}
+
+
+
+	public void setPhieuthanhlys(Collection<PHIEUTHANHLY> phieuthanhlys) {
+		this.phieuthanhlys = phieuthanhlys;
+	}
+
 
 
 	public String getManv() {

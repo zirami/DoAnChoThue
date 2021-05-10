@@ -10,39 +10,45 @@
 <%@include file="/common/loadcss.jsp"%>
 </head>
 <body>
-	<div class="row">
-		<div class="col">
-			<div>Array</div>
-			<div>
-				<c:forEach items="${array}" var="item1">
-					<h3>${item1}</h3>
-				</c:forEach>
-			</div>
-		</div>
-		<div class="col">
-			<div>List</div>
-			<div>
-				<c:forEach items="${list }" var="item2">
-					<h3>${item2}</h3>
-				</c:forEach>
-			</div>
+	<div class="col">
+		<div class="row">
+			<form action="test" method="post">
+				<div class="form-group">
+					<!-- Khi dùng spring:bind không dùng được form:form -->
+					<!-- tên Attribute -->
+					<spring:bind path="loaiTb.ten">
+						<select name="ten">
+							<!-- thuộc tính cần lấy về -->
+							<option value="" selected="selected">-Chọn thiết bị-</option>
+							<c:forEach items="${listLoaiTB }" var="loaiTb">
+								<option value="${loaiTb.ten }">${loaiTb.ten }</option>
+							</c:forEach>
+						</select>
+						<c:if test="${status.error}">
+							<p>Lỗi : ${status.errorMessages[0]}</p>
+						</c:if>
+						
+					</spring:bind>
+					<!-- tên Attribute -->
+					<spring:bind path="phanQuyen.mapq">
+						<!-- thuộc tính cần lấy về -->
+						<input type="text" name="mapq" placeholder="Mã phân quyền">
+						<c:if test="${status.error}">
+							<p>Lỗi : ${status.errorMessages[0]}</p>
+						</c:if>
+					</spring:bind>
+					<spring:bind path="phanQuyen.tenpq">
+						<!-- thuộc tính cần lấy về -->
+						<input type="text" name="tenpq" placeholder="Tên phân quyền">
+						<c:if test="${status.error}">
+							<p>Lỗi : ${status.errorMessages[0]}</p>
+						</c:if>
+					</spring:bind>
+					<input type="submit" value="gửi">
+				</div>
+			</form>
 		</div>
 	</div>
-	<form action="multi" method="post" >
-		<div class="form-group">
-			<label>Select/deselect all</label>
-			<select name="multidata[]" multiple
-				class="selectpicker form-control" data-size="5"
-				data-style="btn-outline-warning" data-actions-box="true"
-				data-selected-text-format="count">
-				<!-- dùng form:select thì đổi thành path="multi-data[]" -->
-				<option value="Mustard">Mustard</option>
-				<option value="Ketchup">Ketchup</option>
-				<option value="Relish">Relish</option>
-			</select>
-			<input type="submit" class="btn btn-primary" value="gửi">
-		</div>
-	</form>
 	<%@include file="/common/footer.jsp"%>
 </body>
 </html>
