@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nhom2.entity.NGUOIMUON;
 import com.nhom2.entity.NHANVIEN;
 @Transactional
 public class NhanVienDAO {
@@ -31,25 +32,24 @@ public class NhanVienDAO {
 		return list;
 	}
 	
-	/* THÊM */
+	/* THÊM NHÂN VIÊN */
 	public Boolean save(SessionFactory factory, NHANVIEN nhanvien_them) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Boolean result = true;
 		try {
 			session.save(nhanvien_them);
-			t.commit();	
+			t.commit();
 			result = true;
-			
 
 		} catch (Exception e) {
 			t.rollback();
 			result = false;
-			
+
 		} finally {
 			session.close();
 		}
-		
+
 		return result;
 	}
 	/* SỬA */
@@ -73,28 +73,27 @@ public class NhanVienDAO {
 		
 		return result;
 	}
-	/* XOÁ */
+	/* XÓA NHÂN VIÊN */
 	public Boolean del(SessionFactory factory, NHANVIEN nhanvien_xoa) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Boolean result = true;
 		try {
-			session.delete(nhanvien_xoa);;
-			t.commit();	
+			session.delete(nhanvien_xoa);
+			;
+			t.commit();
 			result = true;
-			
 
 		} catch (Exception e) {
 			t.rollback();
 			result = false;
-			
+
 		} finally {
 			session.close();
 		}
-		
+
 		return result;
 	}
-	
 	
 	/* TÌM KIẾM BẰNG ID*/
 	public NHANVIEN getById(String id, SessionFactory factory){

@@ -57,25 +57,23 @@
 						<table class="data-table table stripe hover nowrap" id="myTable">
 							<thead>
 								<tr>
-									<th class="table-plus datatable-nosort">Mã nhân viên</th>
-									<th>Họ</th>
-									<th>Tên</th>
+									<th class="table-plus datatable-nosort">Mã NV</th>
+									<th>Họ và Tên</th>
 									<th>Giới tính</th>
 									<th>Ngày sinh</th>
 									<th>Địa chỉ</th>
 									<th>CMND</th>
-									<th>Mã quản lí</th>
+									<th>Mã QL</th>
 									<th>Username</th>
 									<th>Hành động</th>
-								</tr>	
+								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="nhanvien" items="${listNhanVien}"
 									varStatus="row">
 									<tr>
 										<td class="table-plus">${nhanvien.manv}</td>
-										<td>${nhanvien.ho}</td>
-										<td>${nhanvien.ten}</td>
+										<td>${nhanvien.ho}${nhanvien.ten}</td>
 										<td>${nhanvien.gioitinh}</td>
 										<td>${nhanvien.ngaysinh}</td>
 										<td>${nhanvien.diachi}</td>
@@ -119,7 +117,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 	======================   Thêm Nhân Viên ============================ -->
+	<!-- 	======================   Thêm Nhân viên ============================ -->
 	<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
@@ -138,7 +136,7 @@
 							method="post">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									nhân viên</label>
+									người mượn</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="manv" />
 									<form:input class="form-control" type="text" path="manv"
@@ -200,6 +198,7 @@
 										placeholder="Nhập chứng minh nhân dân" />
 								</div>
 							</div>
+
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Mã QL</label>
 								<div class="col-sm-12 col-md-10">
@@ -213,10 +212,9 @@
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />
 									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập username" />
+										placeholder="Nhập chứng minh nhân dân" />
 								</div>
 							</div>
-
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Đóng</button>
@@ -252,8 +250,8 @@
 						<form:form action="qlnhanvien/update"
 							modelAttribute="nhanvien_sua" method="post">
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									nhân viên</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Mã nhân
+									viên</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="manv" />
 									<form:input class="form-control" type="text" path="manv"
@@ -282,7 +280,7 @@
 									tính</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="gioitinh" />
-										<form:select path="gioitinh" items="${gioiTinhs}"
+									<form:select path="gioitinh" items="${gioiTinhs}"
 										class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
 									</form:select>
@@ -326,8 +324,8 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Username</label>
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />
-									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập username" />
+									<form:input path="acc.username" class="form-control"
+										type="text" placeholder="Nhập username" />
 								</div>
 							</div>
 

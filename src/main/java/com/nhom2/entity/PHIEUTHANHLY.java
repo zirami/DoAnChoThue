@@ -19,40 +19,32 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="PHIEUTHANHLY")
+@Table(name = "PHIEUTHANHLY")
 public class PHIEUTHANHLY {
 	@Id
 	@Column(name = "MAPTL")
-	@NotNull(message="Trường này không được bỏ trống!")
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String maptl;
-	
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIAN")
 	private Date thoigian;
-	
+
 	@Column(name = "GHICHU")
 	private String ghichu;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "MANV")
-	private NHANVIEN nhanvien;
-	
+	private NHANVIEN nv;
+
 	@OneToMany(mappedBy = "phieuthanhly", fetch = FetchType.EAGER)
 	private Collection<CT_PHIEUTHANHLY> ct_phieuthanhlys;
 
 	public PHIEUTHANHLY() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public PHIEUTHANHLY(String maptl,Date thoigian, String ghichu, NHANVIEN nhanvien) {
-		super();
-		this.maptl = maptl;
-		this.thoigian = thoigian;
-		this.ghichu = ghichu;
-		this.nhanvien = nhanvien;
 	}
 
 	public String getMaptl() {
@@ -79,12 +71,12 @@ public class PHIEUTHANHLY {
 		this.ghichu = ghichu;
 	}
 
-	public NHANVIEN getNhanvien() {
-		return nhanvien;
+	public NHANVIEN getNv() {
+		return nv;
 	}
 
-	public void setNhanvien(NHANVIEN nhanvien) {
-		this.nhanvien = nhanvien;
+	public void setNv(NHANVIEN nv) {
+		this.nv = nv;
 	}
 
 	public Collection<CT_PHIEUTHANHLY> getCt_phieuthanhlys() {
@@ -96,6 +88,5 @@ public class PHIEUTHANHLY {
 	}
 
 	
-	
-	
+
 }
