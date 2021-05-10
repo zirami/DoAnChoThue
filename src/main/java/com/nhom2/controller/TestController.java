@@ -2,6 +2,9 @@ package com.nhom2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
@@ -23,7 +26,7 @@ public class TestController {
 
 	@Autowired
 	SessionFactory factory;
-
+	
 	@ModelAttribute("phanQuyen")
 	public PHANQUYEN getTb() {
 		return new PHANQUYEN();
@@ -45,14 +48,23 @@ public class TestController {
 	}
 
 	@RequestMapping(value = "test", method = RequestMethod.POST)
-	public String getMultiData(ModelMap model, 
-			@Valid @ModelAttribute("loaiTb") LOAITHIETBI loaiTb, BindingResult reusult1,  
+	public String getMultiData( ModelMap model,
+			@Valid @ModelAttribute("loaiTb") LOAITHIETBI loaiTb,  BindingResult reusult1,
 			@Valid @ModelAttribute("phanQuyen") PHANQUYEN phanQuyen, BindingResult reusult2) {
 		System.out.println(loaiTb.getTen());
 		System.out.println(phanQuyen.getTenpq());
-		System.out.println("has error1: " + reusult1.hasErrors());
-		System.out.println("has error2: " + reusult2.hasErrors());
+		if(reusult2.hasErrors() || reusult1.hasErrors()) {
+			System.out.println("error");
+			model.addAttribute("msg", "Có lỗi xảy ra vui lòng thử lại!!!");
+			
+		}
 		return index(model);
+	}
+	
+	@RequestMapping(value="testValidate", method = RequestMethod.POST)
+	public String testValidate(HttpServletRequest rq) {
+		System.out.println(rq.getParameter("input"));
+		return "multi/multi_input";
 	}
 
 }
