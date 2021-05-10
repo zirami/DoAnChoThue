@@ -1,8 +1,12 @@
 package com.nhom2.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,7 +24,10 @@ public class PHANQUYEN {
 	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="TENPQ")
 	private String tenpq;
-
+	
+	@OneToMany(mappedBy="phanquyen", fetch=FetchType.EAGER)
+	private Collection<ACCOUNT> accounts;
+	
 	public PHANQUYEN() {
 		super();
 		// TODO Auto-generated constructor stub

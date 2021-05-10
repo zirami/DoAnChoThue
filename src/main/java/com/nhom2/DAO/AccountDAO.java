@@ -1,4 +1,4 @@
-package com.nhom2.DAO;
+	package com.nhom2.DAO;
 
 import java.util.List;
 
@@ -115,6 +115,38 @@ public class AccountDAO {
 		List<ACCOUNT> list = query.list();
 		return list;
 	}
-
 	
+	/* TÌM KIẾM 1 ACCOUNT*/
+	public ACCOUNT getById(String name, SessionFactory factory){
+		Session session;
+
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			session = factory.getCurrentSession();
+		} catch (Exception e) {
+			session = factory.openSession();
+		}
+//		String hql = "from ACCOUNT where username = :name";
+//		/* Bắt đầu quá trình truy vấn vào DB */
+//
+//		Query<ACCOUNT> query = session.createQuery(hql);
+//		ACCOUNT list = query.list().get(0);
+		ACCOUNT account = session.get(ACCOUNT.class, name);
+		return account;
+	}
+	
+	public ACCOUNT getByGmail(String gmail, SessionFactory factory) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ACCOUNT WHERE gmail = '"+gmail+"'";
+		Query <ACCOUNT> query = session.createQuery(hql);
+		ACCOUNT account;
+		try {
+			account = (ACCOUNT)query.list().get(0);
+		}
+		catch(Exception e) {
+			account=null;
+		}
+		return account;
+	}
+
 }
