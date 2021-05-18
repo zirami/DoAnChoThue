@@ -126,13 +126,14 @@ public class AccountDAO {
 		} catch (Exception e) {
 			session = factory.openSession();
 		}
-//		String hql = "from ACCOUNT where username = :name";
-//		/* Bắt đầu quá trình truy vấn vào DB */
-//
-//		Query<ACCOUNT> query = session.createQuery(hql);
-//		ACCOUNT list = query.list().get(0);
-		ACCOUNT account = session.get(ACCOUNT.class, name);
-		return account;
+		String hql = "from ACCOUNT where username = :name";
+		/* Bắt đầu quá trình truy vấn vào DB */
+
+		Query<ACCOUNT> query = session.createQuery(hql);
+		query.setParameter("name", name);
+		if (query.list().isEmpty()) return null; 
+		ACCOUNT list = query.list().get(0);
+		return list;
 	}
 	
 	public ACCOUNT getByGmail(String gmail, SessionFactory factory) {
