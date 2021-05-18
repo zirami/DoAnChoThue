@@ -334,14 +334,22 @@
 									</div>
 								</div>
 							</div>
+<<<<<<< HEAD
 							<div class="modal-footer">
 								<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
 								<button type='button' id='btn-add-element'>Lên</button>
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
+=======
+							
+>>>>>>> fd9a1afa1678235478e68746591e8b3b1d49c9ba
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-info">Thêm</button>
 				</div>
 			</div>
 		</div>
