@@ -14,22 +14,22 @@ import javax.validation.constraints.NotNull;
 public class ACCOUNT {
 	@Id
 	@Column(name="USERNAME")
-	@NotNull(message="Trường này không được bỏ trống!")
-	@NotBlank(message = "Vui lòng điền vào trường này !")
+//	@NotNull(message="Trường này không được bỏ trống!")
+//	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String username;
 	
-	@NotNull(message="Trường này không được bỏ trống!")
-	@NotBlank(message = "Vui lòng điền vào trường này !")
+//	@NotNull(message="Trường này không được bỏ trống!")
+//	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="PASSWORD")
 	private String password;
 	
-	@NotNull(message="Trường này không được bỏ trống!")
-	@NotBlank(message = "Vui lòng điền vào trường này !")
+//	@NotNull(message="Trường này không được bỏ trống!")
+//	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="GMAIL")
 	private String gmail;
 	
-	@NotNull(message="Trường này không được bỏ trống!")
-	@NotBlank(message = "Vui lòng điền vào trường này !")
+//	@NotNull(message="Trường này không được bỏ trống!")
+//	@NotBlank(message = "Vui lòng điền vào trường này !")
 	@Column(name="SDT")
 	private String sdt;
 	
@@ -39,16 +39,6 @@ public class ACCOUNT {
 
 	public ACCOUNT() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public ACCOUNT( String username, String password, String gmail, String sdt, PHANQUYEN phanquyen) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.gmail = gmail;
-		this.sdt = sdt;
-		this.phanquyen = phanquyen;
 	}
 
 	public String getUsername() {
@@ -90,6 +80,7 @@ public class ACCOUNT {
 	public void setPhanquyen(PHANQUYEN phanquyen) {
 		this.phanquyen = phanquyen;
 	}
+
 	
 	
 }

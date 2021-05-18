@@ -1,4 +1,5 @@
-<%@include file="/common/taglib.jsp"%>
+<%@page import="org.springframework.web.context.request.RequestScope"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
@@ -72,13 +73,13 @@
 									<div class="container">
 										<div class="row align-items-center">
 
-											<div class="col-md-4 col-lg-7">
+											<div class="col-md-6 col-lg-7">
 												<!-- 												<div class = "title"> -->
 												<!-- 												<h2  class="text-info text-center">Quản Lí Thiết Bị Cho Mượn</h2> -->
 												<!-- 												<h2 class="text-info text-center">Học Viện Cơ Sở</h2> -->
 												<!-- 												</div> -->
 												<img
-													src="${pageContext.servletContext.contextPath}/resources//vendors/images/login-page-img.png"
+													src="${pageContext.servletContext.contextPath}/resources//vendors/images/forgot-password.png"
 													alt="">
 											</div>
 											<div class="col-lg-4 col-lg-5">
@@ -105,7 +106,7 @@
 
 
 													<hr>
-													<form:form action="login" modelAttribute="account_test"
+													<form:form action="modify-account" modelAttribute="modify_account"
 														method="post">
 
 														<div class="text-dark" class="needs-validation" novalidate>
@@ -113,6 +114,9 @@
 																<div class="row">
 																	<label class="col-sm-4 col-md-4">Username</label>
 																	<div class="input-group custom">
+																	
+<!-- 																		ReadOnly -->
+																		
 																		<form:input path="username" type="text"
 																			class="form-control form-control-lg"
 																			placeholder="Username" required="required" />
@@ -125,7 +129,7 @@
 															</div>
 															<div class="col-sm-4 col-md-12">
 																<div class="row">
-																	<label class="col-sm-4 col-md-4">Password</label>
+																	<label class="col-sm-4 col-md-6">New Password</label>
 																	<div class="input-group custom">
 																		<form:input path="password" type="password"
 																			class="form-control form-control-lg"
@@ -138,18 +142,29 @@
 																</div>
 																
 															</div>
-															<div class="col-sm-6 col-md-12">
-																<div class="forgot-password">
-																	<a href="forgot-password">Forgot Password</a>
+															<div class="col-sm-4 col-md-12">
+																<div class="row">
+																	<label class="col-sm-4 col-md-6">Confirm Password</label>
+																	<div class="input-group custom">
+																		<input name="confirmPassword" type="password"
+																			class="form-control form-control-lg"
+																			placeholder="**********" required="required" />
+																		<div class="input-group-append custom">
+																			<span class="input-group-text"><i
+																				class="dw dw-padlock1"></i></span>
+																		</div>
+																	</div>
 																</div>
+																
 															</div>
+															
 															
 														</div>
 														<!-- 							=================================== cột 1 ========================================= -->
 
 														<div class="modal-footer">
 															<input class="btn btn-info btn-lg btn-block"
-																type="submit" value="Đăng nhập">
+																type="submit" value="Thay đổi">
 														</div>
 													</form:form>
 												</div>
@@ -166,13 +181,35 @@
 			</div>
 		</div>
 	</div>
-	<!-- 	</div> -->
+<!-- 		</div> -->
 	<!-- 	</div> -->
 	<!-- 		</div> -->
 
 
 
 	<!-- js -->
+	<%@include file="/common/footer.jsp"%>
+
+	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI XẢY RA-->
+	<c:if test="${failVerify}">
+		<script type="text/javascript">
+			$(document).ready(function() {	
+				show_error();
+			});
+		</script>
+	</c:if>
+	
+	<script type="text/javascript">
+	//THÔNG BÁO LỖI
+	function show_error(content="Email") {
+		Swal.fire({
+			title: 'Xác thực',
+			text: content+" không đúng hoặc chưa tồn tại!",
+			icon: 'error',
+		})
+	}
+</script>
+	
 	<script
 		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/core.js"></script>
 	<script

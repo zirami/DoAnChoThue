@@ -308,13 +308,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
-								<button type="submit" class="btn btn-info">Thêm</button>
-							</div>
+							
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-info">Thêm</button>
 				</div>
 			</div>
 		</div>

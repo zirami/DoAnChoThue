@@ -1,4 +1,5 @@
-<%@include file="/common/taglib.jsp"%>
+<%@page import="org.springframework.web.context.request.RequestScope"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
@@ -72,17 +73,17 @@
 									<div class="container">
 										<div class="row align-items-center">
 
-											<div class="col-md-4 col-lg-7">
+											<div class="col-md-6 col-lg-7">
 												<!-- 												<div class = "title"> -->
 												<!-- 												<h2  class="text-info text-center">Quản Lí Thiết Bị Cho Mượn</h2> -->
 												<!-- 												<h2 class="text-info text-center">Học Viện Cơ Sở</h2> -->
 												<!-- 												</div> -->
 												<img
-													src="${pageContext.servletContext.contextPath}/resources//vendors/images/login-page-img.png"
+													src="${pageContext.servletContext.contextPath}/resources//vendors/images/forgot-password.png"
 													alt="">
 											</div>
 											<div class="col-lg-4 col-lg-5">
-												<div class="login-box bg-while box-shadow border-radius-10">
+												<div class="login-box bg-while box-shadow border-radius-10 text-dark">
 													<div class="login-title "
 														style="color: rgb(255, 255, 255); background-color: rgb(115, 65, 156);">
 														<!-- 											 Chỗ này là Logo -->
@@ -105,51 +106,40 @@
 
 
 													<hr>
-													<form:form action="login" modelAttribute="account_test"
-														method="post">
+													${message }
+													<form:form action="verify" modelAttribute="modify_account" method="post">
 
+														<form:input path="username" style="display: none" class="form-control"/>
+														
 														<div class="text-dark" class="needs-validation" novalidate>
 															<div class="col-sm-4 col-md-12">
 																<div class="row">
-																	<label class="col-sm-4 col-md-4">Username</label>
+																	<input name="verifyCode" value="${verifyCode }"
+																		class="form-control" style="display: none" /> <label
+																		class="col-sm-4 col-md-6">Mã xác nhận</label>
 																	<div class="input-group custom">
-																		<form:input path="username" type="text"
+
+																		<input name="inputVerifyCode" value="" type="text"
 																			class="form-control form-control-lg"
-																			placeholder="Username" required="required" />
-																		<div class="input-group-append custom">
-																			<span class="input-group-text"><i
-																				class="icon-copy dw dw-user1"></i></span>
-																		</div>
-																	</div>
-																</div>
-															</div>
-															<div class="col-sm-4 col-md-12">
-																<div class="row">
-																	<label class="col-sm-4 col-md-4">Password</label>
-																	<div class="input-group custom">
-																		<form:input path="password" type="password"
-																			class="form-control form-control-lg"
-																			placeholder="**********" required="required" />
+																			placeholder="Nhập mã xác nhận" required="required" />
 																		<div class="input-group-append custom">
 																			<span class="input-group-text"><i
 																				class="dw dw-padlock1"></i></span>
 																		</div>
 																	</div>
 																</div>
-																
 															</div>
-															<div class="col-sm-6 col-md-12">
-																<div class="forgot-password">
-																	<a href="forgot-password">Forgot Password</a>
-																</div>
+														</div>
+														<div class="col-sm-6 col-md-12">
+															<div class="forgot-password">
+																<a href="forgot-password">lấy mã</a>
 															</div>
-															
 														</div>
 														<!-- 							=================================== cột 1 ========================================= -->
 
 														<div class="modal-footer">
 															<input class="btn btn-info btn-lg btn-block"
-																type="submit" value="Đăng nhập">
+																type="submit" value="Xác nhận">
 														</div>
 													</form:form>
 												</div>
@@ -166,13 +156,35 @@
 			</div>
 		</div>
 	</div>
-	<!-- 	</div> -->
+	<!-- 		</div> -->
 	<!-- 	</div> -->
 	<!-- 		</div> -->
 
 
 
 	<!-- js -->
+	<%@include file="/common/footer.jsp"%>
+
+	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI XẢY RA-->
+	<c:if test="${failVerify}">
+		<script type="text/javascript">
+			$(document).ready(function() {	
+				show_error();
+			});
+		</script>
+	</c:if>
+
+	<script type="text/javascript">
+	//THÔNG BÁO LỖI
+	function show_error(content="Mã xác thực") {
+		Swal.fire({
+			title: 'Xác thực',
+			text: content+" không đúng!",
+			icon: 'error',
+		})
+	}
+</script>
+
 	<script
 		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/core.js"></script>
 	<script
