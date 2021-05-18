@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.Session;
@@ -62,34 +63,39 @@ public class LoginController {
 
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login(ModelMap model) {
+	public String login(ModelMap model,HttpSession session) {
+		session.setAttribute("role", null);
+		session.setAttribute("user", null);
 		return "login";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account) {
+	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account, HttpServletRequest request, HttpSession session) {
 //		model.addAttribute("account", account);
 
 		ACCOUNT testAccount = new AccountDAO().getById(account.getUsername(), factory);
 		if (testAccount.getUsername() == null) {
 			model.addAttribute("failLogin", true);
-			return login(model);
+			return login(model,session);
 		} else {
 			if (account.getPassword().compareTo(testAccount.getPassword()) != 0) {
 				model.addAttribute("failLogin", true);
-				return login(model);
+				return login(model,session);
 			} else {
-				if (testAccount.getPhanquyen().getMapq().compareTo("admin") == 0)
+				if (testAccount.getPhanquyen().getMapq().compareTo("admin") == 0) {
 					// Cho Đại phiếu mượn là admin
-
+//					request.setAttribute("role", "admin");
+					session.setAttribute("role", "admin");
 					return "redirect: phieumuon";
+				}
 
 				else if (testAccount.getPhanquyen().getMapq().compareTo("staff") == 0) {
 					// Cho Đại người mượn là staff
+					session.setAttribute("role", "staff");
 					return "redirect: qlnguoimuon";
 				} else {
 					model.addAttribute("failLogin", true);
-					return login(model);
+					return login(model,session);
 				}
 			}
 		}
@@ -196,7 +202,12 @@ public class LoginController {
 	
 	
 	
-	
+	@RequestMapping(value="dangxuat", method = RequestMethod.GET)
+	public String dangxuat(ModelMap model, HttpSession session) {
+//		session.setAttribute("role", null);
+//		session.setAttribute("user", null);
+		return login(model,session);
+	}
 	
 	
 	

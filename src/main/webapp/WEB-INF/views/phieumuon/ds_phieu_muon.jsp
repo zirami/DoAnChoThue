@@ -207,28 +207,54 @@
 
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
-								<div class="col-sm-12 col-md-6">
+								<div class="col-sm-12 col-md-6" id='parent-element'>
 
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 1</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi1"
-												style="width: 100%; height: 38px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="${tb1.matb}">${tb1.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
+<!-- 									<div id="divRepeat"> -->
+										<div class="hidden-element">
+											<div class="form-group row">
+												<label class="col-sm-4 col-md-3 col-form-label text-danger">Thiết
+													bị </label>
+												<div class="col-sm-4 col-md-6	">
+													<select class="selectpicker form-control" name="thietBi1"
+														style="width: 100%; height: 38px;">
+														<option value="">Chọn thiết bị</option>
+														<c:forEach var="tb1" items="${loaiThietBis}">
+															<option value="${tb1.matb}">${tb1.matb}</option>
+														</c:forEach>
+													</select>
+													<%-- 														<form:errors path="loai.id" /> --%>
+												</div>
+
+												<div class="col-sm-6 col-md-3">
+													<input type="text" value="" name="slThietBi1"
+														class="form-control" placeholder="Số lượng" />
+												</div>
+
+											</div>
 										</div>
+<!-- 									</div> -->
 
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi1"
-												class="form-control" placeholder="Số lượng" />
-										</div>
 
-									</div>
+									<!-- 									<div class="form-group row"> -->
+									<!-- 										<label class="col-sm-4 col-md-3 col-form-label">Thiết -->
+									<!-- 											bị 1</label> -->
+									<!-- 										<div class="col-sm-4 col-md-6	"> -->
+									<!-- 											<select class="selectpicker form-control" name="thietBi1" -->
+									<!-- 												style="width: 100%; height: 38px;"> -->
+									<!-- 												<option value="">Chọn thiết bị</option> -->
+									<%-- 												<c:forEach var="tb1" items="${loaiThietBis}"> --%>
+									<%-- 													<option value="${tb1.matb}">${tb1.matb}</option> --%>
+									<%-- 												</c:forEach> --%>
+									<!-- 											</select> -->
+									<%-- 																									<form:errors path="loai.id" /> --%>
+									<!-- 										</div> -->
+
+									<!-- 										<div class="col-sm-6 col-md-3"> -->
+									<!-- 											<input type="text" value="" name="slThietBi1" -->
+									<!-- 												class="form-control" placeholder="Số lượng" /> -->
+									<!-- 										</div> -->
+
+									<!-- 									</div> -->
 
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
@@ -310,6 +336,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
+								<button type='button' id='btn-add-element'>Lên</button>
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
@@ -416,29 +443,25 @@
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 1</label>
 										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control"
-												name="thietBi1"
+											<select class="selectpicker form-control" name="thietBi1"
 												style="width: 100%; height: 38px;">
-												<option value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
+												<option
+													value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
 												<c:forEach var="tb1" items="${loaiThietBis}">
 													<option value="${tb1.matb}">${tb1.matb}</option>
 												</c:forEach>
 												<option value="">Nothing selected</option>
 											</select>
 
-<%-- 																						<form:select class="selectpicker form-control" path="ct_phieumuons"   --%>
-<%-- 											  												style="width: 100%; height: 38px;" items="${loaiThietBis}"   --%>
-<%-- 											  												itemValue="matb" itemLabel="ten">   --%>
-<%-- 											  											</form:select>  --%>
 
-											<%-- 														<form:errors path="loai.id" /> --%>
+											<%-- 			<form:errors path="loai.id" /> --%>
 										</div>
 
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[0].soluong}"
-												name="slThietBi1"
-												class="form-control" placeholder="Số lượng" />
+												name="slThietBi1" class="form-control"
+												placeholder="Số lượng" />
 											<%-- 												<form:input class="form-control" type="text" path="ct_phieumuons[0].soluong" --%>
 											<%-- 												placeholder="Nhập ghi chú" /> --%>
 										</div>
@@ -449,8 +472,7 @@
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 2</label>
 										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control"
-												name="thietBi2"
+											<select class="selectpicker form-control" name="thietBi2"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}</option>
@@ -464,8 +486,8 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[1].soluong}"
-												name="slThietBi2"
-												class="form-control" placeholder="Số lượng" />
+												name="slThietBi2" class="form-control"
+												placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -473,8 +495,7 @@
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 3</label>
 										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control"
-												name="thietBi3"
+											<select class="selectpicker form-control" name="thietBi3"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}</option>
@@ -488,8 +509,8 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[2].soluong}"
-												name="slThietBi3"
-												class="form-control" placeholder="Số lượng" />
+												name="slThietBi3" class="form-control"
+												placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -497,8 +518,7 @@
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 4</label>
 										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control"
-												name="thietBi4"
+											<select class="selectpicker form-control" name="thietBi4"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}</option>
@@ -512,8 +532,8 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[3].soluong}"
-												name="slThietBi4"
-												class="form-control" placeholder="Số lượng" />
+												name="slThietBi4" class="form-control"
+												placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -521,8 +541,7 @@
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 5</label>
 										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control"
-												name="thietBi5"
+											<select class="selectpicker form-control" name="thietBi5"
 												style="width: 100%; height: 38px;">
 												<option
 													value="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}</option>
@@ -536,8 +555,8 @@
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[4].soluong}"
-												name="slThietBi5"
-												class="form-control" placeholder="Số lượng" />
+												name="slThietBi5" class="form-control"
+												placeholder="Số lượng" />
 										</div>
 
 									</div>
@@ -560,6 +579,8 @@
 	<%@include file="/common/footer.jsp"%>
 
 
+
+
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -570,7 +591,7 @@
 		</script>
 	</c:if>
 
-		<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
+	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
 	<c:if test="${sua_saidinhdang}">
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -655,5 +676,55 @@
 		}
 	</script>
 	<!-- 	</script> -->
+	<script>
+								 
+									
+		const btn = document.getElementById('btn-add-element')
+		
+		btn.addEventListener('click', function(e){
+			
+			const ele = document.querySelector('.hidden-element')
+			const parent = document.getElementById('parent-element')
+			 
+			let htmlEle = ele.innerHTML;
+			const newEle = document.createElement('div')
+			
+
+			newEle.innerHTML = htmlEle
+			parent.appendChild(newEle)
+			
+			
+// 			htmlEle = htmlEle.replace('ABC', 'ADASDASDASD')
+// 			console.log(htmlEle)
+
+// 			console.log('AAA')
+			
+// 			console.log('ok')
+
+// 	----------------
+// 			n = 2;
+// 			for(var i = 0;i<n;i++ ){
+// 				$("#divRepeat").append($(".hidden-element").html());
+// 			}
+
+
+// ------------
+// 			document.getElementById("divRepeat").style.backgroundRepeat = "repeat";
+
+
+
+
+
+
+
+
+
+
+
+
+		})
+			
+			
+		</script>
 </body>
 </html>

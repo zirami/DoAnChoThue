@@ -27,6 +27,25 @@
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**"
 		location="/resources/" cache-period="31556926" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/qlnhanvien"/>
+			<bean class="com.nhom2.interceptor.AdminInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/qlnhanvien"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/forgot-password"/>
+			<mvc:exclude-mapping path="/verify"/>
+			<mvc:exclude-mapping path="/modify-account"/>
+			<bean class="com.nhom2.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 

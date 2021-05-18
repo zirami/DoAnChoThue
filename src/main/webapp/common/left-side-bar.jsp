@@ -79,6 +79,7 @@
 						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
 							  LÍ</span>
 				</a></li>
+				
 				<li><a
 					href="https://dropways.github.io/deskapp-free-single-page-website-template/"
 					target="_blank" class="dropdown-toggle no-arrow"> <span
@@ -86,6 +87,12 @@
 							Thông tin chi tiết <img
 							src="resources/vendors/images/coming-soon.png" alt="" width="25">
 					</span>
+				</a></li>
+				<li class="dropdown"><a href="dangxuat"
+					class="dropdown-toggle no-arrow" data-toggle="tooltip"
+					data-placement="right" title=""
+					data-original-title="Đăng xuất"> <span
+						class="micon dw dw-invoice"></span> <span class="mtext">Đăng xuất</span>
 				</a></li>
 			</ul>
 		</div>
