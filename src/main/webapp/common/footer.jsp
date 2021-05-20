@@ -14,8 +14,8 @@
 <script src="resources/vendors/scripts/process.js"></script>
 
 
-<script src="src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<script src="resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 <!-- bootstrap-touchspin js -->
 <script
-	src="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
-<script src="vendors/scripts/advanced-components.js"></script>
+	src="resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="resources/vendors/scripts/advanced-components.js"></script>

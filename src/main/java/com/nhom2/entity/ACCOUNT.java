@@ -81,6 +81,12 @@ public class ACCOUNT {
 		this.phanquyen = phanquyen;
 	}
 
+	@Override
+	public String toString() {
+		return "ACCOUNT [username=" + username + ", password=" + password + ", gmail=" + gmail + ", sdt=" + sdt
+				+ ", phanquyen=" + phanquyen + "]";
+	}
+
 	
 	
 }
