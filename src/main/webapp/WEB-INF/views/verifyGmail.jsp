@@ -83,7 +83,8 @@
 													alt="">
 											</div>
 											<div class="col-lg-4 col-lg-5">
-												<div class="login-box bg-while box-shadow border-radius-10 text-dark">
+												<div
+													class="login-box bg-while box-shadow border-radius-10 text-dark">
 													<div class="login-title "
 														style="color: rgb(255, 255, 255); background-color: rgb(115, 65, 156);">
 														<!-- 											 Chỗ này là Logo -->
@@ -106,11 +107,13 @@
 
 
 													<hr>
-													${message }
-													<form:form action="verify" modelAttribute="modify_account" method="post">
 
-														<form:input path="username" style="display: none" class="form-control"/>
-														
+													<form:form action="verify" modelAttribute="modify_account"
+														method="post">
+
+														<form:input path="username" style="display: none"
+															class="form-control" />
+
 														<div class="text-dark" class="needs-validation" novalidate>
 															<div class="col-sm-4 col-md-12">
 																<div class="row">
@@ -130,13 +133,14 @@
 																</div>
 															</div>
 														</div>
+
 														<div class="col-sm-6 col-md-12">
 															<div class="forgot-password">
 																<a href="forgot-password">lấy mã</a>
 															</div>
 														</div>
 														<!-- 							=================================== cột 1 ========================================= -->
-
+														<div class="text-danger col-sm-6 col-md-12">${message}</div>
 														<div class="modal-footer">
 															<input class="btn btn-info btn-lg btn-block"
 																type="submit" value="Xác nhận">

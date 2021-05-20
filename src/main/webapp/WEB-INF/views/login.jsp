@@ -16,11 +16,9 @@
 	href="resources/vendors/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16"
 	href="resources/vendors/images/favicon-16x16.png">
-
 <!-- Mobile Specific Metas -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-
 <!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -32,7 +30,6 @@
 	href="${pageContext.servletContext.contextPath}/resources//vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/resources//vendors/styles/style.css">
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async
 	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -45,13 +42,9 @@
 
 	gtag('config', 'UA-119386393-1');
 </script>
-
 <%@include file="/common/loadcss.jsp"%>
-
-
 </head>
 <body class="login-page">
-
 	<!-- 	<div class="pd-20 xs-pd-20-10"> -->
 	<!-- 	<div class="col-xl-12 col-lg-12" > -->
 	<div class="min-height-200px">
@@ -71,12 +64,7 @@
 									class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
 									<div class="container">
 										<div class="row align-items-center">
-
 											<div class="col-md-4 col-lg-7">
-												<!-- 												<div class = "title"> -->
-												<!-- 												<h2  class="text-info text-center">Quản Lí Thiết Bị Cho Mượn</h2> -->
-												<!-- 												<h2 class="text-info text-center">Học Viện Cơ Sở</h2> -->
-												<!-- 												</div> -->
 												<img
 													src="${pageContext.servletContext.contextPath}/resources//vendors/images/login-page-img.png"
 													alt="">
@@ -89,25 +77,15 @@
 														<div class="contact-dire-info text-center">
 															<a href="${pageContext.servletContext.contextPath}/login">
 																<img
-																src="${pageContext.servletContext.contextPath}/resources/vendors/images/icon-nhom2.jpg"
-																alt="" class="light-logo">
-
+																	src="${pageContext.servletContext.contextPath}/resources/vendors/images/icon-nhom2.jpg"
+																	alt="" class="light-logo">
 															</a>
 														</div>
-
-
 													</div>
-
-
-
-
-
-
-
 													<hr>
+													<div class="text-danger col-sm-6 col-md-12">${message}</div>
 													<form:form action="login" modelAttribute="account_test"
 														method="post">
-
 														<div class="text-dark" class="needs-validation" novalidate>
 															<div class="col-sm-4 col-md-12">
 																<div class="row">
@@ -117,8 +95,9 @@
 																			class="form-control form-control-lg"
 																			placeholder="Username" required="required" />
 																		<div class="input-group-append custom">
-																			<span class="input-group-text"><i
-																				class="icon-copy dw dw-user1"></i></span>
+																			<span class="input-group-text">
+																				<i class="icon-copy dw dw-user1"></i>
+																			</span>
 																		</div>
 																	</div>
 																</div>
@@ -131,22 +110,21 @@
 																			class="form-control form-control-lg"
 																			placeholder="**********" required="required" />
 																		<div class="input-group-append custom">
-																			<span class="input-group-text"><i
-																				class="dw dw-padlock1"></i></span>
+																			<span class="input-group-text">
+																				<i class="dw dw-padlock1"></i>
+																			</span>
 																		</div>
 																	</div>
 																</div>
-																
 															</div>
 															<div class="col-sm-6 col-md-12">
 																<div class="forgot-password">
 																	<a href="forgot-password">Forgot Password</a>
 																</div>
 															</div>
-															
 														</div>
 														<!-- 							=================================== cột 1 ========================================= -->
-
+														
 														<div class="modal-footer">
 															<input class="btn btn-info btn-lg btn-block"
 																type="submit" value="Đăng nhập">
@@ -158,9 +136,7 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -169,18 +145,26 @@
 	<!-- 	</div> -->
 	<!-- 	</div> -->
 	<!-- 		</div> -->
-
-
-
 	<!-- js -->
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/core.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/script.min.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/process.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/layout-settings.js"></script>
+	<%@include file="/common/footer.jsp"%>
+	<c:if test="${failLogin}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				show_error();
+
+			});
+		</script>
+	</c:if>
+	<script type="text/javascript">
+		//THÔNG BÁO LỖI
+		function show_error(content="Thao tác") {
+			Swal.fire({
+				title: 'Đăng nhập',
+				text: content+" thất bại!",
+				icon: 'error',
+			})
+		}
+	</script>
 	<!-- 	<script -->
 	<%-- 		src="${pageContext.servletContext.contextPath}/resources/scss/_utilities.scss"></script> --%>
 </body>

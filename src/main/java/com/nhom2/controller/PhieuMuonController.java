@@ -55,6 +55,22 @@ public class PhieuMuonController {
 		list.add("nv3");
 		return list;
 	}
+	@ModelAttribute("listThietBi")
+	public List<String> getListThietBi(){
+		List<String> list = new ArrayList<>();
+		list.add("thietBi1");
+		return list;
+	}
+	@ModelAttribute("listSoLuong")
+	public List<String> getListSoLuong(){
+		List<String> list = new ArrayList<>();
+		list.add("slThietBi1");
+		return list;
+	}
+	@ModelAttribute("index")
+	public Integer getIndex() {
+		return 0;
+	}
 
 	// Load danh sách người mượn
 	@ModelAttribute("listNguoiMuons")
