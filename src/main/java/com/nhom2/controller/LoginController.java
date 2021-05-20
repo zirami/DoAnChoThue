@@ -71,9 +71,12 @@ public class LoginController {
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account, HttpServletRequest request, HttpSession session) {
-//		model.addAttribute("account", account);
-
+		
 		ACCOUNT testAccount = new AccountDAO().getById(account.getUsername(), factory);
+		if(testAccount==null) {
+			model.addAttribute("failLogin",true);
+			return login(model,session);
+		}
 		if (testAccount.getUsername() == null) {
 			model.addAttribute("failLogin", true);
 			return login(model,session);
