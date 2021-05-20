@@ -73,10 +73,6 @@
 										<div class="row align-items-center">
 
 											<div class="col-md-4 col-lg-7">
-												<!-- 												<div class = "title"> -->
-												<!-- 												<h2  class="text-info text-center">Quản Lí Thiết Bị Cho Mượn</h2> -->
-												<!-- 												<h2 class="text-info text-center">Học Viện Cơ Sở</h2> -->
-												<!-- 												</div> -->
 												<img
 													src="${pageContext.servletContext.contextPath}/resources//vendors/images/login-page-img.png"
 													alt="">
@@ -136,17 +132,19 @@
 																		</div>
 																	</div>
 																</div>
-																
+
 															</div>
+
+
 															<div class="col-sm-6 col-md-12">
 																<div class="forgot-password">
 																	<a href="forgot-password">Forgot Password</a>
 																</div>
 															</div>
-															
+
 														</div>
 														<!-- 							=================================== cột 1 ========================================= -->
-
+														<div class="text-danger col-sm-6 col-md-12">${message}</div>
 														<div class="modal-footer">
 															<input class="btn btn-info btn-lg btn-block"
 																type="submit" value="Đăng nhập">
@@ -173,6 +171,26 @@
 
 
 	<!-- js -->
+	<%@include file="/common/footer.jsp"%>
+
+	<c:if test="${failLogin}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				show_error();
+
+			});
+		</script>
+	</c:if>
+	<script type="text/javascript">
+		//THÔNG BÁO LỖI
+		function show_error(content="Thao tác") {
+			Swal.fire({
+				title: 'Đăng nhập',
+				text: content+" thất bại!",
+				icon: 'error',
+			})
+		}
+	</script>
 	<script
 		src="${pageContext.servletContext.contextPath}/resources/vendors/scripts/core.js"></script>
 	<script

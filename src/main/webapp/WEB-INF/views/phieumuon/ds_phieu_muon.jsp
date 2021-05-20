@@ -11,6 +11,11 @@
 <meta charset="utf-8">
 <base href="${pageContext.servletContext.contextPath }/">
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+<style type="text/css">
+h4 {
+  color:red;
+}
+</style>
 
 <%@include file="/common/loadcss.jsp"%>
 </head>
@@ -130,10 +135,11 @@
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-blue h4">Thêm phiếu mượn</h4>
+								<h4 class="text-info">Thêm phiếu mượn </h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>
+
 						<form:form action="phieumuon" modelAttribute="phieumuon_moi"
 							method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -209,152 +215,65 @@
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
 
-<!-- 									<div id="divRepeat"> -->
-										<div class="hidden-element">
-											<div class="form-group row">
-												<label class="col-sm-4 col-md-3 col-form-label text-danger">Thiết
-													bị </label>
-												<div class="col-sm-4 col-md-6	">
-													<select class="selectpicker form-control" name="thietBi1"
-														style="width: 100%; height: 38px;">
-														<option value="">Chọn thiết bị</option>
-														<c:forEach var="tb1" items="${loaiThietBis}">
-															<option value="${tb1.matb}">${tb1.matb}</option>
-														</c:forEach>
-													</select>
-													<%-- 														<form:errors path="loai.id" /> --%>
-												</div>
+									<!-- 									<div id="divRepeat"> -->
+									<div class="hidden-element">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+												<select class="form-control" name="${listThietBi[index]}"
+													style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
 
-												<div class="col-sm-6 col-md-3">
-													<input type="text" value="" name="slThietBi1"
-														class="form-control" placeholder="Số lượng" />
-												</div>
+											<div class="col-md-3">
+												<input type="number" value="" name="${listSoLuong[index]}"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
 
 											</div>
-										</div>
-<!-- 									</div> -->
+
+											<div class="col-md-2">
+												
+												<a class="material-icons text-info" type="button" id="${dungchoanhnua}"> delete_sweep </a>
+											</div>
 
 
-									<!-- 									<div class="form-group row"> -->
-									<!-- 										<label class="col-sm-4 col-md-3 col-form-label">Thiết -->
-									<!-- 											bị 1</label> -->
-									<!-- 										<div class="col-sm-4 col-md-6	"> -->
-									<!-- 											<select class="selectpicker form-control" name="thietBi1" -->
-									<!-- 												style="width: 100%; height: 38px;"> -->
-									<!-- 												<option value="">Chọn thiết bị</option> -->
-									<%-- 												<c:forEach var="tb1" items="${loaiThietBis}"> --%>
-									<%-- 													<option value="${tb1.matb}">${tb1.matb}</option> --%>
-									<%-- 												</c:forEach> --%>
-									<!-- 											</select> -->
-									<%-- 																									<form:errors path="loai.id" /> --%>
-									<!-- 										</div> -->
-
-									<!-- 										<div class="col-sm-6 col-md-3"> -->
-									<!-- 											<input type="text" value="" name="slThietBi1" -->
-									<!-- 												class="form-control" placeholder="Số lượng" /> -->
-									<!-- 										</div> -->
-
-									<!-- 									</div> -->
-
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 2</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi2"
-												style="width: 100%; height: 38px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb2" items="${loaiThietBis}">
-													<option value="${tb2.matb}">${tb2.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi2"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 3</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi3"
-												style="width: 100%; height: 38px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb3" items="${loaiThietBis}">
-													<option value="${tb3.matb}">${tb3.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi3"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 4</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi4"
-												style="width: 100%; height: 38px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb4" items="${loaiThietBis}">
-													<option value="${tb4.matb}">${tb4.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi4"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 5</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi5"
-												style="width: 100%; height: 38px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb5" items="${loaiThietBis}">
-													<option value="${tb5.matb}">${tb5.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi5"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-
 									</div>
 								</div>
 							</div>
-<<<<<<< HEAD
+
+							<div class="row">
+
+								<div class="col-sm-12 col-md-6"></div>
+								<div class="col-sm-12 col-md-6 align-self-end">
+									<button type='button' class="form-control text-info "
+										id='btn-add-element'>
+										<span class="material-icons text-info">add_circle_outline</span>
+										Thêm thiết bị mượn
+									</button>
+								</div>
+
+
+							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
-								<button type='button' id='btn-add-element'>Lên</button>
+								<hr>
+								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
-=======
-							
->>>>>>> fd9a1afa1678235478e68746591e8b3b1d49c9ba
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
-					<button type="submit" class="btn btn-info">Thêm</button>
-				</div>
 			</div>
 		</div>
 	</div>
-
 	<button hidden="true" id="update_modal_btn" data-toggle="modal"
 		data-target="#bd-edit-modal-lg"></button>
 	<!--======================================================== Sửa phiếu mượn ============================================================ -->
@@ -683,12 +602,11 @@
 			})
 		}
 	</script>
+
 	<!-- 	</script> -->
 	<script>
-								 
 									
-		const btn = document.getElementById('btn-add-element')
-		
+		const btn = document.getElementByName('btn-add-element')[0].value
 		btn.addEventListener('click', function(e){
 			
 			const ele = document.querySelector('.hidden-element')
@@ -699,11 +617,29 @@
 			
 
 			newEle.innerHTML = htmlEle
-			parent.appendChild(newEle)
+			parent.appendChild(newEle)   
+	</script>
+
+	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
+	<script>
+									
+		const btn = document.getElementById('btn-add-element')
+		btn.addEventListener('click', function(e){
+			
+			const ele = document.querySelector('.hidden-element')
+			const parent = document.getElementById('parent-element')
+			 
+			let htmlEle = ele.innerHTML;
+			
+			
+			const newEle = document.createElement('div')
+			newEle.innerHTML = htmlEle
+				
+ 			parent.appendChild(newEle)   
 			
 			
 // 			htmlEle = htmlEle.replace('ABC', 'ADASDASDASD')
-// 			console.log(htmlEle)
+			console.log(htmlEle)
 
 // 			console.log('AAA')
 			
@@ -718,17 +654,6 @@
 
 // ------------
 // 			document.getElementById("divRepeat").style.backgroundRepeat = "repeat";
-
-
-
-
-
-
-
-
-
-
-
 
 		})
 			

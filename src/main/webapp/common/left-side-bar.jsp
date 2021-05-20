@@ -16,12 +16,15 @@
 	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
+				<li>
+					<div class="dropdown-divider"></div>
+				</li>
 				<li class="dropdown">
 					<div>
 						<a href="phieumuon" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
 							data-original-title="QUẢN LÍ PHIẾU MƯỢN"> <span
-							class="micon dw dw-house-1"></span> <span>QUẢN LÝ PHIẾU
+							class="micon dw dw-file"></span> <span>QUẢN LÝ PHIẾU
 								MƯỢN</span>
 						</a>
 					</div>
@@ -31,7 +34,7 @@
 						<a href="thiet-bi" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
 							data-original-title="QUẢN LÝ THIẾT BỊ CHO MƯỢN"> <span
-							class="micon dw dw-house-1"></span> <span>QUẢN LÝ THIẾT BỊ</span>
+							class="micon dw dw-ruler"></span> <span>QUẢN LÝ THIẾT BỊ</span>
 						</a>
 					</div>
 				</li>
@@ -39,7 +42,7 @@
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
 					data-placement="right" title=""
 					data-original-title="QUẢN LÍ NGƯỜI MƯỢN"> <span
-						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
+						class="micon dw dw-user"></span> <span class="mtext">QUẢN
 							LÍ NGƯỜI MƯỢN</span>
 				</a></li>
 				<li class="dropdown">
@@ -47,52 +50,43 @@
 						<a href="phieuthanhly" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
 							data-original-title="THANH LÝ THIẾT BỊ"> <span
-							class="micon dw dw-house-1"></span> <span>THANH LÝ
-								THIẾT BỊ</span>
+							class="micon dw dw-trolley"></span> <span>THANH LÝ THIẾT
+								BỊ</span>
 						</a>
 					</div>
-				</li>
-				<li>
-					<div class="dropdown-divider"></div>
-				</li>
-				<li><a href="thanhli.htm" class="dropdown-toggle no-arrow">
-						<span class="micon dw dw-diagram"></span> <span class="mtext">THỐNG
-							KÊ</span>
-				</a></li>
-				<li>
-					<div class="dropdown-divider"></div>
-				</li>
-				<li>
-					<div class="sidebar-small-cap">MỞ RỘNG</div>
 				</li>
 				<li class="dropdown"><a href="qlnhanvien"
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
 					data-placement="right" title=""
 					data-original-title="QUẢN LÍ NHÂN VIÊN"> <span
-						class="micon dw dw-invoice"></span> <span class="mtext">NHÂN
-							  VIÊN</span>
+						class="micon dw dw-name"></span> <span class="mtext">NHÂN
+							VIÊN</span>
 				</a></li>
 				<li class="dropdown"><a href="qlquanli"
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
-					data-placement="right" title=""
-					data-original-title="QUẢN LÍ "> <span
-						class="micon dw dw-invoice"></span> <span class="mtext">QUẢN
-							  LÍ</span>
+					data-placement="right" title="" data-original-title="QUẢN LÍ ">
+						<span class="micon dw dw-diamond"></span> <span class="mtext">QUẢN
+							LÍ</span>
 				</a></li>
-				
-				<li><a
-					href="https://dropways.github.io/deskapp-free-single-page-website-template/"
-					target="_blank" class="dropdown-toggle no-arrow"> <span
-						class="micon dw dw-paper-plane1"></span> <span class="mtext	">
-							Thông tin chi tiết <img
-							src="resources/vendors/images/coming-soon.png" alt="" width="25">
-					</span>
+				<li><a href="thanhli.htm" class="dropdown-toggle no-arrow">
+						<span class="micon dw dw-analytics-21"></span> <span class="mtext">THỐNG
+							KÊ</span>
 				</a></li>
+				<!-- 				<li> -->
+				<!-- 					<div class="dropdown-divider"></div> -->
+				<!-- 				</li> -->
+
+				<li>
+					<div class="dropdown-divider"></div>
+				</li>
+				<!-- 				<li> -->
+				<!-- 					<div class="sidebar-small-cap">MỞ RỘNG</div> -->
+				<!-- 				</li> -->
 				<li class="dropdown"><a href="dangxuat"
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
-					data-placement="right" title=""
-					data-original-title="Đăng xuất"> <span
-						class="micon dw dw-invoice"></span> <span class="mtext">Đăng xuất</span>
+					data-placement="right" title="" data-original-title="Đăng xuất">
+						<span class="micon dw dw-logout1"></span> <span class="mtext">Đăng
+							xuất</span>
 				</a></li>
 			</ul>
 		</div>

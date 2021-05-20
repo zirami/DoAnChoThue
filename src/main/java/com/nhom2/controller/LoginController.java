@@ -71,51 +71,18 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account, HttpServletRequest request, HttpSession session) {
-		
-		ACCOUNT testAccount = new AccountDAO().getById(account.getUsername(), factory);
-		if(testAccount==null) {
-			model.addAttribute("failLogin",true);
-			return login(model,session);
-		}
-		if (testAccount.getUsername() == null) {
-			model.addAttribute("failLogin", true);
-			return login(model,session);
-		} else {
-			if (account.getPassword().compareTo(testAccount.getPassword()) != 0) {
-				model.addAttribute("failLogin", true);
-				return login(model,session);
-			} else {
-				if (testAccount.getPhanquyen().getMapq().compareTo("admin") == 0) {
-					// Cho Đại phiếu mượn là admin
-//					request.setAttribute("role", "admin");
-					session.setAttribute("role", "admin");
-					return "redirect: phieumuon";
-				}
-
-				else if (testAccount.getPhanquyen().getMapq().compareTo("staff") == 0) {
-					// Cho Đại người mượn là staff
-					session.setAttribute("role", "staff");
-					return "redirect: qlnguoimuon";
-				} else {
-					model.addAttribute("failLogin", true);
-					return login(model,session);
-				}
-			}
-=======
-	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account_login, HttpServletRequest request,
-			HttpSession session) {
+	public String login(ModelMap model, @ModelAttribute("account_test") ACCOUNT account_login, HttpServletRequest request, HttpSession session) {
 		//Truy vấn username từ DB
 		ACCOUNT account_db = new AccountDAO().getById(account_login.getUsername(), factory);
 		
 		//Mặc định là lỗi đăng nhập
-		model.addAttribute("failLogin", true);
 		
+		model.addAttribute("failLogin", true);
 		//Nếu không tìm được tên username
 		if (account_db == null) {
 			//Thông báo ngoài view - chưa làm
 			model.addAttribute("message", "Username không tồn tại !");
+			model.addAttribute("failLogin", true);
 			System.out.println("username không tồn tại");
 			return login(model, session);
 		}
@@ -124,6 +91,7 @@ public class LoginController {
 		if (account_login.getPassword().equals(account_db.getPassword()) == false) {
 			//Thông báo ngoài view - chưa làm
 			model.addAttribute("message", "Mật khẩu không chính xác !");
+			model.addAttribute("failLogin", true);
 			System.out.println("sai mật khẩu");
 			return login(model, session);
 		}
@@ -145,35 +113,8 @@ public class LoginController {
 			// Cho Đại người mượn là staff
 			session.setAttribute("role", "staff");
 			return "redirect: qlnguoimuon";
->>>>>>> caf57326e5ddd09e1475980b4475a796c1b94d94
 		}
 		
-		
-//		if (account_db.getUsername() == null) {
-//			model.addAttribute("failLogin", true);
-//			return login(model, session);
-//		} else {
-//			if (account_login.getPassword().compareTo(account_db.getPassword()) != 0) {
-//				model.addAttribute("failLogin", true);
-//				return login(model, session);
-//			} else {
-//				if (account_db.getPhanquyen().getMapq().compareTo("admin") == 0) {
-//					// Cho Đại phiếu mượn là admin
-////					request.setAttribute("role", "admin");
-//					session.setAttribute("role", "admin");
-//					return "redirect: phieumuon";
-//				}
-//
-//				else if (account_db.getPhanquyen().getMapq().compareTo("D") == 0) {
-//					// Cho Đại người mượn là staff
-//					session.setAttribute("role", "staff");
-//					return "redirect: qlnguoimuon";
-//				} else {
-//					model.addAttribute("failLogin", true);
-//					return login(model, session);
-//				}
-//			}
-//		}
 		
 		//Trường hợp lỗi không xác định (ví dụ mã phân quyền bị xoá nhầm) thì về home
 		//Code tạm để đó từ từ ràng dữ liệu lại sau
