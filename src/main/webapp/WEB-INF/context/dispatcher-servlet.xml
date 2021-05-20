@@ -42,6 +42,7 @@
 			<mvc:exclude-mapping path="/forgot-password"/>
 			<mvc:exclude-mapping path="/verify"/>
 			<mvc:exclude-mapping path="/modify-account"/>
+			<mvc:exclude-mapping path="/resources/**"/>
 			<bean class="com.nhom2.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
