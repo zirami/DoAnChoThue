@@ -1,31 +1,24 @@
-<%@page import="org.springframework.web.context.request.RequestScope"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <!-- Basic Page Info -->
 <meta charset="utf-8">
-<base href="${pageContext.servletContext.contextPath }/">
+<base href="${pageContext.servletContext.contextPath}/">
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
 <style type="text/css">
 h4 {
-  color:red;
+	color: red;
 }
 </style>
-
 <%@include file="/common/loadcss.jsp"%>
 </head>
 <body>
-
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
-
 	<div class="mobile-menu-overlay"></div>
-
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
 	<div class="main-container">
@@ -40,7 +33,8 @@ h4 {
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -54,10 +48,8 @@ h4 {
 						</div>
 					</div>
 				</div>
-
 				<!-- Hiển thị danh sách người mượn -->
 				<div class="card-box mb-30">
-
 					<hr>
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap" id="myTable">
@@ -76,7 +68,6 @@ h4 {
 								<c:forEach var="phieumuon" items="${listPhieuMuon}"
 									varStatus="row">
 									<tr>
-
 										<td class="table-plus">${phieumuon.mapm}</td>
 										<td>${phieumuon.nm.ten}</td>
 										<td>${phieumuon.manv}</td>
@@ -85,15 +76,12 @@ h4 {
 										<td>${phieumuon.ghichu }</td>
 										<td>
 											<div class="row clearfix btn-list">
-
 												<form action="phieumuon/edit/${phieumuon.mapm}">
 													<button class="btn btn-primary" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
 														<i class="material-icons">edit</i>
 													</button>
-
 												</form>
-
 												<form action="phieumuon/delete" method="post">
 													<!-- 														Dùng để hiển thị tên lên form  -->
 													<input type="hidden" name="ten" value="${phieumuon.nm.ten}" />
@@ -108,22 +96,17 @@ h4 {
 													<i class="material-icons">delete</i>
 												</button>
 											</div>
-
-
 										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-
-
 					</div>
 				</div>
 				<!-- Simple Datatable End -->
 			</div>
 		</div>
 	</div>
-
 	<!-- 	======================   Thêm phiếu mượn ============================ -->
 	<div class="modal fade bs-example-modal-lg" id="bd-insert-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -135,11 +118,10 @@ h4 {
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-info">Thêm phiếu mượn </h4>
+								<h4 class="text-info">Thêm phiếu mượn</h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>
-
 						<form:form action="phieumuon" modelAttribute="phieumuon_moi"
 							method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -179,11 +161,9 @@ h4 {
 												<c:forEach var="nv" items="${listNhanViens }">
 													<option value="${nv }">${nv}</option>
 												</c:forEach>
-
 											</select>
 										</div>
 									</div>
-
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
@@ -210,13 +190,34 @@ h4 {
 												placeholder="Nhập ghi chú" />
 										</div>
 									</div>
-
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
-
 									<!-- 									<div id="divRepeat"> -->
-									<div class="hidden-element">
+									<div class="form-group row thiet-bi-moi">
+										<label class="col-sm-4 col-md-2 col-form-label">Thiết
+											bị </label>
+										<div class="col-md-5">
+											<select class="form-control" name="${listThietBi[index]}"
+												style="width: 100%; height: 45px;">
+												<option value="">Chọn thiết bị</option>
+												<c:forEach var="tb1" items="${loaiThietBis}">
+													<option value="${tb1.matb}">${tb1.matb}</option>
+												</c:forEach>
+											</select>
+											<%-- 														<form:errors path="loai.id" /> --%>
+										</div>
+										<div class="col-md-3">
+											<input type="number" value="" name="${listSoLuong[index]}"
+												class="form-control" placeholder="Số lượng"
+												style="width: 100%; height: 45px;" />
+										</div>
+										<div class="col-md-2 xoa-thiet-bi">
+											<a class="material-icons text-info" type="button" id="">
+												delete_sweep </a>
+										</div>
+									</div>
+									<div class="hidden-element thiet-bi-moi" style="display: none">
 										<div class="form-group row">
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
@@ -228,29 +229,21 @@ h4 {
 														<option value="${tb1.matb}">${tb1.matb}</option>
 													</c:forEach>
 												</select>
-												<%-- 														<form:errors path="loai.id" /> --%>
 											</div>
-
 											<div class="col-md-3">
 												<input type="number" value="" name="${listSoLuong[index]}"
 													class="form-control" placeholder="Số lượng"
 													style="width: 100%; height: 45px;" />
-
 											</div>
-
-											<div class="col-md-2">
-												
-												<a class="material-icons text-info" type="button" id="${dungchoanhnua}"> delete_sweep </a>
+											<div class="col-md-2 xoa-thiet-bi">
+												<a class="material-icons text-info" type="button" id="">
+													delete_sweep </a>
 											</div>
-
-
 										</div>
 									</div>
 								</div>
 							</div>
-
 							<div class="row">
-
 								<div class="col-sm-12 col-md-6"></div>
 								<div class="col-sm-12 col-md-6 align-self-end">
 									<button type='button' class="form-control text-info "
@@ -259,8 +252,6 @@ h4 {
 										Thêm thiết bị mượn
 									</button>
 								</div>
-
-
 							</div>
 							<div class="modal-footer">
 								<hr>
@@ -290,7 +281,6 @@ h4 {
 								<h4 class="text-blue h4">Sửa phiếu mượn</h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
-
 						</div>
 						<form:form action="phieumuon/update"
 							modelAttribute="phieumuon_sua" method="post">
@@ -310,31 +300,22 @@ h4 {
 										<label class="col-sm-4 col-md-4 col-form-label">Người
 											mượn</label>
 										<div class="col-sm-4 col-md-8">
-
-
 											<form:select class="selectpicker form-control" path="nm.manm"
 												style="width: 100%; height: 38px;" items="${listNguoiMuons}"
 												itemValue="manm" itemLabel="ten">
 											</form:select>
-
-
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-
-
 											<form:select path="manv" items="${listNhanViens}"
 												class="selectpicker form-control"
 												style="width: 100%; height: 38px;">
 											</form:select>
-
-
 										</div>
 									</div>
-
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
@@ -361,11 +342,9 @@ h4 {
 												placeholder="Nhập ghi chú" />
 										</div>
 									</div>
-
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6">
-
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 1</label>
@@ -379,11 +358,8 @@ h4 {
 												</c:forEach>
 												<option value="">Nothing selected</option>
 											</select>
-
-
 											<%-- 			<form:errors path="loai.id" /> --%>
 										</div>
-
 										<div class="col-sm-6 col-md-3">
 											<input type="text"
 												value="${phieumuon_sua.ct_phieumuons[0].soluong}"
@@ -392,9 +368,7 @@ h4 {
 											<%-- 												<form:input class="form-control" type="text" path="ct_phieumuons[0].soluong" --%>
 											<%-- 												placeholder="Nhập ghi chú" /> --%>
 										</div>
-
 									</div>
-
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
 											bị 2</label>
@@ -416,7 +390,6 @@ h4 {
 												name="slThietBi2" class="form-control"
 												placeholder="Số lượng" />
 										</div>
-
 									</div>
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
@@ -439,7 +412,6 @@ h4 {
 												name="slThietBi3" class="form-control"
 												placeholder="Số lượng" />
 										</div>
-
 									</div>
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
@@ -462,7 +434,6 @@ h4 {
 												name="slThietBi4" class="form-control"
 												placeholder="Số lượng" />
 										</div>
-
 									</div>
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-3 col-form-label">Thiết
@@ -485,7 +456,6 @@ h4 {
 												name="slThietBi5" class="form-control"
 												placeholder="Số lượng" />
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -494,20 +464,14 @@ h4 {
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
 						</form:form>
-
 					</div>
 					<!-- Default Basic Forms Start -->
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
-
-
-
-
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -517,7 +481,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
 	<c:if test="${sua_saidinhdang}">
 		<script type="text/javascript">
@@ -537,7 +500,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO THÊM THÀNH CÔNG / THẤT BẠI -->
 	<c:if test="${insert || update || delete}">
 		<script type="text/javascript">
@@ -555,8 +517,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-
-
 	<script type="text/javascript">
 		//LOAD TABLE 
 		$('#myTable').DataTable();
@@ -602,30 +562,11 @@ h4 {
 			})
 		}
 	</script>
-
-	<!-- 	</script> -->
-	<script>
-									
-		const btn = document.getElementByName('btn-add-element')[0].value
-		btn.addEventListener('click', function(e){
-			
-			const ele = document.querySelector('.hidden-element')
-			const parent = document.getElementById('parent-element')
-			 
-			let htmlEle = ele.innerHTML;
-			const newEle = document.createElement('div')
-			
-
-			newEle.innerHTML = htmlEle
-			parent.appendChild(newEle)   
-	</script>
-
 	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
 	<script>
 									
 		const btn = document.getElementById('btn-add-element')
-		btn.addEventListener('click', function(e){
-			
+		btn.addEventListener('click', (e)=>{
 			const ele = document.querySelector('.hidden-element')
 			const parent = document.getElementById('parent-element')
 			 
@@ -636,28 +577,14 @@ h4 {
 			newEle.innerHTML = htmlEle
 				
  			parent.appendChild(newEle)   
-			
-			
-// 			htmlEle = htmlEle.replace('ABC', 'ADASDASDASD')
-			console.log(htmlEle)
-
-// 			console.log('AAA')
-			
-// 			console.log('ok')
-
-// 	----------------
-// 			n = 2;
-// 			for(var i = 0;i<n;i++ ){
-// 				$("#divRepeat").append($(".hidden-element").html());
-// 			}
-
-
-// ------------
-// 			document.getElementById("divRepeat").style.backgroundRepeat = "repeat";
-
 		})
 			
-			
-		</script>
+	</script>
+	<!-- Xoá thiết bị -->
+	<script>
+		$('#parent-element').on('click', '.xoa-thiet-bi', function(){
+			$(this).parent().remove()
+		})
+	</script>
 </body>
 </html>

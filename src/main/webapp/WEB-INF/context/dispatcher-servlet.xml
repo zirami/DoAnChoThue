@@ -20,7 +20,7 @@
 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan 
+	<context:component-scan
 		base-package="com.nhom2.controller,com.nhom2.entity,com.nhom2.DAO" />
 
 
@@ -29,24 +29,24 @@
 		location="/resources/" cache-period="31556926" />
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/qlnhanvien"/>
-			<bean class="com.nhom2.interceptor.AdminInterceptor"/>
+			<mvc:mapping path="/qlnhanvien" />
+			<bean class="com.nhom2.interceptor.AdminInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/qlnhanvien"/>
-			<mvc:exclude-mapping path="/login"/>
-			<mvc:exclude-mapping path="/forgot-password"/>
-			<mvc:exclude-mapping path="/verify"/>
-			<mvc:exclude-mapping path="/modify-account"/>
-			<mvc:exclude-mapping path="/resources/**"/>
-			<bean class="com.nhom2.interceptor.LoginInterceptor"/>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/qlnhanvien" />
+			<mvc:exclude-mapping path="/login" />
+			<mvc:exclude-mapping path="/forgot-password" />
+			<mvc:exclude-mapping path="/verify" />
+			<mvc:exclude-mapping path="/modify-account" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<bean class="com.nhom2.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 

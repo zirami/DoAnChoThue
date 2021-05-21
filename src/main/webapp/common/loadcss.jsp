@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <base href="${pageContext.servletContext.contextPath}/" />
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
@@ -25,8 +27,6 @@
 	href="resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/src/plugins/datatables/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/vendors/styles/style.css">
 

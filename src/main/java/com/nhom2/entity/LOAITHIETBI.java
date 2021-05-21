@@ -36,6 +36,19 @@ public class LOAITHIETBI {
 	}
 
 
+	
+
+
+	public LOAITHIETBI(Integer id, String ten) {
+		super();
+		this.id = id;
+		this.ten = ten;
+	}
+
+
+
+
+
 	public Integer getId() {
 		return id;
 	}
