@@ -193,12 +193,37 @@ h4 {
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
-									<!-- 									<div id="divRepeat"> -->
-									<div class="form-group row thiet-bi-moi">
+									<!-- <div id="divRepeat"> -->
+									<div class="hidden-element" style="display: none">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+												<select class="form-control" name="thietBi"
+													style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
+											<div class="col-md-3">
+												<input type="number" value="" name="slThietBi"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
+											</div>
+											<div class="col-md-2 xoa-thiet-bi">
+												<a class="material-icons text-info" type="button" id="">
+													delete_sweep </a>
+											</div>
+										</div>
+									</div>
+									<div class="form-group row">
 										<label class="col-sm-4 col-md-2 col-form-label">Thiết
 											bị </label>
 										<div class="col-md-5">
-											<select class="form-control" name="${listThietBi[index]}"
+											<select class="form-control" name="thietBi"
 												style="width: 100%; height: 45px;">
 												<option value="">Chọn thiết bị</option>
 												<c:forEach var="tb1" items="${loaiThietBis}">
@@ -208,37 +233,13 @@ h4 {
 											<%-- 														<form:errors path="loai.id" /> --%>
 										</div>
 										<div class="col-md-3">
-											<input type="number" value="" name="${listSoLuong[index]}"
+											<input type="number" value="" name="slThietBi"
 												class="form-control" placeholder="Số lượng"
 												style="width: 100%; height: 45px;" />
 										</div>
 										<div class="col-md-2 xoa-thiet-bi">
 											<a class="material-icons text-info" type="button" id="">
 												delete_sweep </a>
-										</div>
-									</div>
-									<div class="hidden-element thiet-bi-moi" style="display: none">
-										<div class="form-group row">
-											<label class="col-sm-4 col-md-2 col-form-label">Thiết
-												bị </label>
-											<div class="col-md-5">
-												<select class="form-control" name="${listThietBi[index]}"
-													style="width: 100%; height: 45px;">
-													<option value="">Chọn thiết bị</option>
-													<c:forEach var="tb1" items="${loaiThietBis}">
-														<option value="${tb1.matb}">${tb1.matb}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="col-md-3">
-												<input type="number" value="" name="${listSoLuong[index]}"
-													class="form-control" placeholder="Số lượng"
-													style="width: 100%; height: 45px;" />
-											</div>
-											<div class="col-md-2 xoa-thiet-bi">
-												<a class="material-icons text-info" type="button" id="">
-													delete_sweep </a>
-											</div>
 										</div>
 									</div>
 								</div>

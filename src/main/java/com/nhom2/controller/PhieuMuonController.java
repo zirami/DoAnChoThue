@@ -95,91 +95,96 @@ public class PhieuMuonController {
 	
 	@RequestMapping(value = "phieumuon", method = RequestMethod.POST)
 	public String insert(ModelMap model, @Valid @ModelAttribute("phieumuon_moi") PHIEUMUON phieumuon_moi,
-			BindingResult reusult, @RequestParam("thietBi1") String thietBi1,
-			@RequestParam("slThietBi1") Integer slThietBi1, @RequestParam("thietBi2") String thietBi2,
-			@RequestParam("slThietBi2") Integer slThietBi2, @RequestParam("thietBi3") String thietBi3,
-			@RequestParam("slThietBi3") Integer slThietBi3, @RequestParam("thietBi4") String thietBi4,
-			@RequestParam("slThietBi4") Integer slThietBi4, @RequestParam("thietBi5") String thietBi5,
-			@RequestParam("slThietBi5") Integer slThietBi5) {
-
-		System.out.println("has error: " + reusult.hasErrors());
-		model.addAttribute("them_saidinhdang", reusult.hasErrors());
-		model.addAttribute("phieumuon_moi", phieumuon_moi);
-
-		if (reusult.hasErrors())
-			return home(model);
-
-		Boolean result = false;
-
-		if (thietBi1 != "" && slThietBi1 != null || thietBi2 != "" && slThietBi2 != null
-				|| thietBi3 != "" && slThietBi3 != null || thietBi4 != "" && slThietBi4 != null
-				|| thietBi5 != "" && slThietBi5 != null) {
-			// Xử lý thông báo thêm thành công
-			new PhieuMuonDAO().save(factory, phieumuon_moi);
+			BindingResult reusult, @RequestParam("thietBi") String[] thietBi, @RequestParam("slThietBi") Integer[] slThietBi) {
+		
+		//Ở view do có 1 cái hidden-element nó không có giá trị 
+		//nên cho i bắt đầu từ 1
+		for (Integer i = 1; i < thietBi.length; i++) {
+			System.out.println("thiet bi: "+thietBi[i]);
+			System.out.println("so luong: "+slThietBi[i]);
 		}
-		if (thietBi1 != "" && slThietBi1 != null) {
-			// in thiết bị và số lượng nhận được.
-			System.out.println("ThietBi1: " + thietBi1 + " So luong: " + slThietBi1);
+		
+		
+//		System.out.println("has error: " + reusult.hasErrors());
+//		model.addAttribute("them_saidinhdang", reusult.hasErrors());
+//		model.addAttribute("phieumuon_moi", phieumuon_moi);
+//
+//		if (reusult.hasErrors())
+//			return home(model);
+		
+		
 
-			CT_PHIEUMUON tb1 = new CT_PHIEUMUON();
-			tb1.setPhieumuon(phieumuon_moi);
-			tb1.setSoluong(slThietBi1);
-			tb1.setThietbi_muon(new ThietBiDAO().getById(thietBi1, factory));
-			System.out.println("TB1 :" + tb1.getId() + "," + tb1.getSoluong() + "," + tb1.getPhieumuon().getMapm() + ","
-					+ tb1.getThietbi_muon().getMatb());
-			result = new CT_PhieuMuonDAO().save(factory, tb1);
-		}
-		if (thietBi2 != "" && slThietBi2 != null) {
-			// in thiết bị và số lượng nhận được.
-			System.out.println("ThietBi2: " + thietBi2 + " So luong: " + slThietBi2);
-
-			CT_PHIEUMUON tb2 = new CT_PHIEUMUON();
-			tb2.setPhieumuon(phieumuon_moi);
-			tb2.setSoluong(slThietBi2);
-			tb2.setThietbi_muon(new ThietBiDAO().getById(thietBi2, factory));
-			System.out.println("TB2 :" + tb2.getId() + "," + tb2.getSoluong() + "," + tb2.getPhieumuon().getMapm() + ","
-					+ tb2.getThietbi_muon().getMatb());
-
-			result = new CT_PhieuMuonDAO().save(factory, tb2);
-		}
-		if (thietBi3 != "" && slThietBi3 != null) {
-			// in thiết bị và số lượng nhận được.
-			System.out.println("ThietBi3: " + thietBi3 + " So luong: " + slThietBi3);
-
-			CT_PHIEUMUON tb3 = new CT_PHIEUMUON();
-			tb3.setPhieumuon(phieumuon_moi);
-			tb3.setSoluong(slThietBi3);
-			tb3.setThietbi_muon(new ThietBiDAO().getById(thietBi3, factory));
-			System.out.println("TB3 :" + tb3.getId() + "," + tb3.getSoluong() + "," + tb3.getPhieumuon().getMapm() + ","
-					+ tb3.getThietbi_muon().getMatb());
-			result = new CT_PhieuMuonDAO().save(factory, tb3);
-		}
-		if (thietBi4 != "" && slThietBi4 != null) {
-			// in thiết bị và số lượng nhận được.
-			System.out.println("ThietBi4: " + thietBi4 + " So luong: " + slThietBi4);
-
-			CT_PHIEUMUON tb4 = new CT_PHIEUMUON();
-			tb4.setPhieumuon(phieumuon_moi);
-			tb4.setSoluong(slThietBi4);
-			tb4.setThietbi_muon(new ThietBiDAO().getById(thietBi4, factory));
-			System.out.println("TB4 :" + tb4.getId() + "," + tb4.getSoluong() + "," + tb4.getPhieumuon().getMapm() + ","
-					+ tb4.getThietbi_muon().getMatb());
-			result = new CT_PhieuMuonDAO().save(factory, tb4);
-		}
-		if (thietBi5 != "" && slThietBi5 != null) {
-			// in thiết bị và số lượng nhận được.
-			System.out.println("ThietBi5: " + thietBi5 + " So luong: " + slThietBi5);
-
-			CT_PHIEUMUON tb5 = new CT_PHIEUMUON();
-			tb5.setPhieumuon(phieumuon_moi);
-			tb5.setSoluong(slThietBi5);
-			tb5.setThietbi_muon(new ThietBiDAO().getById(thietBi5, factory));
-			System.out.println("TB5 :" + tb5.getId() + "," + tb5.getSoluong() + "," + tb5.getPhieumuon().getMapm() + ","
-					+ tb5.getThietbi_muon().getMatb());
-			result = new CT_PhieuMuonDAO().save(factory, tb5);
-
-		}
-		model.addAttribute("insert", result);
+//		Boolean result = false;
+//
+//		if (thietBi1 != "" && slThietBi1 != null || thietBi2 != "" && slThietBi2 != null
+//				|| thietBi3 != "" && slThietBi3 != null || thietBi4 != "" && slThietBi4 != null
+//				|| thietBi5 != "" && slThietBi5 != null) {
+//			// Xử lý thông báo thêm thành công
+//			new PhieuMuonDAO().save(factory, phieumuon_moi);
+//		}
+//		if (thietBi1 != "" && slThietBi1 != null) {
+//			// in thiết bị và số lượng nhận được.
+//			System.out.println("ThietBi1: " + thietBi1 + " So luong: " + slThietBi1);
+//
+//			CT_PHIEUMUON tb1 = new CT_PHIEUMUON();
+//			tb1.setPhieumuon(phieumuon_moi);
+//			tb1.setSoluong(slThietBi1);
+//			tb1.setThietbi_muon(new ThietBiDAO().getById(thietBi1, factory));
+//			System.out.println("TB1 :" + tb1.getId() + "," + tb1.getSoluong() + "," + tb1.getPhieumuon().getMapm() + ","
+//					+ tb1.getThietbi_muon().getMatb());
+//			result = new CT_PhieuMuonDAO().save(factory, tb1);
+//		}
+//		if (thietBi2 != "" && slThietBi2 != null) {
+//			// in thiết bị và số lượng nhận được.
+//			System.out.println("ThietBi2: " + thietBi2 + " So luong: " + slThietBi2);
+//
+//			CT_PHIEUMUON tb2 = new CT_PHIEUMUON();
+//			tb2.setPhieumuon(phieumuon_moi);
+//			tb2.setSoluong(slThietBi2);
+//			tb2.setThietbi_muon(new ThietBiDAO().getById(thietBi2, factory));
+//			System.out.println("TB2 :" + tb2.getId() + "," + tb2.getSoluong() + "," + tb2.getPhieumuon().getMapm() + ","
+//					+ tb2.getThietbi_muon().getMatb());
+//
+//			result = new CT_PhieuMuonDAO().save(factory, tb2);
+//		}
+//		if (thietBi3 != "" && slThietBi3 != null) {
+//			// in thiết bị và số lượng nhận được.
+//			System.out.println("ThietBi3: " + thietBi3 + " So luong: " + slThietBi3);
+//
+//			CT_PHIEUMUON tb3 = new CT_PHIEUMUON();
+//			tb3.setPhieumuon(phieumuon_moi);
+//			tb3.setSoluong(slThietBi3);
+//			tb3.setThietbi_muon(new ThietBiDAO().getById(thietBi3, factory));
+//			System.out.println("TB3 :" + tb3.getId() + "," + tb3.getSoluong() + "," + tb3.getPhieumuon().getMapm() + ","
+//					+ tb3.getThietbi_muon().getMatb());
+//			result = new CT_PhieuMuonDAO().save(factory, tb3);
+//		}
+//		if (thietBi4 != "" && slThietBi4 != null) {
+//			// in thiết bị và số lượng nhận được.
+//			System.out.println("ThietBi4: " + thietBi4 + " So luong: " + slThietBi4);
+//
+//			CT_PHIEUMUON tb4 = new CT_PHIEUMUON();
+//			tb4.setPhieumuon(phieumuon_moi);
+//			tb4.setSoluong(slThietBi4);
+//			tb4.setThietbi_muon(new ThietBiDAO().getById(thietBi4, factory));
+//			System.out.println("TB4 :" + tb4.getId() + "," + tb4.getSoluong() + "," + tb4.getPhieumuon().getMapm() + ","
+//					+ tb4.getThietbi_muon().getMatb());
+//			result = new CT_PhieuMuonDAO().save(factory, tb4);
+//		}
+//		if (thietBi5 != "" && slThietBi5 != null) {
+//			// in thiết bị và số lượng nhận được.
+//			System.out.println("ThietBi5: " + thietBi5 + " So luong: " + slThietBi5);
+//
+//			CT_PHIEUMUON tb5 = new CT_PHIEUMUON();
+//			tb5.setPhieumuon(phieumuon_moi);
+//			tb5.setSoluong(slThietBi5);
+//			tb5.setThietbi_muon(new ThietBiDAO().getById(thietBi5, factory));
+//			System.out.println("TB5 :" + tb5.getId() + "," + tb5.getSoluong() + "," + tb5.getPhieumuon().getMapm() + ","
+//					+ tb5.getThietbi_muon().getMatb());
+//			result = new CT_PhieuMuonDAO().save(factory, tb5);
+//
+//		}
+//		model.addAttribute("insert", result);
 		return home(model);
 
 	}
