@@ -1,7 +1,3 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
 <div class="header">
 	<div class="header-left">
 		<div class="menu-icon dw dw-menu"></div>
@@ -261,11 +257,4 @@
 		</div>
 	</div>
 </div>
-
-	
-	<!-- bootstrap-tagsinput css -->
-	<link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-	<!-- bootstrap-touchspin css -->
-	<link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css">
-	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
 
