@@ -15,7 +15,7 @@ h4 {
 </style>
 <%@include file="/common/loadcss.jsp"%>
 </head>
-<body id="body"> 
+<body id="body">
 
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
@@ -36,8 +36,7 @@ h4 {
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item">
-										<a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -197,7 +196,7 @@ h4 {
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
 
-									<div class="hidden-element" style="display:none">
+									<div class="hidden-element" style="display: none">
 										<div class="form-group row">
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
@@ -267,9 +266,8 @@ h4 {
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
 								<input type="hidden" name="indexValue" id="input-index-submit"
-									value='0' />
-								<input type="hidden" name="demValue" id="input-dem-submit"
-									value='0' />
+									value='0' /> <input type="hidden" name="demValue"
+									id="input-dem-submit" value='0' />
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
@@ -359,15 +357,13 @@ h4 {
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element-update'>
-									<div class="hidden-element" >
+									<div class="hidden-element-update" style="display: none">
 										<div class="form-group row">
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
 											<div class="col-md-5">
-												<select class="form-control"
-													name="thietBi0"
-													style="width: 100%; height: 45px;">
-													<option value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
+												<select class="form-control" name="thietBi0" style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
 													<c:forEach var="tb1" items="${loaiThietBis}">
 														<option value="${tb1.matb}">${tb1.matb}</option>
 													</c:forEach>
@@ -376,9 +372,9 @@ h4 {
 											</div>
 
 											<div class="col-md-3">
-												<input type="number" value="${phieumuon_sua.ct_phieumuons[0].soluong}"
-													name="slThietBi0" class="form-control"
-													placeholder="Số lượng" style="width: 100%; height: 45px;" />
+												<input type="number" value="0" name="slThietBi0"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
 
 											</div>
 
@@ -410,10 +406,8 @@ h4 {
 							<div class="modal-footer">
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-								<input type="hidden" name="indexValue" id="input-index-submit-edit"
-									value='0' />
-								<input type="hidden" name="demValue" id="input-dem-submit-edit"
-									value='0' />
+								<input type="hidden" name="indexValue" id="input-index-submit-edit" value='0' /> 
+								<input type="hidden" name="demValue" id="input-dem-submit-edit" value='0' />
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
 
@@ -521,10 +515,9 @@ h4 {
 		var index=0;
 		var dem = 0;
 	</script>
-	
-	
-				<%out.println("<h1>abc</h1>");%>
-	
+
+
+
 	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
 	<script>
 									
@@ -559,6 +552,11 @@ h4 {
 			item.addEventListener('click', function(){
 				newEle.remove()
 				dem = dem - 1;
+				
+				var input_them = document.getElementById('input-index-submit')
+			    input_them.value = index;
+				var demValue = document.getElementById('input-dem-submit')
+			    demValue.value = dem;
 			})
 			
 			
@@ -578,12 +576,85 @@ h4 {
 			
 		</script>
 
-<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
+	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
+<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
+
+	<!-- 	Thêm thiết bị khi click edit phiếu mượn -->
+	<c:if test="${slThietBiSua!=0}">
+		<c:forEach var = "sl" items = "${phieumuon_sua.ct_phieumuons}">
+		<script>
+				//Thay đổi name thiết bị 
+				var index1 = index+1 ;
+				var thietBiCu = 'thietBi0';
+				var thietBiMoi = "thietBi" + index1;
+					
+				//Thay đổi name số lượng
+				var slThietBiCu = 'slThietBi0';
+				var slThietBiMoi = "slThietBi" + index1;	
+	 			index=index1;
+			
+	 			//Thay đổi giá trị thiết bị với tên thiết bị
+	 			var valueTenTbCu = 'value=""'
+	 			var valueTenTbMoi = 'value='+'"${sl.thietbi_muon.matb}"'
+	 			
+	 			var tenTbCu = 'Chọn thiết bị'
+	 			var tenTbMoi = '${sl.thietbi_muon.matb}'
+	 			
+	 			var tenSlCu= 'Số lượng'
+	 			var tenSlMoi = '${sl.soluong}'
+	 			
+	 			var valueSlCu = 'value="0"'
+	 			var valueSlMoi = 'value='+'"${sl.soluong}"'
+	 			
+	 			/// Bắt đầu từ đây, các biến sẽ gán 1 giá trị để cho mỗi vòng lặp lặp thì tên biến sẽ không trùng.
+				var  ele${sl.thietbi_muon.matb} = document.querySelector('.hidden-element-update')
+				const parent${sl.thietbi_muon.matb} = document.getElementById('parent-element-update')
+				 
+				let htmlEle${sl.thietbi_muon.matb} = ele${sl.thietbi_muon.matb}.innerHTML;
+				
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(thietBiCu, thietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(slThietBiCu,slThietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueTenTbCu,valueTenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenTbCu,tenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenSlCu,tenSlMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueSlCu,valueSlMoi)
+				
+				const newEle${sl.thietbi_muon.matb} = document.createElement('div')
+				newEle${sl.thietbi_muon.matb}.innerHTML = htmlEle${sl.thietbi_muon.matb}
+
+				// add event delete
+				
+				const item${sl.thietbi_muon.matb} = newEle${sl.thietbi_muon.matb}.childNodes[1].childNodes[7];
+				item${sl.thietbi_muon.matb}.addEventListener('click', function(){
+					newEle${sl.thietbi_muon.matb}.remove()
+					dem = dem - 1;
+					var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+				    input_them${sl.thietbi_muon.matb}.value = index;
+					var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+				    demValue${sl.thietbi_muon.matb}.value = dem;
+					
+				})
+				
+					
+				
+				
+	 			parent${sl.thietbi_muon.matb}.appendChild(newEle${sl.thietbi_muon.matb})  
+	 			dem = dem + 1;
+	 			
+	 			var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_muon.matb}.value = index;
+				var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_muon.matb}.value = dem;
+		
+	</script>
+		</c:forEach>
+		
+	</c:if>
+
 	<script>
 									
 		const btn1 = document.getElementById('btn-add-element-edit')
 		btn1.addEventListener('click', function(e){
-			
 			
 			var index1 = index+1 ;
 			var thietBiCu = 'thietBi0';
@@ -595,7 +666,7 @@ h4 {
  			index=index1;
 		
 			console.log(${listThietBi[1]});
-			const ele = document.querySelector('.hidden-element')
+			const ele = document.querySelector('.hidden-element-update')
 			const parent = document.getElementById('parent-element-update')
 			 
 			let htmlEle = ele.innerHTML;
@@ -612,6 +683,11 @@ h4 {
 			item.addEventListener('click', function(){
 				newEle.remove()
 				dem = dem - 1;
+				var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_muon.matb}.value = index;
+				var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_muon.matb}.value = dem;
+				
 			})
 			
 				
@@ -620,9 +696,9 @@ h4 {
  			parent.appendChild(newEle)  
  			dem = dem + 1;
  			
- 			var input_them = document.getElementById('input-index-submit')
+ 			var input_them = document.getElementById('input-index-submit-edit')
 		    input_them.value = index;
-			var demValue = document.getElementById('input-dem-submit')
+			var demValue = document.getElementById('input-dem-submit-edit')
 		    demValue.value = dem;
 
 			console.log(htmlEle)
@@ -633,6 +709,7 @@ h4 {
 	<script>
 		$('#parent-element').on('click', '.xoa-thiet-bi', function(){
 			$(this).parent().remove()
+			
 		})
 	</script>
 </body>
