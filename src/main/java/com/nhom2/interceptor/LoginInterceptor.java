@@ -9,7 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		HttpSession session = request.getSession();
+ 		HttpSession session = request.getSession();
 		if(session.getAttribute("role")!="admin" && session.getAttribute("role")!="staff") {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
