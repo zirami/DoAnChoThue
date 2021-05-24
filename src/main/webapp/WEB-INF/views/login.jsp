@@ -57,8 +57,7 @@
 					<div class="da-social">
 						<div class="clearfix">
 							<div class="page-header	 col-md-12 col-sm-12 ">
-								<h2 class="text-info text-center">Quản Lí Thiết Bị Cho Mượn
-									Học Viện Cơ Sở</h2>
+								<h2 class="text-info text-center">Quản Lí Thiết Bị Cho Mượn Học Viện Cơ Sở</h2>
 								<hr>
 								<div
 									class="login-wrap d-flex align-items-center flex-wrap justify-content-center">

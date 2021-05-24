@@ -15,9 +15,12 @@ h4 {
 </style>
 <%@include file="/common/loadcss.jsp"%>
 </head>
-<body>
+<body id="body">
+
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
+
+
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
@@ -33,8 +36,7 @@ h4 {
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item">
-										<a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -193,13 +195,15 @@ h4 {
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
-									<!-- <div id="divRepeat"> -->
+
 									<div class="hidden-element" style="display: none">
 										<div class="form-group row">
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
 											<div class="col-md-5">
-												<select class="form-control" name="thietBi"
+
+												<select class="form-control"
+													name="${listThietBi[indexValue]}"
 													style="width: 100%; height: 45px;">
 													<option value="">Chọn thiết bị</option>
 													<c:forEach var="tb1" items="${loaiThietBis}">
@@ -209,13 +213,17 @@ h4 {
 												<%-- 														<form:errors path="loai.id" /> --%>
 											</div>
 											<div class="col-md-3">
-												<input type="number" value="" name="slThietBi"
-													class="form-control" placeholder="Số lượng"
-													style="width: 100%; height: 45px;" />
+
+												<input type="number" value=""
+													name="${listSoLuong[indexValue]}" class="form-control"
+													placeholder="Số lượng" style="width: 100%; height: 45px;" />
+
 											</div>
-											<div class="col-md-2 xoa-thiet-bi">
-												<a class="material-icons text-info" type="button" id="">
-													delete_sweep </a>
+
+											<div class="col-md-2">
+
+												<a class="material-icons text-info btn-close-item"
+													type="button"> delete_sweep </a>
 											</div>
 										</div>
 									</div>
@@ -257,6 +265,9 @@ h4 {
 							<div class="modal-footer">
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<input type="hidden" name="indexValue" id="input-index-submit"
+									value='0' /> <input type="hidden" name="demValue"
+									id="input-dem-submit" value='0' />
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
@@ -345,125 +356,61 @@ h4 {
 									</div>
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
-								<div class="col-sm-12 col-md-6">
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 1</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi1"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[0].thietbi_muon.matb}</option>
-												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="${tb1.matb}">${tb1.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 			<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieumuon_sua.ct_phieumuons[0].soluong}"
-												name="slThietBi1" class="form-control"
-												placeholder="Số lượng" />
-											<%-- 												<form:input class="form-control" type="text" path="ct_phieumuons[0].soluong" --%>
-											<%-- 												placeholder="Nhập ghi chú" /> --%>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 2</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi2"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[1].thietbi_muon.matb}</option>
-												<c:forEach var="tb2" items="${loaiThietBis}">
-													<option value="${tb2.matb}">${tb2.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieumuon_sua.ct_phieumuons[1].soluong}"
-												name="slThietBi2" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 3</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi3"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[2].thietbi_muon.matb}</option>
-												<c:forEach var="tb3" items="${loaiThietBis}">
-													<option value="${tb3.matb}">${tb3.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieumuon_sua.ct_phieumuons[2].soluong}"
-												name="slThietBi3" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 4</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi4"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[3].thietbi_muon.matb}</option>
-												<c:forEach var="tb4" items="${loaiThietBis}">
-													<option value="${tb4.matb}">${tb4.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieumuon_sua.ct_phieumuons[3].soluong}"
-												name="slThietBi4" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 5</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi5"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}">${phieumuon_sua.ct_phieumuons[4].thietbi_muon.matb}</option>
-												<c:forEach var="tb5" items="${loaiThietBis}">
-													<option value="${tb5.matb}">${tb5.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieumuon_sua.ct_phieumuons[4].soluong}"
-												name="slThietBi5" class="form-control"
-												placeholder="Số lượng" />
+								<div class="col-sm-12 col-md-6" id='parent-element-update'>
+									<div class="hidden-element-update" style="display: none">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+												<select class="form-control" name="thietBi0" style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
+
+											<div class="col-md-3">
+												<input type="number" value="0" name="slThietBi0"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
+
+											</div>
+
+											<div class="col-md-2">
+
+												<a class="material-icons text-info btn-close-item"
+													type="button"> delete_sweep </a>
+											</div>
+
+
 										</div>
 									</div>
 								</div>
 							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12 col-md-6"></div>
+								<div class="col-sm-12 col-md-6 align-self-end">
+									<button type='button' class="form-control text-info "
+										id='btn-add-element-edit'>
+										<span class="material-icons text-info">add_circle_outline</span>
+										Thêm thiết bị mượn
+									</button>
+								</div>
+
+
+							</div>
 							<div class="modal-footer">
+								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<input type="hidden" name="indexValue" id="input-index-submit-edit" value='0' /> 
+								<input type="hidden" name="demValue" id="input-dem-submit-edit" value='0' />
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
+
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
@@ -563,28 +510,206 @@ h4 {
 			})
 		}
 	</script>
+
+	<script>
+		var index=0;
+		var dem = 0;
+	</script>
+
+
+
 	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
 	<script>
 									
 		const btn = document.getElementById('btn-add-element')
-		btn.addEventListener('click', (e)=>{
+		btn.addEventListener('click', function(e){
+			
+			
+			var index1 = index+1 ;
+			var thietBiCu = '${listThietBi[indexValue]}';
+			var thietBiMoi = "thietBi" + index1;
+						
+			
+			var slThietBiCu = '${listSoLuong[indexValue]}';
+			var slThietBiMoi = "slThietBi" + index1;	
+ 			index=index1;
+		
+			console.log(${listThietBi[1]});
 			const ele = document.querySelector('.hidden-element')
 			const parent = document.getElementById('parent-element')
 			 
 			let htmlEle = ele.innerHTML;
 			
+			htmlEle = htmlEle.replace(thietBiCu, thietBiMoi)
+			htmlEle = htmlEle.replace(slThietBiCu,slThietBiMoi)
 			
 			const newEle = document.createElement('div')
 			newEle.innerHTML = htmlEle
+
+			// add event delete
+			
+			const item = newEle.childNodes[1].childNodes[7];
+			item.addEventListener('click', function(){
+				newEle.remove()
+				dem = dem - 1;
 				
- 			parent.appendChild(newEle)   
+				var input_them = document.getElementById('input-index-submit')
+			    input_them.value = index;
+				var demValue = document.getElementById('input-dem-submit')
+			    demValue.value = dem;
+			})
+			
+			
+			
+ 			parent.appendChild(newEle)  
+ 			dem = dem + 1;
+ 			
+ 			var input_them = document.getElementById('input-index-submit')
+		    input_them.value = index;
+			var demValue = document.getElementById('input-dem-submit')
+		    demValue.value = dem;
+
+			console.log(htmlEle)
+
 		})
 			
+			
+		</script>
+
+	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
+<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
+
+	<!-- 	Thêm thiết bị khi click edit phiếu mượn -->
+	<c:if test="${slThietBiSua!=0}">
+		<c:forEach var = "sl" items = "${phieumuon_sua.ct_phieumuons}">
+		<script>
+				//Thay đổi name thiết bị 
+				var index1 = index+1 ;
+				var thietBiCu = 'thietBi0';
+				var thietBiMoi = "thietBi" + index1;
+					
+				//Thay đổi name số lượng
+				var slThietBiCu = 'slThietBi0';
+				var slThietBiMoi = "slThietBi" + index1;	
+	 			index=index1;
+			
+	 			//Thay đổi giá trị thiết bị với tên thiết bị
+	 			var valueTenTbCu = 'value=""'
+	 			var valueTenTbMoi = 'value='+'"${sl.thietbi_muon.matb}"'
+	 			
+	 			var tenTbCu = 'Chọn thiết bị'
+	 			var tenTbMoi = '${sl.thietbi_muon.matb}'
+	 			
+	 			var tenSlCu= 'Số lượng'
+	 			var tenSlMoi = '${sl.soluong}'
+	 			
+	 			var valueSlCu = 'value="0"'
+	 			var valueSlMoi = 'value='+'"${sl.soluong}"'
+	 			
+	 			/// Bắt đầu từ đây, các biến sẽ gán 1 giá trị để cho mỗi vòng lặp lặp thì tên biến sẽ không trùng.
+				var  ele${sl.thietbi_muon.matb} = document.querySelector('.hidden-element-update')
+				const parent${sl.thietbi_muon.matb} = document.getElementById('parent-element-update')
+				 
+				let htmlEle${sl.thietbi_muon.matb} = ele${sl.thietbi_muon.matb}.innerHTML;
+				
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(thietBiCu, thietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(slThietBiCu,slThietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueTenTbCu,valueTenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenTbCu,tenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenSlCu,tenSlMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueSlCu,valueSlMoi)
+				
+				const newEle${sl.thietbi_muon.matb} = document.createElement('div')
+				newEle${sl.thietbi_muon.matb}.innerHTML = htmlEle${sl.thietbi_muon.matb}
+
+				// add event delete
+				
+				const item${sl.thietbi_muon.matb} = newEle${sl.thietbi_muon.matb}.childNodes[1].childNodes[7];
+				item${sl.thietbi_muon.matb}.addEventListener('click', function(){
+					newEle${sl.thietbi_muon.matb}.remove()
+					dem = dem - 1;
+					var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+				    input_them${sl.thietbi_muon.matb}.value = index;
+					var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+				    demValue${sl.thietbi_muon.matb}.value = dem;
+					
+				})
+				
+					
+				
+				
+	 			parent${sl.thietbi_muon.matb}.appendChild(newEle${sl.thietbi_muon.matb})  
+	 			dem = dem + 1;
+	 			
+	 			var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_muon.matb}.value = index;
+				var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_muon.matb}.value = dem;
+		
+	</script>
+		</c:forEach>
+		
+	</c:if>
+
+	<script>
+									
+		const btn1 = document.getElementById('btn-add-element-edit')
+		btn1.addEventListener('click', function(e){
+			
+			var index1 = index+1 ;
+			var thietBiCu = 'thietBi0';
+			var thietBiMoi = "thietBi" + index1;
+						
+			
+			var slThietBiCu = 'slThietBi0';
+			var slThietBiMoi = "slThietBi" + index1;	
+ 			index=index1;
+		
+			console.log(${listThietBi[1]});
+			const ele = document.querySelector('.hidden-element-update')
+			const parent = document.getElementById('parent-element-update')
+			 
+			let htmlEle = ele.innerHTML;
+			
+			htmlEle = htmlEle.replace(thietBiCu, thietBiMoi)
+			htmlEle = htmlEle.replace(slThietBiCu,slThietBiMoi)
+			
+			const newEle = document.createElement('div')
+			newEle.innerHTML = htmlEle
+
+			// add event delete
+			
+			const item = newEle.childNodes[1].childNodes[7];
+			item.addEventListener('click', function(){
+				newEle.remove()
+				dem = dem - 1;
+				var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_muon.matb}.value = index;
+				var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_muon.matb}.value = dem;
+				
+			})
+			
+				
+			
+			
+ 			parent.appendChild(newEle)  
+ 			dem = dem + 1;
+ 			
+ 			var input_them = document.getElementById('input-index-submit-edit')
+		    input_them.value = index;
+			var demValue = document.getElementById('input-dem-submit-edit')
+		    demValue.value = dem;
+
+			console.log(htmlEle)
+
+		})			
 	</script>
 	<!-- Xoá thiết bị -->
 	<script>
 		$('#parent-element').on('click', '.xoa-thiet-bi', function(){
 			$(this).parent().remove()
+			
 		})
 	</script>
 </body>
