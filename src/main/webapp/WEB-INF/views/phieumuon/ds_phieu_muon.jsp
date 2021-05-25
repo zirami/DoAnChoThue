@@ -44,7 +44,7 @@ h4 {
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#" id="insert_btn" class="btn btn-primary"
+							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-insert-modal-lg"
 								type="button">Thêm phiếu mượn </a>
 						</div>
@@ -54,8 +54,10 @@ h4 {
 				<div class="card-box mb-30">
 					<hr>
 					<div class="pb-20">
-						<table class="data-table table stripe hover nowrap" id="myTable">
-							<thead>
+						<table
+							class="table nowrap  dataTable no-footer collapsed"
+							id="myTable" role="grid">
+							<thead class="table-info bg-table">
 								<tr>
 									<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
 									<th>Người mượn</th>
@@ -63,7 +65,7 @@ h4 {
 									<th>Thời gian mượn</th>
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
-									<th>Hành động</th>
+									<th class="pull-right">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -76,12 +78,12 @@ h4 {
 										<td>${phieumuon.thoigianmuon}</td>
 										<td>${phieumuon.thoigiantra}</td>
 										<td>${phieumuon.ghichu }</td>
-										<td>
+										<td class="pull-right">
 											<div class="row clearfix btn-list">
 												<form action="phieumuon/edit/${phieumuon.mapm}">
-													<button class="btn btn-primary" type="submit"
+													<button class="btn btn-info bg-purple" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
-														<i class="material-icons">edit</i>
+														<span class="material-icons ">edit</span>
 													</button>
 												</form>
 												<form action="phieumuon/delete" method="post">
@@ -92,10 +94,10 @@ h4 {
 													<button type="submit" style="display: none"
 														class="submit_del_btn"></button>
 												</form>
-												<button class="btn btn-danger delete_btn"
+												<button class="btn btn-danger delete_btn bg-red"
 													data-toggle="tooltip" data-placement="top" title="Xoá"
 													type="button">
-													<i class="material-icons">delete</i>
+													<span class="material-icons delete_btn" >delete</span>
 												</button>
 											</div>
 										</td>
@@ -115,15 +117,18 @@ h4 {
 		aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Thêm phiếu mượn</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-info">Thêm phiếu mượn</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
-						</div>
+
 						<form:form action="phieumuon" modelAttribute="phieumuon_moi"
 							method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -214,7 +219,7 @@ h4 {
 											</div>
 											<div class="col-md-3">
 
-												<input type="number" value=""
+												<input type="number" value="1" min=""
 													name="${listSoLuong[indexValue]}" class="form-control"
 													placeholder="Số lượng" style="width: 100%; height: 45px;" />
 
@@ -227,29 +232,7 @@ h4 {
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-2 col-form-label">Thiết
-											bị </label>
-										<div class="col-md-5">
-											<select class="form-control" name="thietBi"
-												style="width: 100%; height: 45px;">
-												<option value="">Chọn thiết bị</option>
-												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="${tb1.matb}">${tb1.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-md-3">
-											<input type="number" value="" name="slThietBi"
-												class="form-control" placeholder="Số lượng"
-												style="width: 100%; height: 45px;" />
-										</div>
-										<div class="col-md-2 xoa-thiet-bi">
-											<a class="material-icons text-info" type="button" id="">
-												delete_sweep </a>
-										</div>
-									</div>
+
 								</div>
 							</div>
 							<div class="row">
@@ -261,10 +244,12 @@ h4 {
 										Thêm thiết bị mượn
 									</button>
 								</div>
+
 							</div>
+							<hr>
 							<div class="modal-footer">
-								<hr>
-								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Đóng</button>
 								<input type="hidden" name="indexValue" id="input-index-submit"
 									value='0' /> <input type="hidden" name="demValue"
 									id="input-dem-submit" value='0' />
@@ -285,15 +270,17 @@ h4 {
 		aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Sửa phiếu mượn</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Sửa phiếu mượn</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
-						</div>
 						<form:form action="phieumuon/update"
 							modelAttribute="phieumuon_sua" method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -362,7 +349,8 @@ h4 {
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
 											<div class="col-md-5">
-												<select class="form-control" name="thietBi0" style="width: 100%; height: 45px;">
+												<select class="form-control" name="thietBi0"
+													style="width: 100%; height: 45px;">
 													<option value="">Chọn thiết bị</option>
 													<c:forEach var="tb1" items="${loaiThietBis}">
 														<option value="${tb1.matb}">${tb1.matb}</option>
@@ -406,8 +394,9 @@ h4 {
 							<div class="modal-footer">
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-								<input type="hidden" name="indexValue" id="input-index-submit-edit" value='0' /> 
-								<input type="hidden" name="demValue" id="input-dem-submit-edit" value='0' />
+								<input type="hidden" name="indexValue"
+									id="input-index-submit-edit" value='0' /> <input type="hidden"
+									name="demValue" id="input-dem-submit-edit" value='0' />
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
 
@@ -577,12 +566,12 @@ h4 {
 		</script>
 
 	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
-<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
+	<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
 
 	<!-- 	Thêm thiết bị khi click edit phiếu mượn -->
 	<c:if test="${slThietBiSua!=0}">
-		<c:forEach var = "sl" items = "${phieumuon_sua.ct_phieumuons}">
-		<script>
+		<c:forEach var="sl" items="${phieumuon_sua.ct_phieumuons}">
+			<script>
 				//Thay đổi name thiết bị 
 				var index1 = index+1 ;
 				var thietBiCu = 'thietBi0';
@@ -648,7 +637,7 @@ h4 {
 		
 	</script>
 		</c:forEach>
-		
+
 	</c:if>
 
 	<script>

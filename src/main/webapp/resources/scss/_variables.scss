@@ -7,3 +7,14 @@ $sidebar-base-width: 225px;
 $sidebar-collapsed-width: 90px;
 // Change below variable to change the height of the sticky footer
 $sticky-footer-height: 80px;
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+	"purple":  $purple-600
+);
