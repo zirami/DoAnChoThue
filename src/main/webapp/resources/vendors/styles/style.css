@@ -1696,7 +1696,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before
 .sidebar-light .sidebar-menu .show > .dropdown-toggle .micon,
 .sidebar-menu .dropdown-toggle.active,
 .sidebar-menu .dropdown-toggle.active .micon {
-    color: #fff;
+    color: #79AEF2;
 }
 .mobile-menu-overlay {
     position: fixed;

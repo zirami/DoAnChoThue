@@ -1422,7 +1422,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 
 .sidebar-menu .dropdown-toggle:hover, .sidebar-menu .show > .dropdown-toggle{
 	background: rgba(0, 0, 0, .4);
-	color: #ffffff;
+	color: #69daf2;
 }
 .sidebar-menu .dropdown-toggle .micon{
 	position: absolute;
@@ -1433,7 +1433,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #ffffff;
+	color: #69daf2;
 	background-color: rgba(255,255,255,0);
 	top: 50%;
 	text-align: center;
@@ -1561,10 +1561,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 	color: #ffffff;
 }
 .sidebar-light .sidebar-menu > ul > li > .dropdown-toggle.active .micon{
-	color: #ffffff;
+	color: #79AEF2;
 }
 .sidebar-menu .dropdown-toggle.active, .sidebar-menu .dropdown-toggle.active .micon{
-	color: #ffffff;
+	color: #79AEF2;
 }
 
 .mobile-menu-overlay{
