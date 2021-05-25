@@ -28,7 +28,8 @@
 									<li class="breadcrumb-item">
 										<a href="index.html">Home</a>
 									</li>
-									<li class="breadcrumb-item active" aria-current="page">Thống kê</li>
+									<li class="breadcrumb-item active" aria-current="page">Thống
+										kê</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
@@ -40,57 +41,68 @@
 						</div>
 					</div>
 				</div>
+				<div id="chart"></div>
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
-					<hr>
 					<div class="pb-20">
-						<table class="data-table table stripe hover nowrap" id="myTable">
+						<table class="data-table table stripe hover nowrap" id="datatable">
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">Mã thiết bị</th>
 									<th>Tên Thiết Bị</th>
 									<th>Loại</th>
-									<th>Số Lượng</th>
-									<th>Tình trạng</th>
-									<th>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="thietbi" items="${listThietbi}" >
-									<tr>
-										<td class="table-plus">${thietbi.matb}</td>
-										<td>${thietbi.ten}</td>
-										<td>${thietbi.loai.ten}</td>
-										<td>${thietbi.soluong}</td>
-										<td>${thietbi.tinhtrang}</td>
-										<c:choose>
-											<c:when
-												test="${thietbi.ghichu.isEmpty() || thietbi.ghichu.isBlank()}">
-												<td>-</td>
-											</c:when>
-											<c:otherwise>
-												<td>${thietbi.ghichu}</td>
-											</c:otherwise>
-										</c:choose>
-										
-									</tr>
-								</c:forEach>
+								<tr>
+									<th>Apples</th>
+									<td>3</td>
+									<td>4</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-				<!-- Simple Datatable End -->
+				<!-- END DATATABLE -->
+				
 			</div>
 		</div>
 	</div>
-	
-	
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
-	
+	<!-- chart -->
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/data.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 	<script type="text/javascript">
 		//LOAD TABLE 
-		$('#myTable').DataTable();
+		$('#datatable').DataTable();
+
+		Highcharts.chart('chart', {
+			data : {
+				table : 'datatable'
+			},
+			chart : {
+				type : 'column'
+			},
+			title : {
+				text : 'Data extracted from a HTML table in the page'
+			},
+			yAxis : {
+				allowDecimals : false,
+				title : {
+					text : 'Units'
+				}
+			},
+			tooltip : {
+				formatter : function() {
+					return '<b>' + this.series.name + '</b><br/>'
+							+ this.point.y + ' '
+							+ this.point.name.toLowerCase();
+				}
+			}
+		});
 	</script>
 </body>
 </html>
