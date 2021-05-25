@@ -31,7 +31,7 @@ public class PhieuMuonDAO {
 		Query query = session.createQuery(hql);
 		List <PHIEUMUON> list = query.list();
 		return list;
-	}
+	}  
 	public Boolean save(SessionFactory factory,PHIEUMUON phieumuon_moi) {
 		Boolean result=true;
 		Session session = factory.openSession();

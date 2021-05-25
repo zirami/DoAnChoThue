@@ -26,6 +26,7 @@
   --danger:#dc3545;
   --light:#f8f9fa;
   --dark:#343a40;
+  --purple:#59359a;
   --breakpoint-xs:0;
   --breakpoint-sm:576px;
   --breakpoint-md:768px;
@@ -1548,16 +1549,16 @@ pre code {
   background-color: #b1dfbb; }
 
 .table-info, .table-info > td, .table-info > th {
-  background-color: #bee5eb; }
+  background-color: #0aa2b0; }
 
 .table-info tbody + tbody, .table-info td, .table-info th, .table-info thead th {
-  border-color: #86cfda; }
+  border-color: #8affda; }
 
 .table-hover .table-info:hover {
-  background-color: #abdde5; }
+  background-color: #087990; }
 
 .table-hover .table-info:hover > td, .table-hover .table-info:hover > th {
-  background-color: #abdde5; }
+  background-color: #087990; }
 
 .table-warning, .table-warning > td, .table-warning > th {
   background-color: #ffeeba; }
@@ -4193,8 +4194,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #1b00ff;
-  border-color: #1b00ff; }
+  background-color: #432874;
+  border-color: #432874; }
 
 .page-item.disabled .page-link {
   color: #6c757d;
@@ -7871,11 +7872,21 @@ a.text-secondary:focus, a.text-secondary:hover {
 a.text-success:focus, a.text-success:hover {
   color: #19692c !important; }
 
+
 .text-info {
   color: #17a2b8 !important; }
 
 a.text-info:focus, a.text-info:hover {
   color: #0f6674 !important; }
+  
+
+.text-purple {
+  color: #59359a !important; }
+
+a.text-purple:focus, a.text-purple:hover {
+  color: #8c68cd !important; }
+
+ 
 
 .text-warning {
   color: #ffc107 !important; }

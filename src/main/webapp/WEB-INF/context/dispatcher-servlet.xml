@@ -36,6 +36,12 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/login"/>
+			<bean class="com.nhom2.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<mvc:interceptors>
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/qlnhanvien" />
 			<mvc:exclude-mapping path="/login" />
@@ -43,7 +49,7 @@
 			<mvc:exclude-mapping path="/verify" />
 			<mvc:exclude-mapping path="/modify-account" />
 			<mvc:exclude-mapping path="/resources/**" />
-			<bean class="com.nhom2.interceptor.LoginInterceptor" />
+			<bean class="com.nhom2.interceptor.CheckUserInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

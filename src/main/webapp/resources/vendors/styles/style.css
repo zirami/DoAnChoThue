@@ -449,7 +449,7 @@ p {
     color: #f56767;
 }
 .bg-light-purple {
-    background-color: #a683eb;
+    background-color: #2c1a4d;
 }
 .text-light-purple {
     color: #a683eb;
@@ -1531,7 +1531,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before
     display: block;
     padding: 18px 15px 18px 67px;
     font-size: 16px;
-    color: #fff;
+    color: #456;
     font-weight: 300;
     letter-spacing: 0.03em;
     position: relative;

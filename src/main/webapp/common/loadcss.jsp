@@ -29,6 +29,8 @@
 	href="resources/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/vendors/styles/style.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/src/styles/style.css">
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async

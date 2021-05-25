@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="/common/loadcss.jsp"%>
 <div class="left-side-bar">
 	<div class="brand-logo">
 		<a href="home"> <img
@@ -19,7 +20,7 @@
 					<div class="dropdown-divider"></div>
 				</li>
 				<li class="dropdown">
-					<div>
+					<div class="text-light-purple">
 						<a href="phieumuon" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
 							data-original-title="QUẢN LÍ PHIẾU MƯỢN"> <span
