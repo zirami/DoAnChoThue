@@ -19,8 +19,7 @@ h4 {
 
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
-
-
+	
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
@@ -54,8 +53,7 @@ h4 {
 				<div class="card-box mb-30">
 					<hr>
 					<div class="pb-20">
-						<table
-							class="table nowrap  dataTable no-footer collapsed"
+						<table class="table nowrap  dataTable no-footer collapsed"
 							id="myTable" role="grid">
 							<thead class="table-info bg-table">
 								<tr>
@@ -97,7 +95,7 @@ h4 {
 												<button class="btn btn-danger delete_btn bg-red"
 													data-toggle="tooltip" data-placement="top" title="Xoá"
 													type="button">
-													<span class="material-icons delete_btn" >delete</span>
+													<span class="material-icons delete_btn">delete</span>
 												</button>
 											</div>
 										</td>
@@ -409,6 +407,10 @@ h4 {
 	</div>
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
+	<%-- 	<c:if test="${admin}"> --%>
+	<%-- 		<%@include file="/common/left-side-bar-admin.jsp"%> --%>
+	<%-- 	</c:if> --%>
+
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -562,7 +564,6 @@ h4 {
 
 		})
 			
-			
 		</script>
 
 	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
@@ -701,5 +702,6 @@ h4 {
 			
 		})
 	</script>
+
 </body>
 </html>
