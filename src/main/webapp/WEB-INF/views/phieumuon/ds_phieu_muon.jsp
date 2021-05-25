@@ -55,7 +55,7 @@ h4 {
 					<hr>
 					<div class="pb-20">
 						<table
-							class="table hover data-table-export nowrap dataTable no-footer collapsed"
+							class="table nowrap  dataTable no-footer collapsed"
 							id="myTable" role="grid">
 							<thead class="table-info bg-table">
 								<tr>
@@ -219,7 +219,7 @@ h4 {
 											</div>
 											<div class="col-md-3">
 
-												<input type="number" value=""
+												<input type="number" value="1" min=""
 													name="${listSoLuong[indexValue]}" class="form-control"
 													placeholder="Số lượng" style="width: 100%; height: 45px;" />
 

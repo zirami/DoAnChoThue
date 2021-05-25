@@ -1,45 +1,61 @@
 package com.nhom2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.nhom2.DAO.LoaiThietBiDAO;
-import com.nhom2.entity.LOAITHIETBI;
-import com.nhom2.entity.PHANQUYEN;
+import com.nhom2.DAO.NguoiMuonDAO;
+import com.nhom2.DAO.ThietBiDAO;
+import com.nhom2.entity.NGUOIMUON;
+import com.nhom2.entity.PHIEUMUON;
+import com.nhom2.entity.THIETBI;
 
 @Controller
 public class TestController {
 
 	@Autowired
 	SessionFactory factory;
-	
-	@ModelAttribute("phanQuyen")
-	public PHANQUYEN getTb() {
-		return new PHANQUYEN();
+
+	@ModelAttribute("phieumuon_moi")
+	public PHIEUMUON phieumuon_moi() {
+		return new PHIEUMUON();
 	}
 
-	@ModelAttribute("loaiTb")
-	public LOAITHIETBI loaiTb() {
-		return new LOAITHIETBI();
+	@ModelAttribute("phieumuon_sua")
+	public PHIEUMUON phieumuon_sua() {
+		return new PHIEUMUON();
 	}
 
-	@ModelAttribute("listLoaiTB")
-	public List<LOAITHIETBI> getNv() {
-		return new LoaiThietBiDAO().getAll(factory);
+	// Load danh sách nhân viên
+	@ModelAttribute("listNhanViens")
+	public List<String> getListNhanViens() {
+		List<String> list = new ArrayList<>();
+		list.add("nv1");
+		list.add("nv2");
+		list.add("nv3");
+		return list;
+	}
+
+	// Load danh sách người mượn
+	@ModelAttribute("listNguoiMuons")
+	public List<NGUOIMUON> getListNguoiMuon() {
+		List<NGUOIMUON> list = new NguoiMuonDAO().getAll(factory);
+		return list;
+	}
+
+	// DANH SÁCH LOẠI THIẾT BỊ ĐỂ SELECT
+	@ModelAttribute("thietBis")
+	public List<THIETBI> getListThietBi() {
+		List<THIETBI> list = new ThietBiDAO().getAll(factory);
+		return list;
 	}
 
 	@RequestMapping(value = "test", method = RequestMethod.GET)
@@ -48,23 +64,40 @@ public class TestController {
 	}
 
 	@RequestMapping(value = "test", method = RequestMethod.POST)
-	public String getMultiData( ModelMap model,
-			@Valid @ModelAttribute("loaiTb") LOAITHIETBI loaiTb,  BindingResult reusult1,
-			@Valid @ModelAttribute("phanQuyen") PHANQUYEN phanQuyen, BindingResult reusult2) {
-		System.out.println(loaiTb.getTen());
-		System.out.println(phanQuyen.getTenpq());
-		if(reusult2.hasErrors() || reusult1.hasErrors()) {
-			System.out.println("error");
-			model.addAttribute("msg", "Có lỗi xảy ra vui lòng thử lại!!!");
-			
+	public String getMultiData(ModelMap model, @RequestParam("thietBis") List<String> thietBis,
+			@RequestParam("soLuongTbs") List<Integer> soLuongTbs) {
+
+		// Bỏ phần tử đầu tiên: hidden-element
+		for (int i = 1; i < thietBis.size(); i++) {
+			System.out.println("Truoc khi gop: {maTb: " + thietBis.get(i) + ", so luong: " + soLuongTbs.get(i) + " }");
 		}
+		
+		
+		//Gop phan tu bi trung ten
+		//Duyet tat ca phan tu
+		for (int i = 1; i < thietBis.size() - 1; i++)
+			for (int j = i + 1; j < thietBis.size(); j++) {
+				//neu trung ten
+				if(thietBis.get(i).equals(thietBis.get(j))) {
+					//remove thiet bi trung
+					thietBis.remove(j);	
+					
+					//them vao list so luong tb moi
+					int soLuong = soLuongTbs.get(i) + soLuongTbs.get(j);
+					soLuongTbs.set(i, soLuong);
+					
+					//remove sl cua thiet bi trung
+					soLuongTbs.remove(j);
+				}
+			}
+		
+		//Ds sau khi gop
+		for (int i = 1; i < thietBis.size(); i++) {
+			System.out.println("Sau khi gop: maTb: " + thietBis.get(i)+ ", so luong: " + soLuongTbs.get(i));
+		}
+
+
 		return index(model);
-	}
-	
-	@RequestMapping(value="testValidate", method = RequestMethod.POST)
-	public String testValidate(HttpServletRequest rq) {
-		System.out.println(rq.getParameter("input"));
-		return "multi/multi_input";
 	}
 
 }
