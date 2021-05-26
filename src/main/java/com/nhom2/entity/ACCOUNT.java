@@ -36,6 +36,8 @@ public class ACCOUNT {
 	@ManyToOne	
 	@JoinColumn(name = "MAPQ")
 	private PHANQUYEN phanquyen;
+	
+	
 
 	public ACCOUNT() {
 		super();

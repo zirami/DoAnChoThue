@@ -34,24 +34,16 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<!-- <div class="dropdown">
-								<a class="btn btn-primary dropdown-toggle" href="#"
-									role="button" data-toggle="dropdown"> January 2018 </a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">Export List</a> <a
-										class="dropdown-item" href="#">Policies</a> <a
-										class="dropdown-item" href="#">View Assets</a>
-								</div>
-							</div> -->
+							<a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
+								THIẾT BỊ</a>
 							<a href="#" id="insert_btn" class="btn btn-primary"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
-								type="button">THÊM THIẾT BỊ </a>
+								type="button">THÊM THIẾT BỊ MỚI </a>
 						</div>
 					</div>
 				</div>
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
-					<%-- 					${message} --%>
 					<hr>
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap" id="myTable">
@@ -61,20 +53,17 @@
 									<th>Tên Thiết Bị</th>
 									<th>Loại</th>
 									<th>Số Lượng</th>
-									<th>Tình trạng</th>
 									<th>Ghi chú</th>
 									<th class="datatable-nosort">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="thietbi" items="${listThietbi}" varStatus="row">
+								<c:forEach var="thietbi" items="${listThietbi}" >
 									<tr>
 										<td class="table-plus">${thietbi.matb}</td>
 										<td>${thietbi.ten}</td>
 										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
-										<td>${thietbi.tinhtrang}</td>
-										<%-- <td>${thietbi.ghichu }</td> --%>
 										<c:choose>
 											<c:when
 												test="${thietbi.ghichu.isEmpty() || thietbi.ghichu.isBlank()}">
@@ -86,7 +75,7 @@
 										</c:choose>
 										<td>
 											<div class="row clearfix">
-												<div class="col ">
+												<div class="col-3">
 													<form action="thiet-bi/edit/${thietbi.matb}">
 														<button class="btn btn-primary" type="submit"
 															data-toggle="tooltip" data-placement="top" title="Sửa">
@@ -95,30 +84,22 @@
 														<!--  -->
 													</form>
 												</div>
-												<div class="col">
-													<form action="thiet-bi/delete" method="post" hidden="true">
-														<!-- Dùng để hiển thị tên lên form -->
-														<input type="hidden" name="ten" value="${thietbi.ten}" />
-														<!-- Dùng để gửi về controller -->
-														<input type="hidden" name="id" value="${thietbi.matb}" />
-														<button type="submit" class="submit_del_btn"></button>
-													</form>
-													<button class="btn btn-danger delete_btn"
-														data-toggle="tooltip" data-placement="top" title="Xoá"
-														type="button">
-														<i class="material-icons">delete</i>
-													</button>
-												</div>
-												<div class="col">
-													<form action="thiet-bi/lock" method="post" hidden="true">
-														<input type="hidden" name="id" value="${thietbi.matb}" />
-														<button type="submit" class="submit_lock_btn"></button>
-													</form>
-													<button id="lock_btn" class="btn btn-danger"
-														data-toggle="tooltip" data-placement="top" title="Khoá"
-														type="button">
-														<i class="material-icons">lock</i>
-													</button>
+												<div class="col-6">
+													<c:set var="tinhtrang" value="unlocked" />
+													<c:if test="${thietbi.tinhtrang.equals(tinhtrang)}">
+														<form action="thiet-bi/delete" method="post" hidden="true">
+															<!-- Dùng để hiển thị tên lên form -->
+															<input type="hidden" name="ten" value="${thietbi.ten}" />
+															<!-- Dùng để gửi về controller -->
+															<input type="hidden" name="id" value="${thietbi.matb}" />
+															<button type="submit" class="submit_del_btn"></button>
+														</form>
+														<button class="btn btn-danger delete_btn"
+															data-toggle="tooltip" data-placement="top" title="Xoá"
+															type="button">
+															<i class="material-icons">delete</i>
+														</button>
+													</c:if>
 												</div>
 											</div>
 										</td>
@@ -188,18 +169,7 @@
 									<form:errors path="soluong" />
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tình
-									trạng</label>
-								<div class="col-sm-12 col-md-10">
-									<form:select path="tinhtrang" class="selectpicker form-control"
-										style="width: 100%; height: 38px;">
-										<form:option value="" label="-Vui lòng chọn 1-" />
-										<form:options items="${tinhTrangs}" />
-									</form:select>
-									<form:errors path="tinhtrang"></form:errors>
-								</div>
-							</div>
+							<input type="hidden" name="tinhtrang" value="unlocked" />
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
 								<div class="col-sm-12 col-md-10">
@@ -276,17 +246,7 @@
 									<form:errors path="soluong" />
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tình
-									trạng</label>
-								<div class="col-sm-12 col-md-10">
-									<form:select path="tinhtrang" items="${tinhTrangs}"
-										class="selectpicker form-control"
-										style="width: 100%; height: 38px;">
-									</form:select>
-									<form:errors path="tinhtrang" />
-								</div>
-							</div>
+							<form:input path="tinhtrang" type="hidden" />
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
 								<div class="col-sm-12 col-md-10">
@@ -306,17 +266,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <script>
-		let input = document.getElementById('maThietbi_modal');
-		let btnTest = document.querySelector('.btn-test');
-
-		btnTest.addEventListener('click', function() {
-
-			console.log(input.classList);
-		})
-	</script> -->
-	<c:if test="${action.equals('edit') }">
-	</c:if>
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->

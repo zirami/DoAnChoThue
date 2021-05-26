@@ -60,8 +60,8 @@ public class ThietbiController {
 	@ModelAttribute("tinhTrangs")
 	public List<String> getTinhTrangs() {
 		List<String> list = new ArrayList<>();
-		list.add("Tốt");
-		list.add("Hỏng");
+		list.add("lock");
+		list.add("unlocked");
 		return list;
 	}
 
