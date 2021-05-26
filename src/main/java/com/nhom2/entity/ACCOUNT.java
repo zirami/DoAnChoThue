@@ -1,10 +1,14 @@
 package com.nhom2.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,6 +37,12 @@ public class ACCOUNT {
 	@Column(name="SDT")
 	private String sdt;
 	
+	@OneToMany(mappedBy = "ql", fetch = FetchType.EAGER)
+	private Collection<QUANLI> usernameqls;
+	
+	@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
+	private Collection<NHANVIEN> usernamenvs;
+	
 	@ManyToOne	
 	@JoinColumn(name = "MAPQ")
 	private PHANQUYEN phanquyen;
@@ -40,6 +50,27 @@ public class ACCOUNT {
 	public ACCOUNT() {
 		super();
 	}
+	
+
+	public Collection<QUANLI> getUsernameqls() {
+		return usernameqls;
+	}
+
+
+	public void setUsernameqls(Collection<QUANLI> usernameqls) {
+		this.usernameqls = usernameqls;
+	}
+
+
+	public Collection<NHANVIEN> getUsernamenvs() {
+		return usernamenvs;
+	}
+
+
+	public void setUsernamenvs(Collection<NHANVIEN> usernamenvs) {
+		this.usernamenvs = usernamenvs;
+	}
+
 
 	public String getUsername() {
 		return username;
