@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container center">
-			${message }
+		${message }
 		<table class="table table-dark" id="table_data">
 			<thead>
 				<tr>
@@ -23,32 +23,36 @@
 			</thead>
 			<tbody>
 				<c:forEach var="ct_pm" items="${listCT_Phieumuon}" varStatus="i">
-					
-						<td scope="row">${ct_pm.id}</td>
-						<td scope="row">${ct_pm.phieumuon.mapm}</td>
+					<td scope="row">${ct_pm.id}</td>
+					<td scope="row">${ct_pm.phieumuon.mapm}</td>
 					<td scope="row">${ct_pm.thietbi_muon.ten}</td>
-						<td scope="row">${ct_pm.soluong}</td>
-						<td><a href="javascript:void" class="material-icons"
+					<td scope="row">${ct_pm.soluong}</td>
+					<td>
+						<a href="javascript:void" class="material-icons"
 							data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-							onclick="edit(${i.count})"> <i class="material-icons">edit</i>
-						</a> <a href="javascript:void" class="material-icons"
+							onclick="edit(${i.count})">
+							<i class="material-icons">edit</i>
+						</a>
+						<a href="javascript:void" class="material-icons"
 							data-bs-toggle="modal" data-bs-target="#modalDelete"
-							onclick="del(${i.count})"> <i class="material-icons">delete</i>
-						</a></td>
+							onclick="del(${i.count})">
+							<i class="material-icons">delete</i>
+						</a>
+					</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		<form:form action="ct_phieumuon/insert.htm" modelAttribute="ct_phieumuon_moi">
+		<form:form action="ct_phieumuon/insert.htm"
+			modelAttribute="ct_phieumuon_moi">
 			<div>Nhập mã thiết bị</div>
-			<form:input path="thietbi_muon.matb" class="form-control" value=""/>
+			<form:input path="thietbi_muon.matb" class="form-control" value="" />
 			<div>Nhập mã phiếu mượn</div>
-			<form:input path="phieumuon.mapm" class="form-control" value=""/>
+			<form:input path="phieumuon.mapm" class="form-control" value="" />
 			<div>Nhập số lượng</div>
-			<form:input path="soluong" class="form-control" value=""/>
+			<form:input path="soluong" class="form-control" value="" />
 			<hr>
-			<button type="submit" >OK</button>
+			<button type="submit">OK</button>
 		</form:form>
 	</div>
 </body>

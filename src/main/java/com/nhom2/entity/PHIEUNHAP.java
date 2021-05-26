@@ -2,11 +2,14 @@ package com.nhom2.entity;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,64 +23,98 @@ public class PHIEUNHAP {
 	@Id
 	@Column(name = "MAPN")
 	public String mapn;
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name = "THOIGIANNHAP")
 	public Date thoigiannhap;
-	@Column(name = "DONGIA")
-	public String dongia;
-	@Column(name = "MANV")
-	public String manv;
-	@Column(name = "MANCC")
-	public String mancc;
-	
-	
-	
-	@OneToMany(mappedBy="mapn",fetch=FetchType.EAGER)
-	private Collection<CT_PHIEUNHAP> ct_phieunhaps;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "MANV")
+	public NHANVIEN nhanvien;
+
+	@Column(name = "GHICHU")
+	public String ghichu;
+
+	@Column(name = "TRANGTHAI")
+	public String trangthai;
+
+	@OneToMany(mappedBy = "phieunhap", fetch = FetchType.EAGER)
+	private List<CT_PHIEUNHAP> ct_phieunhaps;
+
+	@ManyToOne
+	@JoinColumn(name = "MANCC")
+	public NHACUNGCAP ncc;
+
 	public PHIEUNHAP() {
 		super();
 	}
-	public PHIEUNHAP(String mapn, Date thoigiannhap, String dongia, String manv, String mancc) {
+
+	public PHIEUNHAP(String mapn, Date thoigiannhap, NHANVIEN nhanvien, String ghichu, List<CT_PHIEUNHAP> ct_phieunhaps,
+			NHACUNGCAP ncc) {
 		super();
 		this.mapn = mapn;
 		this.thoigiannhap = thoigiannhap;
-		this.dongia = dongia;
-		this.manv = manv;
-		this.mancc = mancc;
+		this.nhanvien = nhanvien;
+		this.ghichu = ghichu;
+		this.ct_phieunhaps = ct_phieunhaps;
+		this.ncc = ncc;
 	}
+
+	public String getTrangthai() {
+		return trangthai;
+	}
+
+	public void setTrangthai(String trangthai) {
+		this.trangthai = trangthai;
+	}
+
 	public String getMapn() {
 		return mapn;
 	}
+
 	public void setMapn(String mapn) {
 		this.mapn = mapn;
 	}
+
 	public Date getThoigiannhap() {
 		return thoigiannhap;
 	}
+
 	public void setThoigiannhap(Date thoigiannhap) {
 		this.thoigiannhap = thoigiannhap;
 	}
-	public String getDongia() {
-		return dongia;
-	}
-	public void setDongia(String dongia) {
-		this.dongia = dongia;
-	}
-	public String getManv() {
-		return manv;
-	}
-	public void setManv(String manv) {
-		this.manv = manv;
-	}
-	public String getMancc() {
-		return mancc;
-	}
-	public void setMancc(String mancc) {
-		this.mancc = mancc;
+
+	public NHANVIEN getNhanvien() {
+		return nhanvien;
 	}
 
+	public void setNhanvien(NHANVIEN nhanvien) {
+		this.nhanvien = nhanvien;
+	}
+
+	public String getGhichu() {
+		return ghichu;
+	}
+
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
+	}
+
+	public List<CT_PHIEUNHAP> getCt_phieunhaps() {
+		return ct_phieunhaps;
+	}
+
+	public void setCt_phieunhaps(List<CT_PHIEUNHAP> ct_phieunhaps) {
+		this.ct_phieunhaps = ct_phieunhaps;
+	}
+
+	public NHACUNGCAP getNcc() {
+		return ncc;
+	}
+
+	public void setNcc(NHACUNGCAP ncc) {
+		this.ncc = ncc;
+	}
 
 }

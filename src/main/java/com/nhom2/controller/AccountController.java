@@ -23,7 +23,9 @@ import com.nhom2.entity.ACCOUNT;
 public class AccountController {
 
 	public AccountController() {
-		super();}
+		super();
+	}
+
 	@Autowired
 	SessionFactory factory;
 
@@ -33,19 +35,17 @@ public class AccountController {
 		return "account/ds_account";
 	}
 
-	//THÊM
+	// THÊM
 	@ModelAttribute("account_moi")
 	public ACCOUNT account_moi() {
 		return new ACCOUNT();
 	}
-	
+
 	// SỬA
 	@ModelAttribute("account_sua")
 	public ACCOUNT account_sua() {
 		return new ACCOUNT();
 	}
-	
-	
 
 	// THÊM
 	@RequestMapping(value = "account", method = RequestMethod.POST)
@@ -65,17 +65,18 @@ public class AccountController {
 
 	// LẤY RA THIẾT BỊ BẰNG ID ĐỂ SHOW FORM EDIT
 	@RequestMapping(value = "account/edit/{id}", method = RequestMethod.GET)
-	public String show_form_edit(ModelMap model, @ModelAttribute("account_sua") ACCOUNT account_sua, @PathVariable String id) {
-		
+	public String show_form_edit(ModelMap model, @ModelAttribute("account_sua") ACCOUNT account_sua,
+			@PathVariable String id) {
+
 		model.addAttribute("form_edit", true);
 		model.addAttribute("account_sua", new AccountDAO().getByName(id, factory));
 		return home(model);
 	}
-	
 
 	// UPDATE
 	@RequestMapping(value = "account/update", method = RequestMethod.POST)
-	public String update(ModelMap model, @Valid @ModelAttribute("account_sua") ACCOUNT account_sua, BindingResult reusult) {
+	public String update(ModelMap model, @Valid @ModelAttribute("account_sua") ACCOUNT account_sua,
+			BindingResult reusult) {
 		System.out.println("has error: " + reusult.getFieldErrors().toString());
 		model.addAttribute("sua_saidinhdang", reusult.hasErrors());
 		model.addAttribute("account_sua", account_sua);

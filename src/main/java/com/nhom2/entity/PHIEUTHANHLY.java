@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
+//@Entity
 @Table(name = "PHIEUTHANHLY")
 public class PHIEUTHANHLY {
 	@Id

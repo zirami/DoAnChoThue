@@ -13,7 +13,7 @@
 			<i class="ion-close-round"></i>
 		</div>
 	</div>
-	<div class="menu-block customscroll bg-red">
+	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
 				<li>
@@ -23,8 +23,9 @@
 					href="phieumuon" class="dropdown-toggle no-arrow"
 					data-toggle="tooltip" data-placement="right" title=""
 					data-original-title="QUẢN LÍ PHIẾU MƯỢN"> <span
-						class="micon dw dw-file"></span> <span class="text-yellow">QUẢN LÝ PHIẾU MƯỢN</span>
-				</a></li>
+						class="micon dw dw-file"></span>
+						<span class="text-yellow">QUẢN LÝ PHIẾU MƯỢN</span>
+					</a></li>
 				<li class="dropdown" id="qltb" style="display: none">
 						<a href="thiet-bi" class="dropdown-toggle no-arrow"
 							data-toggle="tooltip" data-placement="right" title=""
