@@ -37,80 +37,81 @@ public class ACCOUNT {
 	@Column(name="SDT")
 	private String sdt;
 	
-	@OneToMany(mappedBy = "ql", fetch = FetchType.EAGER)
-	private Collection<QUANLI> usernameqls;
-	
-	@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
-	private Collection<NHANVIEN> usernamenvs;
 	
 	@ManyToOne	
 	@JoinColumn(name = "MAPQ")
 	private PHANQUYEN phanquyen;
+	
+	//Thử dòng này.
 
+	@OneToMany(mappedBy = "acc", fetch = FetchType.EAGER)
+	private Collection<NHANVIEN> nhanviens ;
+	
 	public ACCOUNT() {
 		super();
 	}
 	
-
-	public Collection<QUANLI> getUsernameqls() {
-		return usernameqls;
-	}
-
-
-	public void setUsernameqls(Collection<QUANLI> usernameqls) {
-		this.usernameqls = usernameqls;
-	}
-
-
-	public Collection<NHANVIEN> getUsernamenvs() {
-		return usernamenvs;
-	}
-
-
-	public void setUsernamenvs(Collection<NHANVIEN> usernamenvs) {
-		this.usernamenvs = usernamenvs;
-	}
 
 
 	public String getUsername() {
 		return username;
 	}
 
+
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
 
 	public String getGmail() {
 		return gmail;
 	}
 
+
+
 	public void setGmail(String gmail) {
 		this.gmail = gmail;
 	}
+
+
 
 	public String getSdt() {
 		return sdt;
 	}
 
+
+
 	public void setSdt(String sdt) {
 		this.sdt = sdt;
 	}
+
+
 
 	public PHANQUYEN getPhanquyen() {
 		return phanquyen;
 	}
 
+
+
 	public void setPhanquyen(PHANQUYEN phanquyen) {
 		this.phanquyen = phanquyen;
 	}
+
+
 
 	@Override
 	public String toString() {

@@ -53,7 +53,7 @@ public class QUANLI {
 	
 	@ManyToOne	
 	@JoinColumn(name = "USERNAME")
-	private ACCOUNT acc;
+	private ACCOUNT accql;
 
 	public QUANLI() {
 		super();
@@ -109,11 +109,11 @@ public class QUANLI {
 	}
 
 	public ACCOUNT getAcc() {
-		return acc;
+		return accql;
 	}
 
 	public void setAcc(ACCOUNT acc) {
-		this.acc = acc;
+		this.accql = acc;
 	}
 
 	
