@@ -66,7 +66,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="thietbi" items="${listAccount}" varStatus="row">
+								<c:forEach var="account" items="${listAccount}" varStatus="row">
 									<tr>
 										<td class="table-plus">${account.username}</td>
 										<td>${account.password}</td>
@@ -152,7 +152,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Password
 									</label>
 								<div class="col-sm-12 col-md-10">
-									<form:input path="ten" class="form-control" type="text"
+									<form:input path="password" class="form-control" type="text"
 										placeholder="Nhập password" />
 									<form:errors path="password" />
 								</div>
@@ -162,7 +162,7 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Gmail
 									</label>
 								<div class="col-sm-12 col-md-10">
-									<form:input path="ten" class="form-control" type="text"
+									<form:input path="gmail" class="form-control" type="text"
 										placeholder="Nhập Gmail" />
 									<form:errors path="gmail" />
 								</div>
@@ -213,7 +213,7 @@
 								<div class="col-sm-12 col-md-10">
 									<form:input path="password" class="form-control" type="text"
 										placeholder="Nhập password" />
-									<form:errors path="ten" />
+									<form:errors path="password" />
 								</div>
 							</div>
 							
@@ -240,9 +240,9 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Mã 
 									phân quyền </label>
 								<div class="col-sm-12 col-md-10">
-									<form:input path="mapq" class="form-control" type="text"
+									<form:input path="phanquyen.mapq" class="form-control" type="text"
 										placeholder="Nhập mã phân quyền" />
-									<form:errors path="mapq" />
+									<form:errors path="phanquyen.mapq" />
 								</div>
 							</div>
 							<div class="modal-footer">
