@@ -1,8 +1,5 @@
 package com.nhom2.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
@@ -18,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhom2.DAO.AccountDAO;
-import com.nhom2.DAO.LoaiThietBiDAO;
-import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.ACCOUNT;
-import com.nhom2.entity.LOAITHIETBI;
-import com.nhom2.entity.THIETBI;
 
 @Transactional
 @Controller
