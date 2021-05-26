@@ -1,43 +1,48 @@
 package com.nhom2.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="ACCOUNT")
+@Table(name = "ACCOUNT")
 public class ACCOUNT {
 	@Id
-	@Column(name="USERNAME")
+	@Column(name = "USERNAME")
 //	@NotNull(message="Trường này không được bỏ trống!")
 //	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String username;
-	
+
 //	@NotNull(message="Trường này không được bỏ trống!")
 //	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="PASSWORD")
+	@Column(name = "PASSWORD")
 	private String password;
-	
+
 //	@NotNull(message="Trường này không được bỏ trống!")
 //	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="GMAIL")
+	@Column(name = "GMAIL")
 	private String gmail;
-	
+
 //	@NotNull(message="Trường này không được bỏ trống!")
 //	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="SDT")
+	@Column(name = "SDT")
 	private String sdt;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "MAPQ")
 	private PHANQUYEN phanquyen;
-	
-	
+
+	@OneToMany(mappedBy = "acc", fetch = FetchType.EAGER)
+	private Collection<NHANVIEN> nhanviens;
 
 	public ACCOUNT() {
 		super();
@@ -89,6 +94,4 @@ public class ACCOUNT {
 				+ ", phanquyen=" + phanquyen + "]";
 	}
 
-	
-	
 }

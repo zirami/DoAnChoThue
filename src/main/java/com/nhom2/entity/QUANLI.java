@@ -16,44 +16,44 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="QUANLI")
+@Table(name = "QUANLI")
 public class QUANLI {
 	@Id
-	@Column(name="MAQL")
-	@NotNull(message="Trường này không được bỏ trống!")
+	@Column(name = "MAQL")
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
 	private String maql;
-	
-	@NotNull(message="Trường này không được bỏ trống!")
+
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="HO")
+	@Column(name = "HO")
 	private String ho;
-	
-	@NotNull(message="Trường này không được bỏ trống!")
+
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="TEN")
+	@Column(name = "TEN")
 	private String ten;
-	
-	@NotNull(message="Trường này không được bỏ trống!")
+
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name="NGAYSINH")
+	@Column(name = "NGAYSINH")
 	private Date ngaysinh;
-	 
-	@NotNull(message="Trường này không được bỏ trống!")
+
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@NotBlank(message = "Vui lòng điền vào trường này !")
-	@Column(name="GIOITINH")
+	@Column(name = "GIOITINH")
 	private String gioitinh;
-	
-	@NotNull(message="Trường này không được bỏ trống!")
+
+	@NotNull(message = "Trường này không được bỏ trống!")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name="NGAYTIEPNHAN")
+	@Column(name = "NGAYTIEPNHAN")
 	private Date ngaytiepnhan;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "USERNAME")
-	private ACCOUNT acc;
+	private ACCOUNT accql;
 
 	public QUANLI() {
 		super();
@@ -109,14 +109,11 @@ public class QUANLI {
 	}
 
 	public ACCOUNT getAcc() {
-		return acc;
+		return accql;
 	}
 
 	public void setAcc(ACCOUNT acc) {
-		this.acc = acc;
+		this.accql = acc;
 	}
 
-	
-	
-	
 }
