@@ -1,5 +1,3 @@
-<%@page import="org.springframework.web.context.request.RequestScope"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
@@ -8,16 +6,23 @@
 <head>
 <!-- Basic Page Info -->
 <meta charset="utf-8">
-<base href="${pageContext.servletContext.contextPath }/">
+<base href="${pageContext.servletContext.contextPath}/">
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+<style type="text/css">
+h4 {
+	color: red;
+}
+</style>
 <%@include file="/common/loadcss.jsp"%>
 </head>
-<body>
+<body id="body">
+
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
+	
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
-	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
+	<!-- 	================================ Hiển thị danh sách Phiếu Thanh Lý ================================ -->
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -30,8 +35,7 @@
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item">
-										<a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -39,24 +43,25 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#" id="insert_btn" class="btn btn-primary"
+							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-insert-modal-lg"
 								type="button">Thêm phiếu thanh lý </a>
 						</div>
 					</div>
 				</div>
-				<!-- Hiển thị danh sách thiết bị thanh lý -->
+				<!-- Hiển thị danh sách  -->
 				<div class="card-box mb-30">
 					<hr>
 					<div class="pb-20">
-						<table class="data-table table stripe hover nowrap" id="myTable">
-							<thead>
+						<table class="table nowrap  dataTable no-footer collapsed"
+							id="myTable" role="grid">
+							<thead class="table-info bg-table">
 								<tr>
 									<th class="table-plus datatable-nosort">Mã phiếu thanh lý</th>
 									<th>Mã nhân viên</th>
 									<th>Thời gian thanh lý</th>
 									<th>Ghi chú</th>
-									<th>Hành động</th>
+									<th class="pull-right">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -66,27 +71,27 @@
 										<td class="table-plus">${phieuthanhly.maptl}</td>
 										<td>${phieuthanhly.nv.manv}</td>
 										<td>${phieuthanhly.thoigian}</td>
-										<td>${phieumuon.ghichu }</td>
-										<td>
+										<td>${phieuthanhly.ghichu }</td>
+										<td class="pull-right">
 											<div class="row clearfix btn-list">
 												<form action="phieuthanhly/edit/${phieuthanhly.maptl}">
-													<button class="btn btn-primary" type="submit"
+													<button class="btn btn-info bg-purple" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
-														<i class="material-icons">edit</i>
+														<span class="material-icons ">edit</span>
 													</button>
 												</form>
 												<form action="phieuthanhly/delete" method="post">
-													<!--Dùng để hiển thị tên lên form  -->
-													<!--Dùng để gửi về controller  -->
-													<input type="hidden" name="maptl"
-														value="${phieuthanhly.maptl}" />
+													<!-- Dùng để hiển thị tên lên form  -->
+													<input type="hidden" name="manv" value="${phieuthanhly.nv.manv}" />
+													<!-- Dùng để gửi về controller  -->
+													<input type="hidden" name="maptl" value="${phieuthanhly.maptl}" />
 													<button type="submit" style="display: none"
 														class="submit_del_btn"></button>
 												</form>
-												<button class="btn btn-danger delete_btn"
+												<button class="btn btn-danger delete_btn bg-red"
 													data-toggle="tooltip" data-placement="top" title="Xoá"
 													type="button">
-													<i class="material-icons">delete</i>
+													<span class="material-icons delete_btn">delete</span>
 												</button>
 											</div>
 										</td>
@@ -106,18 +111,21 @@
 		aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Thêm phiếu thanh lý</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Thêm phiếu thanh lý</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
-						</div>
+
 						<form:form action="phieuthanhly" modelAttribute="phieuthanhly_moi"
 							method="post">
-							<!--=================================== cột 1 ========================================= -->
+							<!-- 							=================================== cột 1 ========================================= -->
 							<div class="row">
 								<div class="col-sm-12 col-md-6">
 									<div class="form-group row">
@@ -162,99 +170,60 @@
 									</div>
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
-								<div class="col">
-									<div class="form-group row">
-										<div class="col-sm-8 col-md-4">											
-											<select class="selectpicker form-control" name="thietBi1"
-												style="width: 100%; height: 38px;" >
-												<option value="">Thiết bị 1</option>
-												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="${tb1.matb}">${tb1.matb}</option>
-												</c:forEach>
-											</select>
-											<%--<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-4 col-md-3">
-											<input type="text" value="" name="slThietBi1"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-										<div class="col-sm-8 col-md-4">
-											<input type="number" min="0" value="" name="donGiaTB1"
-												class="form-control" placeholder="Đơn giá" />
-										</div>
-									</div>
-									<div class="form-group row">
-										
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi2"
-												style="width: 100%; height: 38px;">
-												<option value="">Thiết bị 2</option>
-												<c:forEach var="tb2" items="${loaiThietBis}">
-													<option value="${tb2.matb}">${tb2.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- <form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi2"
-												class="form-control" placeholder="Số lượng" />
+								<div class="col-sm-12 col-md-6" id='parent-element'>
+
+									<div class="hidden-element" style="display: none">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+
+												<select class="form-control"
+													name="${listThietBi[indexValue]}"
+													style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
+											<div class="col-md-3">
+
+												<input type="number" value="1" min=""
+													name="${listSoLuong[indexValue]}" class="form-control"
+													placeholder="Số lượng" style="width: 100%; height: 45px;" />
+
+											</div>
+
+											<div class="col-md-2">
+
+												<a class="material-icons text-info btn-close-item"
+													type="button"> delete_sweep </a>
+											</div>
 										</div>
 									</div>
-									<div class="form-group row">
-										
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi3"
-												style="width: 100%; height: 38px;">
-												<option value="">Thiết bị 3</option>
-												<c:forEach var="tb3" items="${loaiThietBis}">
-													<option value="${tb3.matb}">${tb3.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi3"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi4"
-												style="width: 100%; height: 38px;">
-												<option value="">Thiết bị 4</option>
-												<c:forEach var="tb4" items="${loaiThietBis}">
-													<option value="${tb4.matb}">${tb4.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi4"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi5"
-												style="width: 100%; height: 38px;">
-												<option value="">Thiết bị 5</option>
-												<c:forEach var="tb5" items="${loaiThietBis}">
-													<option value="${tb5.matb}">${tb5.matb}</option>
-												</c:forEach>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text" value="" name="slThietBi5"
-												class="form-control" placeholder="Số lượng" />
-										</div>
-									</div>
+
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-sm-12 col-md-6"></div>
+								<div class="col-sm-12 col-md-6 align-self-end">
+									<button type='button' class="form-control text-info "
+										id='btn-add-element'>
+										<span class="material-icons text-info">add_circle_outline</span>
+										Thêm thiết bị thanh lý
+									</button>
+								</div>
+
+							</div>
+							<hr>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-dark	" data-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Đóng</button>
+								<input type="hidden" name="indexValue" id="input-index-submit"
+									value='0' /> <input type="hidden" name="demValue"
+									id="input-dem-submit" value='0' />
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
@@ -272,15 +241,17 @@
 		aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Sửa phiếu thanh lý</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Sửa phiếu thanh lý</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
-						</div>
 						<form:form action="phieuthanhly/update"
 							modelAttribute="phieuthanhly_sua" method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -296,16 +267,18 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-4 col-md-4 col-form-label">Nhân
-											viên</label>
+										<label class="col-sm-4 col-md-4 col-form-label">Mã
+											nhân viên</label>
 										<div class="col-sm-4 col-md-8">
+											<form:errors path="nv.manv" />
 											<form:select class="selectpicker form-control" path="nv.manv"
-												style="width: 100%; height: 38px;" items="${listNhanViens}"
-												itemValue="manv" itemLabel="ten">
+												style="width: 100%; height: 38px;">
+												<form:option value="" label="-Vui lòng chọn 1-" />
+												<form:options items="${listNhanViens}" itemValue="manv"
+													itemLabel="manv" />
 											</form:select>
 										</div>
 									</div>
-									
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian thanh lý</label>
@@ -326,129 +299,63 @@
 									</div>
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
-								<div class="col-sm-12 col-md-6">
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 1</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi1"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieuthanhly_sua.ct_phieuthanhlys[0].thietbi_thanhly.matb}">${phieuthanhly_sua.ct_phieuthanhlys[0].thietbi_thanhly.matb}</option>
-												<c:forEach var="tb1" items="${loaiThietBis}">
-													<option value="${tb1.matb}">${tb1.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 																						<form:select class="selectpicker form-control" path="ct_phieumuons"   --%>
-											<%-- 											  												style="width: 100%; height: 38px;" items="${loaiThietBis}"   --%>
-											<%-- 											  												itemValue="matb" itemLabel="ten">   --%>
-											<%-- 											  											</form:select>  --%>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieuthanhly_sua.ct_phieuthanhlys[0].soluong}"
-												name="slThietBi1" class="form-control"
-												placeholder="Số lượng" />
-											<%-- 												<form:input class="form-control" type="text" path="ct_phieumuons[0].soluong" --%>
-											<%-- 												placeholder="Nhập ghi chú" /> --%>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 2</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi2"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieuthanhly_sua.ct_phieuthanhlys[1].thietbi_thanhly.matb}">${phieuthanhly_sua.ct_phieuthanhlys[1].thietbi_thanhly.matb}</option>
-												<c:forEach var="tb2" items="${loaiThietBis}">
-													<option value="${tb2.matb}">${tb2.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieuthanhly_sua.ct_phieuthanhlys[1].soluong}"
-												name="slThietBi2" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 3</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi3"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieuthhanhly_sua.ct_phieuthanhlys[2].thietbi_thanhly.matb}">${phieuthanhly_sua.ct_phieuthanhlys[2].thietbi_thanhly.matb}</option>
-												<c:forEach var="tb3" items="${loaiThietBis}">
-													<option value="${tb3.matb}">${tb3.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieuthanhly_sua.ct_phieuthanhlys[2].soluong}"
-												name="slThietBi3" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 4</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi4"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieuthanhly_sua.ct_phieuthanhlys[3].thietbi_thanhly.matb}">${phieuthanhly_sua.ct_phieuthanhlys[3].thietbi_thanhly.matb}</option>
-												<c:forEach var="tb4" items="${loaiThietBis}">
-													<option value="${tb4.matb}">${tb4.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieuthanhly_sua.ct_phieuthanhlys[3].soluong}"
-												name="slThietBi4" class="form-control"
-												placeholder="Số lượng" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-4 col-md-3 col-form-label">Thiết
-											bị 5</label>
-										<div class="col-sm-4 col-md-6	">
-											<select class="selectpicker form-control" name="thietBi5"
-												style="width: 100%; height: 38px;">
-												<option
-													value="${phieuthanhly_sua.ct_phieuthanhlys[4].thietbi_thanhly.matb}">${phieuthanhly_sua.ct_phieuthanhlys[4].thietbi_thanhly.matb}</option>
-												<c:forEach var="tb5" items="${loaiThietBis}">
-													<option value="${tb5.matb}">${tb5.matb}</option>
-												</c:forEach>
-												<option value="">Nothing selected</option>
-											</select>
-											<%-- 														<form:errors path="loai.id" /> --%>
-										</div>
-										<div class="col-sm-6 col-md-3">
-											<input type="text"
-												value="${phieuthanhly_sua.ct_phieuthanhlys[4].soluong}"
-												name="slThietBi5" class="form-control"
-												placeholder="Số lượng" />
+								<div class="col-sm-12 col-md-6" id='parent-element-update'>
+									<div class="hidden-element-update" style="display: none">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+												<select class="form-control" name="thietBi0"
+													style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
+
+											<div class="col-md-3">
+												<input type="number" value="0" name="slThietBi0"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
+
+											</div>
+
+											<div class="col-md-2">
+
+												<a class="material-icons text-info btn-close-item"
+													type="button"> delete_sweep </a>
+											</div>
+
+
 										</div>
 									</div>
 								</div>
 							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12 col-md-6"></div>
+								<div class="col-sm-12 col-md-6 align-self-end">
+									<button type='button' class="form-control text-info "
+										id='btn-add-element-edit'>
+										<span class="material-icons text-info">add_circle_outline</span>
+										Thêm thiết bị thanh lý
+									</button>
+								</div>
+
+
+							</div>
 							<div class="modal-footer">
+								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<input type="hidden" name="indexValue"
+									id="input-index-submit-edit" value='0' /> <input type="hidden"
+									name="demValue" id="input-dem-submit-edit" value='0' />
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
+
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
@@ -458,6 +365,10 @@
 	</div>
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
+	<%-- 	<c:if test="${admin}"> --%>
+	<%-- 		<%@include file="/common/left-side-bar-admin.jsp"%> --%>
+	<%-- 	</c:if> --%>
+
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -510,10 +421,10 @@
 		
 		//NẾU CLICK NÚT XOÁ
 		$('#myTable').on('click','.delete_btn',function(){
-			let ten = $(this).parent().find("input[name='maptl']").val();
+			let ten = $(this).parent().find("input[name='ten']").val();
 			let delete_btn = $(this).parent().find('.submit_del_btn');
 			Swal.fire({
-				title: 'Xoá [' + ten + '] ?',
+				title: 'Xoá ' + ten + ' ?',
 				text: "Dữ liệu không thể khôi phục sau thao tác này!",
 				icon: 'warning',
 				showCancelButton: true,
@@ -548,6 +459,207 @@
 			})
 		}
 	</script>
-	<!-- 	</script> -->
+
+	<script>
+		var index=0;
+		var dem = 0;
+	</script>
+
+
+
+	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
+	<script>
+									
+		const btn = document.getElementById('btn-add-element')
+		btn.addEventListener('click', function(e){
+			
+			
+			var index1 = index+1 ;
+			var thietBiCu = '${listThietBi[indexValue]}';
+			var thietBiMoi = "thietBi" + index1;
+						
+			
+			var slThietBiCu = '${listSoLuong[indexValue]}';
+			var slThietBiMoi = "slThietBi" + index1;	
+ 			index=index1;
+		
+			console.log(${listThietBi[1]});
+			const ele = document.querySelector('.hidden-element')
+			const parent = document.getElementById('parent-element')
+			 
+			let htmlEle = ele.innerHTML;
+			
+			htmlEle = htmlEle.replace(thietBiCu, thietBiMoi)
+			htmlEle = htmlEle.replace(slThietBiCu,slThietBiMoi)
+			
+			const newEle = document.createElement('div')
+			newEle.innerHTML = htmlEle
+
+			// add event delete
+			
+			const item = newEle.childNodes[1].childNodes[7];
+			item.addEventListener('click', function(){
+				newEle.remove()
+				dem = dem - 1;
+				
+				var input_them = document.getElementById('input-index-submit')
+			    input_them.value = index;
+				var demValue = document.getElementById('input-dem-submit')
+			    demValue.value = dem;
+			})
+			
+			
+			
+ 			parent.appendChild(newEle)  
+ 			dem = dem + 1;
+ 			
+ 			var input_them = document.getElementById('input-index-submit')
+		    input_them.value = index;
+			var demValue = document.getElementById('input-dem-submit')
+		    demValue.value = dem;
+
+			console.log(htmlEle)
+
+		})
+			
+		</script>
+
+	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
+	<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
+
+	<!-- 	Thêm thiết bị khi click edit phiếu thanh lý -->
+	<c:if test="${slThietBiSua!=0}">
+		<c:forEach var="sl" items="${phieuthanhly_sua.ct_phieuthanhlys}">
+			<script>
+				//Thay đổi name thiết bị 
+				var index1 = index+1 ;
+				var thietBiCu = 'thietBi0';
+				var thietBiMoi = "thietBi" + index1;
+					
+				//Thay đổi name số lượng
+				var slThietBiCu = 'slThietBi0';
+				var slThietBiMoi = "slThietBi" + index1;	
+	 			index=index1;
+			
+	 			//Thay đổi giá trị thiết bị với tên thiết bị
+	 			var valueTenTbCu = 'value=""'
+	 			var valueTenTbMoi = 'value='+'"${sl.thietbi_thanhly.matb}"'
+	 			
+	 			var tenTbCu = 'Chọn thiết bị'
+	 			var tenTbMoi = '${sl.thietbi_thanhly.matb}'
+	 			
+	 			var tenSlCu= 'Số lượng'
+	 			var tenSlMoi = '${sl.soluong}'
+	 			
+	 			var valueSlCu = 'value="0"'
+	 			var valueSlMoi = 'value='+'"${sl.soluong}"'
+	 			
+	 			/// Bắt đầu từ đây, các biến sẽ gán 1 giá trị để cho mỗi vòng lặp lặp thì tên biến sẽ không trùng.
+				var  ele${sl.thietbi_thanhly.matb} = document.querySelector('.hidden-element-update')
+				const parent${sl.thietbi_thanhly.matb} = document.getElementById('parent-element-update')
+				 
+				let htmlEle${sl.thietbi_thanhly.matb} = ele${sl.thietbi_thanhly.matb}.innerHTML;
+				
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(thietBiCu, thietBiMoi)
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(slThietBiCu,slThietBiMoi)
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(valueTenTbCu,valueTenTbMoi)
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(tenTbCu,tenTbMoi)
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(tenSlCu,tenSlMoi)
+				htmlEle${sl.thietbi_thanhly.matb} = htmlEle${sl.thietbi_thanhly.matb}.replace(valueSlCu,valueSlMoi)
+				
+				const newEle${sl.thietbi_thanhly.matb} = document.createElement('div')
+				newEle${sl.thietbi_thanhly.matb}.innerHTML = htmlEle${sl.thietbi_thanhly.matb}
+
+				// add event delete
+				
+				const item${sl.thietbi_thanhly.matb} = newEle${sl.thietbi_thanhly.matb}.childNodes[1].childNodes[7];
+				item${sl.thietbi_thanhly.matb}.addEventListener('click', function(){
+					newEle${sl.thietbi_thanhly.matb}.remove()
+					dem = dem - 1;
+					var input_them${sl.thietbi_thanhly.matb} = document.getElementById('input-index-submit-edit')
+				    input_them${sl.thietbi_thanhly.matb}.value = index;
+					var demValue${sl.thietbi_thanhly.matb} = document.getElementById('input-dem-submit-edit')
+				    demValue${sl.thietbi_thanhly.matb}.value = dem;
+					
+				})
+				
+					
+				
+				
+	 			parent${sl.thietbi_thanhly.matb}.appendChild(newEle${sl.thietbi_thanhly.matb})  
+	 			dem = dem + 1;
+	 			
+	 			var input_them${sl.thietbi_thanhly.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_thanhly.matb}.value = index;
+				var demValue${sl.thietbi_thanhly.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_thanhly.matb}.value = dem;
+		
+	</script>
+		</c:forEach>
+
+	</c:if>
+
+	<script>
+									
+		const btn1 = document.getElementById('btn-add-element-edit')
+		btn1.addEventListener('click', function(e){
+			
+			var index1 = index+1 ;
+			var thietBiCu = 'thietBi0';
+			var thietBiMoi = "thietBi" + index1;
+						
+			
+			var slThietBiCu = 'slThietBi0';
+			var slThietBiMoi = "slThietBi" + index1;	
+ 			index=index1;
+		
+			console.log(${listThietBi[1]});
+			const ele = document.querySelector('.hidden-element-update')
+			const parent = document.getElementById('parent-element-update')
+			 
+			let htmlEle = ele.innerHTML;
+			
+			htmlEle = htmlEle.replace(thietBiCu, thietBiMoi)
+			htmlEle = htmlEle.replace(slThietBiCu,slThietBiMoi)
+			
+			const newEle = document.createElement('div')
+			newEle.innerHTML = htmlEle
+
+			// add event delete
+			
+			const item = newEle.childNodes[1].childNodes[7];
+			item.addEventListener('click', function(){
+				newEle.remove()
+				dem = dem - 1;
+				var input_them${sl.thietbi_thanhly.matb} = document.getElementById('input-index-submit-edit')
+			    input_them${sl.thietbi_thanhly.matb}.value = index;
+				var demValue${sl.thietbi_thanhly.matb} = document.getElementById('input-dem-submit-edit')
+			    demValue${sl.thietbi_thanhly.matb}.value = dem;
+				
+			})
+			
+				
+			
+			
+ 			parent.appendChild(newEle)  
+ 			dem = dem + 1;
+ 			
+ 			var input_them = document.getElementById('input-index-submit-edit')
+		    input_them.value = index;
+			var demValue = document.getElementById('input-dem-submit-edit')
+		    demValue.value = dem;
+
+			console.log(htmlEle)
+
+		})			
+	</script>
+	<!-- Xoá thiết bị -->
+	<script>
+		$('#parent-element').on('click', '.xoa-thiet-bi', function(){
+			$(this).parent().remove()
+			
+		})
+	</script>
+
 </body>
 </html>

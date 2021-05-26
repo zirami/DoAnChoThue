@@ -37,15 +37,14 @@ public class QuanLiController {
 	public QUANLI quanli_sua() {
 		return new QUANLI();
 	}
-
-	// DANH SÁCH GIỚI TÍNH ĐỂ SELECT
-	@ModelAttribute("gioiTinhs")
-	public List<String> getGioiTinhs() {
-		List<String> list = new ArrayList<>();
-		list.add("Nam");
-		list.add("Nữ");
-		return list;
-	}
+	//DANH SÁCH GIỚI TÍNH ĐỂ SELECT
+		@ModelAttribute("gioiTinhs")
+		public List<String> getGioiTinhs() {
+			List<String> list = new ArrayList<>();
+			list.add("Nam");
+			list.add("Nữ");
+			return list;
+		}
 
 	@RequestMapping(value = "qlquanli", method = RequestMethod.GET)
 	public String home(ModelMap model) {
@@ -57,7 +56,7 @@ public class QuanLiController {
 	@RequestMapping(value = "qlquanli", method = RequestMethod.POST)
 	public String insert(ModelMap model, @Valid @ModelAttribute("quanli_moi") QUANLI quanli_moi,
 			BindingResult reusult) {
-		System.out.println("has error: " + reusult.getFieldError());
+		System.out.println("has error: " + reusult.hasErrors());
 		model.addAttribute("them_saidinhdang", reusult.hasErrors());
 		model.addAttribute("quanli_moi", quanli_moi);
 
@@ -65,7 +64,7 @@ public class QuanLiController {
 			return home(model);
 
 		model.addAttribute("insert", new QuanLiDAO().save(factory, quanli_moi)); // Xử lý thông báo thêm thành
-																					// công
+																						// công
 
 		return home(model);
 	}
@@ -81,19 +80,19 @@ public class QuanLiController {
 		return home(model);
 	}
 
-	// UPDATE
-	@RequestMapping(value = "qlquanli/update", method = RequestMethod.POST)
-	public String update(ModelMap model, @Valid @ModelAttribute("quanli_sua") QUANLI quanli_sua,
-			BindingResult reusult) {
-		System.out.println("has error: " + reusult.getFieldErrors().toString());
-		model.addAttribute("sua_saidinhdang", reusult.hasErrors());
-		model.addAttribute("quanli_sua", quanli_sua);
-		if (reusult.hasErrors())
+		// UPDATE
+		@RequestMapping(value = "qlquanli/update", method = RequestMethod.POST)
+		public String update(ModelMap model, @Valid @ModelAttribute("quanli_sua") QUANLI quanli_sua, BindingResult reusult) {
+			System.out.println("has error: " + reusult.getFieldErrors().toString());
+			model.addAttribute("sua_saidinhdang", reusult.hasErrors());
+			model.addAttribute("quanli_sua", quanli_sua);
+			if (reusult.hasErrors())
+				return home(model);
+
+			model.addAttribute("update", new QuanLiDAO().update(factory, quanli_sua));
 			return home(model);
-		model.addAttribute("update", new QuanLiDAO().update(factory, quanli_sua));
-		return home(model);
-	}
-// XÓA
+		}
+
 	@RequestMapping(value = "qlquanli/delete", method = RequestMethod.POST)
 	public String del(ModelMap model, @RequestParam("maql") String maql) {
 		System.out.println("maql = " + maql);

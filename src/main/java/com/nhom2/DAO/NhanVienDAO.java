@@ -2,20 +2,21 @@ package com.nhom2.DAO;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.nhom2.entity.NGUOIMUON;
 import com.nhom2.entity.NHANVIEN;
+import com.nhom2.entity.THIETBI;
+
 @Transactional
 public class NhanVienDAO {
-	
-	/* HIỂN THỊ DANH SÁCH  */
-	public List<NHANVIEN> getAll(SessionFactory factory){
+	/* HIỂN THỊ DANH SÁCH NHÂN VIÊN */
+	public List<NHANVIEN> getAll(SessionFactory factory) {
 		Session session;
 
 		/* Nếu chưa có session nào thì tạo session mới */
@@ -31,7 +32,7 @@ public class NhanVienDAO {
 		List<NHANVIEN> list = query.list();
 		return list;
 	}
-	
+
 	/* THÊM NHÂN VIÊN */
 	public Boolean save(SessionFactory factory, NHANVIEN nhanvien_them) {
 		Session session = factory.openSession();
@@ -52,6 +53,7 @@ public class NhanVienDAO {
 
 		return result;
 	}
+
 	/* SỬA */
 	public Boolean update(SessionFactory factory, NHANVIEN nhanvien_sua) {
 		Session session = factory.openSession();
@@ -59,21 +61,21 @@ public class NhanVienDAO {
 		Boolean result = true;
 		try {
 			session.update(nhanvien_sua);
-			t.commit();	
+			t.commit();
 			result = true;
-			
 
 		} catch (Exception e) {
 			t.rollback();
 			result = false;
-			
+
 		} finally {
 			session.close();
 		}
-		
+
 		return result;
 	}
-	/* XÓA NHÂN VIÊN */
+
+	/* XÓA  */
 	public Boolean del(SessionFactory factory, NHANVIEN nhanvien_xoa) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -94,9 +96,9 @@ public class NhanVienDAO {
 
 		return result;
 	}
-	
-	/* TÌM KIẾM BẰNG ID*/
-	public NHANVIEN getById(String id, SessionFactory factory){
+
+	/* TÌM BẰNG ID */
+	public NHANVIEN getById(String id, SessionFactory factory) {
 		Session session;
 
 		/* Nếu chưa có session nào thì tạo session mới */
@@ -105,13 +107,14 @@ public class NhanVienDAO {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "from NHANVIEN where manv = :id";
-		
-		/* Bắt đầu quá trình truy vấn vào DB */
-
-		Query<NHANVIEN> query = session.createQuery(hql);		
-		query.setParameter("id", id.toString()	);
-		NHANVIEN list = query.list().get(0);
+//		String hql = "from THIETBI where matb = :id";
+//		
+//		/* Bắt đầu quá trình truy vấn vào DB */
+//
+		NHANVIEN list = session.get(NHANVIEN.class, id);
+		// Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 nhân viên
 		return list;
 	}
+
 }
+

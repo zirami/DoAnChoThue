@@ -73,7 +73,7 @@
 									varStatus="row">
 									<tr>
 										<td class="table-plus">${nhanvien.manv}</td>
-										<td>${nhanvien.ho}${nhanvien.ten}</td>
+										<td>${nhanvien.ho} ${nhanvien.ten}</td>
 										<td>${nhanvien.gioitinh}</td>
 										<td>${nhanvien.ngaysinh}</td>
 										<td>${nhanvien.diachi}</td>
@@ -212,7 +212,7 @@
 								<div class="col-sm-12 col-md-10">
 									<form:errors path="acc.username" />
 									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập chứng minh nhân dân" />
+										placeholder="Nhập username" />
 								</div>
 							</div>
 							<div class="modal-footer">

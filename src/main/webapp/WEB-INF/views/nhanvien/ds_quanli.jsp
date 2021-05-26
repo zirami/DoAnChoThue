@@ -180,7 +180,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ngày tiếp nhận</label>
 								<div class="col-sm-12 col-md-10">
-									<form:errors path="ngaysinh" />
+									<form:errors path="ngaytiepnhan" />
 									<form:input class="form-control" path="ngaytiepnhan"
 										placeholder="Chọn ngày sinh" type="date" />
 								</div>
@@ -223,7 +223,7 @@
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-blue h4">Sửa thông tin người mượn</h4>
+								<h4 class="text-blue h4">Sửa thông tin người quản lí</h4>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>
