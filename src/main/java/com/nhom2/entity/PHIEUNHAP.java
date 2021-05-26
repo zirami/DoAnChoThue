@@ -1,5 +1,6 @@
 package com.nhom2.entity;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -32,38 +33,41 @@ public class PHIEUNHAP {
 	@JoinColumn(name = "MANV")
 	public NHANVIEN nhanvien;
 
-
 	@Column(name = "GHICHU")
-	public String ghinhu;
-	
+	public String ghichu;
+
 	@Column(name = "TRANGTHAI")
 	public String trangthai;
 
 	@OneToMany(mappedBy = "phieunhap", fetch = FetchType.EAGER)
 	private List<CT_PHIEUNHAP> ct_phieunhaps;
-	
+
 	@ManyToOne
-	@JoinColumn(name="MANCC")
+	@JoinColumn(name = "MANCC")
 	public NHACUNGCAP ncc;
 
 	public PHIEUNHAP() {
 		super();
 	}
-	
-	
 
-	public PHIEUNHAP(String mapn, Date thoigiannhap, NHANVIEN nhanvien, String ghinhu, List<CT_PHIEUNHAP> ct_phieunhaps,
+	public PHIEUNHAP(String mapn, Date thoigiannhap, NHANVIEN nhanvien, String ghichu, List<CT_PHIEUNHAP> ct_phieunhaps,
 			NHACUNGCAP ncc) {
 		super();
 		this.mapn = mapn;
 		this.thoigiannhap = thoigiannhap;
 		this.nhanvien = nhanvien;
-		this.ghinhu = ghinhu;
+		this.ghichu = ghichu;
 		this.ct_phieunhaps = ct_phieunhaps;
 		this.ncc = ncc;
 	}
 
+	public String getTrangthai() {
+		return trangthai;
+	}
 
+	public void setTrangthai(String trangthai) {
+		this.trangthai = trangthai;
+	}
 
 	public String getMapn() {
 		return mapn;
@@ -89,12 +93,12 @@ public class PHIEUNHAP {
 		this.nhanvien = nhanvien;
 	}
 
-	public String getGhinhu() {
-		return ghinhu;
+	public String getGhichu() {
+		return ghichu;
 	}
 
-	public void setGhinhu(String ghinhu) {
-		this.ghinhu = ghinhu;
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
 	}
 
 	public List<CT_PHIEUNHAP> getCt_phieunhaps() {
@@ -112,9 +116,5 @@ public class PHIEUNHAP {
 	public void setNcc(NHACUNGCAP ncc) {
 		this.ncc = ncc;
 	}
-
-	
-	
-	
 
 }

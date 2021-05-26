@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
+//@Entity
 @Table(name="CT_PHIEUTHANHLY")
 public class CT_PHIEUTHANHLY {
 	@Id

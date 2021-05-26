@@ -65,7 +65,8 @@
 									<td class="table-plus">${pn.mapn}</td>
 									<td>${pn.thoigiannhap}</td>
 									<td>${pn.ncc.ten}</td>
-									<td>${pn.nhanvien.ho}${pn.nhanvien.ten}</td>
+									<c:set var="hoten" value="${pn.nhanvien.ho} ${pn.nhanvien.ten}" />
+									<td>${hoten}</td>
 									<!-- Tình trạng -->
 									<c:choose>
 										<c:when test="${pn.trangthai.equals(choXacNhan)}">

@@ -67,32 +67,32 @@ public class NHANVIEN {
 	@JoinColumn(name = "USERNAME")
 	private ACCOUNT acc;
 
-	@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
-	private Collection<PHIEUTHANHLY> phieuthanhlys;
+	//@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
+	//private Collection<PHIEUTHANHLY> phieuthanhlys;
 
 	@OneToMany(mappedBy = "nhanvien", fetch = FetchType.EAGER)
-	private List<CT_PHIEUNHAP> phieunhaps;
+	private Collection<PHIEUNHAP> phieunhaps;
 
 	public NHANVIEN() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<CT_PHIEUNHAP> getPhieunhaps() {
+	public Collection<PHIEUNHAP> getPhieunhaps() {
 		return phieunhaps;
 	}
 
-	public void setPhieunhaps(List<CT_PHIEUNHAP> phieunhaps) {
+	public void setPhieunhaps(Collection<PHIEUNHAP> phieunhaps) {
 		this.phieunhaps = phieunhaps;
 	}
 
-	public Collection<PHIEUTHANHLY> getPhieuthanhlys() {
-		return phieuthanhlys;
-	}
-
-	public void setPhieuthanhlys(Collection<PHIEUTHANHLY> phieuthanhlys) {
-		this.phieuthanhlys = phieuthanhlys;
-	}
+//	public Collection<PHIEUTHANHLY> getPhieuthanhlys() {
+//		return phieuthanhlys;
+//	}
+//
+//	public void setPhieuthanhlys(Collection<PHIEUTHANHLY> phieuthanhlys) {
+//		this.phieuthanhlys = phieuthanhlys;
+//	}
 
 	public String getManv() {
 		return manv;
