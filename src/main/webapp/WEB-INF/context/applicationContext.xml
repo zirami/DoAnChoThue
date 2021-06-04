@@ -76,4 +76,10 @@
 		p:sessionFactory-ref="sessionFactory" />
 	<tx:annotation-driven
 		transaction-manager="transactionManger" />
+
+	<bean id="uploadfile" class="com.nhom2.bean.UploadFile">
+		<property name="basePath" value="C:\Users\n18dc\eclipse-workspace\DoAnChoThue\DoAnChoThue\src\main\webapp\resources\files" />
+<!-- 			Đường dẫn đến workspace -->
+			
+	</bean>
 </beans>

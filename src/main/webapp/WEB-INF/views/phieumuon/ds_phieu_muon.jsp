@@ -19,7 +19,7 @@ h4 {
 
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
-	
+
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
@@ -49,60 +49,64 @@ h4 {
 						</div>
 					</div>
 				</div>
-				<!-- Hiển thị danh sách người mượn -->
-				<div class="card-box mb-30">
-					<hr>
-					<div class="pb-20">
-						<table class="table nowrap  dataTable no-footer collapsed"
-							id="myTable" role="grid">
-							<thead class="table-info bg-table">
-								<tr>
-									<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
-									<th>Người mượn</th>
-									<th>Mã nhân viên</th>
-									<th>Thời gian mượn</th>
-									<th>Thời gian trả</th>
-									<th>Ghi chú</th>
-									<th class="pull-right">Hành động</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="phieumuon" items="${listPhieuMuon}"
-									varStatus="row">
+				<div class="page-body">
+					<!-- Hiển thị danh sách người mượn -->
+					<div class="card-box md-30">
+						<hr>
+						<div>
+							<table
+								class="table nowrap  dataTable no-footer collapsed table-border-factor"
+								style="width: 98%" id="myTable" role="grid">
+								<thead class="table-info">
 									<tr>
-										<td class="table-plus">${phieumuon.mapm}</td>
-										<td>${phieumuon.nm.ten}</td>
-										<td>${phieumuon.manv}</td>
-										<td>${phieumuon.thoigianmuon}</td>
-										<td>${phieumuon.thoigiantra}</td>
-										<td>${phieumuon.ghichu }</td>
-										<td class="pull-right">
-											<div class="row clearfix btn-list">
-												<form action="phieumuon/edit/${phieumuon.mapm}">
-													<button class="btn btn-info bg-purple" type="submit"
-														data-toggle="tooltip" data-placement="top" title="Sửa">
-														<span class="material-icons ">edit</span>
-													</button>
-												</form>
-												<form action="phieumuon/delete" method="post">
-													<!-- 														Dùng để hiển thị tên lên form  -->
-													<input type="hidden" name="ten" value="${phieumuon.nm.ten}" />
-													<!-- 														Dùng để gửi về controller  -->
-													<input type="hidden" name="mapm" value="${phieumuon.mapm}" />
-													<button type="submit" style="display: none"
-														class="submit_del_btn"></button>
-												</form>
-												<button class="btn btn-danger delete_btn bg-red"
-													data-toggle="tooltip" data-placement="top" title="Xoá"
-													type="button">
-													<span class="material-icons delete_btn">delete</span>
-												</button>
-											</div>
-										</td>
+										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
+										<th>Người mượn</th>
+										<th>Mã nhân viên</th>
+										<th>Thời gian mượn</th>
+										<th>Thời gian trả</th>
+										<th>Ghi chú</th>
+										<th class="pull-right">Hành động</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach var="phieumuon" items="${listPhieuMuon}"
+										varStatus="row">
+										<tr>
+											<td class="table-plus">${phieumuon.mapm}</td>
+											<td>${phieumuon.nm.ten}</td>
+											<td>${phieumuon.manv}</td>
+											<td>${phieumuon.thoigianmuon}</td>
+											<td>${phieumuon.thoigiantra}</td>
+											<td>${phieumuon.ghichu }</td>
+											<td class="pull-right">
+												<div class="row clearfix btn-list">
+													<form action="phieumuon/edit/${phieumuon.mapm}">
+														<button class="btn btn-info bg-purple" type="submit"
+															data-toggle="tooltip" data-placement="top" title="Sửa">
+															<span class="material-icons ">edit</span>
+														</button>
+													</form>
+													<form action="phieumuon/delete" method="post">
+														<!-- 														Dùng để hiển thị tên lên form  -->
+														<input type="hidden" name="ten"
+															value="${phieumuon.nm.ten}" />
+														<!-- 														Dùng để gửi về controller  -->
+														<input type="hidden" name="mapm" value="${phieumuon.mapm}" />
+														<button type="submit" style="display: none"
+															class="submit_del_btn"></button>
+													</form>
+													<button class="btn btn-danger delete_btn"
+														data-toggle="tooltip" data-placement="top" title="Xoá"
+														type="button">
+														<span class="material-icons delete_btn">delete</span>
+													</button>
+												</div>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<!-- Simple Datatable End -->

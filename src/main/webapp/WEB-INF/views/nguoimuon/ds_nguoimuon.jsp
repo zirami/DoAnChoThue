@@ -54,7 +54,7 @@
 					${message}
 					<hr>
 					<div class="pb-20">
-						<table class="data-table table stripe hover nowrap" id="myTable">
+						<table class="table hover nowrap" id="myTable">
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">Mã người mượn</th>
@@ -72,19 +72,21 @@
 								<c:forEach var="nguoimuon" items="${listNguoiMuon}"
 									varStatus="row">
 									<tr>
+										
 										<td class="table-plus">${nguoimuon.manm}</td>
-										<td>${nguoimuon.ho}</td>
+										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nguoimuon.ho}</p></td>
 										<td>${nguoimuon.ten}</td>
 										<td>${nguoimuon.gioitinh}</td>
 										<td>${nguoimuon.ngaysinh}</td>
-										<td>${nguoimuon.diachi}</td>
+										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nguoimuon.diachi}</p></td>
 										<td>${nguoimuon.cmnd}</td>
 										<c:choose>
-											<c:when test="${nguoimuon.ghichu.isEmpty()}">
-												<td>${nguoimuon.ghichu}</td>
+											<c:when test="${nguoimuon.ghichu.isEmpty()==false}">
+												<td><p style="width: 100px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nguoimuon.ghichu}</p>
+												</td>
 											</c:when>
 											<c:otherwise>
-												<td>-</td>
+												<td> - </td>
 											</c:otherwise>
 										</c:choose>
 										<td>
@@ -114,7 +116,9 @@
 												</button>
 											</div> <!-- 											</div> -->
 										</td>
+										
 									</tr>
+									
 								</c:forEach>
 							</tbody>
 						</table>

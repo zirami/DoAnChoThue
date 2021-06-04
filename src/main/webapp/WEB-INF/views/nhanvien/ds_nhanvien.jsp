@@ -34,7 +34,7 @@
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="phieumua">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -42,7 +42,8 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#" id="insert_btn" class="btn btn-primary"
+						<a href="qlnhanvien" class="btn bg-purple text-yellow" type="button">Làm mới</a> 
+							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">Thêm nhân viên </a>
 						</div>
@@ -55,8 +56,9 @@
 					<hr>
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap" id="myTable">
-							<thead>
+							<thead class="table-info" >
 								<tr>
+									<th>Hình ảnh</th>
 									<th class="table-plus datatable-nosort">Mã NV</th>
 									<th>Họ và Tên</th>
 									<th>Giới tính</th>
@@ -72,8 +74,9 @@
 								<c:forEach var="nhanvien" items="${listNhanVien}"
 									varStatus="row">
 									<tr>
+										<td><img src="resources/files/${nhanvien.hinh }" style="width: 100px; height: 100px"></td>
 										<td class="table-plus">${nhanvien.manv}</td>
-										<td>${nhanvien.ho} ${nhanvien.ten}</td>
+										<td>${nhanvien.ho}  ${nhanvien.ten}</td>
 										<td>${nhanvien.gioitinh}</td>
 										<td>${nhanvien.ngaysinh}</td>
 										<td>${nhanvien.diachi}</td>
@@ -84,7 +87,7 @@
 											<div class="row clearfix btn-list">
 												<!-- 												<div class=""> -->
 												<form action="qlnhanvien/edit/${nhanvien.manv}">
-													<button class="btn btn-primary" type="submit"
+													<button class="btn bg-purple text-white" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
 														<i class="material-icons">edit</i>
 													</button>
@@ -121,52 +124,107 @@
 	<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Thêm nhân viên</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Thêm nhân viên</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
-						</div>
 						<form:form action="qlnhanvien" modelAttribute="nhanvien_moi"
-							method="post">
+							method="post" enctype="multipart/form-data">
+							<div class="row">
+							<div class = "col-sm-12 col-md-6">
+								<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Hình đại diện</label>
+								<div class="col-sm-12 col-md-8">
+									<input name="photo" class="form-control" type="file"
+										placeholder="Nhập mã quản lí" required="required"/>
+								</div>
+							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									người mượn</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="manv" />
+								<label class="col-sm-12 col-md-3 col-form-label">Mã QL</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="ql.maql" /> --%>
+									<form:input path="ql.maql" class="form-control" type="text"
+										placeholder="Nhập mã quản lí" required="required"/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Username
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<input name="username" class="form-control" type="text"
+										placeholder="Nhập username" required="required"/>
+<%-- 									<form:errors path="username" /> --%>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Password
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<input name="password" class="form-control" type="password"
+										placeholder="Nhập password" required="required" />
+<%-- 									<form:errors path="password" /> --%>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Gmail
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<input name="gmail" class="form-control" type="text"
+										placeholder="Nhập Gmail" required="required"/>
+<%-- 									<form:errors path="gmail" /> --%>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">SDT</label>
+								<div class="col-sm-12 col-md-8">
+									<input name="sdt" class="form-control" type="text"
+										placeholder="Số điện thoại" required="required"/>
+								</div>
+							</div>
+							</div>
+							<div class = "col-sm-12 col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Mã nhân viên</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="manv" /> --%>
 									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên" />
+										placeholder="Nhập mã nhân viên" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Họ và
-									chữ lót</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ho" />
+								<label class="col-sm-12 col-md-3 col-form-label">Họ và chữ lót</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="ho" /> --%>
 									<form:input class="form-control" type="text" path="ho"
-										placeholder="Nhập họ và chữ lót" />
+										placeholder="Nhập họ và chữ lót" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tên</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ten" />
+								<label class="col-sm-12 col-md-3 col-form-label">Tên</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="ten" /> --%>
 									<form:input class="form-control" type="text" path="ten"
-										placeholder="Nhập tên" />
+										placeholder="Nhập tên" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Giới
+								<label class="col-sm-12 col-md-3 col-form-label">Giới
 									tính</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="gioitinh" />
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="gioitinh" /> --%>
 									<form:select path="gioitinh" class="selectpicker form-control"
-										style="width: 100%; height: 38px;">
+										style="width: 100%; height: 38px;" required="required">
 										<form:option value="" label="-Vui lòng chọn 1-" />
 										<form:options items="${gioiTinhs}" />
 									</form:select>
@@ -174,51 +232,36 @@
 							</div>
 
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Ngày
+								<label class="col-sm-12 col-md-3 col-form-label">Ngày
 									sinh</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ngaysinh" />
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="ngaysinh" /> --%>
 									<form:input class="form-control" path="ngaysinh"
-										placeholder="Chọn ngày sinh" type="date" />
+										placeholder="Chọn ngày sinh" type="date" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="diachi" />
+								<label class="col-sm-12 col-md-3 col-form-label">Địa chỉ</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="diachi" /> --%>
 									<form:input class="form-control" type="text" path="diachi"
-										placeholder="Nhập địa chỉ" />
+										placeholder="Nhập địa chỉ" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="cmnd" />
+								<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
+								<div class="col-sm-12 col-md-8">
+<%-- 									<form:errors path="cmnd" /> --%>
 									<form:input path="cmnd" class="form-control" type="text"
-										placeholder="Nhập chứng minh nhân dân" />
+										placeholder="Nhập chứng minh nhân dân" required="required"/>
 								</div>
 							</div>
-
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã QL</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ql.maql" />
-									<form:input path="ql.maql" class="form-control" type="text"
-										placeholder="Nhập mã quản lí" />
-								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Username</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="acc.username" />
-									<form:input path="acc.username" class="form-control" type="text"
-										placeholder="Nhập username" />
-								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Đóng</button>
-								<button type="submit" class="btn btn-success">Thêm</button>
+								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
 					</div>
@@ -236,103 +279,147 @@
 	<div class="modal fade bs-example-modal-lg" id="bd-edit-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
-				<div class="modal-body">
-					<!-- 					Default Basic Forms Start -->
-					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Sửa thông tin nhân viên</h4>
-								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
-							</div>
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Sửa thông tin nhân viên</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 						</div>
-						<form:form action="qlnhanvien/update"
-							modelAttribute="nhanvien_sua" method="post">
+					</div>
+				</div>
+				<div class="modal-body">
+					<!-- Default Basic Forms Start -->
+					<div class="pd-20 card-box mb-30">
+						<form:form action="qlnhanvien/update" modelAttribute="nhanvien_sua"
+							method="post" enctype="multipart/form-data">
+							<div class="row">
+							<div class = "col-sm-12 col-md-6 ">
+								<div class="form-group row">
+								<label class="col-sm-12 col-md-4 col-form-label">Ảnh đại diện</label>
+								<div class="col-sm-12 col-md-6">
+									<img src="resources/files/${nhanvien_sua.hinh}"	>
+									<input name="photo" class="form-control" type="file" placeholder="Chọn ảnh khác"/>
+									<form:input path="hinh" class="form-control"
+												style="display: none" />
+								</div>
+							</div>
+							
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã nhân
-									viên</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="manv" />
-									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên" />
+								<label class="col-sm-12 col-md-3 col-form-label">Username
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<form:input path="acc.username" class="form-control" type="text" style="display: none"/>
+<%-- 									<form:errors path="username" /> --%>
+										<input class="form-control" type="text" placeholder="${nhanvien_sua.acc.username }" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Họ và
-									chữ lót</label>
-								<div class="col-sm-12 col-md-10">
+								<label class="col-sm-12 col-md-3 col-form-label">Password
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<form:input path="acc.password" class="form-control" type="password"
+										placeholder="Nhập password" />
+<%-- 									<form:errors path="password" /> --%>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Mã QL</label>
+								<div class="col-sm-12 col-md-8">
+									<form:errors path="ql.maql" />
+									<form:input path="ql.maql" class="form-control" type="text"
+										placeholder="Nhập mã quản lí"/>
+								</div>
+							</div>
+							</div>
+							<div class = "col-sm-12 col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Mã nhân viên</label>
+								<div class="col-sm-12 col-md-8">
+									<form:errors path="manv" />
+									<form:input class="form-control" type="text" path="manv"
+										placeholder="Nhập mã nhân viên"  style="display: none"/>
+									<input class="form-control" type="text" placeholder="${nhanvien_sua.manv}" readonly>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-3 col-form-label">Họ và chữ lót</label>
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="ho" />
 									<form:input class="form-control" type="text" path="ho"
 										placeholder="Nhập họ và chữ lót" />
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tên</label>
-								<div class="col-sm-12 col-md-10">
+								<label class="col-sm-12 col-md-3 col-form-label">Tên</label>
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="ten" />
 									<form:input class="form-control" type="text" path="ten"
 										placeholder="Nhập tên" />
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Giới
+								<label class="col-sm-12 col-md-3 col-form-label">Giới
 									tính</label>
-								<div class="col-sm-12 col-md-10">
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="gioitinh" />
-									<form:select path="gioitinh" items="${gioiTinhs}"
-										class="selectpicker form-control"
+									<form:select path="gioitinh" class="selectpicker form-control"
 										style="width: 100%; height: 38px;">
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${gioiTinhs}" />
 									</form:select>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Ngày
+								<label class="col-sm-12 col-md-3 col-form-label">Ngày
 									sinh</label>
-								<div class="col-sm-12 col-md-10">
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="ngaysinh" />
 									<form:input class="form-control" path="ngaysinh"
 										placeholder="Chọn ngày sinh" type="date" />
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
-								<div class="col-sm-12 col-md-10">
+								<label class="col-sm-12 col-md-3 col-form-label">Địa chỉ</label>
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="diachi" />
 									<form:input class="form-control" type="text" path="diachi"
 										placeholder="Nhập địa chỉ" />
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">CMND</label>
-								<div class="col-sm-12 col-md-10">
+								<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
+								<div class="col-sm-12 col-md-8">
 									<form:errors path="cmnd" />
 									<form:input path="cmnd" class="form-control" type="text"
 										placeholder="Nhập chứng minh nhân dân" />
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã QL</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="ql.maql" />
-									<form:input path="ql.maql" class="form-control" type="text"
-										placeholder="Nhập mã quản lí" />
+								<label class="col-sm-12 col-md-3 col-form-label">Gmail
+									</label>
+								<div class="col-sm-12 col-md-8">
+									<form:input path="acc.gmail" class="form-control" type="text"
+										placeholder="Nhập Gmail" />
+<%-- 									<form:errors path="gmail" /> --%>
 								</div>
 							</div>
+							
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Username</label>
-								<div class="col-sm-12 col-md-10">
-									<form:errors path="acc.username" />
-									<form:input path="acc.username" class="form-control"
-										type="text" placeholder="Nhập username" />
+								<label class="col-sm-12 col-md-3 col-form-label">SDT</label>
+								<div class="col-sm-12 col-md-8">
+									<form:input path="acc.sdt" class="form-control" type="text"
+										placeholder="Số điện thoại" />
 								</div>
 							</div>
-
+							</div>
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Đóng</button>
-								<button type="submit" class="btn btn-success">Sửa</button>
+								<button type="submit" class="btn btn-info">Cập nhật</button>
 							</div>
 						</form:form>
 
