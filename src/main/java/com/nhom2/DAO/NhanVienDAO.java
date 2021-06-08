@@ -116,5 +116,24 @@ public class NhanVienDAO {
 		return list;
 	}
 
+	public NHANVIEN getByUserName(String username, SessionFactory factory) {
+		Session hibernate_session;
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			hibernate_session = factory.getCurrentSession();
+		} catch (HibernateException e) {
+			hibernate_session = factory.openSession();
+		}
+		
+		//String hql = "from NHANVIEN where username = :username";
+		NHANVIEN nv = hibernate_session.get(NHANVIEN.class, username);
+		
+		return nv;
+	}
+	
+
+	
+	
+
 }
 

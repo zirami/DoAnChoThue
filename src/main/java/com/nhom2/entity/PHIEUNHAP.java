@@ -1,6 +1,5 @@
 package com.nhom2.entity;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,33 +23,47 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class PHIEUNHAP {
 	@Id
 	@Column(name = "MAPN")
-	public String mapn;
+	@NotBlank
+	private String mapn;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIANNHAP")
-	public Date thoigiannhap;
+	@NotNull
+	private Date thoigiannhap;
 
 	@ManyToOne
 	@JoinColumn(name = "MANV")
-	public NHANVIEN nhanvien;
+	@NotNull
+	private NHANVIEN nhanvien;
 
 	@Column(name = "GHICHU")
-	public String ghichu;
+	private String ghichu;
 
 	@Column(name = "TRANGTHAI")
-	public String trangthai;
+	@NotBlank
+	private String trangthai;
 
-	@OneToMany(mappedBy = "phieunhap", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "phieunhap", fetch = FetchType.LAZY)
 	private List<CT_PHIEUNHAP> ct_phieunhaps;
 
 	@ManyToOne
 	@JoinColumn(name = "MANCC")
-	public NHACUNGCAP ncc;
+	private NHACUNGCAP ncc;
 
 	public PHIEUNHAP() {
 		super();
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "PHIEUNHAP [mapn=" + mapn + ", thoigiannhap=" + thoigiannhap + ", nhanvien=" + nhanvien + ", ghichu="
+				+ ghichu + ", trangthai=" + trangthai + ", ncc=" + ncc + "]";
+	}
+
+
 
 	public PHIEUNHAP(String mapn, Date thoigiannhap, NHANVIEN nhanvien, String ghichu, List<CT_PHIEUNHAP> ct_phieunhaps,
 			NHACUNGCAP ncc) {

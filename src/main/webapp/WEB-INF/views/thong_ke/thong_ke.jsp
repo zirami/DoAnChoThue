@@ -66,10 +66,10 @@
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pb-20 container">
-						<table class="data-table table stripe hover nowrap" id="myTable">
+						<table class="data-table-export table" id="myTable">
 							<thead>
 								<tr>
-									<th class="table-plus datatable-nosort">Tháng/Phiếu</th>
+									<th>Tháng/Phiếu</th>
 									<th>${loaiThongke}</th>
 								</tr>
 							</thead>
@@ -104,22 +104,13 @@
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<!-- DATATABLE EXPORT -->
-	<script
-		src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-	<script
-		src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+	<script src="resources/vendors/scripts/datatable-setting.js"></script>
 	<script type="text/javascript">
 		//LOAD TABLE 
-		$('#myTable').DataTable({
+		/* $('#myTable').DataTable({
 			dom : 'Bfrtip',
 			buttons : [ 'excelHtml5', 'pdfHtml5']
-		});
+		}); */
 
 		Highcharts.chart('chart', {
 			data : {

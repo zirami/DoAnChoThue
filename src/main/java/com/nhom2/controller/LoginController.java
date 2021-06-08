@@ -98,7 +98,7 @@ public class LoginController {
 		
 		//Sau các bước trên không lỗi thì đã đăng nhập thành công
 		model.addAttribute("failLogin", false);
-		
+		session.setAttribute("account_db", account_db);
 		//Nếu là admin thì đẩy về phieumuon
 		if (account_db.getPhanquyen().getMapq().equals("admin")) {
 			
@@ -219,6 +219,7 @@ public class LoginController {
 	public String dangxuat(ModelMap model, HttpSession session) {
 //		session.setAttribute("role", null);
 //		session.setAttribute("user", null);
+		//session.removeAttribute("account_db");
 		return login(model, session);
 	}
 

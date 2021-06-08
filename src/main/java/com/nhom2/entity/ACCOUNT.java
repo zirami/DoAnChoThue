@@ -1,6 +1,7 @@
 package com.nhom2.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,11 +43,25 @@ public class ACCOUNT {
 	private PHANQUYEN phanquyen;
 
 	@OneToMany(mappedBy = "acc", fetch = FetchType.EAGER)
-	private Collection<NHANVIEN> nhanviens;
+	private List<NHANVIEN> nhanviens;
 
 	public ACCOUNT() {
 		super();
 	}
+	
+	
+
+	public List<NHANVIEN> getNhanviens() {
+		return nhanviens;
+	}
+
+
+
+	public void setNhanviens(List<NHANVIEN> nhanviens) {
+		this.nhanviens = nhanviens;
+	}
+
+
 
 	public String getUsername() {
 		return username;

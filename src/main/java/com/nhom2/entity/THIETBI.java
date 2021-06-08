@@ -51,6 +51,16 @@ public class THIETBI {
 	public THIETBI() {
 		super();
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "THIETBI [matb=" + matb + ", ten=" + ten + ", loai=" + loai + ", soluong=" + soluong + ", tinhtrang="
+				+ tinhtrang + ", ghichu=" + ghichu + "]";
+	}
+
+
 
 	public LOAITHIETBI getLoai() {
 		return loai;

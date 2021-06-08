@@ -84,7 +84,7 @@
 														<!--  -->
 													</form>
 												</div>
-												<div class="col-6">
+												<div class="col-6 text-center">
 													<c:set var="tinhtrang" value="unlocked" />
 													<c:if test="${thietbi.tinhtrang.equals(tinhtrang)}">
 														<form action="thiet-bi/delete" method="post" hidden="true">
@@ -268,6 +268,9 @@
 	</div>
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
+	<!-- kích hoạt table -->
+	<script src="resources/vendors/scripts/datatable-setting.js"></script>
+	
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -322,10 +325,7 @@
 			});
 		</script>
 	</c:if>
-	<script type="text/javascript">
-		//LOAD TABLE 
-		$('#myTable').DataTable();
-		
+	<script type="text/javascript">		
 		
 		//NẾU CLICK NÚT XOÁ
 		$('#myTable').on('click','.delete_btn',function(){
