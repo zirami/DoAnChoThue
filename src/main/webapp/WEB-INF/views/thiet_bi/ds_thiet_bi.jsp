@@ -33,12 +33,20 @@
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
+						<!-- <div class="col-md-3 col-sm-12 text-right form-group "></div> -->
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
-								THIẾT BỊ</a>
+							<form action="import-excel" method="post"
+								enctype="multipart/form-data">
+								<input type="file" hidden="true" name="file"/>
+								<input type="submit" hidden="true">
+							</form>
+							<button class="btn btn-primary import-excel">Import
+								Excel</button>
 							<a href="#" id="insert_btn" class="btn btn-primary"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">THÊM THIẾT BỊ MỚI </a>
+							<!-- <a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
+								THIẾT BỊ</a> -->
 						</div>
 					</div>
 				</div>
@@ -58,7 +66,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="thietbi" items="${listThietbi}" >
+								<c:forEach var="thietbi" items="${listThietbi}">
 									<tr>
 										<td class="table-plus">${thietbi.matb}</td>
 										<td>${thietbi.ten}</td>
@@ -270,7 +278,6 @@
 	<%@include file="/common/footer.jsp"%>
 	<!-- kích hoạt table -->
 	<script src="resources/vendors/scripts/datatable-setting.js"></script>
-	
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -347,15 +354,7 @@
 				}
 			})
 		}) 
-		
-		//NẾU CLICK NÚT KHOÁ
-		$('#lock_btn').on('click',function(){
-			if(confirm_lock()){
-				console.log(1)
-			}
-			console.log("locked")
-		})
-		
+				
 		
 		//THÔNG BÁO THÀNH CÔNG
 		function show_success(content="Thao tác") {
@@ -374,6 +373,18 @@
 				icon: 'error',
 			})
 		}
+	</script>
+	<!-- IMPORT EXCEL -->
+	<script type="text/javascript">
+		$('.import-excel').on('click', function(){
+			let inputFile = $(this).parent().find("input[type='file']")
+			let btnSubmit = $(this).parent().find("input[type='submit']")
+			
+			inputFile.on('change', function(){
+				btnSubmit.click()
+			})
+			inputFile.click();
+		})
 	</script>
 </body>
 </html>
