@@ -25,13 +25,7 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/src/plugins/datatables/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
 	href="resources/src/plugins/datatables/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/src/plugins/datatables/css/responsive.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/vendors/styles/style.css">
 <link rel="stylesheet" type="text/css"
