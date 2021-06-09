@@ -304,9 +304,10 @@
 							<c:forEach items="${phieunhap_sua.ct_phieunhaps}" var="ct_pn">
 								<tr>
 									<td>
-										<select class="form-control" name="matb" >
-											<c:set var="matb" value="${ct_pn.thietbi.matb}"/>
-											<option value="${ct_pn.thietbi.matb}" label="${ct_pn.thietbi.ten}"/>
+										<select class="form-control" name="matb">
+											<c:set var="matb" value="${ct_pn.thietbi.matb}" />
+											<option value="${ct_pn.thietbi.matb}"
+												label="${ct_pn.thietbi.ten}" />
 											<c:forEach var="tb" items="${listThietbi}">
 												<c:if test="${matb.equals(tb.matb) == false }">
 													<option value="${tb.matb}">${tb.ten}</option>
@@ -315,12 +316,12 @@
 										</select>
 									</td>
 									<td>
-										<input type="number" min="1" name="soluongnhap" value="${ct_pn.soluongnhap}"
-											class=" form-control" />
+										<input type="number" min="1" name="soluongnhap"
+											value="${ct_pn.soluongnhap}" class=" form-control" />
 									</td>
 									<td>
-										<input type="number" min="0" step="0.01" name="dongia" value="${ct_pn.dongia}"
-											class=" form-control" />
+										<input type="number" min="0" step="0.01" name="dongia"
+											value="${ct_pn.dongia}" class=" form-control" />
 									</td>
 									<td>
 										<a class="material-icons text-info btn-close-item  text-right"
