@@ -456,7 +456,7 @@
 			let trangthai = $(this).parent().find("input[name='trangthai']")
 			trangthai.val("daXacNhan")
 			$('#hidden-row').remove()
-			console.log($('#trangthai').val())
+			console.log(trangthai.val())
 		})
 		
 		//CLICK LƯU PHIẾU NHẬP
@@ -464,7 +464,7 @@
 			let trangthai = $(this).parent().find("input[name='trangthai']")
 			trangthai.val("choXacNhan")
 			$('#hidden-row').remove()
-			console.log($('#trangthai').val())
+			console.log(trangthai.val())
 		})
 		
 		//THÔNG BÁO THÀNH CÔNG

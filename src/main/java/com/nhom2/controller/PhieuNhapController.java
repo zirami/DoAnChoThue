@@ -146,12 +146,12 @@ public class PhieuNhapController {
 
 	// GIAO DIỆN SỬA PHIẾU NHẬP
 	@RequestMapping("phieu-nhap/edit/{id}")
-	public String edit(@PathVariable String id, ModelMap model) {
+	public RedirectView edit(@PathVariable String id, RedirectAttributes model) {
 		PHIEUNHAP phieunhap_sua = new PhieuNhapDAO().getById(id, factory);
-		model.addAttribute("phieunhap_sua", phieunhap_sua);
+		model.addFlashAttribute("phieunhap_sua", phieunhap_sua);
 		
-		model.addAttribute("form_edit", true);
-		return home(model);
+		model.addFlashAttribute("form_edit", true);
+		return new RedirectView("../../phieu-nhap");
 	}
 	// UPDATE PHIẾU NHẬP
 	@RequestMapping(value = "phieu-nhap/update", method = RequestMethod.POST)
@@ -164,10 +164,11 @@ public class PhieuNhapController {
 
 		// Kiểm tra PhieuNhap nhận về có đủ dữ liệu cần không
 		// Kiểm tra xem trạng thái PhieuNhap != chờ xác nhận thì không cho sửa
-		if (result.hasErrors() || !phieunhap_sua.getTrangthai().equals(choXacNhan)) {
+		// || !phieunhap_sua.getTrangthai().equals(choXacNhan)
+		if (result.hasErrors() ) {
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
-			return new RedirectView("phieu-nhap");
+			return new RedirectView("../phieu-nhap");
 		}
 
 		List<CT_PHIEUNHAP> listCt_pn = removeDuplicate(matbs, soluongnhaps, dongias, phieunhap_sua);
