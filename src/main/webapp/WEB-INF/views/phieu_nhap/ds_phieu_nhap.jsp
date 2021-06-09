@@ -146,7 +146,7 @@
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
-			<form action="phieu-nhap/update" method="post" class="modal-content">
+			<form action="phieu-nhap" method="post" class="modal-content">
 				<div class="modal-body">
 					<div class="invoice-header text-center">
 						<h4 class="text-blue h4">THÊM PHIẾU NHẬP</h4>

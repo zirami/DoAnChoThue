@@ -11,10 +11,10 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
  		HttpSession session = request.getSession();
  		//Check user nếu chưa đăng nhập thì quay lại login
-// 		if(session.getAttribute("role")!="admin" && session.getAttribute("role")!="staff") {
-//			response.sendRedirect(request.getContextPath() + "/login");
-//			return false;
-//		}
+ 		if(session.getAttribute("role")!="admin" && session.getAttribute("role")!="staff") {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return false;
+		}
 		return true;
 		
 	}

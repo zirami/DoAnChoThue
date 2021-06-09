@@ -59,6 +59,17 @@ public class NHANVIEN {
 	@Column(name = "CMND")
 	private String cmnd;
 
+	@Column(name = "HINH")
+	private String hinh;
+	
+	public String getHinh() {
+		return hinh;
+	}
+
+	public void setHinh(String hinh) {
+		this.hinh = hinh;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "MAQL")
 	private QUANLI ql;
