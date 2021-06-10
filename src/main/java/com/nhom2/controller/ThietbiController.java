@@ -81,13 +81,19 @@ public class ThietbiController {
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.POST)
 	public String insert(ModelMap model, @Valid @ModelAttribute("thietbi_moi") THIETBI thietbi_moi,
 			BindingResult reusult) {
+		final String UNLOCKED = "unlocked"; //Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
+		final String  CONTOT = "Còn tốt"; // Tình trạng mặc định là Tốt
+		
 		System.out.println("has error: " + reusult.hasErrors());
 		model.addAttribute("them_saidinhdang", reusult.hasErrors());
 		model.addAttribute("thietbi_moi", thietbi_moi);
 
 		if (reusult.hasErrors())
 			return home(model);
-
+		
+		thietbi_moi.setTrangthai(UNLOCKED);
+		thietbi_moi.setTinhtrang(CONTOT);
+		thietbi_moi.setSoluong(0); // THIẾT BỊ MỚI THÌ PHẢI NHẬP VỀ MỚI CÓ SỐ LƯỢNG
 		model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi)); // Xử lý thông báo thêm thành công
 
 		return home(model);

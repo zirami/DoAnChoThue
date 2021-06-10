@@ -60,7 +60,7 @@
 									<th class="table-plus datatable-nosort">Mã thiết bị</th>
 									<th>Tên Thiết Bị</th>
 									<th>Loại</th>
-									<th>Số Lượng</th>
+									<th>Số Lượng tồn</th>
 									<th>Ghi chú</th>
 									<th class="datatable-nosort">Hành động</th>
 								</tr>
@@ -72,15 +72,7 @@
 										<td>${thietbi.ten}</td>
 										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
-										<c:choose>
-											<c:when
-												test="${thietbi.ghichu.isEmpty() || thietbi.ghichu.isBlank()}">
-												<td>-</td>
-											</c:when>
-											<c:otherwise>
-												<td>${thietbi.ghichu}</td>
-											</c:otherwise>
-										</c:choose>
+										<td>${thietbi.ghichu}</td>
 										<td>
 											<div class="row clearfix">
 												<div class="col-3">
@@ -93,8 +85,8 @@
 													</form>
 												</div>
 												<div class="col-6 text-center">
-													<c:set var="tinhtrang" value="unlocked" />
-													<c:if test="${thietbi.tinhtrang.equals(tinhtrang)}">
+													<c:set var="unlocked" value="unlocked" />
+													<c:if test="${thietbi.trangthai.equals(unlocked)}">
 														<form action="thiet-bi/delete" method="post" hidden="true">
 															<!-- Dùng để hiển thị tên lên form -->
 															<input type="hidden" name="ten" value="${thietbi.ten}" />
@@ -168,15 +160,6 @@
 									<form:errors path="loai.id" />
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Số
-									lượng</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="soluong" class="form-control" type="text"
-										placeholder="Nhập số lượng thiết bị" />
-									<form:errors path="soluong" />
-								</div>
-							</div>
 							<input type="hidden" name="tinhtrang" value="unlocked" />
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
@@ -217,15 +200,6 @@
 						<form:form action="thiet-bi/update" modelAttribute="thietbi_sua"
 							method="post">
 							<form:input path="matb" class="form-control" type="hidden" />
-							<%-- <div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									thiết bị</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="matb" class="form-control" type="text"
-										placeholder="Nhập mã thiết bị" />
-									<form:errors path="matb" />
-								</div>
-							</div> --%>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Tên
 									thiết bị</label>
@@ -245,16 +219,9 @@
 									<form:errors path="loai" />
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Số
-									lượng</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="soluong" class="form-control" type="text"
-										placeholder="Nhập số lượng thiết bị" />
-									<form:errors path="soluong" />
-								</div>
-							</div>
 							<form:input path="tinhtrang" type="hidden" />
+							<form:input path="trangthai" type="hidden" />
+							<form:input path="soluong" type="hidden" />
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
 								<div class="col-sm-12 col-md-10">

@@ -21,7 +21,7 @@
 			<div class="min-height-200px">
 				<div class="page-header">
 					<div class="row">
-						<div class="col">
+						<div class="col-2">
 							<div class="title">
 								<h4>Thống Kê</h4>
 							</div>
@@ -37,39 +37,64 @@
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
-						<div class="col-9">
-							<form action="thong-ke" method="post">
-								<div class="row text-right">
-									<div class="col">
-										<select class="selectpicker" name="loaiThongke">
-											<c:forEach var="loai" items="${loaiThongkes}">
-												<option value="${loai}">${loai}</option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col">
-										<input name="date" type="text"
-											placeholder="Chọn khoảng thời gian">
-										<input hidden="true" id="ngaybatdau" name="ngaybatdau"
-											type="date" />
-										<input hidden="true" id="ngayketthuc" name="ngayketthuc"
-											type="date" />
-									</div>
-									<div class="col-3 text-right">
-										<button class="btn btn-primary" type="submit">LỌC</button>
-									</div>
+						<form class="col" action="thong-ke" method="post">
+							<div class="row">
+								<div class="col-3">
+									<select class="btn btn-primary" name="loaiThongke">
+										<option value="">-Vui lòng chọn 1-</option>
+										<c:forEach var="loai" items="${loaiThongkes}">
+											<option value="${loai}">${loai}</option>
+										</c:forEach>
+									</select>
 								</div>
-							</form>
+								<div class="col-2">
+									<select class="btn btn-primary" name="option"
+										style="display: none">
+										<c:forEach var="option" items="${optionPM}">
+											<option value="${option}">${option}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col text-center">
+									<input name="date" type="text"
+										placeholder="Chọn khoảng thời gian">
+									<input hidden="true" id="ngaybatdau" name="ngaybatdau"
+										type="date" />
+									<input hidden="true" id="ngayketthuc" name="ngayketthuc"
+										type="date" />
+								</div>
+								<input type="submit" hidden="true" />
+							</div>
+						</form>
+						<div class="col-1 text-right">
+							<button class="btn btn-primary filter-btn" style="display: none">LỌC</button>
 						</div>
 					</div>
 				</div>
+				<div id="chart"></div>
+				<hr>
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pb-20 container">
 						<table class="data-table-export table" id="myTable">
 							<thead>
 								<tr>
-									<th>Tháng/Phiếu</th>
+									<c:set var="daTra" value="Đã trả" />
+									<c:set var="chuaTra" value="Chưa trả" />
+									<c:set var="tot" value="Còn tốt" />
+									<c:set var="hong" value="Hư hỏng" />
+									<!-- PHIẾU MƯỢN -->
+									<c:choose>
+										<c:when test="${optionThongke.equals(daTra) }">
+											<th>Ngày Trả</th>
+										</c:when>
+										<c:when test="${optionThongke.equals(chuaTra) }">
+											<th>Ngày Mượn</th>
+										</c:when>
+										<c:otherwise>
+											<th>Ngày</th>
+										</c:otherwise>
+									</c:choose>
 									<th>${loaiThongke}</th>
 								</tr>
 							</thead>
@@ -86,7 +111,6 @@
 						</table>
 					</div>
 				</div>
-				<div id="chart"></div>
 				<!-- END DATATABLE -->
 			</div>
 		</div>
@@ -121,7 +145,8 @@
 				type : 'column'
 			},
 			title : {
-				text : 'Thống kê ' + '${loaiThongke}'
+				text : 'Thống kê ' + '${loaiThongke}' + ': '
+						+ '${optionThongke}'
 			},
 			yAxis : {
 				allowDecimals : false,
@@ -142,13 +167,28 @@
 	<script>
 		$(function() {
 			//Khởi tạo chọn khoảng thời gian: date range picker
+			let date_init = {
+					locale : {
+						cancelLabel : 'Xoá',
+						applyLabel : 'Áp dụng',
+						format : 'DD/MM/YYYY'
+					}
+					,
+					startDate : '${ngaybatdau}',
+					endDate : '${ngayketthuc}'
+				}
+		
+			if ('${ngaybatdau}' == '' || '${ngayketthuc}' == '') 
+				date_init = {
+					locale : {
+						cancelLabel : 'Xoá',
+						applyLabel : 'Áp dụng',
+						format : 'DD/MM/YYYY'
+					}
+				}
+		
 			let date = $('input[name="date"]').daterangepicker(
-					{
-						locale : {
-							cancelLabel : 'Xoá',
-							applyLabel : 'Áp dụng'
-						}
-					},
+					date_init,
 					//Khi có sự kiện mở lịch ra và chọn ngày mới thì set dữ liệu lại cho 2 cái ngày start và end
 					function(start, end, label) {
 						console.log('New date range selected: '
@@ -162,10 +202,89 @@
 			//Mới load vào thì ngày bắt đầu và ngày kết thúc như nhau			
 			let startDate = date.data('daterangepicker').startDate
 					.format('YYYY-MM-DD');
+			let endDate = date.data('daterangepicker').endDate
+					.format('YYYY-MM-DD');
 			$('#ngaybatdau').val(startDate);
-			$('#ngayketthuc').val(startDate);
+			$('#ngayketthuc').val(endDate);
 
 		});
+	</script>
+	<!-- THAY ĐỔI OPTION DỰA THEO LOẠI THỐNG KÊ -->
+	<select id="optionPM" hidden="true">
+		<c:forEach items="${optionPM}" var="option">
+			<option value="${option}">${option}</option>
+		</c:forEach>
+	</select>
+	<select id="optionTB" hidden="true">
+		<c:forEach items="${optionTB}" var="option">
+			<option value="${option}">${option}</option>
+		</c:forEach>
+	</select>
+	<select id="optionThongke" hidden="true">
+		<c:forEach items="${options}" var="option">
+			<option value="${option}">${option}</option>
+		</c:forEach>
+	</select>
+	<script type="text/javascript">
+		//LOAD VÀO THẤY LOẠI THỐNG KÊ CÓ GIÁ TRỊ
+		$(function(){
+			let loaiThongke = $("select[name='loaiThongke']").val('${loaiThongke}')
+			let option = $("select[name='option']")
+			
+			option.html($('#optionThongke').html())
+			option.val('${optionThongke}')
+	
+			//NẾU LOẠI THỐNG KÊ LÀ RỖNG THÌ ẨN CÁC NÚT OPTION VÀ NÚT LỌC
+			if (loaiThongke.val() == "") {
+				option.hide()
+				$('.filter-btn').hide()
+			} else {
+				$('.filter-btn').show()
+				option.show()
+			}
+		})
+		
+		//KHI THAY ĐỔI LOẠI THỐNG KÊ
+		$("select[name='loaiThongke']").on('change',function() {
+			let option = $(this).parents("div.row").find(
+					"select[name='option']")
+	
+			//THAY ĐỔI OPTION DỰA THEO LOẠI THỐNG KÊ
+			if ($(this).val() === "Phiếu Mượn")
+				option.html($('#optionPM').html())
+			else if ($(this).val() === "Thiết Bị")
+				option.html($('#optionTB').html())
+	
+			//NẾU LOẠI THỐNG KÊ LÀ RỖNG THÌ ẨN CÁC NÚT OPTION VÀ NÚT LỌC
+			if ($(this).val() == "") {
+				option.hide()
+				$('.filter-btn').hide()
+			} else {
+				$('.filter-btn').show()
+				option.show()
+			}
+	
+		})
+		
+		
+		//KHI NHẤN NÚT LỌC
+		$('.filter-btn').on('click', function() {
+			$(this).parents("div.row").find("input[type='submit']").click()
+		})
+	</script>
+	
+	<!-- KHAI BÁO THÔNG BÁO CƠ BẢN -->
+	<script type="text/javascript">
+		if(error) show_error("${msg}");
+		
+		//THÔNG BÁO LỖI
+		function show_error(content) {
+			Swal.fire({
+				title: 'LỖI',
+				text: content,
+				icon: 'error',
+			})
+		}
 	</script>
 </body>
 </html>
