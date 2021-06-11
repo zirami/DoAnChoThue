@@ -49,7 +49,6 @@
 
 <%@include file="/common/loadcss.jsp"%>
 
-
 </head>
 <body class="login-page">
 
@@ -64,7 +63,7 @@
 				<div class="da-overlay">
 					<div class="da-social">
 						<div class="clearfix">
-							<div class="page-header	 col-md-12 col-sm-12 ">
+							<div class="page-header	 col-md-12 col-lg-12 ">
 								<h2 class="text-info text-center">Quản Lí Thiết Bị Cho Mượn
 									Học Viện Cơ Sở</h2>
 								<hr>
@@ -78,11 +77,12 @@
 												<!-- 												<h2  class="text-info text-center">Quản Lí Thiết Bị Cho Mượn</h2> -->
 												<!-- 												<h2 class="text-info text-center">Học Viện Cơ Sở</h2> -->
 												<!-- 												</div> -->
+
 												<img
 													src="${pageContext.servletContext.contextPath}/resources//vendors/images/forgot-password.png"
 													alt="">
 											</div>
-											<div class="col-lg-4 col-lg-5">
+											<div class="col-md-6 col-lg-5">
 												<div class="login-box bg-while box-shadow border-radius-10">
 													<div class="login-title "
 														style="color: rgb(255, 255, 255); background-color: rgb(115, 65, 156);">
@@ -99,12 +99,6 @@
 
 													</div>
 
-
-
-
-
-
-
 													<hr>
 													<form:form action="changePassword"
 													modelAttribute="accountChange" method="post">
@@ -112,7 +106,7 @@
 													<div class="text-dark">
 														<div class="col-sm-4 col-md-12">
 															<div class="row">
-																<label class="col-sm-4 col-md-4">Username</label>
+																<label class="col-sm-4 col-md-6">Username</label>
 																<div class="input-group custom">
 
 
@@ -181,6 +175,11 @@
 													<div class="modal-footer">
 														<input class="btn btn-info btn-lg btn-block" type="submit"
 															value="Thay đổi">
+														<div class="col-sm-6 col-md-12">
+																
+																<a href="phieumuon">Quay lại</a>
+																
+														</div>
 													</div>
 
 													</form:form>
@@ -212,6 +211,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {	
 				show_success();
+				setTimeout(function(){window.location="${pageContext.servletContext.contextPath}/login";}, 5000);
 			});
 		</script>
 	</c:if>
@@ -228,7 +228,7 @@
 	function show_success(content="Vui lòng") {
 		Swal.fire({
 			title: 'Thay đổi mật khẩu thành công',
-			text: content+" đăng nhập lại!",
+			text: content+" đăng nhập lại sau 5 giây!",
 			icon: 'success',
 		})
 	}

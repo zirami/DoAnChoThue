@@ -1,5 +1,6 @@
 package com.nhom2.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
@@ -104,7 +105,8 @@ public class AccountController {
 	}
 	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
 	public String changePassWord(ModelMap model, @ModelAttribute("accountChange") ACCOUNT accountChange,
-			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword) {
+			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword,
+			HttpSession session) {
 		ACCOUNT testAccount = new AccountDAO().getById(accountChange.getUsername(), factory);
 		if(testAccount!=null) {
 			if(confirmPassword.compareTo(newPassword)==0 && testAccount.getPassword().compareTo(accountChange.getPassword())==0) {
@@ -123,6 +125,8 @@ public class AccountController {
 			return changePassWord(model);
 		}
 		model.addAttribute("changeSuccess", true);
+		session.setAttribute("role", null);
+		session.setAttribute("user", null);
 		return changePassWord(model);
 	}
 }
