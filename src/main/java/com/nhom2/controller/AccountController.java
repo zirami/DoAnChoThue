@@ -97,4 +97,32 @@ public class AccountController {
 		return home(model);
 	}
 
+	@RequestMapping(value = "changePassword", method = RequestMethod.GET)
+	public String changePassWord(ModelMap model) {
+		model.addAttribute("accountChange", new ACCOUNT());
+		return "changePassword";
+	}
+	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
+	public String changePassWord(ModelMap model, @ModelAttribute("accountChange") ACCOUNT accountChange,
+			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword) {
+		ACCOUNT testAccount = new AccountDAO().getById(accountChange.getUsername(), factory);
+		if(testAccount!=null) {
+			if(confirmPassword.compareTo(newPassword)==0 && testAccount.getPassword().compareTo(accountChange.getPassword())==0) {
+				testAccount.setPassword(confirmPassword);
+				new AccountDAO().update(factory, testAccount);
+				model.addAttribute("changeSuccess", true);
+			}
+			else {
+				model.addAttribute("changeSuccess", false);
+				return changePassWord(model);
+			}
+		}
+		else {
+			model.addAttribute("changeSuccess", false);
+			model.addAttribute("message", "Username không tồn tại");
+			return changePassWord(model);
+		}
+		model.addAttribute("changeSuccess", true);
+		return changePassWord(model);
+	}
 }

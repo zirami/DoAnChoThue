@@ -1,9 +1,7 @@
 
 package com.nhom2.controller;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +28,6 @@ import com.nhom2.entity.CT_PHIEUMUON;
 import com.nhom2.entity.NGUOIMUON;
 import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
-import com.sun.net.httpserver.HttpsParameters;
 
 @Transactional
 @Controller
@@ -39,6 +36,18 @@ public class PhieuMuonController {
 
 	@Autowired
 	SessionFactory factory;
+	
+	public String getRandomMa() {
+		List <PHIEUMUON> list = new PhieuMuonDAO().getAll(factory);
+		int ma = 1001;
+		for (PHIEUMUON elem : list) {
+			String temp = "pm"+ma;
+			if(elem.getMapm().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "pm" + ma;
+	}
 
 	@ModelAttribute("phieumuon_moi")
 	public PHIEUMUON phieumuon_moi() {
@@ -93,6 +102,7 @@ public class PhieuMuonController {
 	@RequestMapping(value = "phieumuon", method = RequestMethod.GET)
 	public String home(ModelMap model, HttpSession session) {
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
+		model.addAttribute("maphieumuon",getRandomMa());
 		model.addAttribute("indexValue", 0);
 		return "phieumuon/ds_phieu_muon";
 	}

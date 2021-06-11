@@ -123,14 +123,17 @@ public class PhieuNhapController {
 
 		// Kiểm tra PhieuNhap nhận về có đủ dữ liệu cần không
 		if (result.hasErrors()) {
+			System.out.println("khong du truong");
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
 			return new RedirectView("phieu-nhap");
 		}
 
 		List<CT_PHIEUNHAP> listCt_pn = removeDuplicate(matbs, soluongnhaps, dongias, phieunhap_them);
+		System.out.println(listCt_pn);
 		// Có đủ dữ liệu thì mới thêm
 		if (listCt_pn != null) {
+			System.out.println("loi ct pn");
 			phieunhap_them.setCt_phieunhaps(listCt_pn);
 			phieunhap_them.setThoigiannhap(Date.valueOf(LocalDate.now()));
 			kq = new PhieuNhapDAO().saveOrUpdate(factory, phieunhap_them);
