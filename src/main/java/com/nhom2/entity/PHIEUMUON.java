@@ -33,6 +33,10 @@ public class PHIEUMUON {
 	@Column(name = "THOIGIANMUON")
 	private Date thoigianmuon;
 
+	@NotNull(message="Trường này không được bỏ trống!")
+	@Column(name="PHONG")
+	private String phong;
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIANTRA")
@@ -60,6 +64,13 @@ public class PHIEUMUON {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getPhong() {
+		return phong;
+	}
+
+	public void setPhong(String phong) {
+		this.phong = phong;
+	}
 	public String getMapm() {
 		return mapm;
 	}

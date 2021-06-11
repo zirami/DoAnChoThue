@@ -62,6 +62,7 @@ h4 {
 										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
 										<th>Người mượn</th>
 										<th>Mã nhân viên</th>
+										<th>Phòng</th>
 										<th>Thời gian mượn</th>
 										<th>Thời gian trả</th>
 										<th>Ghi chú</th>
@@ -71,10 +72,12 @@ h4 {
 								<tbody>
 									<c:forEach var="phieumuon" items="${listPhieuMuon}"
 										varStatus="row">
+										<c:if test="${phieumuon.thoigiantra==null}">
 										<tr>
 											<td class="table-plus">${phieumuon.mapm}</td>
 											<td>${phieumuon.nm.ten}</td>
 											<td>${phieumuon.manv}</td>
+											<td>${phieumuon.phong }</td>
 											<td>${phieumuon.thoigianmuon}</td>
 											<td>${phieumuon.thoigiantra}</td>
 											<td>${phieumuon.ghichu }</td>
@@ -103,6 +106,7 @@ h4 {
 												</div>
 											</td>
 										</tr>
+										</c:if>
 									</c:forEach>
 								</tbody>
 							</table>
@@ -141,8 +145,9 @@ h4 {
 											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="mapm" />
-											<form:input class="form-control" type="text" path="mapm"
-												placeholder="Nhập mã phiếu mượn" />
+											<input class="form-control" name = "mapm_temp" value="${maphieumuon}" readonly/>
+											<form:input class="form-control" type="text" path="mapm" value="${maphieumuon}"
+												placeholder="Nhập mã phiếu mượn" required="required" style="display: none"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -152,7 +157,7 @@ h4 {
 											<!-- 											Đối tượng này dễ sai khi không .manm -->
 											<form:errors path="nm" />
 											<form:select class="selectpicker form-control" path="nm.manm"
-												style="width: 100%;height: 38px;">
+												style="width: 100%;height: 38px;" required="required">
 												<form:option value="" label="Chọn người mượn"></form:option>
 												<form:options items="${listNguoiMuons}" itemValue="manm"
 													itemLabel="ten"></form:options>
@@ -165,7 +170,7 @@ h4 {
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="manv" />
 											<select class="selectpicker form-control" name="manv"
-												style="width: 100%; height: 38px;">
+												style="width: 100%; height: 38px;" required="required">
 												<option value="">Chọn Nhân viên</option>
 												<c:forEach var="nv" items="${listNhanViens }">
 													<option value="${nv }">${nv}</option>
@@ -174,12 +179,19 @@ h4 {
 										</div>
 									</div>
 									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
+										<div class="col-sm-4 col-md-8">
+											<form:errors path="phong" />
+											<form:input class="form-control" path="phong" placeholder="Nhập phòng học" type="text" required="required"/> 
+										</div>
+									</div>
+									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="thoigianmuon" />
 											<form:input class="form-control" path="thoigianmuon"
-												placeholder="Chọn thời gian mượn" type="date" />
+												placeholder="Chọn thời gian mượn" type="date" required="required"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -187,7 +199,7 @@ h4 {
 											gian trả</label>
 										<div class="col-sm-4 col-md-8">
 											<form:input class="form-control" path="thoigiantra"
-												placeholder="Chọn thời gian trả" type="date" />
+												placeholder="Chọn thời gian trả" type="date"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -293,8 +305,9 @@ h4 {
 											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<%-- 											<form:errors path="mapm" /> --%>
+											<input class = "form-control" value="${phieumuon_sua.mapm }" readonly/>
 											<form:input class="form-control" type="text" path="mapm"
-												placeholder="Nhập mã phiếu mượn" />
+												placeholder="Nhập mã phiếu mượn" style="display: none"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -315,6 +328,14 @@ h4 {
 												class="selectpicker form-control"
 												style="width: 100%; height: 38px;">
 											</form:select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
+										<div class="col-sm-4 col-md-8">
+											<form:errors path="phong" />
+											<form:input class="form-control" path="phong"
+ 												placeholder="Nhập phòng học" type="text" required="required"/>
 										</div>
 									</div>
 									<div class="form-group row">

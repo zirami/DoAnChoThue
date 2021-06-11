@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <div class="header">
 	<div class="header-left">
 		<div class="menu-icon dw dw-menu"></div>
@@ -128,30 +130,23 @@
 				</a>
 				<div
 					class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-					<a class="dropdown-item" href="profile.html">
-						<i class="dw dw-user1"></i>
-						Profile
-					</a>
-					<a class="dropdown-item" href="profile.html">
+
+					<a class="dropdown-item" href="changePassword">
 						<i class="dw dw-settings2"></i>
-						Setting
+						Thay đổi mật khẩu
 					</a>
-					<a class="dropdown-item" href="faq.html">
-						<i class="dw dw-help"></i>
-						Help
-					</a>
-					<a class="dropdown-item" href="login.html">
+					<a class="dropdown-item" href="dangxuat">
 						<i class="dw dw-logout"></i>
-						Log Out
+						Đăng xuất
 					</a>
 				</div>
 			</div>
 		</div>
-		<div class="github-link">
-			<a href="https://github.com/dropways/deskapp" target="_blank">
-				<img src="resources/vendors/images/github.svg" alt="">
-			</a>
-		</div>
+<!-- 		<div class="github-link"> -->
+<!-- 			<a href="https://github.com/dropways/deskapp" target="_blank"> -->
+<!-- 				<img src="resources/vendors/images/github.svg" alt=""> -->
+<!-- 			</a> -->
+<!-- 		</div> -->
 	</div>
 </div>
 <!-- <div class="right-sidebar"> -->
