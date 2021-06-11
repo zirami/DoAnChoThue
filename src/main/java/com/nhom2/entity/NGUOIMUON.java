@@ -20,21 +20,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "NGUOIMUON")
 public class NGUOIMUON {
 		@Id
-		@NotNull(message = "Trường này không được bỏ trống!")
-		@NotBlank(message = "Vui lòng điền vào trường này !")
+//		@NotNull(message = "Trường này không được bỏ trống!")
+//		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "MANM")
 		private String manm;
 		
-		@NotBlank(message = "Trường này không được bỏ trống")
+//		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "HO")
 		private String ho;
 		
-		@NotBlank(message = "Trường này không được bỏ trống")
+//		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "TEN")
 		private String ten;
 
-		@NotNull(message = "Trường này không được bỏ trống!")
-		@NotBlank(message = "Vui lòng điền vào trường này !")
+//		@NotNull(message = "Trường này không được bỏ trống!")
+//		@NotBlank(message = "Vui lòng điền vào trường này !")
 		@Column(name = "GIOITINH")
 		private String gioitinh;
 		
@@ -43,13 +43,17 @@ public class NGUOIMUON {
 		@Column(name = "NGAYSINH")
 		private Date ngaysinh;
 
-		@NotBlank(message = "Trường này không được bỏ trống")
+//		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "DIACHI")
 		private String diachi;
 		
-		@NotBlank(message = "Trường này không được bỏ trống")
+//		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "CMND")
-		private String cmnd;	
+		private String cmnd;
+		
+		@NotBlank(message = "Trường này không được bỏ trống")
+		@Column(name = "LOAI")
+		private String loai;
 		
 		@Column(name = "GHICHU")
 		private String ghichu;
@@ -60,8 +64,9 @@ public class NGUOIMUON {
 		public NGUOIMUON() {
 			super();
 		}
-		public NGUOIMUON(String manm, String ho, String ten, String gioitinh, Date ngaysinh, String diachi,
-				String cmnd, String ghichu) {
+		
+		public NGUOIMUON(String manm, String ho, String ten, String gioitinh, Date ngaysinh, String diachi, String cmnd, String loai, String ghichu,
+				Collection<PHIEUMUON> phieumuons) {
 			super();
 			this.manm = manm;
 			this.ho = ho;
@@ -70,8 +75,11 @@ public class NGUOIMUON {
 			this.ngaysinh = ngaysinh;
 			this.diachi = diachi;
 			this.cmnd = cmnd;
+			this.loai = loai;
 			this.ghichu = ghichu;
+			this.phieumuons = phieumuons;
 		}
+
 		public String getManm() {
 			return manm;
 		}
@@ -114,6 +122,15 @@ public class NGUOIMUON {
 		public void setCmnd(String cmnd) {
 			this.cmnd = cmnd;
 		}
+		
+		public String getLoai() {
+			return loai;
+		}
+
+		public void setLoai(String loai) {
+			this.loai = loai;
+		}
+
 		public String getGhichu() {
 			return ghichu;
 		}

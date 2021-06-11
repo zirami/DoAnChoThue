@@ -64,6 +64,7 @@
 									<th>Ngày sinh</th>
 									<th>Địa chỉ</th>
 									<th>CMND</th>
+									<th>Loại người mượn</th>
 									<th>Ghi chú</th>
 									<th>Hành động</th>
 								</tr>	
@@ -80,6 +81,7 @@
 										<td>${nguoimuon.ngaysinh}</td>
 										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nguoimuon.diachi}</p></td>
 										<td>${nguoimuon.cmnd}</td>
+										<td>${nguoimuon.loai}</td>
 										<c:choose>
 											<c:when test="${nguoimuon.ghichu.isEmpty()==false}">
 												<td><p style="width: 100px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nguoimuon.ghichu}</p>
@@ -210,6 +212,18 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Loại
+									người mượn</label>
+								<div class="col-sm-12 col-md-10">
+									<form:errors path="loai" />
+									<form:select path="loai" class="selectpicker form-control"
+										style="width: 100%; height: 38px;">
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${loais}" />
+									</form:select>
+								</div>
+							</div>
+							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
 								<div class="col-sm-12 col-md-10">
 									<form:input class="form-control" type="text" path="ghichu"
@@ -312,6 +326,18 @@
 									<form:errors path="cmnd" />
 									<form:input path="cmnd" class="form-control" type="text"
 										placeholder="Nhập chứng minh nhân dân" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Loại
+									người mượn</label>
+								<div class="col-sm-12 col-md-10">
+									<form:errors path="loai" />
+									<form:select path="loai" class="selectpicker form-control"
+										style="width: 100%; height: 38px;">
+										<form:option value="" label="-Vui lòng chọn 1-" />
+										<form:options items="${loais}" />
+									</form:select>
 								</div>
 							</div>
 							<div class="form-group row">
