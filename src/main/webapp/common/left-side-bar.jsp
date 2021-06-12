@@ -92,14 +92,15 @@
 				<!-- 				<li> -->
 				<!-- 					<div class="sidebar-small-cap">MỞ RỘNG</div> -->
 				<!-- 				</li> -->
-				<li class="dropdown" id="dangxuat" style="display: none">
-					<a href="dangxuat" class="dropdown-toggle no-arrow"
-						data-toggle="tooltip" data-placement="right" title=""
-						data-original-title="Đăng xuất">
-						<span class="micon dw dw-logout1"></span>
-						<span class="text-yellow">Đăng xuất</span>
-					</a>
-				</li>
+
+<!-- 				<li class="dropdown" id="dangxuat" style="display: none"><a -->
+<!-- 					href="dangxuat" class="dropdown-toggle no-arrow" -->
+<!-- 					data-toggle="tooltip" data-placement="right" title="" -->
+<!-- 					data-original-title="Đăng xuất"> <span -->
+<!-- 						class="micon dw dw-logout1"></span> <span class="text-yellow">Đăng -->
+<!-- 							xuất</span> -->
+<!-- 				</a></li> -->
+
 			</ul>
 		</div>
 	</div>
@@ -113,7 +114,7 @@
 			document.getElementById("ntb").style.display = "";
 			document.getElementById("tltb").style.display = "";
 			document.getElementById("thongke").style.display = "";
-			document.getElementById("dangxuat").style.display = "";
+//  			document.getElementById("dangxuat").style.display = "";
 		}
 		if ("${role}" == "admin") {
 			document.getElementById("qlpm").style.display = "";
@@ -122,7 +123,7 @@
 			document.getElementById("tltb").style.display = "";
 			document.getElementById("thongke").style.display = "";
 			document.getElementById("qlnv").style.display = "";
-			document.getElementById("dangxuat").style.display = "";
+// 			document.getElementById("dangxuat").style.display = "";
 		}
 	})
 </script>

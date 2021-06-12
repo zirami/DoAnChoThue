@@ -47,8 +47,18 @@ public class NguoimuonController {
 		@ModelAttribute("gioiTinhs")
 		public List<String> getGioiTinhs() {
 			List<String> list = new ArrayList<>();
-			list.add("NAM");
-			list.add("NỮ");
+			list.add("Nam");
+			list.add("Nữ");
+			return list;
+		}
+
+		// DANH SÁCH LOẠI NGƯỜI MƯỢN ĐỂ SELECT
+		@ModelAttribute("loais")
+		public List<String> getLoais() {
+			List<String> list = new ArrayList<>();
+			list.add("Sinh viên");
+			list.add("Giảng viên");
+			list.add("Khác");
 			return list;
 		}
 

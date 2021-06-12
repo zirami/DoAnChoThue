@@ -1,5 +1,7 @@
 package com.nhom2.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -33,6 +35,10 @@ public class PHIEUMUON {
 	@Column(name = "THOIGIANMUON")
 	private Date thoigianmuon;
 
+	@NotNull(message="Trường này không được bỏ trống!")
+	@Column(name="PHONG")
+	private String phong;
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "THOIGIANTRA")
@@ -60,6 +66,13 @@ public class PHIEUMUON {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getPhong() {
+		return phong;
+	}
+
+	public void setPhong(String phong) {
+		this.phong = phong;
+	}
 	public String getMapm() {
 		return mapm;
 	}
@@ -115,5 +128,62 @@ public class PHIEUMUON {
 	public void setCt_phieumuons(Collection<CT_PHIEUMUON> ct_phieumuons) {
 		this.ct_phieumuons = ct_phieumuons;
 	}
+	public Date getDate() {  
+	    Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+	    String strDate= formatter.format(date);  
+	    Date date1 = null;
+	    try {
+			date1 = formatter.parse(strDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    System.out.println(strDate); 
+	    return date1;
+	}
+	public int laySoNgay_Date(Date d1) {
+		 Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    String strDate= formatter.format(date);  
+	    Date date1 = null;
+	    try {
+			date1 = formatter.parse(strDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		int result = 0;
+		result = (int) (date1.getTime()-d1.getTime());
+		result = result / (24 * 60 * 60 * 1000) + 1;
+		return result;
+	}
+	
+	public int laySoNgay(String t1) {
+		 Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    String strDate= formatter.format(date);  
+	    Date date1 = null;
+	    try {
+			date1 = formatter.parse(strDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Date date2=null;
+		try {
+			date2 = new SimpleDateFormat("yyyy-MM-dd").parse(t1);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int result = 0;
+		result = (int) (date1.getTime()-date2.getTime());
+		result = result / (24 * 60 * 60 * 1000) + 1;
+		return result;
+	}
+
 
 }

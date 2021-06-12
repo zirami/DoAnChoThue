@@ -14,6 +14,7 @@ h4 {
 }
 </style>
 <%@include file="/common/loadcss.jsp"%>
+
 </head>
 <body id="body">
 
@@ -30,22 +31,26 @@ h4 {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Danh sách phiếu mượn</h4>
+								<h3>Danh sách phiếu mượn</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="phieumuon">phieumuon</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
+
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
-								data-toggle="modal" data-target="#bd-insert-modal-lg"
-								type="button">Thêm phiếu mượn </a>
+							<a href="phieumuon" class="btn bg-purple text-yellow"
+								type="button">Làm mới </a>
+							 <a href="#" id="insert_btn"
+								class="btn bg-purple text-yellow" data-toggle="modal"
+								data-target="#bd-insert-modal-lg" type="button">Thêm phiếu
+								mượn </a>
 						</div>
 					</div>
 				</div>
@@ -56,12 +61,13 @@ h4 {
 						<div>
 							<table
 								class="table nowrap  dataTable no-footer collapsed table-border-factor"
-								style="width: 98%" id="myTable" role="grid">
+								style="width: 100%" id="myTable" role="grid">
 								<thead class="table-info">
 									<tr>
 										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
 										<th>Người mượn</th>
 										<th>Mã nhân viên</th>
+										<th>Phòng</th>
 										<th>Thời gian mượn</th>
 										<th>Thời gian trả</th>
 										<th>Ghi chú</th>
@@ -71,48 +77,141 @@ h4 {
 								<tbody>
 									<c:forEach var="phieumuon" items="${listPhieuMuon}"
 										varStatus="row">
-										<tr>
-											<td class="table-plus">${phieumuon.mapm}</td>
-											<td>${phieumuon.nm.ten}</td>
-											<td>${phieumuon.manv}</td>
-											<td>${phieumuon.thoigianmuon}</td>
-											<td>${phieumuon.thoigiantra}</td>
-											<td>${phieumuon.ghichu }</td>
-											<td class="pull-right">
-												<div class="row clearfix btn-list">
-													<form action="phieumuon/edit/${phieumuon.mapm}">
-														<button class="btn btn-info bg-purple" type="submit"
-															data-toggle="tooltip" data-placement="top" title="Sửa">
-															<span class="material-icons ">edit</span>
+										<c:if test="${phieumuon.thoigiantra==null}">
+											<tr>
+												<td class="table-plus">${phieumuon.mapm}</td>
+												<td>${phieumuon.nm.ten}</td>
+												<td>${phieumuon.manv}</td>
+												<td>${phieumuon.phong }</td>
+												<td>${phieumuon.thoigianmuon}</td>
+												<td>${phieumuon.thoigiantra}</td>
+												<td>${phieumuon.ghichu }</td>
+												<td class="pull-right">
+													<div class="row clearfix btn-list">
+														<form action="phieumuon/edit/${phieumuon.mapm}">
+															<button class="btn btn-info bg-purple" type="submit"
+																data-toggle="tooltip" data-placement="top" title="Sửa">
+																<span class="material-icons ">edit</span>
+															</button>
+														</form>
+														<form action="phieumuon/delete" method="post">
+															<!-- 														Dùng để hiển thị tên lên form  -->
+															<input type="hidden" name="ten"
+																value="${phieumuon.nm.ten}" />
+															<!-- 														Dùng để gửi về controller  -->
+															<input type="hidden" name="mapm"
+																value="${phieumuon.mapm}" />
+															<button type="submit" style="display: none"
+																class="submit_del_btn"></button>
+														</form>
+														<button class="btn btn-danger delete_btn"
+															data-toggle="tooltip" data-placement="top" title="Xoá"
+															type="button">
+															<span class="material-icons delete_btn">delete</span>
 														</button>
-													</form>
-													<form action="phieumuon/delete" method="post">
-														<!-- 														Dùng để hiển thị tên lên form  -->
-														<input type="hidden" name="ten"
-															value="${phieumuon.nm.ten}" />
-														<!-- 														Dùng để gửi về controller  -->
-														<input type="hidden" name="mapm" value="${phieumuon.mapm}" />
-														<button type="submit" style="display: none"
-															class="submit_del_btn"></button>
-													</form>
-													<button class="btn btn-danger delete_btn"
-														data-toggle="tooltip" data-placement="top" title="Xoá"
-														type="button">
-														<span class="material-icons delete_btn">delete</span>
-													</button>
-												</div>
-											</td>
-										</tr>
+													</div>
+												</td>
+											</tr>
+										</c:if>
 									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
+
 				<!-- Simple Datatable End -->
 			</div>
 		</div>
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<div class="title">
+								<h4>Danh sách phiếu mượn quá hạn 3 ngày</h4>
+							</div>
+							<!-- Đường dẫn -->
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="phieumuon">phieumuon</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
+								</ol>
+
+							</nav>
+
+							<!-- END Đường dẫn -->
+						</div>
+						<div class="col-md-6 col-sm-12 text-right">
+							<a href="#" id="mail_btn" class="btn bg-purple text-yellow"
+								data-toggle="modal" data-target="#bd-mail-modal-lg"
+								type="button">Gửi mail</a>
+						</div>
+
+						<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
+						<table
+							class="table nowrap  dataTable no-footer collapsed table-border-factor"
+							style="width: 100%" id="myTable" role="grid">
+							<thead class="table-info">
+								<tr>
+									<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
+									<th>Người mượn</th>
+									<th>Mã nhân viên</th>
+									<th>Phòng</th>
+									<th>Thời gian mượn</th>
+									<th>Thời gian trả</th>
+									<th>Ghi chú</th>
+									<th class="pull-right">Hành động</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="phieumuon" items="${listPhieuMuon}"
+									varStatus="row">
+									<c:if test="${phieumuon.thoigiantra==null}">
+										<c:if
+											test="${phieumuon_moi.laySoNgay(phieumuon.thoigianmuon)>=3 }">
+											<tr>
+												<td class="table-plus">${phieumuon.mapm}</td>
+												<td>${phieumuon.nm.ten}</td>
+												<td>${phieumuon.manv}</td>
+												<td>${phieumuon.phong }</td>
+												<td>${phieumuon.thoigianmuon}</td>
+												<td>${phieumuon.thoigiantra}</td>
+												<td>${phieumuon.ghichu }</td>
+												<td class="pull-right">
+													<!-- 													<div class="row clearfix btn-list"> --> <%-- 														<form action="phieumuon/edit/${phieumuon.mapm}"> --%>
+													<!-- 															<button class="btn btn-info bg-purple" type="submit" -->
+													<!-- 																data-toggle="tooltip" data-placement="top" title="Sửa"> -->
+													<!-- 																<span class="material-icons ">edit</span> -->
+													<!-- 															</button> --> <!-- 														</form> -->
+													<!-- 														<form action="phieumuon/delete" method="post"> -->
+													<!-- 																													Dùng để hiển thị tên lên form  -->
+													<!-- 															<input type="hidden" name="ten" --> <%-- 																value="${phieumuon.nm.ten}" /> --%>
+													<!-- 																													Dùng để gửi về controller  -->
+													<!-- 															<input type="hidden" name="mapm" --> <%-- 																value="${phieumuon.mapm}" /> --%>
+													<!-- 															<button type="submit" style="display: none" -->
+													<!-- 																class="submit_del_btn"></button> --> <!-- 														</form> -->
+													<!-- 														<button class="btn btn-danger delete_btn" -->
+													<!-- 															data-toggle="tooltip" data-placement="top" title="Xoá" -->
+													<!-- 															type="button"> --> <!-- 															<span class="material-icons delete_btn">delete</span> -->
+													<!-- 														</button> --> <!-- 													</div> -->
+												</td>
+											</tr>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
 	</div>
+	<!-- 	</div> -->
 	<!-- 	======================   Thêm phiếu mượn ============================ -->
 	<div class="modal fade bs-example-modal-lg" id="bd-insert-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -141,8 +240,11 @@ h4 {
 											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="mapm" />
+											<input class="form-control" name="mapm_temp"
+												value="${maphieumuon}" readonly />
 											<form:input class="form-control" type="text" path="mapm"
-												placeholder="Nhập mã phiếu mượn" />
+												value="${maphieumuon}" placeholder="Nhập mã phiếu mượn"
+												required="required" style="display: none" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -152,7 +254,7 @@ h4 {
 											<!-- 											Đối tượng này dễ sai khi không .manm -->
 											<form:errors path="nm" />
 											<form:select class="selectpicker form-control" path="nm.manm"
-												style="width: 100%;height: 38px;">
+												style="width: 100%;height: 38px;" required="required">
 												<form:option value="" label="Chọn người mượn"></form:option>
 												<form:options items="${listNguoiMuons}" itemValue="manm"
 													itemLabel="ten"></form:options>
@@ -165,7 +267,7 @@ h4 {
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="manv" />
 											<select class="selectpicker form-control" name="manv"
-												style="width: 100%; height: 38px;">
+												style="width: 100%; height: 38px;" required="required">
 												<option value="">Chọn Nhân viên</option>
 												<c:forEach var="nv" items="${listNhanViens }">
 													<option value="${nv }">${nv}</option>
@@ -174,12 +276,21 @@ h4 {
 										</div>
 									</div>
 									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
+										<div class="col-sm-4 col-md-8">
+											<form:errors path="phong" />
+											<form:input class="form-control" path="phong"
+												placeholder="Nhập phòng học" type="text" required="required" />
+										</div>
+									</div>
+									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Thời
 											gian mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="thoigianmuon" />
 											<form:input class="form-control" path="thoigianmuon"
-												placeholder="Chọn thời gian mượn" type="date" />
+												placeholder="Chọn thời gian mượn" type="date"
+												required="required" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -293,8 +404,10 @@ h4 {
 											phiếu mượn</label>
 										<div class="col-sm-4 col-md-8">
 											<%-- 											<form:errors path="mapm" /> --%>
+											<input class="form-control" value="${phieumuon_sua.mapm }"
+												readonly />
 											<form:input class="form-control" type="text" path="mapm"
-												placeholder="Nhập mã phiếu mượn" />
+												placeholder="Nhập mã phiếu mượn" style="display: none" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -315,6 +428,14 @@ h4 {
 												class="selectpicker form-control"
 												style="width: 100%; height: 38px;">
 											</form:select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
+										<div class="col-sm-4 col-md-8">
+											<form:errors path="phong" />
+											<form:input class="form-control" path="phong"
+												placeholder="Nhập phòng học" type="text" required="required" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -409,6 +530,67 @@ h4 {
 			</div>
 		</div>
 	</div>
+
+	<!-- 	=========================================================== Gửi mail cảnh báo ===================================================================================== -->
+
+	<div class="modal fade bs-example-modal-lg" id="bd-mail-modal-lg"
+		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Gửi mail cảnh báo cho người mượn</h3>
+							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-body">
+					<!-- Default Basic Forms Start -->
+					<div class="pd-20 card-box mb-30">
+
+						<form:form action="phieumuon/mail" method="post">
+							<!-- 							=================================== cột 1 ========================================= -->
+							<div class="col-sm-12 col-md-12">
+								<div class="form-group row">
+									<label class="col-sm-4 col-md-3 col-form-label">Tiêu đề
+									</label>
+									<div class="col-sm-8 col-md-9">
+
+										<input class="form-control form-control-lg" type="text"
+											name="tieude_mail" value="${tieude_mail }"
+											placeholder="Nhập tiêu đề" required="required" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-4 col-md-3 col-form-label">Nội
+										dung </label>
+									<div class="col-sm-8 col-md-9">
+										<!-- 			Đối tượng này dễ sai khi không .manm -->
+										<input class="form-control form-control-lg"
+											name="noidung_mail" value="${noidung_mail }"
+											placeholder="${noidung_mail }" required="required" />
+									</div>
+								</div>
+
+							</div>
+							<!-- 							====================================== Cột 2 =================================================== -->
+
+							<hr>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Đóng</button>
+								<button type="submit" class="btn btn-info">Gửi mail</button>
+							</div>
+						</form:form>
+					</div>
+					<!-- Default Basic Forms Start -->
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<%-- 	<c:if test="${admin}"> --%>
