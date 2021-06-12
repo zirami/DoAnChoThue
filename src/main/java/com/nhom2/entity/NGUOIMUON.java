@@ -51,6 +51,9 @@ public class NGUOIMUON {
 		@Column(name = "CMND")
 		private String cmnd;
 		
+		@Column(name = "GMAIL")
+		private String gmail;
+		
 		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "LOAI")
 		private String loai;
@@ -142,6 +145,13 @@ public class NGUOIMUON {
 		}
 		public void setPhieumuons(Collection<PHIEUMUON> phieumuons) {
 			this.phieumuons = phieumuons;
+		}
+		public String getGmail() {
+			return gmail;
+		}
+
+		public void setGmail(String gmail) {
+			this.gmail = gmail;
 		}
 		
 }	

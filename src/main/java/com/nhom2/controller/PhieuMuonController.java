@@ -4,12 +4,15 @@ package com.nhom2.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhom2.DAO.CT_PhieuMuonDAO;
+import com.nhom2.DAO.MailDAO;
 import com.nhom2.DAO.NguoiMuonDAO;
 import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
@@ -36,6 +40,9 @@ public class PhieuMuonController {
 
 	@Autowired
 	SessionFactory factory;
+
+	@Autowired
+	JavaMailSender mailer;
 	
 	public String getRandomMa() {
 		List <PHIEUMUON> list = new PhieuMuonDAO().getAll(factory);
@@ -48,6 +55,18 @@ public class PhieuMuonController {
 		}
 		return "pm" + ma;
 	}
+	
+	@ModelAttribute("tieude_mail")
+	public String tieude_mail() {
+		return "Cảnh báo mượn thiết bị!!!";
+	}
+	
+	@ModelAttribute("noidung_mail")
+	public String noidung_mail() {
+		return "Phòng Cơ Sở Vật Chất xin thông báo việc mượn thiết bị của bạn đã quá 3 ngày. "
+				+ "Vui lòng hoàn tất thủ tục trả thiết bị mượn.";
+	}
+
 
 	@ModelAttribute("phieumuon_moi")
 	public PHIEUMUON phieumuon_moi() {
@@ -59,6 +78,7 @@ public class PhieuMuonController {
 		return new PHIEUMUON();
 	}
 
+	
 	// Load danh sách nhân viên
 	@ModelAttribute("listNhanViens")
 	public List<String> getListNhanViens() {
@@ -293,7 +313,7 @@ public class PhieuMuonController {
 				ct_tb.setPhieumuon(phieumuon_cansua);
 				result1 = new CT_PhieuMuonDAO().save(factory, ct_tb);
 			}
-			model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_cansua));
+			model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
 
 		}
 		model.addAttribute("update", result1);
@@ -317,5 +337,114 @@ public class PhieuMuonController {
 		}
 		return home(model, session);
 
+	}
+	
+	@RequestMapping(value = "phieumuon/mail", method= RequestMethod.POST)
+	public String sendMail(ModelMap model, @RequestParam("tieude_mail") String tieude_mail,
+			@RequestParam("noidung_mail") String noidung_mail, HttpSession session) {
+		List<PHIEUMUON> list = new PhieuMuonDAO().getAll(factory);
+		
+		for(PHIEUMUON elem : list) {
+			if(elem.getThoigiantra()==null) {
+				int songay = elem.laySoNgay_Date( elem.getThoigianmuon() );
+				if(songay>=3) {	
+					String from = "thanhthang32k@gmail.com";
+					String to = elem.getNm().getGmail();
+					String subject = tieude_mail;
+					String body = "<!DOCTYPE html>\r\n"
+							+ "<!-- saved from url=(0042)file:///C:/Users/n18dc/Downloads/test.html -->\r\n"
+							+ "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n"
+							+ "	<style>\r\n"
+							+ "table, td, th {\r\n"
+							+ "  border: 1px solid black;\r\n"
+							+ "}\r\n"
+							+ "\r\n"
+							+ "table {\r\n"
+							+ "  font-family: Arial, Helvetica, sans-serif;\r\n"
+							+ "  border-collapse: collapse;\r\n"
+							+ "  width: 100%;\r\n"
+							+ "}\r\n"
+							+ "\r\n"
+							+ "table, td, th {\r\n"
+							+ "  border: 1px solid #432874;\r\n"
+							+ "  padding: 8px;\r\n"
+							+ "}\r\n"
+							+ "\r\n"
+							+ "table tr:nth-child(even){background-color: #f2f2f2;}\r\n"
+							+ "\r\n"
+							+ "table tr:hover {background-color: #ecc24e;}\r\n"
+							+ "\r\n"
+							+ "table th {\r\n"
+							+ "  padding-top: 12px;\r\n"
+							+ "  padding-bottom: 12px;\r\n"
+							+ "  text-align: left;\r\n"
+							+ "  background-color: #432874;\r\n"
+							+ "  color: white;\r\n"
+							+ "}\r\n"
+							+ "</style>\r\n"
+							+ "</head>\r\n"
+							+ "<body>\r\n"
+							+ "	<div style=\"border: 5px solid #17a2b8;margin: 20px;padding: 20px; width: 1000px;\">\r\n"
+							+ "		<h2 style=\"text-align: center; color: #17a2b8; font-size: 35px\">Quản lí thiết bị Học Viện Cơ Sở</h2>\r\n"
+							+ "		<h4 style=\"text-align: left;\"> Chào bạn " + elem.getNm().getHo() + elem.getNm().getTen() +"! </h4>\r\n"
+							+ "	<p  style=\"font-size: 18px;  font-family: &#39;Times New Roman&#39;\">"  + noidung_mail+  "</p>\r\n"
+							+ "		\r\n"
+							+ "		<h2>Danh sách các thiết bị mượn gồm: </h2>\r\n"
+							+ "		<div>\r\n"
+							+ "			<table style=\"width: 100%;border-collapse: collapse;\">	\r\n"
+							+ "			<colgroup>\r\n"
+							+ "				<col span=\"1\" style=\"width: 15%\">\r\n"
+							+ "				<col span=\"1\" style=\"width: 50%\">\r\n"
+							+ "				<col span=\"1\" style=\"width: 35%\">\r\n"
+
+							+ "			</colgroup>												\r\n"
+							+ "				<thead>\r\n"
+							+ "					<tr>\r\n"
+							+ "						<th style=\"text-align: center;\">Mã thiết bị</th>\r\n"
+							+ "						<th style=\"text-align: center;\">Tên thiết bị</th>\r\n"
+							+ "						<th style=\"text-align: center;\">Số lượng mượn</th>\r\n"
+
+							+ "					</tr>													\r\n"
+							+ "				</thead>			\r\n"
+							+ "				<tbody  style=\"text-align: center;\">\r\n";
+							 for(CT_PHIEUMUON e : elem.getCt_phieumuons()) {
+								 body += "<tr>\r\n"
+								 + " <td>" + e.getThietbi_muon().getMatb() + "</td>\r\n"
+								 + " <td>" + e.getThietbi_muon().getTen() + "</td>\r\n"
+								 + " <td>" + e.getSoluong() + "</td>\r\n"
+								 + "</tr>\r\n";
+							 }	
+
+							body+= "\r\n"
+							+ "\r\n"
+							+ "				</tbody>\r\n"
+							+ "			</table>\r\n"
+							+ "		</div>\r\n"
+							+ "		<p style=\"font-size: 18px;  font-family: &#39;Times New Roman&#39;\">Trân trọng!!! </p>\r\n"
+							+ "	</div>\r\n"
+							+ "\r\n"
+							+ "</body></html>";
+					
+					try {
+						// tao mail
+						MimeMessage mail = mailer.createMimeMessage();
+						// su dung lop tro giup
+						MimeMessageHelper helper = new MimeMessageHelper(mail);
+						helper.setFrom(from, from);
+						helper.setTo(to);
+						helper.setReplyTo(from, from);
+						helper.setSubject(subject);
+						helper.setText(body, true);
+				
+						// gui mail
+						mailer.send(mail);
+						model.addAttribute("message", "Gửi email thành công!");
+					} catch (Exception ex) {
+						model.addAttribute("message", "Gửi email thất bại!");
+					}
+				}
+			}
+		}
+		return home(model,session);
 	}
 }
