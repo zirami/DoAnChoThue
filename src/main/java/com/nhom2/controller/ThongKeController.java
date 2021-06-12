@@ -40,7 +40,7 @@ public class ThongKeController {
 
 	@ModelAttribute("optionTB")
 	public List<String> getOptionTB() {
-		List<String> optionPM = Arrays.asList("Tất cả", "Còn tốt", "Hư hỏng");
+		List<String> optionPM = Arrays.asList("Nhập về", "Hư hỏng");
 		return optionPM;
 	}
 
@@ -74,7 +74,8 @@ public class ThongKeController {
 			
 			// Nếu là Thiết Bị
 			case case2: {
-				
+				kqThongke = getKqThongkeTB(option, ngaybatdau, ngayketthuc);
+				options = getOptionTB();
 				break;
 			}
 			
@@ -137,7 +138,7 @@ public class ThongKeController {
 	}
 	
 //	KẾT QUẢ THỐNG KÊ THIẾT BỊ
-	public List<Object[]> getKqThongkePM(String tinhtrang){
+	public List<Object[]> getKqThongkeTB(String option, Date ngaybatdau, Date ngayketthuc){
 		Session session;
 		/* Nếu chưa có session nào thì tạo session mới */
 		try {
@@ -145,22 +146,30 @@ public class ThongKeController {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "from THIETBI "
-				+ "where tinhtrang = :tinhtrang ";
-
+		String hql = "";
+		
 		// Nếu thoigiantra khác NULL thì đã trả
-		if (tinhtrang.equals("Còn tốt"))
-			hql += "and thoigiantra is not null ";
-		else if (tinhtrang.equals("Hư hỏng"))
-			hql += "and thoigiantra is null ";
-
-		hql += "group by thoigianmuon";				
+		if (option.equals("Hư hỏng"))
+			hql = "select ptl.thoigian, COUNT(*) "
+					+ "from PHIEUTHANHLY ptl, CT_PHIEUTHANHLY ct_ptl "
+					+ "where ptl.maptl = ct_ptl.phieuthanhly.maptl "
+					+ "and trangthai = :trangthai "
+					+ "and ptl.thoigian between :ngaybatdau and :ngayketthuc "					
+					+ "group by ptl.thoigian";
+		else if (option.equals("Nhập về"))
+			hql = "select pn.thoigiannhap, COUNT(*) "
+					+ "from PHIEUNHAP pn, CT_PHIEUNHAP ct_pn "
+					+ "where pn.mapn = ct_pn.phieunhap.mapn "
+					+ "and trangthai = :trangthai "
+					+ "and pn.thoigiannhap between :ngaybatdau and :ngayketthuc "
+					+ "group by pn.thoigiannhap";	
 						
 		
 		/* Bắt đầu quá trình truy vấn vào DB */
 		Query<Object[]> query = session.createQuery(hql);
-		query.setParameter("tinhtrang", tinhtrang);
-		query.setParameter("tinhtrang", tinhtrang);
+		query.setParameter("ngaybatdau", ngaybatdau);
+		query.setParameter("ngayketthuc", ngayketthuc);
+		query.setParameter("trangthai", "daXacNhan");
 				
 		return query.list();
 	}

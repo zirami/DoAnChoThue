@@ -37,6 +37,9 @@ import com.nhom2.entity.THIETBI;
 public class PhieuThanhLyController {
 	@Autowired
 	SessionFactory factory;
+	
+	final String daXacNhan = "daXacNhan";
+	final String choXacNhan = "choXacNhan";
 
 	@ModelAttribute("listThietbi")
 	public List<THIETBI> getListTB() {
@@ -174,7 +177,9 @@ public class PhieuThanhLyController {
 	public RedirectView edit(@PathVariable String id, RedirectAttributes model) {
 		PHIEUTHANHLY phieuthanhly_sua = new PhieuThanhLyDAO().getById(id, factory);
 		model.addFlashAttribute("phieuthanhly_sua", phieuthanhly_sua);
-
+		
+		if (phieuthanhly_sua.getTrangthai().equals(daXacNhan))
+			model.addFlashAttribute("form_info", true);
 		model.addFlashAttribute("form_edit", true);
 		return new RedirectView("../../phieu-thanhly");
 	}
@@ -185,7 +190,7 @@ public class PhieuThanhLyController {
 			BindingResult result, @RequestParam("matb") List<String> matbs,
 			@RequestParam("soluong") List<Integer> soluongnhaps, @RequestParam("dongia") List<Double> dongias,
 			final RedirectAttributes model) {
-		final String daXacNhan = "daXacNhan";
+		
 		// Mặc định là thất bại
 		Boolean kq = false;
 
