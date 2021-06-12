@@ -16,8 +16,6 @@ import com.nhom2.entity.PHIEUNHAP;
 
 @Transactional
 public class PhieuNhapDAO {
-	@PersistenceContext
-	private Session session;
 	/* HIỂN THỊ DANH SÁCH THIẾT BỊ */
 	public List<PHIEUNHAP> getAll(SessionFactory factory) {
 		Session session;

@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-//@Entity
+@Entity
 @Table(name = "PHIEUTHANHLY")
 public class PHIEUTHANHLY {
 	@Id
@@ -35,16 +35,28 @@ public class PHIEUTHANHLY {
 	@Column(name = "GHICHU")
 	private String ghichu;
 
+	@Column(name = "TRANGTHAI")
+	@NotBlank
+	private String trangthai;
+
 	@ManyToOne
 	@JoinColumn(name = "MANV")
-	private NHANVIEN nv;
+	private NHANVIEN nhanvien_thanhly;
 
-	@OneToMany(mappedBy = "phieuthanhly", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "phieuthanhly", fetch = FetchType.LAZY)
 	private Collection<CT_PHIEUTHANHLY> ct_phieuthanhlys;
 
 	public PHIEUTHANHLY() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getTrangthai() {
+		return trangthai;
+	}
+
+	public void setTrangthai(String trangthai) {
+		this.trangthai = trangthai;
 	}
 
 	public String getMaptl() {
@@ -71,12 +83,12 @@ public class PHIEUTHANHLY {
 		this.ghichu = ghichu;
 	}
 
-	public NHANVIEN getNv() {
-		return nv;
+	public NHANVIEN getNhanvien_thanhly() {
+		return nhanvien_thanhly;
 	}
 
-	public void setNv(NHANVIEN nv) {
-		this.nv = nv;
+	public void setNhanvien_thanhly(NHANVIEN nhanvien_thanhly) {
+		this.nhanvien_thanhly = nhanvien_thanhly;
 	}
 
 	public Collection<CT_PHIEUTHANHLY> getCt_phieuthanhlys() {
@@ -87,6 +99,10 @@ public class PHIEUTHANHLY {
 		this.ct_phieuthanhlys = ct_phieuthanhlys;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "PHIEUTHANHLY [maptl=" + maptl + ", thoigian=" + thoigian + ", ghichu=" + ghichu + ", trangthai="
+				+ trangthai + ", nhanvien=" + nhanvien_thanhly + "]";
+	}
 
 }
