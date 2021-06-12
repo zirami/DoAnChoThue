@@ -386,7 +386,7 @@ public class PhieuMuonController {
 							+ "<body>\r\n"
 							+ "	<div style=\"border: 5px solid #17a2b8;margin: 20px;padding: 20px; width: 1000px;\">\r\n"
 							+ "		<h2 style=\"text-align: center; color: #17a2b8; font-size: 35px\">Quản lí thiết bị Học Viện Cơ Sở</h2>\r\n"
-							+ "		<h4 style=\"text-align: left;\"> Chào bạn " + elem.getNm().getHo() + elem.getNm().getTen() +"! </h4>\r\n"
+							+ "		<h4 style=\"text-align: left;\"> Chào bạn " + elem.getNm().getHo() + " " + elem.getNm().getTen() +"! </h4>\r\n"
 							+ "	<p  style=\"font-size: 18px;  font-family: &#39;Times New Roman&#39;\">"  + noidung_mail+  "</p>\r\n"
 							+ "		\r\n"
 							+ "		<h2>Danh sách các thiết bị mượn gồm: </h2>\r\n"
