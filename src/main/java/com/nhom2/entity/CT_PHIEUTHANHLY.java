@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-//@Entity
+@Entity
 @Table(name="CT_PHIEUTHANHLY")
 public class CT_PHIEUTHANHLY {
 	@Id
@@ -34,14 +34,14 @@ public class CT_PHIEUTHANHLY {
 	
 	@NotNull(message="Trường này không được bỏ trống!")
 	@Column(name="DONGIA")
-	private Float dongia;
+	private Double dongia;
 
 	public CT_PHIEUTHANHLY() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CT_PHIEUTHANHLY(Integer id, THIETBI thietbi_thanhly, PHIEUTHANHLY phieuthanhly, Integer soluong,Float dongia) {
+	public CT_PHIEUTHANHLY(Integer id, THIETBI thietbi_thanhly, PHIEUTHANHLY phieuthanhly, Integer soluong,Double dongia) {
 		super();
 		this.id = id;
 		this.thietbi_thanhly = thietbi_thanhly;
@@ -82,11 +82,11 @@ public class CT_PHIEUTHANHLY {
 		this.soluong = soluong;
 	}
 
-	public Float getDongia() {
+	public Double getDongia() {
 		return dongia;
 	}
 
-	public void setDongia(Float dongia) {
+	public void setDongia(Double dongia) {
 		this.dongia = dongia;
 	}
 	

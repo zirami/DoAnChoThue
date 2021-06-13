@@ -64,6 +64,7 @@ public class ThietBiDAO {
 			
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			t.rollback();
 			result = false;
 			
@@ -133,6 +134,35 @@ public class ThietBiDAO {
 		Query<THIETBI> query = session.createQuery(hql);
 		List<THIETBI> list = query.list();
 		return list;
+	}
+
+	public THIETBI getById2thanhly(String id, SessionFactory factory) {
+		Session session;
+
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			session = factory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = factory.openSession();
+		}
+		String hql = "from THIETBI where matb = :id";
+		
+		/* Bắt đầu quá trình truy vấn vào DB */
+
+		Query<THIETBI> query = session.createQuery(hql);		
+		query.setParameter("id", id	);
+		THIETBI thietbi = null;
+		
+		if (query.list().isEmpty())
+			return thietbi;
+		else thietbi = query.list().get(0);
+		
+		session.close();
+		return thietbi;
+	}
+	
+	public THIETBI getById2nhap(String id, SessionFactory factory) {
+		return getById2thanhly(id, factory);
 	}
 
 	

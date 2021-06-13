@@ -43,12 +43,20 @@
 						<span class="text-yellow">QUẢN LÍ NGƯỜI MƯỢN</span>
 					</a>
 				</li>
-				<li class="dropdown" id="tltb" style="display: none">
+				<li class="dropdown" id="ntb" style="display: none">
 					<a href="phieu-nhap" class="dropdown-toggle no-arrow"
+						data-toggle="tooltip" data-placement="right" title=""
+						data-original-title="NHẬP THIẾT BỊ">
+						<span class="micon dw dw-trolley"></span>
+						<span class="text-yellow">QUẢN LÍ PHIẾU NHẬP</span>
+					</a>
+				</li>
+				<li class="dropdown" id="tltb" style="display: none">
+					<a href="phieu-thanhly" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="THANH LÝ THIẾT BỊ">
 						<span class="micon dw dw-trolley"></span>
-						<span class="text-yellow">QUẢN LÍ PHIẾU NHẬP</span>
+						<span class="text-yellow">QUẢN LÍ PHIẾU THANH LÝ</span>
 					</a>
 				</li>
 				<li class="dropdown" id="qlnv" style="display: none">
@@ -103,6 +111,7 @@
 			document.getElementById("qlpm").style.display = "";
 			document.getElementById("qltb").style.display = "";
 			document.getElementById("qlnm").style.display = "";
+			document.getElementById("ntb").style.display = "";
 			document.getElementById("tltb").style.display = "";
 			document.getElementById("thongke").style.display = "";
 //  			document.getElementById("dangxuat").style.display = "";

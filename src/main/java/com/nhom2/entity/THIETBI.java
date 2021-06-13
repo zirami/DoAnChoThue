@@ -44,8 +44,14 @@ public class THIETBI {
 	@Column(name = "GHICHU")
 	private String ghichu;
 
-	@OneToMany(mappedBy = "thietbi_muon", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "thietbi_muon", fetch = FetchType.LAZY)
 	private Collection<CT_PHIEUMUON> ct_phieumuons;
+	
+	@OneToMany(mappedBy = "thietbi", fetch = FetchType.LAZY)
+	private Collection<CT_PHIEUNHAP> ct_phieunhaps;
+	
+	@OneToMany(mappedBy = "thietbi_thanhly", fetch = FetchType.LAZY)
+	private Collection<CT_PHIEUTHANHLY> ct_phieuthanhlys;
 
 	public THIETBI() {
 		super();

@@ -78,11 +78,11 @@ public class NHANVIEN {
 	@JoinColumn(name = "USERNAME")
 	private ACCOUNT acc;
 
-	//@OneToMany(mappedBy = "nv", fetch = FetchType.EAGER)
-	//private Collection<PHIEUTHANHLY> phieuthanhlys;
-
-	@OneToMany(mappedBy = "nhanvien", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "nhanvien", fetch = FetchType.LAZY)
 	private Collection<PHIEUNHAP> phieunhaps;
+	
+	@OneToMany(mappedBy = "nhanvien_thanhly", fetch = FetchType.LAZY)
+	private Collection<PHIEUTHANHLY> phieuthanhlys;
 
 	public NHANVIEN() {
 		super();
