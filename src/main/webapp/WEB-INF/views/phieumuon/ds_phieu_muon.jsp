@@ -62,7 +62,7 @@ h4 {
 					<div class="card-box md-30">
 						<hr>
 						<div>
-							<table class="table nowrap  dataTable collapsed table-hover" style="width: 100% ">
+							<table class="table nowrap  dataTable collapsed table-hover table-boder-factor" style="width: 100% " id="myTable" role="grid">
 							<colgroup>
 								<col span="1" style="width: 10%">
 								<col span="1" style="width: 10%">
@@ -161,7 +161,7 @@ h4 {
 						</div>
 
 						<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
-						<table class="table dataTable table-bordered table-hover "
+						<table class="table dataTable table-bordered table-hover " 
 							style="width: 100%;border-collapse: collapse;" >
 							<colgroup>
 								<col span="1" style="width: 10%">
