@@ -12,6 +12,7 @@
 h4 {
 	color: red;
 }
+
 </style>
 <%@include file="/common/loadcss.jsp"%>
 
@@ -24,6 +25,8 @@ h4 {
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
+	
+
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -59,9 +62,17 @@ h4 {
 					<div class="card-box md-30">
 						<hr>
 						<div>
-							<table
-								class="table nowrap  dataTable no-footer collapsed table-border-factor"
-								style="width: 100%" id="myTable" role="grid">
+							<table class="table nowrap  dataTable collapsed table-hover" style="width: 100% ">
+							<colgroup>
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 15%">
+							</colgroup>
 								<thead class="table-info">
 									<tr>
 										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
@@ -150,19 +161,26 @@ h4 {
 						</div>
 
 						<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
-						<table
-							class="table nowrap  dataTable no-footer collapsed table-border-factor"
-							style="width: 100%" id="myTable" role="grid">
+						<table class="table dataTable table-bordered table-hover "
+							style="width: 100%;border-collapse: collapse;" >
+							<colgroup>
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+							</colgroup>
 							<thead class="table-info">
 								<tr>
-									<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
+									<th>Mã phiếu mượn</th>
 									<th>Người mượn</th>
-									<th>Mã nhân viên</th>
+									<th>Nhân viên lập phiếu</th>
 									<th>Phòng</th>
 									<th>Thời gian mượn</th>
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
-									<th class="pull-right">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -179,24 +197,7 @@ h4 {
 												<td>${phieumuon.thoigianmuon}</td>
 												<td>${phieumuon.thoigiantra}</td>
 												<td>${phieumuon.ghichu }</td>
-												<td class="pull-right">
-													<!-- 													<div class="row clearfix btn-list"> --> <%-- 														<form action="phieumuon/edit/${phieumuon.mapm}"> --%>
-													<!-- 															<button class="btn btn-info bg-purple" type="submit" -->
-													<!-- 																data-toggle="tooltip" data-placement="top" title="Sửa"> -->
-													<!-- 																<span class="material-icons ">edit</span> -->
-													<!-- 															</button> --> <!-- 														</form> -->
-													<!-- 														<form action="phieumuon/delete" method="post"> -->
-													<!-- 																													Dùng để hiển thị tên lên form  -->
-													<!-- 															<input type="hidden" name="ten" --> <%-- 																value="${phieumuon.nm.ten}" /> --%>
-													<!-- 																													Dùng để gửi về controller  -->
-													<!-- 															<input type="hidden" name="mapm" --> <%-- 																value="${phieumuon.mapm}" /> --%>
-													<!-- 															<button type="submit" style="display: none" -->
-													<!-- 																class="submit_del_btn"></button> --> <!-- 														</form> -->
-													<!-- 														<button class="btn btn-danger delete_btn" -->
-													<!-- 															data-toggle="tooltip" data-placement="top" title="Xoá" -->
-													<!-- 															type="button"> --> <!-- 															<span class="material-icons delete_btn">delete</span> -->
-													<!-- 														</button> --> <!-- 													</div> -->
-												</td>
+												
 											</tr>
 										</c:if>
 									</c:if>
@@ -210,6 +211,7 @@ h4 {
 
 			</div>
 		</div>
+		<br>
 	</div>
 	<!-- 	</div> -->
 	<!-- 	======================   Thêm phiếu mượn ============================ -->
