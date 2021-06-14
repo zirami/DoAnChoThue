@@ -77,7 +77,7 @@ public class PhieuNhapController {
 			PHIEUNHAP phieunhap) {
 		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1)
 			return null;
-
+		boolean kq = true;
 		// Gop phan tu bi trung ten
 		// Duyet tat ca phan tu
 		for (int i = 0; i < matbs.size() - 1; i++)
@@ -103,12 +103,20 @@ public class PhieuNhapController {
 		for (int i = 0; i < matbs.size(); i++) {
 			CT_PHIEUNHAP ct_pn = new CT_PHIEUNHAP();
 			ct_pn.setPhieunhap(phieunhap);
-			ct_pn.setThietbi(new ThietBiDAO().getById(matbs.get(i), factory));
+			ct_pn.setThietbi(new ThietBiDAO().getById2nhap(matbs.get(i), factory));
+
+			if (soluongnhaps.get(i) > ct_pn.getThietbi().getSoluong()) {
+				kq = false;
+				break;
+			}
+
 			ct_pn.setSoluongnhap(soluongnhaps.get(i));
 			ct_pn.setDongia(dongias.get(i));
 			listCt_pn.add(ct_pn);
 		}
 
+		if (!kq)
+			return null;
 		return listCt_pn;
 	}
 
@@ -137,6 +145,17 @@ public class PhieuNhapController {
 			phieunhap_them.setCt_phieunhaps(listCt_pn);
 			phieunhap_them.setThoigiannhap(Date.valueOf(LocalDate.now()));
 			kq = new PhieuNhapDAO().saveOrUpdate(factory, phieunhap_them);
+		}
+		// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ giảm
+		if (phieunhap_them.getTrangthai().equals("daXacNhan")) {
+			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
+				THIETBI thietbi_nhap = ct_pn.getThietbi();
+				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
+				kq = new ThietBiDAO().update(factory, thietbi_nhap);
+				if (!kq)
+					break;
+			}
+
 		}
 
 		// Hiển thị thông báo kết quả

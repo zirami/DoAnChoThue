@@ -46,9 +46,6 @@
 								data-toggle="modal" type="button">NHẬP THIẾT BỊ</a>
 							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn">SỬA THIẾT BỊ</a>
-							<a href="#" id="insert_btn" class="btn btn-primary"
-								data-toggle="modal" data-target="#bd-example-modal-lg"
-								type="button">THÊM THIẾT BỊ MỚI </a>
 						</div>
 					</div>
 				</div>
@@ -114,8 +111,8 @@
 													<c:when test="${pn.trangthai.equals(choXacNhan)}">
 														<div class="col-3">
 															<a class="material-icons" data-toggle="tooltip"
-																href="phieu-nhap/edit/${pn.mapn}" data-placement="top"
-																title="Sửa" style="color: blue">edit</a>
+																href="phieu-nhap/edit/${pn.mapn}"
+																data-placement="top" title="Sửa" style="color: blue">edit</a>
 														</div>
 														<div class="col-6 text-center">
 															<!-- XOÁ -->
@@ -126,7 +123,12 @@
 														</div>
 													</c:when>
 													<c:otherwise>
-														<div class="col-6 text-center">-</div>
+														<div class="col-3">
+															<a class="material-icons" data-toggle="tooltip"
+																href="phieu-nhap/edit/${pn.mapn}"
+																data-placement="top" title="Xem chi tiết"
+																style="color: blue">info</a>
+														</div>
 													</c:otherwise>
 												</c:choose>
 											</div>
@@ -177,6 +179,11 @@
 									Viên tạo:</label>
 								<strong class="col-sm-4 col-md-8 text-left">${nv.manv}</strong>
 								<input type="hidden" name="nhanvien.manv" value="${nv.manv}" />
+							</div>
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Nhà cung cấp:</label>
+								<input class="form-control col-sm-4 col-md-8" name="mancc"
+									placeholder="Nhập mã nhà cung cấp" />
 							</div>
 							<div class="row">
 								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
@@ -278,6 +285,11 @@
 									Viên chỉnh sửa:</label>
 								<strong class="col-sm-4 col-md-8 text-left">${nv.manv}</strong>
 								<input type="hidden" name="nhanvien.manv" value="${nv.manv}" />
+							</div>
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Nhà cung cấp:</label>
+								<input class="form-control col-sm-4 col-md-8" name="mancc"
+									placeholder="Nhập mã nhà cung cấp" />
 							</div>
 							<div class="row">
 								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
