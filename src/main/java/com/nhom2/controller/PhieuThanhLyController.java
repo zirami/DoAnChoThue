@@ -237,9 +237,15 @@ public class PhieuThanhLyController {
 	@RequestMapping(value = "phieu-thanhly/delete/{maptl}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String delete(@PathVariable String maptl) throws Exception {
 		PHIEUTHANHLY phieuthanhly = new PhieuThanhLyDAO().getById2delete(maptl, factory);
-		if (phieuthanhly.getTrangthai().equals("daXacNhan"))
+		if (phieuthanhly == null || phieuthanhly.getTrangthai().equals("daXacNhan"))
 			return "false";
 		String kq = new PhieuThanhLyDAO().delete(factory, phieuthanhly).toString();
 		return kq;
+	}
+	
+	@RequestMapping(value = "phieu-thanhly/getSoluongton/{matb}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String getSoluongton(@PathVariable String matb) throws Exception {
+		THIETBI thietbi = new ThietBiDAO().getById2thanhly(matb, factory);
+		return thietbi.getSoluong().toString();
 	}
 }

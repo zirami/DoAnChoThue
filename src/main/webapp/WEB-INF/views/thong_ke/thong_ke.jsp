@@ -76,39 +76,56 @@
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pb-20 container">
-						<table class="data-table-export table" id="myTable">
-							<thead>
-								<tr>
-									<c:set var="daTra" value="Đã trả" />
-									<c:set var="chuaTra" value="Chưa trả" />
-									<c:set var="tot" value="Còn tốt" />
-									<c:set var="hong" value="Hư hỏng" />
-									<!-- PHIẾU MƯỢN -->
-									<c:choose>
-										<c:when test="${optionThongke.equals(daTra) }">
-											<th>Ngày Trả</th>
-										</c:when>
-										<c:when test="${optionThongke.equals(chuaTra) }">
-											<th>Ngày Mượn</th>
-										</c:when>
-										<c:otherwise>
-											<th>Ngày</th>
-										</c:otherwise>
-									</c:choose>
-									<th>${loaiThongke}</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="kq" items="${kqThongke}">
+						<c:set var="daTra" value="Đã trả" />
+						<c:set var="chuaTra" value="Chưa trả" />
+						<c:set var="tot" value="Còn tốt" />
+						<c:set var="hong" value="Hư hỏng" />
+						<c:set var="PM" value="Phiếu Mượn" />
+						<c:if test="${loaiThongke.equals(PM) }">
+							<table class="data-table-export table">
+								<thead>
 									<tr>
-										<th>
-											<fmt:formatDate pattern="dd-MM-yyyy" value="${kq[0]}" />
-										</th>
-										<td>${kq[1]}</td>
+										<!-- PHIẾU MƯỢN -->
+										<th>Ngày Mượn</th>
+										<th>Ngày Trả</th>
+										<th>Số lượng ${loaiThongke}</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach var="kq" items="${kqThongke}">
+										<tr>
+											<th>${kq[0]}</th>
+											<th>${kq[1]}</th>
+											<td>${kq[2]}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							<table hidden="hidden" id="myTable">
+								<thead>
+									<tr>
+										<!-- PHIẾU MƯỢN -->
+										<c:choose>
+											<c:when test="${loaiThongke.equals(PM) }">
+												<th>Ngày Mượn</th>
+											</c:when>
+											<c:otherwise>
+												<th>Ngày</th>
+											</c:otherwise>
+										</c:choose>
+										<th>${loaiThongke}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="kq" items="${kqThongke}">
+										<tr>
+											<th>${kq[0]}</th>
+											<td>${kq[2]}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
 					</div>
 				</div>
 				<!-- END DATATABLE -->
@@ -160,6 +177,11 @@
 							+ this.point.y + ' '
 							+ this.point.name.toLowerCase();
 				}
+			},
+			noData : {
+				style : {
+					fontSize : "16px"
+				}
 			}
 		});
 	</script>
@@ -167,26 +189,29 @@
 	<script>
 		$(function() {
 			//Khởi tạo chọn khoảng thời gian: date range picker
+			let locale_init = {
+				cancelLabel : 'Xoá',
+				applyLabel : 'Áp dụng',
+				format : 'DD/MM/YYYY',
+				daysOfWeek : [ "T2", "T3", "T4", "T5", "T6", "T7", "CN" ],
+				monthNames : [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4",
+						"Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9",
+						"Tháng 10", "Tháng 11", "Tháng 12" ],
+			}
+
 			let date_init = {
-					locale : {
-						cancelLabel : 'Xoá',
-						applyLabel : 'Áp dụng',
-						format : 'DD/MM/YYYY'
-					}
-					,
-					startDate : '${ngaybatdau}',
-					endDate : '${ngayketthuc}'
-				}
-		
-			if ('${ngaybatdau}' == '' || '${ngayketthuc}' == '') 
+				showDropdowns : true,
+				locale : locale_init,
+				startDate : '${ngaybatdau}',
+				endDate : '${ngayketthuc}'
+			}
+
+			if ('${ngaybatdau}' == '' || '${ngayketthuc}' == '')
 				date_init = {
-					locale : {
-						cancelLabel : 'Xoá',
-						applyLabel : 'Áp dụng',
-						format : 'DD/MM/YYYY'
-					}
+					showDropdowns : true,
+					locale : locale_init,
 				}
-		
+
 			let date = $('input[name="date"]').daterangepicker(
 					date_init,
 					//Khi có sự kiện mở lịch ra và chọn ngày mới thì set dữ liệu lại cho 2 cái ngày start và end
@@ -227,13 +252,14 @@
 	</select>
 	<script type="text/javascript">
 		//LOAD VÀO THẤY LOẠI THỐNG KÊ CÓ GIÁ TRỊ
-		$(function(){
-			let loaiThongke = $("select[name='loaiThongke']").val('${loaiThongke}')
+		$(function() {
+			let loaiThongke = $("select[name='loaiThongke']").val(
+					'${loaiThongke}')
 			let option = $("select[name='option']")
-			
+
 			option.html($('#optionThongke').html())
 			option.val('${optionThongke}')
-	
+
 			//NẾU LOẠI THỐNG KÊ LÀ RỖNG THÌ ẨN CÁC NÚT OPTION VÀ NÚT LỌC
 			if (loaiThongke.val() == "") {
 				option.hide()
@@ -243,46 +269,47 @@
 				option.show()
 			}
 		})
-		
+
 		//KHI THAY ĐỔI LOẠI THỐNG KÊ
-		$("select[name='loaiThongke']").on('change',function() {
-			let option = $(this).parents("div.row").find(
-					"select[name='option']")
-	
-			//THAY ĐỔI OPTION DỰA THEO LOẠI THỐNG KÊ
-			if ($(this).val() === "Phiếu Mượn")
-				option.html($('#optionPM').html())
-			else if ($(this).val() === "Thiết Bị")
-				option.html($('#optionTB').html())
-	
-			//NẾU LOẠI THỐNG KÊ LÀ RỖNG THÌ ẨN CÁC NÚT OPTION VÀ NÚT LỌC
-			if ($(this).val() == "") {
-				option.hide()
-				$('.filter-btn').hide()
-			} else {
-				$('.filter-btn').show()
-				option.show()
-			}
-	
-		})
-		
-		
+		$("select[name='loaiThongke']").on(
+				'change',
+				function() {
+					let option = $(this).parents("div.row").find(
+							"select[name='option']")
+
+					//THAY ĐỔI OPTION DỰA THEO LOẠI THỐNG KÊ
+					if ($(this).val() === "Phiếu Mượn")
+						option.html($('#optionPM').html())
+					else if ($(this).val() === "Thiết Bị")
+						option.html($('#optionTB').html())
+
+						//NẾU LOẠI THỐNG KÊ LÀ RỖNG THÌ ẨN CÁC NÚT OPTION VÀ NÚT LỌC
+					if ($(this).val() == "") {
+						option.hide()
+						$('.filter-btn').hide()
+					} else {
+						$('.filter-btn').show()
+						option.show()
+					}
+
+				})
+
 		//KHI NHẤN NÚT LỌC
 		$('.filter-btn').on('click', function() {
 			$(this).parents("div.row").find("input[type='submit']").click()
 		})
 	</script>
-	
 	<!-- KHAI BÁO THÔNG BÁO CƠ BẢN -->
 	<script type="text/javascript">
-		if(error) show_error("${msg}");
-		
+		if (${error})
+			show_error("${msg}");
+
 		//THÔNG BÁO LỖI
 		function show_error(content) {
 			Swal.fire({
-				title: 'LỖI',
-				text: content,
-				icon: 'error',
+				title : 'LỖI',
+				text : content,
+				icon : 'error',
 			})
 		}
 	</script>

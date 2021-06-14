@@ -267,8 +267,8 @@
 								<label class="col-sm-4 col-md-4 col-form-label">Ngày
 									thanh lý: </label>
 								<div class="col-sm-4 col-md-8">
-									<input name="thoigian" class="form-control"
-										readonly="readonly" type="date" value="${today}" />
+									<input name="thoigian" class="form-control" readonly="readonly"
+										type="date" value="${today}" />
 								</div>
 							</div>
 						</div>
@@ -534,6 +534,42 @@
 				icon: 'error',
 			})
 		}
+	</script>
+	<!-- Lấy số lượng tối đa của thiết bị -->
+	<select id="listThietbi" hidden="true">
+		<c:forEach items="${listThietbi}" var="tb">
+			<option value="${tb.matb}">${tb.matb}</option>
+		</c:forEach>
+	</select>
+	<script type="text/javascript">
+	function thietbi(matb, soluongton){
+		this.matb = matb;
+		this.soluongton = soluongton;
+	}
+	
+	let listSoluongton = [];
+	$('#listThietbi option').each(function(){
+		let matb = $(this).val();
+		listSoluongton.push(new thietbi(matb, 0))
+		getSoluongton(matb)
+	})
+
+	function getSoluongton(matb){
+		$.ajax({
+            type: "GET",
+            url: "${pageContext.servletContext.contextPath}/phieu-thanhly/getSoluongton/" + matb,    
+            success: function(data){
+            	listSoluongton.forEach(function(item, i){
+            		if(item.matb == matb) listSoluongton[i].soluongton = data
+            	})
+            	
+            }
+    	})
+	}
+		
+	</script>
+	<script type="text/javascript">
+		console.log(listSoluongton)
 	</script>
 </body>
 </html>
