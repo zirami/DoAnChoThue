@@ -26,10 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nhom2.DAO.CT_PhieuMuonDAO;
 import com.nhom2.DAO.MailDAO;
 import com.nhom2.DAO.NguoiMuonDAO;
+import com.nhom2.DAO.NhanVienDAO;
 import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
+import com.nhom2.entity.ACCOUNT;
 import com.nhom2.entity.CT_PHIEUMUON;
 import com.nhom2.entity.NGUOIMUON;
+import com.nhom2.entity.NHANVIEN;
 import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
@@ -81,11 +84,8 @@ public class PhieuMuonController {
 	
 	// Load danh sách nhân viên
 	@ModelAttribute("listNhanViens")
-	public List<String> getListNhanViens() {
-		List<String> list = new ArrayList<>();
-		list.add("nv1");
-		list.add("nv2");
-		list.add("nv3");
+	public List<NHANVIEN> getListNhanViens() {
+		List<NHANVIEN> list = new NhanVienDAO().getAll(factory);
 		return list;
 	}
 
@@ -120,7 +120,11 @@ public class PhieuMuonController {
 	}
 
 	@RequestMapping(value = "phieumuon", method = RequestMethod.GET)
-	public String home(ModelMap model, HttpSession session) {
+	public String home(ModelMap model, HttpSession session, HttpServletRequest request) {
+		session = request.getSession();
+		ACCOUNT account = (ACCOUNT) session.getAttribute("account_login");
+		
+		model.addAttribute("acount_login",account);
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
 		model.addAttribute("maphieumuon",getRandomMa());
 		model.addAttribute("indexValue", 0);
@@ -138,7 +142,7 @@ public class PhieuMuonController {
 
 		// nếu có lỗi thì quay về chương trình
 		if (reusult.hasErrors())
-			return home(model, session);
+			return home(model, session,rq);
 
 		// Kiểm tra giá trị của index bên view
 		if (indexValue == 0) {
@@ -197,7 +201,7 @@ public class PhieuMuonController {
 				new PhieuMuonDAO().delete(factory, phieumuon_moi);
 				model.addAttribute("phieumuon_moi",new PHIEUMUON());
 				model.addAttribute("insert", false);
-				return home(model, session);
+				return home(model, session,rq);
 			}
 			
 		}
@@ -219,19 +223,19 @@ public class PhieuMuonController {
 
 		result = new PhieuMuonDAO().update(factory, phieumuon_moi);
 		model.addAttribute("insert", result);
-		return home(model, session);
+		return home(model, session,rq);
 
 	}
 
 	@RequestMapping(value = "phieumuon/edit/{mapm}", method = RequestMethod.GET)
 	public String show_form_edit(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua,
-			@PathVariable("mapm") String mapm, HttpSession session) {
+			@PathVariable("mapm") String mapm, HttpSession session, HttpServletRequest request) {
 		model.addAttribute("form_edit", true);
 		phieumuon_sua = new PhieuMuonDAO().getById(mapm, factory);
 		model.addAttribute("indexValue", 0);
 		model.addAttribute("slThietBiSua", phieumuon_sua.getCt_phieumuons().size());
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
-		return home(model, session);
+		return home(model, session,request);
 	}
 
 	@RequestMapping(value = "phieumuon/update", method = RequestMethod.POST)
@@ -244,7 +248,7 @@ public class PhieuMuonController {
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		// Nếu có lỗi thì quay lại chương trình
 		if (result.hasErrors())
-			return home(model, session);
+			return home(model, session,rq);
 
 		Boolean result1 = false;
 		// lấy phiếu mua bằng mã của phiếu mua sửa.
@@ -270,7 +274,7 @@ public class PhieuMuonController {
 				thietbii.setSoluong(thietbii.getSoluong()+ elem.getSoluong());
 				new ThietBiDAO().update(factory, thietbii);
 			}
-			return home(model, session);
+			return home(model, session,rq);
 		}
 		
 
@@ -337,7 +341,7 @@ public class PhieuMuonController {
 		
 				model.addAttribute("phieumuon_sua",new PHIEUMUON());
 				model.addAttribute("update", false);
-				return home(model, session);
+				return home(model, session,rq);
 			}
 			
 		}
@@ -368,12 +372,12 @@ public class PhieuMuonController {
 		}
 		
 		model.addAttribute("update", result1);
-		return home(model, session);
+		return home(model, session,rq);
 	}
 
 	// Delete
 	@RequestMapping(value = "phieumuon/delete", method = RequestMethod.POST)
-	public String delete(ModelMap model, @RequestParam("mapm") String mapm, HttpSession session) {
+	public String delete(ModelMap model, @RequestParam("mapm") String mapm, HttpSession session, HttpServletRequest rq) {
 		PHIEUMUON phieumuon_xoa = new PhieuMuonDAO().getById(mapm, factory);
 		if (phieumuon_xoa.getThoigiantra() != null) {
 			model.addAttribute("delete", false);
@@ -386,13 +390,12 @@ public class PhieuMuonController {
 			phieumuon_canxoa.setMapm(mapm);
 			model.addAttribute("delete", new PhieuMuonDAO().delete(factory, phieumuon_canxoa));
 		}
-		return home(model, session);
-
+		return home(model, session,rq);
 	}
 	
 	@RequestMapping(value = "phieumuon/mail", method= RequestMethod.POST)
 	public String sendMail(ModelMap model, @RequestParam("tieude_mail") String tieude_mail,
-			@RequestParam("noidung_mail") String noidung_mail, HttpSession session) {
+			@RequestParam("noidung_mail") String noidung_mail, HttpSession session, HttpServletRequest rq) {
 		List<PHIEUMUON> list = new PhieuMuonDAO().getAll(factory);
 		
 		for(PHIEUMUON elem : list) {
@@ -496,6 +499,6 @@ public class PhieuMuonController {
 				}
 			}
 		}
-		return home(model,session);
+		return home(model,session,rq);
 	}
 }

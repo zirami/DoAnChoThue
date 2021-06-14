@@ -53,10 +53,19 @@ public class PHIEUMUON {
 	@NotNull(message="Trường này không được bỏ trống!")
 	private NGUOIMUON nm;
 
-	@NotNull
-	@Column(name = "MANV")
-	@NotNull(message="Trường này không được bỏ trống!")
-	private String manv;
+//	@NotNull(message="Trường này không được bỏ trống!")
+	@ManyToOne
+	@JoinColumn(name = "MANV")
+	private NHANVIEN nhanvien_pm;
+
+
+	public NHANVIEN getNhanvien_pm() {
+		return nhanvien_pm;
+	}
+
+	public void setNhanvien_pm(NHANVIEN nhanvien_pm) {
+		this.nhanvien_pm = nhanvien_pm;
+	}
 
 	@OneToMany(mappedBy = "phieumuon", fetch = FetchType.EAGER)
 	private Collection<CT_PHIEUMUON> ct_phieumuons;
@@ -113,13 +122,7 @@ public class PHIEUMUON {
 		this.nm = nm;
 	}
 
-	public String getManv() {
-		return manv;
-	}
 
-	public void setManv(String manv) {
-		this.manv = manv;
-	}
 
 	public Collection<CT_PHIEUMUON> getCt_phieumuons() {
 		return ct_phieumuons;
@@ -162,7 +165,7 @@ public class PHIEUMUON {
 	
 	public int laySoNgay(String t1) {
 		 Date date = new Date();  
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+ 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 	    String strDate= formatter.format(date);  
 	    Date date1 = null;
 	    try {

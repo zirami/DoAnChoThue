@@ -104,6 +104,7 @@ public class LoginController {
 			
 			// Cho Đại phiếu mượn là admin
 			session.setAttribute("role", "admin");
+			session.setAttribute("account_login", account_db);
 			return "redirect: phieumuon";
 		}
 		
