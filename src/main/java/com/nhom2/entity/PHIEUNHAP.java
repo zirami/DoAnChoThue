@@ -54,16 +54,12 @@ public class PHIEUNHAP {
 	public PHIEUNHAP() {
 		super();
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "PHIEUNHAP [mapn=" + mapn + ", thoigiannhap=" + thoigiannhap + ", nhanvien=" + nhanvien + ", ghichu="
 				+ ghichu + ", trangthai=" + trangthai + ", ncc=" + ncc + "]";
 	}
-
-
 
 	public PHIEUNHAP(String mapn, Date thoigiannhap, NHANVIEN nhanvien, String ghichu, List<CT_PHIEUNHAP> ct_phieunhaps,
 			NHACUNGCAP ncc) {

@@ -1,6 +1,7 @@
 package com.nhom2.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.nhom2.entity.CT_PHIEUNHAP;
+import com.nhom2.entity.CT_PHIEUTHANHLY;
+import com.nhom2.entity.PHIEUNHAP;
+import com.nhom2.entity.PHIEUTHANHLY;
 
 @Transactional
 @Controller
@@ -51,65 +57,50 @@ public class ThongKeController {
 	}
 
 	@RequestMapping(value = "thong-ke", method = RequestMethod.POST)
-	public String thongke(@RequestParam("loaiThongke") String loaiThongke, @RequestParam("option") String option,
+	public String thongke(@RequestParam("loaiThongke") String loaiThongke,
 			@RequestParam("ngaybatdau") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngaybatdau,
 			@RequestParam("ngayketthuc") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayketthuc, ModelMap model) {
 		final String case1 = "Phiếu Mượn";
 		final String case2 = "Thiết Bị";
 		final String case3 = "Phiếu Nhập";
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-		
-		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 		List<Object[]> kqThongke = null;
 		String hql = "";
 		List<String> options = getOptionTB();
 		switch (loaiThongke) {
-			// Nếu là Phiếu Mượn
-			case case1: {
-				kqThongke = getKqThongkePM(option, ngaybatdau, ngayketthuc);
-				options = getOptionPM();
-				break;
-			}
-			
-			
-			// Nếu là Thiết Bị
-			case case2: {
-				kqThongke = getKqThongkeTB(option, ngaybatdau, ngayketthuc);
-				options = getOptionTB();
-				break;
-			}
-			
-			
-			default:
-				model.addAttribute("error", true);
-				model.addAttribute("msg", "Loại thiết bị không xác định !!!");
-				break;
-				
+		// Nếu là Phiếu Mượn
+		case case1: {
+			kqThongke = getKqThongkePM(ngaybatdau, ngayketthuc);
+			break;
 		}
 
-		model.addAttribute("loaiThongke", loaiThongke);		
+		// Nếu là Thiết Bị
+		case case2: {
+			kqThongke = getKqThongkeTB(ngaybatdau, ngayketthuc);
+			break;
+		}
+
+		default:
+			model.addAttribute("error", true);
+			model.addAttribute("msg", "Loại thiết bị không xác định !!!");
+			break;
+
+		}
+
+		model.addAttribute("loaiThongke", loaiThongke);
 		model.addAttribute("options", options);
 		model.addAttribute("ngaybatdau", formatter.format(ngaybatdau));
 		model.addAttribute("ngayketthuc", formatter.format(ngayketthuc));
-		
-		model.addAttribute("optionThongke", option);
+
 		model.addAttribute("kqThongke", kqThongke);
-		
-		if (loaiThongke.equals("Thiết Bị")) {
-			for (Object[] objects : kqThongke) {
-				System.out.println("ten: " + objects[0]);
-				System.out.println("soluong: " + objects[1]);
-				System.out.println("------------------");
-			}
-			return home(model);
-		}
+
 		return home(model);
-		
-		
 	}
-	
-	//	KẾT QUẢ THỐNG KÊ PHIẾU MƯỢN
-	public List<Object[]> getKqThongkePM(String option, Date ngaybatdau, Date ngayketthuc){
+
+	// KẾT QUẢ THỐNG KÊ PHIẾU MƯỢN
+	public List<Object[]> getKqThongkePM(Date ngaybatdau, Date ngayketthuc) {
+		List<Object[]> listKq = new ArrayList<Object[]>();
 		Session session;
 		/* Nếu chưa có session nào thì tạo session mới */
 		try {
@@ -117,28 +108,50 @@ public class ThongKeController {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "select thoigianmuon, thoigiantra, count(*) " + "from PHIEUMUON "
+		String hql = "select thoigianmuon, thoigiantra, count(*) from PHIEUMUON "
 				+ "where thoigianmuon between :ngaybatdau and :ngayketthuc ";
 
-		// Nếu thoigiantra khác NULL thì đã trả
-		if (option.equals("Đã trả"))
-			hql += "and thoigiantra is not null ";
-		else if (option.equals("Chưa trả"))
-			hql += "and thoigiantra is null ";
+		for (long i = ngaybatdau.getTime(); i <= ngayketthuc.getTime(); i += 86400000) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			System.out.println(formatter.format(i));
+			Object[] kq = { "", null, null };
+			kq[0] = formatter.format(i); // Ngay
 
-		hql += "group by thoigianmuon, thoigiantra";				
-						
-		
-		/* Bắt đầu quá trình truy vấn vào DB */
-		Query<Object[]> query = session.createQuery(hql);
-		query.setParameter("ngaybatdau", ngaybatdau);
-		query.setParameter("ngayketthuc", ngayketthuc);
-				
-		return query.list();
+			hql = "select thoigianmuon, count(*) from PHIEUMUON " + "where thoigianmuon = :thoigianmuon "
+					+ "and thoigiantra is null " + "group by thoigianmuon";
+			Query<Object[]> q = session.createQuery(hql);
+			q.setParameter("thoigianmuon", new Date(i));
+
+			if (!q.list().isEmpty()) {
+				kq[1] = q.list().get(0)[1]; // soluong muon
+			}
+
+			hql = "select thoigiantra, count(*) from PHIEUMUON " + "where thoigiantra = :thoigiantra "
+					+ "and thoigiantra is not null " + "group by thoigiantra";
+			q = session.createQuery(hql);
+			q.setParameter("thoigiantra", new Date(i));
+
+			if (!q.list().isEmpty()) {
+				kq[2] = q.list().get(0)[1]; // soluong tra
+
+			}
+
+			if (kq[1] != null || kq[2] != null) {
+				if (kq[1] == null)
+					kq[1] = 0;
+				if (kq[2] == null)
+					kq[2] = 0;
+				listKq.add(kq);
+			}
+
+		}
+
+		return listKq;
 	}
-	
+
 //	KẾT QUẢ THỐNG KÊ THIẾT BỊ
-	public List<Object[]> getKqThongkeTB(String option, Date ngaybatdau, Date ngayketthuc){
+	public List<Object[]> getKqThongkeTB(Date ngaybatdau, Date ngayketthuc) {
+		List<Object[]> listKq = new ArrayList<Object[]>();
 		Session session;
 		/* Nếu chưa có session nào thì tạo session mới */
 		try {
@@ -147,31 +160,55 @@ public class ThongKeController {
 			session = factory.openSession();
 		}
 		String hql = "";
-		
-		// Nếu thoigiantra khác NULL thì đã trả
-		if (option.equals("Hư hỏng"))
-			hql = "select ptl.thoigian, COUNT(*) "
-					+ "from PHIEUTHANHLY ptl, CT_PHIEUTHANHLY ct_ptl "
-					+ "where ptl.maptl = ct_ptl.phieuthanhly.maptl "
-					+ "and trangthai = :trangthai "
-					+ "and ptl.thoigian between :ngaybatdau and :ngayketthuc "					
-					+ "group by ptl.thoigian";
-		else if (option.equals("Nhập về"))
-			hql = "select pn.thoigiannhap, COUNT(*) "
-					+ "from PHIEUNHAP pn, CT_PHIEUNHAP ct_pn "
-					+ "where pn.mapn = ct_pn.phieunhap.mapn "
-					+ "and trangthai = :trangthai "
-					+ "and pn.thoigiannhap between :ngaybatdau and :ngayketthuc "
-					+ "group by pn.thoigiannhap";	
-						
-		
-		/* Bắt đầu quá trình truy vấn vào DB */
-		Query<Object[]> query = session.createQuery(hql);
-		query.setParameter("ngaybatdau", ngaybatdau);
-		query.setParameter("ngayketthuc", ngayketthuc);
-		query.setParameter("trangthai", "daXacNhan");
-				
-		return query.list();
+
+		for (long i = ngaybatdau.getTime(); i <= ngayketthuc.getTime(); i += 86400000) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			System.out.println(formatter.format(i));
+			Object[] kq = { null, null, null };
+			
+			/* THIẾT BỊ NHẬP VỀ */
+			hql = "from PHIEUNHAP where trangthai = 'daXacNhan' "
+				+ "and thoigiannhap = :thoigiannhap";
+			Query<PHIEUNHAP> listPn = session.createQuery(hql);
+			listPn.setParameter("thoigiannhap", new Date(i));
+
+			if (!listPn.list().isEmpty()) {
+				int tong = 0;
+				for(CT_PHIEUNHAP ct_pn: listPn.list().get(0).getCt_phieunhaps()) {
+					tong+=ct_pn.getSoluongnhap();
+				}
+				kq[0] = listPn.list().get(0).getThoigiannhap(); //Ngày
+				kq[1] = tong; // soluong nhập về
+
+			}
+			
+			/* THIẾT BỊ BỊ THANH LÝ (HỎNG) */
+			hql = "from PHIEUTHANHLY " + "where trangthai = 'daXacNhan' "
+				+ "and thoigian = :thoigian";
+			Query<PHIEUTHANHLY> listPtl = session.createQuery(hql);
+			listPtl.setParameter("thoigian", new Date(i));
+
+			if (!listPtl.list().isEmpty()) {
+				int tong = 0;
+				for(CT_PHIEUTHANHLY ct_ptl: listPtl.list().get(0).getCt_phieuthanhlys()) {
+					tong+=ct_ptl.getSoluong();
+				}
+				kq[0] = listPtl.list().get(0).getThoigian(); //Ngày
+				kq[2] = tong; // soluong hỏng
+
+			}
+
+			if (kq[0] != null ) {
+				if (kq[1] == null)
+					kq[1] = 0;
+				if (kq[2] == null)
+					kq[2] = 0;
+				listKq.add(kq);
+			}
+
+		}
+
+		return listKq;
 	}
 
 }

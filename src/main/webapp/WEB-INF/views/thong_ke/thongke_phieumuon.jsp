@@ -6,13 +6,13 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<table class="data-table-export table">
+	<table class="data-table-export table" id="myTable">
 		<thead>
 			<tr>
 				<!-- PHIẾU MƯỢN -->
-				<th>Ngày Mượn</th>
-				<th>Ngày Trả</th>
-				<th>Số lượng ${loaiThongke}</th>
+				<th>Ngày</th>
+				<th>Phiếu Mượn chưa trả</th>
+				<th>Phiếu Mượn đã trả</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,23 +20,7 @@
 				<tr>
 					<th>${kq[0]}</th>
 					<th>${kq[1]}</th>
-					<td>${kq[2]}</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<table hidden="hidden" id="myTable">
-		<thead>
-			<tr>
-				<th>Ngày Mượn</th>
-				<th>${loaiThongke}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="kq" items="${kqThongke}">
-				<tr>
-					<th>${kq[0]}</th>
-					<td>${kq[2]}</td>
+					<th>${kq[2]}</th>
 				</tr>
 			</c:forEach>
 		</tbody>
