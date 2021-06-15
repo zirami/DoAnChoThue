@@ -25,8 +25,7 @@
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item">
-										<a href="index.html">Home</a>
+									<li class="breadcrumb-item"><a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -37,12 +36,14 @@
 						<div class="col-md-6 col-sm-12 text-right">
 							<form action="import-excel" method="post"
 								enctype="multipart/form-data">
-								<input type="file" hidden="true" name="file"/>
-								<input type="submit" hidden="true">
+								<input type="file" hidden="true" name="file" /> <input
+									type="submit" hidden="true">
 							</form>
-							<button class="btn btn-primary import-excel">Import
+							<a href="thiet-bi" class="btn bg-purple text-yellow"
+								type="button">Làm mới </a>
+							<button class="btn bg-purple text-yellow import-excel">Import
 								Excel</button>
-							<a href="#" id="insert_btn" class="btn btn-primary"
+							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">THÊM THIẾT BỊ MỚI </a>
 							<!-- <a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
@@ -55,36 +56,40 @@
 					<hr>
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap" id="myTable">
-							<thead>
+							<thead class="table-info">
+							
 								<tr>
+									<th>Hình ảnh</th>
 									<th class="table-plus datatable-nosort">Mã thiết bị</th>
 									<th>Tên Thiết Bị</th>
 									<th>Loại</th>
 									<th>Số Lượng tồn</th>
 									<th>Ghi chú</th>
-									<th class="datatable-nosort">Hành động</th>
+									<th class="pull-right">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="thietbi" items="${listThietbi}">
 									<tr>
+										<td><img src="resources/files/${thietbi.hinh }"
+											style="width: 100px; height: 100px"></td>
 										<td class="table-plus">${thietbi.matb}</td>
 										<td>${thietbi.ten}</td>
 										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
 										<td>${thietbi.ghichu}</td>
-										<td>
+										<td class="pull-right">
 											<div class="row clearfix">
-												<div class="col-3">
+												<div class="col-sm-12 col-md-6">
 													<form action="thiet-bi/edit/${thietbi.matb}">
-														<button class="btn btn-primary" type="submit"
+														<button class="btn bg-purple text-white" type="submit"
 															data-toggle="tooltip" data-placement="top" title="Sửa">
 															<i class="material-icons">edit</i>
 														</button>
 														<!--  -->
 													</form>
 												</div>
-												<div class="col-6 text-center">
+												<div class="col-sm-12 col-md-6">
 													<c:set var="unlocked" value="unlocked" />
 													<c:if test="${thietbi.trangthai.equals(unlocked)}">
 														<form action="thiet-bi/delete" method="post" hidden="true">
@@ -100,8 +105,14 @@
 															<i class="material-icons">delete</i>
 														</button>
 													</c:if>
+													<c:if test="${!thietbi.trangthai.equals(unlocked)}">
+													<button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Xoá" type="button">
+													<i class="material-icons">delete</i>
+													</button>
+													</c:if>
 												</div>
 											</div>
+
 										</td>
 									</tr>
 								</c:forEach>
@@ -117,7 +128,7 @@
 	<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
@@ -129,49 +140,65 @@
 							</div>
 						</div>
 						<form:form action="thiet-bi" modelAttribute="thietbi_moi"
-							method="post">
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mã
-									thiết bị</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="matb" class="form-control" type="text"
-										placeholder="Nhập mã thiết bị" />
-									<form:errors path="matb" />
+							method="post" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Chọn
+											ảnh</label>
+										<div class="col-sm-12 col-md-8">
+											<input name="photo" class="form-control" type="file"
+												placeholder="Chọn ảnh thiết bị" required="required" />
+										</div>
+									</div>
+
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tên
-									thiết bị</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="ten" class="form-control" type="text"
-										placeholder="Nhập tên thiết bị" />
-									<form:errors path="ten" />
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Mã
+											thiết bị</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="matb" class="form-control" type="text"
+												placeholder="Nhập mã thiết bị" />
+											<form:errors path="matb" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Tên
+											thiết bị</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="ten" class="form-control" type="text"
+												placeholder="Nhập tên thiết bị" />
+											<form:errors path="ten" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Loại</label>
+										<div class="col-sm-12 col-md-9">
+											<form:select class="selectpicker form-control" path="loai.id"
+												style="width: 100%; height: 38px;">
+												<form:option value="" label="-Vui lòng chọn 1-" />
+												<form:options items="${loaiThietBis}" itemValue="id"
+													itemLabel="ten" />
+											</form:select>
+											<form:errors path="loai.id" />
+										</div>
+									</div>
+									<input type="hidden" name="tinhtrang" value="unlocked" />
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Ghi
+											chú</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="ghichu" class="form-control" type="text"
+												placeholder="Ghi chú" />
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Đóng</button>
+										<button type="submit" class="btn btn-info">Thêm</button>
+									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Loại</label>
-								<div class="col-sm-12 col-md-10">
-									<form:select class="selectpicker form-control" path="loai.id"
-										style="width: 100%; height: 38px;">
-										<form:option value="" label="-Vui lòng chọn 1-" />
-										<form:options items="${loaiThietBis}" itemValue="id"
-											itemLabel="ten" />
-									</form:select>
-									<form:errors path="loai.id" />
-								</div>
-							</div>
-							<input type="hidden" name="tinhtrang" value="unlocked" />
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="ghichu" class="form-control" type="text"
-										placeholder="Ghi chú" />
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Đóng</button>
-								<button type="submit" class="btn btn-success">Thêm</button>
 							</div>
 						</form:form>
 					</div>
@@ -198,41 +225,74 @@
 							</div>
 						</div>
 						<form:form action="thiet-bi/update" modelAttribute="thietbi_sua"
-							method="post">
-							<form:input path="matb" class="form-control" type="hidden" />
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Tên
-									thiết bị</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="ten" class="form-control" type="text"
-										placeholder="Nhập tên thiết bị" />
-									<form:errors path="ten" />
+							method="post" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+
+										<label class="col-sm-12 col-md-3 col-form-label">Chọn
+											ảnh</label>
+										<div class="col-sm-12 col-md-8">
+											<img src="resources/files/${thietbi_sua.hinh}"
+												style="width: 250px; height: 200px" /> <input name="photo"
+												class="form-control" type="file"
+												placeholder="Chọn ảnh thiết bị" />
+											<form:input path="hinh" class="form-control"
+												style="display: none" />
+										</div>
+									</div>
+
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Loại</label>
-								<div class="col-sm-12 col-md-10">
-									<form:select class="selectpicker form-control" path="loai.id"
-										style="width: 100%; height: 38px;" items="${loaiThietBis}"
-										itemValue="id" itemLabel="ten">
-									</form:select>
-									<form:errors path="loai" />
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Mã
+											thiết bị</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="matb" class="form-control" type="text"
+												placeholder="Nhập mã thiết bị" />
+											<form:errors path="matb" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Tên
+											thiết bị</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="ten" class="form-control" type="text"
+												placeholder="Nhập tên thiết bị" />
+											<form:errors path="ten" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Loại</label>
+										<div class="col-sm-12 col-md-9">
+											<form:select class="selectpicker form-control" path="loai.id"
+												style="width: 100%; height: 38px;">
+												<form:option value="" label="-Vui lòng chọn 1-" />
+												<form:options items="${loaiThietBis}" itemValue="id"
+													itemLabel="ten" />
+											</form:select>
+											<form:errors path="loai.id" />
+										</div>
+									</div>
+									<form:input style="display: none" path="soluong" />
+									<form:input style="display: none" path="tinhtrang" />
+									<form:input style="display: none" path="trangthai" />
+
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Ghi
+											chú</label>
+										<div class="col-sm-12 col-md-9">
+											<form:input path="ghichu" class="form-control" type="text"
+												placeholder="Ghi chú" />
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Đóng</button>
+										<button type="submit" class="btn btn-info">Sửa</button>
+									</div>
 								</div>
-							</div>
-							<form:input path="tinhtrang" type="hidden" />
-							<form:input path="trangthai" type="hidden" />
-							<form:input path="soluong" type="hidden" />
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
-								<div class="col-sm-12 col-md-10">
-									<form:input path="ghichu" class="form-control" type="text"
-										placeholder="Ghi chú" />
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Đóng</button>
-								<button type="submit" class="btn btn-success">Sửa</button>
+
 							</div>
 						</form:form>
 					</div>

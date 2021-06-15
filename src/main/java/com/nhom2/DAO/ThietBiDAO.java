@@ -43,6 +43,7 @@ public class ThietBiDAO {
 			
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			t.rollback();
 			result = false;
 			

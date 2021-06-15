@@ -54,6 +54,11 @@ public class NGUOIMUON {
 		@Column(name = "GMAIL")
 		private String gmail;
 		
+		@Column(name = "SDT")
+		private String sdt;
+		
+
+
 		@NotBlank(message = "Trường này không được bỏ trống")
 		@Column(name = "LOAI")
 		private String loai;
@@ -81,6 +86,14 @@ public class NGUOIMUON {
 			this.loai = loai;
 			this.ghichu = ghichu;
 			this.phieumuons = phieumuons;
+		}
+		
+		public String getSdt() {
+			return sdt;
+		}
+
+		public void setSdt(String sdt) {
+			this.sdt = sdt;
 		}
 
 		public String getManm() {

@@ -1,10 +1,12 @@
 package com.nhom2.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -79,10 +81,10 @@ public class ThietbiController {
 
 	// THÊM
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.POST)
-	public String insert(ModelMap model, @Valid @ModelAttribute("thietbi_moi") THIETBI thietbi_moi,
+	public String insert(ModelMap model, @Valid @ModelAttribute("thietbi_moi") THIETBI thietbi_moi, HttpServletRequest rq, @RequestParam("photo") MultipartFile photo,
 			BindingResult reusult) {
-		final String UNLOCKED = "unlocked"; //Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
-		final String  CONTOT = "Còn tốt"; // Tình trạng mặc định là Tốt
+		String UNLOCKED = "unlocked"; //Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
+		String  CONTOT = "Còn tốt"; // Tình trạng mặc định là Tốt
 		
 		System.out.println("has error: " + reusult.hasErrors());
 		model.addAttribute("them_saidinhdang", reusult.hasErrors());
@@ -90,13 +92,28 @@ public class ThietbiController {
 
 		if (reusult.hasErrors())
 			return home(model);
-		
-		thietbi_moi.setTrangthai(UNLOCKED);
-		thietbi_moi.setTinhtrang(CONTOT);
-		thietbi_moi.setSoluong(0); // THIẾT BỊ MỚI THÌ PHẢI NHẬP VỀ MỚI CÓ SỐ LƯỢNG
-		model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi)); // Xử lý thông báo thêm thành công
+		try {
 
-		return home(model);
+			String photoPath = rq.getServletContext().getRealPath("/resources/files/" + photo.getOriginalFilename());
+
+			photo.transferTo(new File(photoPath));
+			thietbi_moi.setHinh(photo.getOriginalFilename());
+			
+			thietbi_moi.setTrangthai(UNLOCKED);
+			thietbi_moi.setTinhtrang(CONTOT);
+			thietbi_moi.setSoluong(0); // THIẾT BỊ MỚI THÌ PHẢI NHẬP VỀ MỚI CÓ SỐ LƯỢNG
+			model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi)); // Xử lý thông báo thêm thành công
+			model.addAttribute("thietbi_moi",new THIETBI());
+			return home(model);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("insert", false);
+			model.addAttribute("thietbi_moi", thietbi_moi);
+			return home(model);
+		}
+
+
 	}
 
 	// LẤY RA THIẾT BỊ BẰNG ID ĐỂ SHOW FORM EDIT
@@ -112,15 +129,35 @@ public class ThietbiController {
 	// UPDATE
 	@RequestMapping(value = "thiet-bi/update", method = RequestMethod.POST)
 	public String update(ModelMap model, @Valid @ModelAttribute("thietbi_sua") THIETBI thietbi_sua,
-			BindingResult reusult) {
+			HttpServletRequest rq, @RequestParam("photo") MultipartFile photo, BindingResult reusult) {
 		System.out.println("has error: " + reusult.getFieldErrors().toString());
 		model.addAttribute("sua_saidinhdang", reusult.hasErrors());
 		model.addAttribute("thietbi_sua", thietbi_sua);
 		if (reusult.hasErrors())
 			return home(model);
 
-		model.addAttribute("update", new ThietBiDAO().update(factory, thietbi_sua));
-		return home(model);
+		if (photo.isEmpty()) {
+			model.addAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm thành công
+			model.addAttribute("thietbi_sua",new THIETBI());
+			return home(model);
+		} else {
+		try {
+
+			String photoPath = rq.getServletContext().getRealPath("/resources/files/" + photo.getOriginalFilename());
+			
+			photo.transferTo(new File(photoPath));
+
+			thietbi_sua.setHinh(photo.getOriginalFilename());
+			model.addAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm thành công
+			model.addAttribute("thietbi_sua",new THIETBI());
+			return home(model);
+
+		} catch (Exception e) {
+			model.addAttribute("update", false);
+			model.addAttribute("thietbi_sua", thietbi_sua);
+			return home(model);
+		}
+		}
 	}
 
 	// DELETE

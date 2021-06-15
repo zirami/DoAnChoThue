@@ -41,8 +41,15 @@ public class THIETBI {
 	@Column(name = "TRANGTHAI")
 	private String trangthai;
 
+	
+	@Column(name = "HINH")
+	private String hinh;
+	
 	@Column(name = "GHICHU")
 	private String ghichu;
+
+	
+
 
 	@OneToMany(mappedBy = "thietbi_muon", fetch = FetchType.LAZY)
 	private Collection<CT_PHIEUMUON> ct_phieumuons;
@@ -67,6 +74,14 @@ public class THIETBI {
 		return trangthai;
 	}
 
+
+	public String getHinh() {
+		return hinh;
+	}
+
+	public void setHinh(String hinh) {
+		this.hinh = hinh;
+	}
 	public void setTrangthai(String trangthai) {
 		this.trangthai = trangthai;
 	}

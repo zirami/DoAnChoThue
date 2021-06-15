@@ -147,11 +147,11 @@ public class PhieuMuonController {
 		// nếu có lỗi thì quay về chương trình
 		if (reusult.hasErrors())
 			return home(model, session,rq);
-
-		// Kiểm tra giá trị của index bên view
-		if (indexValue == 0) {
-			System.out.print("co gia tri");
-		}
+//
+//		// Kiểm tra giá trị của index bên view
+//		if (indexValue == 0) {
+//			System.out.print("co gia tri");
+//		}
 		if(phieumuon_moi.getThoigiantra()!=null) {
 			if(phieumuon_moi.tinhKhoangCachHaiNgay_Date(phieumuon_moi.getThoigianmuon(), phieumuon_moi.getThoigiantra()) <= 0) {
 				model.addAttribute("phieumuon_moi",new PHIEUMUON());
@@ -164,6 +164,11 @@ public class PhieuMuonController {
 		if (demValue != 0) {
 
 			new PhieuMuonDAO().save(factory, phieumuon_moi);
+		}
+		else {
+//			model.addAttribute("phieumuon_moi",new PHIEUMUON());
+			model.addAttribute("emptyThietBi", true);
+			return home(model, session,rq);
 		}
 		// Khởi tạo thằng trả về bằng false
 		Boolean result = false;

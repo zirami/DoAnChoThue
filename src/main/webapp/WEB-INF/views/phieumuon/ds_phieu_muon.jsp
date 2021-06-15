@@ -908,6 +908,15 @@ h4 {
 		</script>
 	</c:if>
 	
+	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI KHÔNG CHỌN THIẾT BỊ XẢY RA-->
+	<c:if test="${emptyThietBi}">
+		<script type="text/javascript">
+			$(document).ready(function() {	
+				show_errorEmptyThietBi();
+			});
+		</script>
+	</c:if>
+	
 	
 	<script type="text/javascript">
 		//LOAD TABLE 
@@ -961,6 +970,14 @@ h4 {
 				icon: 'error',
 			})
 		}
+		function show_errorEmptyThietBi(content="Chọn ") {
+			Swal.fire({
+				title: 'Thiết bị còn trống!',
+				text: content+" thêm thiết bi mượn!",
+				icon: 'error',
+			})
+		}
+		
 	</script>
 
 	<script>
