@@ -30,7 +30,6 @@ import com.nhom2.entity.NHANVIEN;
 import com.nhom2.entity.PHIEUNHAP;
 import com.nhom2.entity.THIETBI;
 
-
 @Controller
 @RequestMapping("/")
 public class PhieuNhapController {
@@ -51,18 +50,19 @@ public class PhieuNhapController {
 	public PHIEUNHAP getPhieuNhapSua() {
 		return new PHIEUNHAP();
 	}
-	
+
 	@ModelAttribute("today")
-	public LocalDate getToday() {		
-		return LocalDate.now(); 
+	public LocalDate getToday() {
+		return LocalDate.now();
 	}
 
 	@ModelAttribute("nv")
 	public NHANVIEN getNv(HttpSession session) {
 		ACCOUNT account = (ACCOUNT) session.getAttribute("account_db");
 		System.out.println("username: " + account.getUsername());
-		//return new NhanVienDAO().getByUserName(account.getUsername(), factory);
-		if (account.getNhanviens().isEmpty()) return null;
+		// return new NhanVienDAO().getByUserName(account.getUsername(), factory);
+		if (account.getNhanviens().isEmpty())
+			return null;
 		return account.getNhanviens().get(0);
 	}
 
@@ -104,12 +104,6 @@ public class PhieuNhapController {
 			CT_PHIEUNHAP ct_pn = new CT_PHIEUNHAP();
 			ct_pn.setPhieunhap(phieunhap);
 			ct_pn.setThietbi(new ThietBiDAO().getById2nhap(matbs.get(i), factory));
-
-			if (soluongnhaps.get(i) > ct_pn.getThietbi().getSoluong()) {
-				kq = false;
-				break;
-			}
-
 			ct_pn.setSoluongnhap(soluongnhaps.get(i));
 			ct_pn.setDongia(dongias.get(i));
 			listCt_pn.add(ct_pn);
@@ -141,12 +135,11 @@ public class PhieuNhapController {
 		System.out.println(listCt_pn);
 		// Có đủ dữ liệu thì mới thêm
 		if (listCt_pn != null) {
-			System.out.println("loi ct pn");
 			phieunhap_them.setCt_phieunhaps(listCt_pn);
 			phieunhap_them.setThoigiannhap(Date.valueOf(LocalDate.now()));
 			kq = new PhieuNhapDAO().saveOrUpdate(factory, phieunhap_them);
 		}
-		// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ giảm
+		// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ tăng
 		if (phieunhap_them.getTrangthai().equals("daXacNhan")) {
 			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
 				THIETBI thietbi_nhap = ct_pn.getThietbi();
@@ -160,7 +153,7 @@ public class PhieuNhapController {
 
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
-		
+
 		System.out.println(phieunhap_them.getThoigiannhap());
 
 		return new RedirectView("phieu-nhap");
@@ -171,10 +164,11 @@ public class PhieuNhapController {
 	public RedirectView edit(@PathVariable String id, RedirectAttributes model) {
 		PHIEUNHAP phieunhap_sua = new PhieuNhapDAO().getById(id, factory);
 		model.addFlashAttribute("phieunhap_sua", phieunhap_sua);
-		
+
 		model.addFlashAttribute("form_edit", true);
 		return new RedirectView("../../phieu-nhap");
 	}
+
 	// UPDATE PHIẾU NHẬP
 	@RequestMapping(value = "phieu-nhap/update", method = RequestMethod.POST)
 	public RedirectView update(@ModelAttribute("phieunhap_them") @Valid PHIEUNHAP phieunhap_sua, BindingResult result,
@@ -187,7 +181,7 @@ public class PhieuNhapController {
 		// Kiểm tra PhieuNhap nhận về có đủ dữ liệu cần không
 		// Kiểm tra xem trạng thái PhieuNhap != chờ xác nhận thì không cho sửa
 		// || !phieunhap_sua.getTrangthai().equals(choXacNhan)
-		if (result.hasErrors() ) {
+		if (result.hasErrors()) {
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
 			return new RedirectView("../phieu-nhap");
@@ -200,16 +194,29 @@ public class PhieuNhapController {
 			kq = new PhieuNhapDAO().update(factory, phieunhap_sua);
 		}
 
+		// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ tăng
+		if (phieunhap_sua.getTrangthai().equals("daXacNhan")) {
+			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
+				THIETBI thietbi_nhap = ct_pn.getThietbi();
+				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
+				kq = new ThietBiDAO().update(factory, thietbi_nhap);
+				if (!kq)
+					break;
+			}
+
+		}
+
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
 
 		return new RedirectView("../phieu-nhap");
 	}
-	
+
 	@RequestMapping(value = "phieu-nhap/delete/{mapn}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String delete(@PathVariable String mapn) throws Exception {
 		PHIEUNHAP phieunhap = new PhieuNhapDAO().getById2delete(mapn, factory);
-		if(phieunhap.getTrangthai().equals("daXacNhan")) return "false";
+		if (phieunhap.getTrangthai().equals("daXacNhan"))
+			return "false";
 		String kq = new PhieuNhapDAO().delete(factory, phieunhap).toString();
 		return kq;
 	}

@@ -9,10 +9,9 @@
 	<table class="data-table-export table" id="myTable">
 		<thead>
 			<tr>
-				<!-- Thiết Bị -->
-				<th>Ngày</th>
-				<th>Thiết bị Nhập Về</th>
-				<th>Thiết bị Hỏng</th>
+				<!-- Người Mượn -->
+				<th>Loại Người Mượn</th>
+				<th>Số lượt mượn</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,7 +19,6 @@
 				<tr>
 					<th>${kq[0]}</th>
 					<th>${kq[1]}</th>
-					<th>${kq[2]}</th>
 				</tr>
 			</c:forEach>
 		</tbody>

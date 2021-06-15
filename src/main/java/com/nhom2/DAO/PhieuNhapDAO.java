@@ -59,6 +59,7 @@ public class PhieuNhapDAO {
 			result = true;
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			t.rollback();
 			result = false;
 
@@ -87,6 +88,7 @@ public class PhieuNhapDAO {
 			t.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			t.rollback();
 			return false;
 
