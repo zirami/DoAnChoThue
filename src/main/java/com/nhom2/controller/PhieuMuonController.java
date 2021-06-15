@@ -81,6 +81,10 @@ public class PhieuMuonController {
 		return new PHIEUMUON();
 	}
 
+	@ModelAttribute("phieumuon_chitiet")
+	public PHIEUMUON phieumuon_chitiet() {
+		return new PHIEUMUON();
+	}
 	
 	// Load danh sách nhân viên
 	@ModelAttribute("listNhanViens")
@@ -148,8 +152,17 @@ public class PhieuMuonController {
 		if (indexValue == 0) {
 			System.out.print("co gia tri");
 		}
+		if(phieumuon_moi.getThoigiantra()!=null) {
+			if(phieumuon_moi.tinhKhoangCachHaiNgay_Date(phieumuon_moi.getThoigianmuon(), phieumuon_moi.getThoigiantra()) <= 0) {
+				model.addAttribute("phieumuon_moi",new PHIEUMUON());
+				model.addAttribute("failDate", true);
+				return home(model, session,rq);
+			}
+		}
+		
 		// nếu số lượng các phần tử khác không thì tạo 1 Phiếu mượn
 		if (demValue != 0) {
+
 			new PhieuMuonDAO().save(factory, phieumuon_moi);
 		}
 		// Khởi tạo thằng trả về bằng false
@@ -250,6 +263,14 @@ public class PhieuMuonController {
 		if (result.hasErrors())
 			return home(model, session,rq);
 
+		if(phieumuon_sua.getThoigiantra()!=null) {
+		if(phieumuon_sua.tinhKhoangCachHaiNgay_Date(phieumuon_sua.getThoigianmuon(), phieumuon_sua.getThoigiantra()) <= 0) {
+			model.addAttribute("phieumuon_sua",new PHIEUMUON());
+			model.addAttribute("failDate", true);
+			return home(model, session,rq);
+		}
+		}
+		
 		Boolean result1 = false;
 		// lấy phiếu mua bằng mã của phiếu mua sửa.
 		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
@@ -500,5 +521,16 @@ public class PhieuMuonController {
 			}
 		}
 		return home(model,session,rq);
+	}
+	
+	@RequestMapping(value = "phieumuon/detail/{mapm}", method = RequestMethod.GET)
+	public String show_form_detail(ModelMap model,@ModelAttribute("phieumuon_chitiet") PHIEUMUON phieumuon_chitiet,
+			@PathVariable("mapm") String mapm, HttpSession session, HttpServletRequest request) {
+		model.addAttribute("form_detail", true);
+		phieumuon_chitiet = new PhieuMuonDAO().getById(mapm, factory);
+		model.addAttribute("indexValue", 0);
+		model.addAttribute("slThietBiChiTiet", phieumuon_chitiet.getCt_phieumuons().size());
+		model.addAttribute("phieumuon_chitiet", phieumuon_chitiet);
+		return home(model, session,request);
 	}
 }

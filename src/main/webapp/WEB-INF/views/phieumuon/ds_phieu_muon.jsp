@@ -12,7 +12,6 @@
 h4 {
 	color: red;
 }
-
 </style>
 <%@include file="/common/loadcss.jsp"%>
 
@@ -25,7 +24,7 @@ h4 {
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
-	
+
 
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
@@ -49,8 +48,13 @@ h4 {
 
 						<div class="col-md-6 col-sm-12 text-right">
 							<a href="phieumuon" class="btn bg-purple text-yellow"
-								type="button">Làm mới </a>
-							 <a href="#" id="insert_btn"
+								type="button">Làm mới </a> <a href="#" id="insert_btn"
+								class="btn bg-purple text-yellow" data-toggle="modal"
+								data-target="#bd-phieumuondatra-modal-lg" type="button">Phiếu
+								mượn đã trả</a> <a href="#" id="insert_btn"
+								class="btn bg-purple text-yellow" data-toggle="modal"
+								data-target="#bd-phieumuonqua3ngay-modal-lg" type="button">Phiếu
+								mượn quá hạn</a> <a href="#" id="insert_btn"
 								class="btn bg-purple text-yellow" data-toggle="modal"
 								data-target="#bd-insert-modal-lg" type="button">Thêm phiếu
 								mượn </a>
@@ -62,8 +66,10 @@ h4 {
 					<div class="card-box md-30">
 						<hr>
 						<div>
-							<table class="table nowrap  dataTable collapsed table-hover table-boder-factor" style="width: 100% " id="myTable" role="grid">
-						
+							<table
+								class="table nowrap  dataTable collapsed table-hover table-boder-factor"
+								style="width: 100%" id="myTable" role="grid">
+
 								<thead class="table-info">
 									<tr>
 										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
@@ -82,12 +88,14 @@ h4 {
 										<c:if test="${phieumuon.thoigiantra==null}">
 											<tr>
 												<td class="table-plus">${phieumuon.mapm}</td>
-												<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
-												<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
+												<td>${phieumuon.nm.ho}${phieumuon.nm.ten}</td>
+												<td>${phieumuon.nhanvien_pm.ho}
+													${phieumuon.nhanvien_pm.ten}</td>
 												<td>${phieumuon.phong }</td>
 												<td>${phieumuon.thoigianmuon}</td>
 												<td>${phieumuon.thoigiantra}</td>
-												<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
+												<td><p
+														style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
 												<td class="pull-right">
 													<div class="row clearfix btn-list">
 														<form action="phieumuon/edit/${phieumuon.mapm}">
@@ -125,83 +133,163 @@ h4 {
 				<!-- Simple Datatable End -->
 			</div>
 		</div>
-		<div class="pd-ltr-20 xs-pd-20-10">
-			<div class="min-height-200px">
-				<div class="page-header">
-					<div class="row">
-						<div class="col-md-6 col-sm-12">
-							<div class="title">
-								<h4>Danh sách phiếu mượn quá hạn 3 ngày</h4>
+		<!-- 		=========================================================================  Danh sách các phiếu mượn quá 3 ngày ========================================================================== -->
+
+		<div class="modal fade bs-example-modal-lg"
+			id="bd-phieumuonqua3ngay-modal-lg" tabindex="-1" role="dialog"
+			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+							<div class="row">
+									<h3 class="text-info">Gửi mail cảnh báo cho người mượn</h3>
+								
+
 							</div>
-							<!-- Đường dẫn -->
-							<nav aria-label="breadcrumb" role="navigation">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="phieumuon">phieumuon</a>
-									</li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
-								</ol>
 
-							</nav>
-
-							<!-- END Đường dẫn -->
-						</div>
-						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#" id="mail_btn" class="btn bg-purple text-yellow"
-								data-toggle="modal" data-target="#bd-mail-modal-lg"
-								type="button">Gửi mail</a>
-						</div>
-
-						<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
-						<table class="table dataTable table-bordered table-hover " 
-							style="width: 100%;border-collapse: collapse;" >
-							<colgroup>
-								<col span="1" style="width: 10%">
-								<col span="1" style="width: 15%">
-								<col span="1" style="width: 15%">
-								<col span="1" style="width: 15%">
-								<col span="1" style="width: 15%">
-								<col span="1" style="width: 15%">
-								<col span="1" style="width: 15%">
-							</colgroup>
-							<thead class="table-info">
-								<tr>
-									<th>Mã phiếu mượn</th>
-									<th>Người mượn</th>
-									<th>Nhân viên lập phiếu</th>
-									<th>Phòng</th>
-									<th>Thời gian mượn</th>
-									<th>Thời gian trả</th>
-									<th>Ghi chú</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="phieumuon" items="${listPhieuMuon}"
-									varStatus="row">
-									<c:if test="${phieumuon.thoigiantra==null}">
-										<c:if
-											test="${phieumuon_moi.laySoNgay(phieumuon.thoigianmuon)>=3 }">
-											<tr>
-												<td class="table-plus">${phieumuon.mapm}</td>
-												<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
-												<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
-												<td>${phieumuon.phong }</td>
-												<td>${phieumuon.thoigianmuon}</td>
-												<td>${phieumuon.thoigiantra}</td>
-												<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
-												
-											</tr>
-										</c:if>
-									</c:if>
-								</c:forEach>
-							</tbody>
-						</table>
 					</div>
+					<div class="modal-body">
+					
+						
+						<!-- Default Basic Forms Start -->
+						<div class="pd-20 card-box mb-30">
+							
+							<a href="#" class="btn bg-purple text-yellow pull-right"
+										data-toggle="modal" data-target="#bd-mail-modal-lg"
+										type="button">Gửi mail </a>
 
+							<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
+							<table
+								class="table nowrap  dataTable collapsed table-hover table-boder-factor tablePhieuMuonQua3Ngay"
+								style="width: 100%; border-collapse: collapse;" role="grid">
 
+								<thead class="table-info">
+									<tr>
+										<th>Mã phiếu mượn</th>
+										<th>Người mượn</th>
+										<th>Nhân viên lập phiếu</th>
+										<th>Phòng</th>
+										<th>Thời gian mượn</th>
+										<th>Thời gian trả</th>
+										<th>Ghi chú</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="phieumuon" items="${listPhieuMuon}"
+										varStatus="row">
+										<c:if test="${phieumuon.thoigiantra==null}">
+											<c:if
+												test="${phieumuon_moi.laySoNgay(phieumuon.thoigianmuon)>=3 }">
+												<tr>
+													<td class="table-plus">${phieumuon.mapm}</td>
+													<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
+													<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
+													<td>${phieumuon.phong }</td>
+													<td>${phieumuon.thoigianmuon}</td>
+													<td>${phieumuon.thoigiantra}</td>
+													<td><p
+															style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
+
+												</tr>
+											</c:if>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+
+						</div>
+						<!-- Default Basic Forms Start -->
+					</div>
+					<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Đóng</button>
+
+							</div>
 				</div>
-
 			</div>
 		</div>
+
+		<!-- 		=========================================================================  Danh sách các phiếu mượn đã trả ========================================================================== -->
+		<div class="modal fade bs-example-modal-lg"
+			id="bd-phieumuondatra-modal-lg" tabindex="-1" role="dialog"
+			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="clearfix">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<div class="clearfix">
+								<div class="pull-left">
+									<h3 class="text-info">Danh sách các phiếu đã trả</h3>
+									<!-- 									<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p> -->
+								</div>
+							</div>
+						</div>
+						<div class="modal-body">
+							<!-- Default Basic Forms Start -->
+							<div class="pd-20 card-box mb-30">
+
+								<table
+									class="table nowrap  dataTable collapsed table-hover table-boder-factor tablePhieuMuonQua3Ngay"
+									style="width: 100%; border-collapse: collapse;" role="grid">
+
+									<thead class="table-info">
+										<tr>
+											<th>Mã phiếu mượn</th>
+											<th>Người mượn</th>
+											<th>Nhân viên lập phiếu</th>
+											<th>Phòng</th>
+											<th>Thời gian mượn</th>
+											<th>Thời gian trả</th>
+											<th>Ghi chú</th>
+											<th>Xem chi tiết</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="phieumuon" items="${listPhieuMuon}"
+											varStatus="row">
+											<c:if test="${phieumuon.thoigiantra!=null}">
+													<tr>
+														<td class="table-plus">${phieumuon.mapm}</td>
+														<td>${phieumuon.nm.ho}${phieumuon.nm.ten}</td>
+														<td>${phieumuon.nhanvien_pm.ho}
+															${phieumuon.nhanvien_pm.ten}</td>
+														<td>${phieumuon.phong }</td>
+														<td>${phieumuon.thoigianmuon}</td>
+														<td>${phieumuon.thoigiantra}</td>
+														<td><p
+																style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
+														<td class="pull-right">
+															<div class="row clearfix btn-list">
+																<form action="phieumuon/detail/${phieumuon.mapm}">
+																	<button class="btn btn-info bg-purple" type="submit"
+																		data-toggle="tooltip" data-placement="top"
+																		title="Xem chi tiết">
+																		<span class="icon-copy fa fa-info" aria-hidden="true"></span>
+
+																	</button>
+																</form>
+															</div>
+														</td>
+													</tr>
+											</c:if>
+										</c:forEach>
+									</tbody>
+								</table>
+
+							</div>
+							<!-- Default Basic Forms Start -->
+						</div>
+						<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Đóng</button>
+
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<br>
 	</div>
 	<!-- 	</div> -->
@@ -259,8 +347,9 @@ h4 {
 											viên</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="nhanvien_pm.manv" />
-											<form:select class="selectpicker form-control" path="nhanvien_pm.manv"
-												style="width: 100%;height: 38px;" required="required">
+											<form:select class="selectpicker form-control"
+												path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
+												required="required">
 												<form:option value="" label="Chọn nhân viên"></form:option>
 												<form:options items="${listNhanViens}" itemValue="manv"
 													itemLabel="ten"></form:options>
@@ -416,7 +505,8 @@ h4 {
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-											<form:select path="nhanvien_pm.manv" items="${listNhanViens}" itemLabel="ten" itemValue="manv"
+											<form:select path="nhanvien_pm.manv" items="${listNhanViens}"
+												itemLabel="ten" itemValue="manv"
 												class="selectpicker form-control"
 												style="width: 100%; height: 38px;">
 											</form:select>
@@ -583,6 +673,170 @@ h4 {
 		</div>
 	</div>
 
+
+	<!-- 	========================================================================================  Show Info ============================================================================================== -->
+	<button hidden="true" id="detail_modal_btn" data-toggle="modal"
+		data-target="#bd-detail-modal-lg"></button>
+	<!--======================================================== Thông tin phiếu mượn ============================================================ -->
+	<div class="modal fade bs-example-modal-lg" id="bd-detail-modal-lg"
+		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h3 class="text-info">Thông tin phiếu mượn</h3>
+							<!-- 							<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p> -->
+						</div>
+					</div>
+				</div>
+				<div class="modal-body">
+					<!-- Default Basic Forms Start -->
+					<div class="pd-20 card-box mb-30">
+						<form:form action="#" modelAttribute="phieumuon_chitiet"
+							method="post">
+							<!-- 							=================================== cột 1 ========================================= -->
+							<div class="row">
+								<div class="col-sm-12 col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Mã
+											phiếu mượn nef</label>
+										<div class="col-sm-4 col-md-8">
+											<%-- 											<form:errors path="mapm" /> --%>
+											<%-- 											<input class="form-control" value="${phieumuon_chitiet.mapm }" --%>
+											<!-- 												readonly /> -->
+											<form:input class="form-control" type="text" path="mapm"
+												placeholder="Nhập mã phiếu mượn" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Người
+											mượn</label>
+										<div class="col-sm-4 col-md-8">
+											<form:select class="selectpicker form-control" path="nm.manm"
+												style="width: 100%; height: 38px;" items="${listNguoiMuons}"
+												itemValue="manm" itemLabel="ten">
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Nhân
+											viên</label>
+										<div class="col-sm-4 col-md-8">
+											<form:select path="nhanvien_pm.manv" items="${listNhanViens}"
+												itemLabel="ten" itemValue="manv"
+												class="selectpicker form-control"
+												style="width: 100%; height: 38px;">
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
+										<div class="col-sm-4 col-md-8">
+											<form:errors path="phong" />
+											<form:input class="form-control" path="phong"
+												placeholder="Nhập phòng học" type="text" required="required" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Thời
+											gian mượn</label>
+										<div class="col-sm-4 col-md-8">
+											<%-- 											<form:errors path="thoigianmuon" /> --%>
+											<form:input class="form-control" path="thoigianmuon"
+												placeholder="Chọn thời gian mượn" type="date" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Thời
+											gian trả</label>
+										<div class="col-sm-4 col-md-8">
+											<form:input class="form-control" path="thoigiantra"
+												placeholder="Chọn thời gian trả" type="date" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-4 col-md-4 col-form-label">Ghi
+											chú</label>
+										<div class="col-sm-4 col-md-8">
+											<%-- 									<form:errors path="diachi" /> --%>
+											<form:input class="form-control" type="text" path="ghichu"
+												placeholder="Nhập ghi chú" />
+										</div>
+									</div>
+								</div>
+								<!-- 							====================================== Cột 2 =================================================== -->
+								<div class="col-sm-12 col-md-6" id='parent-element-detail'>
+									<div class="hidden-element-detail" style="display: none">
+										<div class="form-group row">
+											<label class="col-sm-4 col-md-2 col-form-label">Thiết
+												bị </label>
+											<div class="col-md-5">
+												<select class="form-control" name="thietBi0"
+													style="width: 100%; height: 45px;">
+													<option value="">Chọn thiết bị</option>
+													<c:forEach var="tb1" items="${loaiThietBis}">
+														<option value="${tb1.matb}">${tb1.matb}</option>
+													</c:forEach>
+												</select>
+												<%-- 														<form:errors path="loai.id" /> --%>
+											</div>
+
+											<div class="col-md-3">
+												<input type="number" value="0" name="slThietBi0"
+													class="form-control" placeholder="Số lượng"
+													style="width: 100%; height: 45px;" />
+
+											</div>
+
+											<div class="col-md-2">
+
+												<a class="material-icons text-info btn-close-item"
+													type="button"> delete_sweep </a>
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12 col-md-6"></div>
+								<div class="col-sm-12 col-md-6 align-self-end">
+									<button type='button' class="form-control text-info "
+										id='btn-add-element-edit'>
+										<span class="material-icons text-info">add_circle_outline</span>
+										Thêm thiết bị mượn
+									</button>
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<hr>
+								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+								<input type="hidden" name="indexValue"
+									id="input-index-submit-detail" value='0' /> <input
+									type="hidden" name="demValue" id="input-dem-submit-detail"
+									value='0' />
+								<!-- 								<button type="submit" class="btn btn-info">Sửa</button> -->
+							</div>
+
+						</form:form>
+					</div>
+					<!-- Default Basic Forms Start -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<%-- 	<c:if test="${admin}"> --%>
@@ -598,6 +852,16 @@ h4 {
 			});
 		</script>
 	</c:if>
+
+	<c:if test="${form_detail}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#detail_modal_btn').click();
+				console.log("Hiển thị edit form")
+			});
+		</script>
+	</c:if>
+
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
 	<c:if test="${sua_saidinhdang}">
 		<script type="text/javascript">
@@ -634,10 +898,21 @@ h4 {
 			});
 		</script>
 	</c:if>
+	
+		<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI NGAY TRẢ XẢY RA-->
+	<c:if test="${failDate}">
+		<script type="text/javascript">
+			$(document).ready(function() {	
+				show_errorDate();
+			});
+		</script>
+	</c:if>
+	
+	
 	<script type="text/javascript">
 		//LOAD TABLE 
 		$('#myTable').DataTable();
-			
+		$(".tablePhieuMuonQua3Ngay").DataTable();
 		
 		//NẾU CLICK NÚT XOÁ
 		$('#myTable').on('click','.delete_btn',function(){
@@ -675,6 +950,14 @@ h4 {
 			Swal.fire({
 				title: 'THẤT BẠI',
 				text: content+" thất bại!",
+				icon: 'error',
+			})
+		}
+		
+		function show_errorDate(content="Ngày trả") {
+			Swal.fire({
+				title: 'Ngày trả không hợp lệ!',
+				text: content+" phải từ ngày mượn trở về sau!",
 				icon: 'error',
 			})
 		}
@@ -818,6 +1101,76 @@ h4 {
 		</c:forEach>
 
 	</c:if>
+
+	<!-- 	Thêm một dòng thiết bị mỗi lần click trong detail -->
+	<!-- 	====================================================== SCRIPT DETAIL ================================================================== -->
+
+	<!-- 	Thêm thiết bị khi click detail phiếu mượn -->
+	<c:if test="${slThietBiChiTiet!=0}">
+		<c:forEach var="sl" items="${phieumuon_chitiet.ct_phieumuons}">
+			<script>
+				//Thay đổi name thiết bị 
+				var index1 = index+1 ;
+				var thietBiCu = 'thietBi0';
+				var thietBiMoi = "thietBi" + index1;
+					
+				//Thay đổi name số lượng
+				var slThietBiCu = 'slThietBi0';
+				var slThietBiMoi = "slThietBi" + index1;	
+	 			index=index1;
+			
+	 			//Thay đổi giá trị thiết bị với tên thiết bị
+	 			var valueTenTbCu = 'value=""'
+	 			var valueTenTbMoi = 'value='+'"${sl.thietbi_muon.matb}"'
+	 			
+	 			var tenTbCu = 'Chọn thiết bị'
+	 			var tenTbMoi = '${sl.thietbi_muon.matb}'
+	 			
+	 			var tenSlCu= 'Số lượng'
+	 			var tenSlMoi = '${sl.soluong}'
+	 			
+	 			var valueSlCu = 'value="0"'
+	 			var valueSlMoi = 'value='+'"${sl.soluong}"'
+	 			
+	 			/// Bắt đầu từ đây, các biến sẽ gán 1 giá trị để cho mỗi vòng lặp lặp thì tên biến sẽ không trùng.
+				var  ele${sl.thietbi_muon.matb} = document.querySelector('.hidden-element-detail')
+				const parent${sl.thietbi_muon.matb} = document.getElementById('parent-element-detail')
+				 
+				let htmlEle${sl.thietbi_muon.matb} = ele${sl.thietbi_muon.matb}.innerHTML;
+				
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(thietBiCu, thietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(slThietBiCu,slThietBiMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueTenTbCu,valueTenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenTbCu,tenTbMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(tenSlCu,tenSlMoi)
+				htmlEle${sl.thietbi_muon.matb} = htmlEle${sl.thietbi_muon.matb}.replace(valueSlCu,valueSlMoi)
+				
+				const newEle${sl.thietbi_muon.matb} = document.createElement('div')
+				newEle${sl.thietbi_muon.matb}.innerHTML = htmlEle${sl.thietbi_muon.matb}
+
+				// add event delete
+				
+				const item${sl.thietbi_muon.matb} = newEle${sl.thietbi_muon.matb}.childNodes[1].childNodes[7];
+				item${sl.thietbi_muon.matb}.addEventListener('click', function(){
+				})
+				
+					
+				
+				
+	 			parent${sl.thietbi_muon.matb}.appendChild(newEle${sl.thietbi_muon.matb})  
+	 			dem = dem + 1;
+	 			
+	 			var input_them${sl.thietbi_muon.matb} = document.getElementById('input-index-submit-detail')
+			    input_them${sl.thietbi_muon.matb}.value = index;
+				var demValue${sl.thietbi_muon.matb} = document.getElementById('input-dem-submit-detail')
+			    demValue${sl.thietbi_muon.matb}.value = dem;
+		
+	</script>
+		</c:forEach>
+
+	</c:if>
+
+
 
 	<script>
 									
