@@ -117,7 +117,7 @@ public class ThongKeController {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "select thoigianmuon, count(*) " + "from PHIEUMUON "
+		String hql = "select thoigianmuon, thoigiantra, count(*) " + "from PHIEUMUON "
 				+ "where thoigianmuon between :ngaybatdau and :ngayketthuc ";
 
 		// Nếu thoigiantra khác NULL thì đã trả
@@ -126,7 +126,7 @@ public class ThongKeController {
 		else if (option.equals("Chưa trả"))
 			hql += "and thoigiantra is null ";
 
-		hql += "group by thoigianmuon";				
+		hql += "group by thoigianmuon, thoigiantra";				
 						
 		
 		/* Bắt đầu quá trình truy vấn vào DB */
