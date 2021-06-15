@@ -46,9 +46,6 @@
 								data-toggle="modal" type="button">NHẬP THIẾT BỊ</a>
 							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn">SỬA THIẾT BỊ</a>
-							<a href="#" id="insert_btn" class="btn btn-primary"
-								data-toggle="modal" data-target="#bd-example-modal-lg"
-								type="button">THÊM THIẾT BỊ MỚI </a>
 						</div>
 					</div>
 				</div>
@@ -126,7 +123,11 @@
 														</div>
 													</c:when>
 													<c:otherwise>
-														<div class="col-6 text-center">-</div>
+														<div class="col-3">
+															<a class="material-icons" data-toggle="tooltip"
+																href="phieu-nhap/edit/${pn.mapn}" data-placement="top"
+																title="Xem chi tiết" style="color: blue">info</a>
+														</div>
 													</c:otherwise>
 												</c:choose>
 											</div>
@@ -177,6 +178,12 @@
 									Viên tạo:</label>
 								<strong class="col-sm-4 col-md-8 text-left">${nv.manv}</strong>
 								<input type="hidden" name="nhanvien.manv" value="${nv.manv}" />
+							</div>
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Nhà cung
+									cấp:</label>
+								<input class="form-control col-sm-4 col-md-8" name="mancc"
+									placeholder="Nhập mã nhà cung cấp" />
 							</div>
 							<div class="row">
 								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
@@ -280,6 +287,12 @@
 								<input type="hidden" name="nhanvien.manv" value="${nv.manv}" />
 							</div>
 							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Nhà cung
+									cấp:</label>
+								<input class="form-control col-sm-4 col-md-8" name="mancc"
+									placeholder="Nhập mã nhà cung cấp" />
+							</div>
+							<div class="row">
 								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
 								<form:textarea class="col-sm-4 col-md-8" type="text"
 									style="border-color: lightgrey;border-radius: 3px;"
@@ -358,10 +371,30 @@
 			$(document).ready(function() {
 				$('#update_modal_btn').click();
 				console.log("Hiển thị edit form")
-				
+				tinhtong()
 			});
 		</script>
 	</c:if>
+	<!-- Dùng để tính tổng tiền chi tiết phiếu -->
+	<script type="text/javascript">
+		function tinhtong(){
+			let soluong = $(this).parents('tr').find("input[name='soluong']").val()
+			let dongia = $(this).parents('tr').find("input[name='dongia']").val()
+			if (dongia < 0 || soluong < 0) return false;
+			
+			
+			let tongcong = 0;
+			$('form#phieuthanhly_sua').find('tbody tr').each(function(index, tr) {
+			      let soluong = $(this).find("input[name='soluong']").val()
+			      let dongia = $(this).find("input[name='dongia']").val()
+			      
+			      tongcong += soluong * dongia
+			});
+			
+			$('.tongcong').text('Tổng cộng: ' + tongcong + ' VNĐ');
+		}
+		
+	</script>
 	<!-- DÙNG ĐỂ SHOW FORM DELETE -->
 	<script type="text/javascript">
 		$(document).ready(function() {

@@ -162,7 +162,29 @@ public class ThietBiDAO {
 	}
 	
 	public THIETBI getById2nhap(String id, SessionFactory factory) {
-		return getById2thanhly(id, factory);
+//		return getById2thanhly(id, factory);
+		Session session;
+
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			session = factory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = factory.openSession();
+		}
+		String hql = "from THIETBI where matb = :id";
+		
+		/* Bắt đầu quá trình truy vấn vào DB */
+
+		Query<THIETBI> query = session.createQuery(hql);		
+		query.setParameter("id", id	);
+		THIETBI thietbi = null;
+		
+		if (query.list().isEmpty())
+			return thietbi;
+		else thietbi = query.list().get(0);
+		
+		session.close();
+		return thietbi;
 	}
 
 	

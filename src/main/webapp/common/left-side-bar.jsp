@@ -16,10 +16,9 @@
 	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
-				<li>
-					<div class="dropdown-divider"></div>
-				</li>
+
 				<li class="dropdown" id="qlpm" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="phieumuon" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="QUẢN LÍ PHIẾU MƯỢN">
@@ -28,6 +27,7 @@
 					</a>
 				</li>
 				<li class="dropdown" id="qltb" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="thiet-bi" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="QUẢN LÝ THIẾT BỊ CHO MƯỢN">
@@ -36,6 +36,7 @@
 					</a>
 				</li>
 				<li class="dropdown" id="qlnm" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="qlnguoimuon" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="QUẢN LÍ NGƯỜI MƯỢN">
@@ -43,7 +44,9 @@
 						<span class="text-yellow">QUẢN LÍ NGƯỜI MƯỢN</span>
 					</a>
 				</li>
+
 				<li class="dropdown" id="ntb" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="phieu-nhap" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="NHẬP THIẾT BỊ">
@@ -51,7 +54,9 @@
 						<span class="text-yellow">QUẢN LÍ PHIẾU NHẬP</span>
 					</a>
 				</li>
+
 				<li class="dropdown" id="tltb" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="phieu-thanhly" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="THANH LÝ THIẾT BỊ">
@@ -59,7 +64,9 @@
 						<span class="text-yellow">QUẢN LÍ PHIẾU THANH LÝ</span>
 					</a>
 				</li>
+
 				<li class="dropdown" id="qlnv" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="qlnhanvien" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="QUẢN LÍ NHÂN VIÊN">
@@ -75,7 +82,9 @@
 				<!-- 						<span class="mtext">QUẢN LÍ</span> -->
 				<!-- 					</a> -->
 				<!-- 				</li> -->
+
 				<li class="dropdown" id="thongke" style="display: none">
+					<div class="dropdown-divider"></div>
 					<a href="thong-ke" class="dropdown-toggle no-arrow"
 						data-toggle="tooltip" data-placement="right" title=""
 						data-original-title="THỐNG KÊ">
@@ -89,17 +98,6 @@
 				<li>
 					<div class="dropdown-divider"></div>
 				</li>
-				<!-- 				<li> -->
-				<!-- 					<div class="sidebar-small-cap">MỞ RỘNG</div> -->
-				<!-- 				</li> -->
-
-<!-- 				<li class="dropdown" id="dangxuat" style="display: none"><a -->
-<!-- 					href="dangxuat" class="dropdown-toggle no-arrow" -->
-<!-- 					data-toggle="tooltip" data-placement="right" title="" -->
-<!-- 					data-original-title="Đăng xuất"> <span -->
-<!-- 						class="micon dw dw-logout1"></span> <span class="text-yellow">Đăng -->
-<!-- 							xuất</span> -->
-<!-- 				</a></li> -->
 
 			</ul>
 		</div>
@@ -120,6 +118,7 @@
 			document.getElementById("qlpm").style.display = "";
 			document.getElementById("qltb").style.display = "";
 			document.getElementById("qlnm").style.display = "";
+			document.getElementById("ntb").style.display = "";
 			document.getElementById("tltb").style.display = "";
 			document.getElementById("thongke").style.display = "";
 			document.getElementById("qlnv").style.display = "";

@@ -180,7 +180,7 @@ public class PhieuThanhLyController {
 		
 		if (phieuthanhly_sua.getTrangthai().equals(daXacNhan))
 			model.addFlashAttribute("form_info", true);
-		model.addFlashAttribute("form_edit", true);
+		else model.addFlashAttribute("form_edit", true);
 		return new RedirectView("../../phieu-thanhly");
 	}
 

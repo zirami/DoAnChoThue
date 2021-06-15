@@ -94,6 +94,14 @@ public class NhanVienController {
 				account_moi.setPhanquyen(qp);
 				account_moi.setSdt(sdt);
 				account_moi.setUsername(username);
+				
+				ACCOUNT account_temp = new AccountDAO().getById(username, factory);
+				if(account_temp!=null) {
+					model.addAttribute("accountTonTai", true);
+					model.addAttribute("nhanvien_moi", nhanvien_moi);
+					return home(model);
+				}
+				
 				new AccountDAO().save(factory, account_moi);
 
 				nhanvien_moi.setAcc(account_moi);

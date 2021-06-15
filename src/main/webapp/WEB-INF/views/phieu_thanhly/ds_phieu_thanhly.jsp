@@ -210,11 +210,11 @@
 								</td>
 								<td>
 									<input type="number" min="1" name="soluong"
-										class=" form-control" />
+										class=" form-control" onchange="tinhtong(this)"/>
 								</td>
 								<td>
 									<input type="number" min="0" step="0.01" name="dongia"
-										class=" form-control" />
+										class=" form-control" onchange="tinhtong(this)"/>
 								</td>
 								<td>
 									<a class="material-icons text-info btn-close-item  text-right"
@@ -248,170 +248,48 @@
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<form:form action="phieu-thanhly/update" method="post"
 				class="modal-content" modelAttribute="phieuthanhly_sua">
-				<div class="modal-body">
-					<div class="invoice-header text-center">
-						<h4 class="text-blue h4">CHI TIẾT PHIẾU THANH LÝ</h4>
-					</div>
-					<!-- Nhập thông tin cơ bản phiếu nhập -->
-					<div class=" row">
-						<div class="col form-group">
-							<div class="row">
-								<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
-									thanh lý</label>
-								<div class="col-sm-4 col-md-8">
-									<form:input class="form-control" type="text" path="maptl"
-										placeholder="Nhập mã phiếu mượn" readonly="true" />
-								</div>
-							</div>
-							<div class="row">
-								<label class="col-sm-4 col-md-4 col-form-label">Ngày
-									thanh lý: </label>
-								<div class="col-sm-4 col-md-8">
-									<input name="thoigian" class="form-control" readonly="readonly"
-										type="date" value="${today}" />
-								</div>
-							</div>
-						</div>
-						<div class=" col form-group">
-							<div class="row">
-								<label class="col-sm-6 col-md-4 col-form-label">Nhân
-									Viên chỉnh sửa:</label>
-								<input class="col-sm-4 col-md-8 form-control" type="text"
-									name="nhanvien_thanhly.manv" value="${nv.manv}"
-									readonly="readonly" />
-							</div>
-							<div class="row">
-								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
-								<c:if test="${!form_info}">
-									<form:textarea class="col-sm-4 col-md-8" type="text"
-										style="border-color: lightgrey;border-radius: 3px;"
-										path="ghichu" rows="1" placeholder="Nhập ghi chú" />
-								</c:if>
-								<c:if test="${form_info}">
-									<textarea class="col-sm-4 col-md-8"
-										style="border-color: lightgrey; border-radius: 3px;"
-										name="ghichu" rows="1" placeholder="Nhập ghi chú"
-										readonly="readonly">
-										${phieuthanhly_sua.ghichu}	
-									</textarea>
-								</c:if>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<h5 class="h5 invoice-header text-center">DANH SÁCH THIẾT BỊ
-						THANH LÝ</h5>
-					<!-- Nhập thông tin cơ bản phiếu nhập -->
-					<table class="table dsThietbi_table">
-						<thead>
-							<tr>
-								<th>Thiết bị</th>
-								<th>Số lượng</th>
-								<th>Đơn giá</th>
-								<th></th>
-							</tr>
-						</thead>
-						<c:if test="${form_info}">
-							<tbody>
-								<c:forEach items="${phieuthanhly_sua.ct_phieuthanhlys}"
-									var="ct_ptl">
-									<tr>
-										<td>
-											<select class="form-control" name="matb" disabled="disabled">
-												<c:set var="matb" value="${ct_ptl.thietbi_thanhly.matb}" />
-												<option value="${ct_ptl.thietbi_thanhly.matb}"
-													label="${ct_ptl.thietbi_thanhly.ten}" />
-												<c:forEach var="tb" items="${listThietbi}">
-													<c:if test="${matb.equals(tb.matb) == false }">
-														<option value="${tb.matb}">${tb.ten}</option>
-													</c:if>
-												</c:forEach>
-											</select>
-										</td>
-										<td>
-											<input type="number" min="1" name="soluong"
-												value="${ct_ptl.soluong}" readonly="readonly"
-												class=" form-control" />
-										</td>
-										<td>
-											<input type="number" min="0" step="0.01" name="dongia"
-												value="${ct_ptl.dongia}" readonly="readonly"
-												class=" form-control" />
-										</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</c:if>
-						<c:if test="${!form_info}">
-							<tbody>
-								<c:forEach items="${phieuthanhly_sua.ct_phieuthanhlys}"
-									var="ct_ptl">
-									<tr>
-										<td>
-											<select class="form-control" name="matb">
-												<c:set var="matb" value="${ct_ptl.thietbi_thanhly.matb}" />
-												<option value="${ct_ptl.thietbi_thanhly.matb}"
-													label="${ct_ptl.thietbi_thanhly.ten}" />
-												<c:forEach var="tb" items="${listThietbi}">
-													<c:if test="${matb.equals(tb.matb) == false }">
-														<option value="${tb.matb}">${tb.ten}</option>
-													</c:if>
-												</c:forEach>
-											</select>
-										</td>
-										<td>
-											<input type="number" min="1" name="soluong"
-												value="${ct_ptl.soluong}" class=" form-control" />
-										</td>
-										<td>
-											<input type="number" min="0" step="0.01" name="dongia"
-												value="${ct_ptl.dongia}" class=" form-control" />
-										</td>
-										<td>
-											<a
-												class="material-icons text-info btn-close-item  text-right"
-												type="button"> delete_sweep </a>
-										</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</c:if>
-					</table>
-					<c:if test="${!form_info}">
-						<div class="row form-group them-tb-nhap">
-							<button type='button' class="form-control text-info ">
-								<span class="material-icons text-info">add_circle_outline</span>
-								Thêm thiết bị nhập
-							</button>
-						</div>
-					</c:if>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Đóng</button>
-					<input type="hidden" name="trangthai" />
-					<c:if test="${!form_info}">
-						<button type="submit" class="btn btn-primary luu-btn">Lưu
-							tạm</button>
-						<button type="submit" class="btn btn-success them-btn">Xác
-							Nhận</button>
-					</c:if>
-				</div>
+				<c:if test="${form_edit}">
+					<%@include file="/WEB-INF/views/phieu_thanhly/form_edit_ptl.jsp"%>
+				</c:if>
+				<c:if test="${form_info}">
+					<%@include file="/WEB-INF/views/phieu_thanhly/form_info_ptl.jsp"%>
+				</c:if>
 			</form:form>
 		</div>
 	</div>
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
-	<c:if test="${form_edit}">
+	<c:if test="${form_edit || form_info}">
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#update_modal_btn').click();
 				console.log("Hiển thị edit form")
+				tinhtong()
 				
 			});
 		</script>
 	</c:if>
+	<!-- Dùng để tính tổng tiền chi tiết phiếu -->
+	<script type="text/javascript">
+		function tinhtong(){
+			let soluong = $(this).parents('tr').find("input[name='soluong']").val()
+			let dongia = $(this).parents('tr').find("input[name='dongia']").val()
+			if (dongia < 0 || soluong < 0) return false;
+			
+			
+			let tongcong = 0;
+			$('form#phieuthanhly_sua').find('tbody tr').each(function(index, tr) {
+			      let soluong = $(this).find("input[name='soluong']").val()
+			      let dongia = $(this).find("input[name='dongia']").val()
+			      
+			      tongcong += soluong * dongia
+			});
+			
+			$('.tongcong').text('Tổng cộng: ' + tongcong + ' VNĐ');
+		}
+		
+	</script>
 	<!-- DÙNG ĐỂ SHOW FORM DELETE -->
 	<script type="text/javascript">
 		$(document).ready(function() {

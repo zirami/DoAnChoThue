@@ -465,6 +465,15 @@
 			});
 		</script>
 	</c:if>
+	
+		<c:if test="${accountTonTai}">
+		<script type="text/javascript">
+			$(document).ready(function() {	
+				show_error_account();
+			});
+		</script>
+	</c:if>
+	
 	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI XẢY RA-->
 	<c:if test="${insert == false || update == false || delete == false}">
 		<script type="text/javascript">
@@ -516,6 +525,13 @@
 			Swal.fire({
 				title: 'THẤT BẠI',
 				text: content+" thất bại!",
+				icon: 'error',
+			})
+		}
+		function show_error_account(content="Username") {
+			Swal.fire({
+				title: 'THẤT BẠI',
+				text: content+" đã tồn tại!",
 				icon: 'error',
 			})
 		}

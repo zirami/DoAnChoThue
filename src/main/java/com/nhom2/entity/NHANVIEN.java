@@ -83,6 +83,9 @@ public class NHANVIEN {
 	
 	@OneToMany(mappedBy = "nhanvien_thanhly", fetch = FetchType.LAZY)
 	private Collection<PHIEUTHANHLY> phieuthanhlys;
+	
+	@OneToMany(mappedBy = "nhanvien_pm", fetch = FetchType.EAGER)
+	private Collection<PHIEUMUON> phieumuons;
 
 	public NHANVIEN() {
 		super();

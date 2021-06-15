@@ -26,10 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nhom2.DAO.CT_PhieuMuonDAO;
 import com.nhom2.DAO.MailDAO;
 import com.nhom2.DAO.NguoiMuonDAO;
+import com.nhom2.DAO.NhanVienDAO;
 import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
+import com.nhom2.entity.ACCOUNT;
 import com.nhom2.entity.CT_PHIEUMUON;
 import com.nhom2.entity.NGUOIMUON;
+import com.nhom2.entity.NHANVIEN;
 import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
@@ -81,11 +84,8 @@ public class PhieuMuonController {
 	
 	// Load danh sách nhân viên
 	@ModelAttribute("listNhanViens")
-	public List<String> getListNhanViens() {
-		List<String> list = new ArrayList<>();
-		list.add("nv1");
-		list.add("nv2");
-		list.add("nv3");
+	public List<NHANVIEN> getListNhanViens() {
+		List<NHANVIEN> list = new NhanVienDAO().getAll(factory);
 		return list;
 	}
 
@@ -120,7 +120,11 @@ public class PhieuMuonController {
 	}
 
 	@RequestMapping(value = "phieumuon", method = RequestMethod.GET)
-	public String home(ModelMap model, HttpSession session) {
+	public String home(ModelMap model, HttpSession session, HttpServletRequest request) {
+		session = request.getSession();
+		ACCOUNT account = (ACCOUNT) session.getAttribute("account_login");
+		
+		model.addAttribute("acount_login",account);
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
 		model.addAttribute("maphieumuon",getRandomMa());
 		model.addAttribute("indexValue", 0);
@@ -138,7 +142,7 @@ public class PhieuMuonController {
 
 		// nếu có lỗi thì quay về chương trình
 		if (reusult.hasErrors())
-			return home(model, session);
+			return home(model, session,rq);
 
 		// Kiểm tra giá trị của index bên view
 		if (indexValue == 0) {
@@ -151,7 +155,8 @@ public class PhieuMuonController {
 		// Khởi tạo thằng trả về bằng false
 		Boolean result = false;
 
-		// Thêm từng cái CT_ThietBi
+//		// Thêm từng cái CT_ThietBi
+
 		int i = 1;
 		List<THIETBI> list = new ArrayList<>();
 		for (i = 1; i <= indexValue; i++) {
@@ -185,29 +190,52 @@ public class PhieuMuonController {
 			}
 
 		}
+		
+		///Kiểm tra có thiết bị nào âm không
+		for (THIETBI ele : list) {
+			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+			
+			float checkSoLuong = thietbii.getSoluong()-ele.getSoluong();
+			
+			if(checkSoLuong < 0) {
+				new PhieuMuonDAO().delete(factory, phieumuon_moi);
+				model.addAttribute("phieumuon_moi",new PHIEUMUON());
+				model.addAttribute("insert", false);
+				return home(model, session,rq);
+			}
+			
+		}
+		
 
 		for (THIETBI ele : list) {
 			CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
-			ct_tb.setThietbi_muon(new ThietBiDAO().getById(ele.getMatb(), factory));
+			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+			ct_tb.setThietbi_muon(thietbii);
 			ct_tb.setSoluong(ele.getSoluong());
 			ct_tb.setPhieumuon(phieumuon_moi);
 			result = new CT_PhieuMuonDAO().save(factory, ct_tb);
+			
+			thietbii.setSoluong(thietbii.getSoluong()-ele.getSoluong());
+			new ThietBiDAO().update(factory, thietbii);
+			
+			
 		}
 
+		result = new PhieuMuonDAO().update(factory, phieumuon_moi);
 		model.addAttribute("insert", result);
-		return home(model, session);
+		return home(model, session,rq);
 
 	}
 
 	@RequestMapping(value = "phieumuon/edit/{mapm}", method = RequestMethod.GET)
 	public String show_form_edit(ModelMap model, @ModelAttribute("phieumuon_sua") PHIEUMUON phieumuon_sua,
-			@PathVariable("mapm") String mapm, HttpSession session) {
+			@PathVariable("mapm") String mapm, HttpSession session, HttpServletRequest request) {
 		model.addAttribute("form_edit", true);
 		phieumuon_sua = new PhieuMuonDAO().getById(mapm, factory);
 		model.addAttribute("indexValue", 0);
 		model.addAttribute("slThietBiSua", phieumuon_sua.getCt_phieumuons().size());
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
-		return home(model, session);
+		return home(model, session,request);
 	}
 
 	@RequestMapping(value = "phieumuon/update", method = RequestMethod.POST)
@@ -220,109 +248,136 @@ public class PhieuMuonController {
 		model.addAttribute("phieumuon_sua", phieumuon_sua);
 		// Nếu có lỗi thì quay lại chương trình
 		if (result.hasErrors())
-			return home(model, session);
+			return home(model, session,rq);
 
 		Boolean result1 = false;
-		// lấy phiếu mượn bằng mã của phiếu mượn sửa.
+		// lấy phiếu mua bằng mã của phiếu mua sửa.
 		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
 
-		/// Nếu thời gian trả tồn tại, thì không có quyền sửa
-		if (phieumuon_cansua.getThoigiantra() != null) {
-			model.addAttribute("update", false);
+		List<CT_PHIEUMUON> backup = new ArrayList<>();
+		// Xóa hết các ct phiếu mua hiện tại
+		for (CT_PHIEUMUON elem : phieumuon_cansua.getCt_phieumuons()) {
+			
+			backup.add(elem);
+			new CT_PhieuMuonDAO().delete(factory, elem);
 		}
-		// Có quyền chỉnh sửa
-		else {
 
-			// Xóa hết các ct phiếu mượn hiện tại
-			for (CT_PHIEUMUON elem : phieumuon_cansua.getCt_phieumuons()) {
-				new CT_PhieuMuonDAO().delete(factory, elem);
+		// Nếu đếm value == 0 tức là người dùng đã bỏ chọn hết thiết bị, sẽ xóa luôn
+		// phiếu muon.
+		if (demValue == 0) {
+
+			// Thêm thông báo thành công khi xóa phiếu muon.
+			model.addAttribute("update", new PhieuMuonDAO().delete(factory, phieumuon_sua));
+			for (CT_PHIEUMUON elem : backup) {
+				//phục hồi số lượng của thiết bị
+				THIETBI thietbii = new ThietBiDAO().getById(elem.getThietbi_muon().getMatb(), factory);
+				thietbii.setSoluong(thietbii.getSoluong()+ elem.getSoluong());
+				new ThietBiDAO().update(factory, thietbii);
 			}
+			return home(model, session,rq);
+		}
+		
 
-			// Nếu đếm value == 0 tức là người dùng đã bỏ chọn hết thiết bị, sẽ xóa luôn
-			// phiếu mượn.
-			if (demValue == 0) {
+        // Thêm từng cái CT_ThietBi
+		int i = 1;
+		List<THIETBI> list = new ArrayList<>();
+		for (i = 1; i <= indexValue; i++) {
+			// Tạo phần tử để requestParameter
+			String tb = "thietBi" + i;
+			String slTb = "slThietBi" + i;
 
-				// Xử lý thông báo thêm thành công
-				model.addAttribute("update", new PhieuMuonDAO().delete(factory, phieumuon_sua));
-				return home(model, session);
-			}
+			// Phần tử chứ requestParameter
 
-			// Các trường hợp chỉnh sửa: thêm, điều chỉnh, bớt các thiết bị.
-			// Khởi tạo thằng trả về bằng false
+			String slTB = rq.getParameter(slTb);
+			String thietBi = rq.getParameter(tb);
 
-			// Thêm từng cái CT_ThietBi
-//			int i = 1;
-//			for (i = 1; i <= indexValue; i++) {
-//				// Tạo phần tử để requestParameter
-//				String tb = "thietBi" + i;
-//				String slTb = "slThietBi" + i;
-//
-//				// Phần tử chứ requestParameter
-//				String thietBi = rq.getParameter(tb);
-//				String slTB = rq.getParameter(slTb);
-//				// chưa request chuỗi
-//				if (thietBi != "" && slTB != null) {
-//					// Chuyển slThietBi thành số
-//					int slThietBi = Integer.valueOf(slTB);
-//
-//					CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
-//					ct_tb.setThietbi_muon(new ThietBiDAO().getById(thietBi, factory));
-//					ct_tb.setSoluong(slThietBi);
-//					ct_tb.setPhieumuon(phieumuon_cansua);
-//
-//					result1 = new CT_PhieuMuonDAO().save(factory, ct_tb);
-// Thêm từng cái CT_ThietBi
-			int i = 1;
-			List<THIETBI> list = new ArrayList<>();
-			for (i = 1; i <= indexValue; i++) {
-				// Tạo phần tử để requestParameter
-				String tb = "thietBi" + i;
-				String slTb = "slThietBi" + i;
+			if (thietBi != "" && slTB != null) {
+				int slThietBi = Integer.valueOf(slTB);
 
-				// Phần tử chứ requestParameter
+				THIETBI tb_them = new THIETBI();
+				tb_them.setMatb(thietBi);
+				tb_them.setSoluong(slThietBi);
+				// Tìm kiếm mã thiết bị xem đã tồn tại hay chưa, luôn check trước khi thêm
 
-				String slTB = rq.getParameter(slTb);
-				String thietBi = rq.getParameter(tb);
-
-				if (thietBi != "" && slTB != null) {
-					int slThietBi = Integer.valueOf(slTB);
-
-					THIETBI tb_them = new THIETBI();
-					tb_them.setMatb(thietBi);
-					tb_them.setSoluong(slThietBi);
-					// Tìm kiếm mã thiết bị xem đã tồn tại hay chưa, luôn check trước khi thêm
-
-					boolean check = false;
-					for (THIETBI ele : list) {
-						if (thietBi.compareTo(ele.getMatb()) == 0) {
-							ele.setSoluong((ele.getSoluong() + slThietBi));
-							check = true;
-							break;
-						}
+				boolean check = false;
+				for (THIETBI ele : list) {
+					if (thietBi.compareTo(ele.getMatb()) == 0) {
+						ele.setSoluong((ele.getSoluong() + slThietBi));
+						check = true;
+						break;
 					}
-					if (check == false)
-						list.add(tb_them);
 				}
-
+				if (check == false)
+					list.add(tb_them);
 			}
-
-			for (THIETBI ele : list) {
-				CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
-				ct_tb.setThietbi_muon(new ThietBiDAO().getById(ele.getMatb(), factory));
-				ct_tb.setSoluong(ele.getSoluong());
-				ct_tb.setPhieumuon(phieumuon_cansua);
-				result1 = new CT_PhieuMuonDAO().save(factory, ct_tb);
-			}
-			model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
 
 		}
+		
+		
+		///Kiểm tra có thiết bị nào âm không
+		for (THIETBI ele : list) {
+			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+
+			float soluongbackup = 0;
+			for (CT_PHIEUMUON elem : backup) {
+				if(elem.getThietbi_muon().getMatb()==thietbii.getMatb()) {
+					soluongbackup = elem.getSoluong();
+					break;
+				}
+			}
+			
+			float checkSoLuong = thietbii.getSoluong()-ele.getSoluong() + soluongbackup;
+			
+			if(checkSoLuong < 0) {
+//				new PhieuMuonDAO().delete(factory, phieumuon_cansua);
+
+				for (CT_PHIEUMUON elem : backup) {
+					CT_PHIEUMUON ct_phieumuon_backup = new CT_PHIEUMUON();
+					ct_phieumuon_backup.setPhieumuon(phieumuon_cansua);
+					ct_phieumuon_backup.setSoluong(elem.getSoluong());
+					ct_phieumuon_backup.setThietbi_muon(elem.getThietbi_muon());
+					new CT_PhieuMuonDAO().save(factory, ct_phieumuon_backup);
+				}		
+		
+				model.addAttribute("phieumuon_sua",new PHIEUMUON());
+				model.addAttribute("update", false);
+				return home(model, session,rq);
+			}
+			
+		}
+		
+
+		for (THIETBI ele : list) {
+			CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
+			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+			ct_tb.setThietbi_muon(thietbii);
+			ct_tb.setSoluong(ele.getSoluong());
+			ct_tb.setPhieumuon(phieumuon_cansua);
+			result1 = new CT_PhieuMuonDAO().save(factory, ct_tb);
+			
+			thietbii.setSoluong(thietbii.getSoluong()-ele.getSoluong());
+			new ThietBiDAO().update(factory, thietbii);
+			
+		
+		}
+
+		model.addAttribute("update", new PhieuMuonDAO().update(factory, phieumuon_sua));
+		
+		//trả về giá trị cho database khi xóa CT_PHIEUMUON
+		for (CT_PHIEUMUON elem : backup) {
+			//phục hồi số lượng của thiết bị
+			THIETBI thietbii = new ThietBiDAO().getById(elem.getThietbi_muon().getMatb(), factory);
+			thietbii.setSoluong(thietbii.getSoluong()+ elem.getSoluong());
+			new ThietBiDAO().update(factory, thietbii);
+		}
+		
 		model.addAttribute("update", result1);
-		return home(model, session);
+		return home(model, session,rq);
 	}
 
 	// Delete
 	@RequestMapping(value = "phieumuon/delete", method = RequestMethod.POST)
-	public String delete(ModelMap model, @RequestParam("mapm") String mapm, HttpSession session) {
+	public String delete(ModelMap model, @RequestParam("mapm") String mapm, HttpSession session, HttpServletRequest rq) {
 		PHIEUMUON phieumuon_xoa = new PhieuMuonDAO().getById(mapm, factory);
 		if (phieumuon_xoa.getThoigiantra() != null) {
 			model.addAttribute("delete", false);
@@ -335,13 +390,12 @@ public class PhieuMuonController {
 			phieumuon_canxoa.setMapm(mapm);
 			model.addAttribute("delete", new PhieuMuonDAO().delete(factory, phieumuon_canxoa));
 		}
-		return home(model, session);
-
+		return home(model, session,rq);
 	}
 	
 	@RequestMapping(value = "phieumuon/mail", method= RequestMethod.POST)
 	public String sendMail(ModelMap model, @RequestParam("tieude_mail") String tieude_mail,
-			@RequestParam("noidung_mail") String noidung_mail, HttpSession session) {
+			@RequestParam("noidung_mail") String noidung_mail, HttpSession session, HttpServletRequest rq) {
 		List<PHIEUMUON> list = new PhieuMuonDAO().getAll(factory);
 		
 		for(PHIEUMUON elem : list) {
@@ -445,6 +499,6 @@ public class PhieuMuonController {
 				}
 			}
 		}
-		return home(model,session);
+		return home(model,session,rq);
 	}
 }

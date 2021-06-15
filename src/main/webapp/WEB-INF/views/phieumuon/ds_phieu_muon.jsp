@@ -12,6 +12,7 @@
 h4 {
 	color: red;
 }
+
 </style>
 <%@include file="/common/loadcss.jsp"%>
 
@@ -24,6 +25,8 @@ h4 {
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
+	
+
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -59,14 +62,13 @@ h4 {
 					<div class="card-box md-30">
 						<hr>
 						<div>
-							<table
-								class="table nowrap  dataTable no-footer collapsed table-border-factor"
-								style="width: 100%" id="myTable" role="grid">
+							<table class="table nowrap  dataTable collapsed table-hover table-boder-factor" style="width: 100% " id="myTable" role="grid">
+						
 								<thead class="table-info">
 									<tr>
 										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
 										<th>Người mượn</th>
-										<th>Mã nhân viên</th>
+										<th>Nhân viên</th>
 										<th>Phòng</th>
 										<th>Thời gian mượn</th>
 										<th>Thời gian trả</th>
@@ -80,12 +82,12 @@ h4 {
 										<c:if test="${phieumuon.thoigiantra==null}">
 											<tr>
 												<td class="table-plus">${phieumuon.mapm}</td>
-												<td>${phieumuon.nm.ten}</td>
-												<td>${phieumuon.manv}</td>
+												<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
+												<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
 												<td>${phieumuon.phong }</td>
 												<td>${phieumuon.thoigianmuon}</td>
 												<td>${phieumuon.thoigiantra}</td>
-												<td>${phieumuon.ghichu }</td>
+												<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
 												<td class="pull-right">
 													<div class="row clearfix btn-list">
 														<form action="phieumuon/edit/${phieumuon.mapm}">
@@ -150,19 +152,26 @@ h4 {
 						</div>
 
 						<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
-						<table
-							class="table nowrap  dataTable no-footer collapsed table-border-factor"
-							style="width: 100%" id="myTable" role="grid">
+						<table class="table dataTable table-bordered table-hover " 
+							style="width: 100%;border-collapse: collapse;" >
+							<colgroup>
+								<col span="1" style="width: 10%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+								<col span="1" style="width: 15%">
+							</colgroup>
 							<thead class="table-info">
 								<tr>
-									<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
+									<th>Mã phiếu mượn</th>
 									<th>Người mượn</th>
-									<th>Mã nhân viên</th>
+									<th>Nhân viên lập phiếu</th>
 									<th>Phòng</th>
 									<th>Thời gian mượn</th>
 									<th>Thời gian trả</th>
 									<th>Ghi chú</th>
-									<th class="pull-right">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -173,30 +182,13 @@ h4 {
 											test="${phieumuon_moi.laySoNgay(phieumuon.thoigianmuon)>=3 }">
 											<tr>
 												<td class="table-plus">${phieumuon.mapm}</td>
-												<td>${phieumuon.nm.ten}</td>
-												<td>${phieumuon.manv}</td>
+												<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
+												<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
 												<td>${phieumuon.phong }</td>
 												<td>${phieumuon.thoigianmuon}</td>
 												<td>${phieumuon.thoigiantra}</td>
-												<td>${phieumuon.ghichu }</td>
-												<td class="pull-right">
-													<!-- 													<div class="row clearfix btn-list"> --> <%-- 														<form action="phieumuon/edit/${phieumuon.mapm}"> --%>
-													<!-- 															<button class="btn btn-info bg-purple" type="submit" -->
-													<!-- 																data-toggle="tooltip" data-placement="top" title="Sửa"> -->
-													<!-- 																<span class="material-icons ">edit</span> -->
-													<!-- 															</button> --> <!-- 														</form> -->
-													<!-- 														<form action="phieumuon/delete" method="post"> -->
-													<!-- 																													Dùng để hiển thị tên lên form  -->
-													<!-- 															<input type="hidden" name="ten" --> <%-- 																value="${phieumuon.nm.ten}" /> --%>
-													<!-- 																													Dùng để gửi về controller  -->
-													<!-- 															<input type="hidden" name="mapm" --> <%-- 																value="${phieumuon.mapm}" /> --%>
-													<!-- 															<button type="submit" style="display: none" -->
-													<!-- 																class="submit_del_btn"></button> --> <!-- 														</form> -->
-													<!-- 														<button class="btn btn-danger delete_btn" -->
-													<!-- 															data-toggle="tooltip" data-placement="top" title="Xoá" -->
-													<!-- 															type="button"> --> <!-- 															<span class="material-icons delete_btn">delete</span> -->
-													<!-- 														</button> --> <!-- 													</div> -->
-												</td>
+												<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
+												
 											</tr>
 										</c:if>
 									</c:if>
@@ -210,6 +202,7 @@ h4 {
 
 			</div>
 		</div>
+		<br>
 	</div>
 	<!-- 	</div> -->
 	<!-- 	======================   Thêm phiếu mượn ============================ -->
@@ -265,14 +258,13 @@ h4 {
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-											<form:errors path="manv" />
-											<select class="selectpicker form-control" name="manv"
-												style="width: 100%; height: 38px;" required="required">
-												<option value="">Chọn Nhân viên</option>
-												<c:forEach var="nv" items="${listNhanViens }">
-													<option value="${nv }">${nv}</option>
-												</c:forEach>
-											</select>
+											<form:errors path="nhanvien_pm.manv" />
+											<form:select class="selectpicker form-control" path="nhanvien_pm.manv"
+												style="width: 100%;height: 38px;" required="required">
+												<form:option value="" label="Chọn nhân viên"></form:option>
+												<form:options items="${listNhanViens}" itemValue="manv"
+													itemLabel="ten"></form:options>
+											</form:select>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -424,7 +416,7 @@ h4 {
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-											<form:select path="manv" items="${listNhanViens}"
+											<form:select path="nhanvien_pm.manv" items="${listNhanViens}" itemLabel="ten" itemValue="manv"
 												class="selectpicker form-control"
 												style="width: 100%; height: 38px;">
 											</form:select>
