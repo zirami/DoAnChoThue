@@ -145,6 +145,14 @@ public class PHIEUMUON {
 	    System.out.println(strDate); 
 	    return date1;
 	}
+	
+	public int tinhKhoangCachHaiNgay_Date(Date d1,Date d2) { 
+		int result = 0;
+		result = (int) (d2.getTime()-d1.getTime());
+		result = result / (24 * 60 * 60 * 1000) + 1;
+		return result;
+	}
+	
 	public int laySoNgay_Date(Date d1) {
 		 Date date = new Date();  
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
