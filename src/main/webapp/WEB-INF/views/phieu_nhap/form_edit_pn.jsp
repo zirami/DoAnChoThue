@@ -1,0 +1,118 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div class="pd-20 card-box mb-30">
+						<div class="clearfix">
+							<div class="pull-left">
+								<h4 class="text-blue h4">Sửa thông tin phiếu nhập</h4>
+								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
+							</div>
+						</div>
+		<!-- Nhập thông tin cơ bản phiếu nhập -->
+		<div class=" row">
+			<div class="col form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
+						nhập</label>
+					<div class="col-sm-4 col-md-8">
+						<form:input class="form-control" type="text" path="mapn"
+							placeholder="Nhập mã phiếu nhập" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-sm-4 col-md-4 col-form-label">Ngày
+						nhập: </label>
+					<div class="col-sm-4 col-md-8">
+						<input name="thoigiannhap" class="form-control" readonly="readonly"
+							type="date" value="${today}" />
+					</div>
+				</div>
+			</div>
+			<div class=" col form-group">
+				<div class="row">
+					<label class="col-sm-6 col-md-4 col-form-label">Nhân Viên
+						nhập :</label>
+					<input class="col-sm-4 col-md-8 form-control" type="text"
+						name="nhanvien.manv" value="${nv.manv}"
+						readonly="readonly" />
+				</div>
+				<div class="row">
+					<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
+					<form:textarea class="col-sm-4 col-md-8" type="text"
+						style="border-color: lightgrey;border-radius: 3px;" path="ghichu"
+						rows="1" placeholder="Nhập ghi chú" />
+				</div>
+			</div>
+		</div>
+		<hr>
+		<h5 class="h5 invoice-header text-center">DANH SÁCH THIẾT BỊ
+			NHẬP</h5>
+		<!-- Nhập thông tin cơ bản phiếu nhập -->
+		<table class="table dsThietbi_table">
+			<thead>
+				<tr>
+					<th>Thiết bị</th>
+					<th>Số lượng</th>
+					<th>Đơn giá</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${phieunhap_sua.ct_phieunhaps}" var="ct_pn">
+					<tr>
+						<td>
+							<select class="form-control" name="matb" style="width: auto;">
+								<c:set var="matb" value="${ct_pn.thietbi.matb}" />
+								<option value="${ct_pn.thietbi.matb}"
+									label="${ct_pn.thietbi.ten}" />
+								<c:forEach var="tb" items="${listThietbi}">
+									<c:if test="${matb.equals(tb.matb) == false }">
+										<option value="${tb.matb}">${tb.ten}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</td>
+						<td>
+							<input type="number" min="1" name="soluongnhap"
+								value="${ct_pn.soluongnhap}" class=" form-control" />
+						</td>
+						<td>
+							<input type="number" min="0" step="0.01" name="dongia"
+								value="${ct_pn.dongia}" class=" form-control" />
+						</td>
+						<td>
+							<a class="material-icons text-info btn-close-item  text-right"
+								type="button"> delete_sweep </a>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th></th>
+					<th></th>
+					<th class="tongcong"></th>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="row form-group them-tb-nhap">
+			<button type='button' class="form-control text-info ">
+				<span class="material-icons text-info">add_circle_outline</span>
+				Thêm thiết bị nhập
+			</button>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+		<input type="hidden" name="trangthai" />
+		<button type="submit" class="btn btn-primary luu-btn">Lưu tạm</button>
+		<button type="submit" class="btn btn-success them-btn">Xác
+			Nhận</button>
+	</div>
+</body>
+</html>
