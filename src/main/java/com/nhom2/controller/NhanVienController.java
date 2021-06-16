@@ -22,10 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nhom2.DAO.AccountDAO;
 import com.nhom2.DAO.NhanVienDAO;
+import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.ACCOUNT;
 import com.nhom2.entity.NHANVIEN;
 import com.nhom2.entity.PHANQUYEN;
+import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
 @Transactional
@@ -36,6 +38,18 @@ public class NhanVienController {
 	@Autowired
 	SessionFactory factory;
 
+	public String getRandomMa() {
+		List <NHANVIEN> list = new NhanVienDAO().getAll(factory);
+		int ma = 1001;
+		for (NHANVIEN elem : list) {
+			String temp = "nv"+ma;
+			if(elem.getManv().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "nv" + ma;
+	}
+	
 	@ModelAttribute("nhanvien_moi")
 	public NHANVIEN nhanvien_moi() {
 		return new NHANVIEN();
@@ -58,6 +72,7 @@ public class NhanVienController {
 	@RequestMapping(value = "qlnhanvien", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listNhanVien", new NhanVienDAO().getAll(factory));
+		model.addAttribute("maNhanVien",getRandomMa());
 		return "nhanvien/ds_nhanvien";
 	}
 
@@ -90,6 +105,7 @@ public class NhanVienController {
 				account_moi.setGmail(gmail);
 				account_moi.setPassword(password);
 				PHANQUYEN qp = new PHANQUYEN();
+				//Do chỉ có 1 admin nên chỗ này sẽ set là staff. Sau này thêm nhiều quản lí thì sẽ thêm tính năng setMapq
 				qp.setMapq("staff");
 				account_moi.setPhanquyen(qp);
 				account_moi.setSdt(sdt);
@@ -141,8 +157,15 @@ public class NhanVienController {
 			ACCOUNT account_sua = nhanvien_sua.getAcc();
 			account_sua.setGmail(nhanvien_sua.getAcc().getGmail());
 			account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
+			
 			PHANQUYEN qp = new PHANQUYEN();
-			qp.setMapq("staff");
+
+			if(nhanvien_sua.getIsadmin().compareTo("yes")==0) {
+				qp.setMapq("admin");
+			}
+			else {
+				qp.setMapq("staff");
+			}
 			account_sua.setPhanquyen(qp);
 			account_sua.setSdt(nhanvien_sua.getAcc().getSdt());
 			account_sua.setUsername(nhanvien_sua.getAcc().getUsername());

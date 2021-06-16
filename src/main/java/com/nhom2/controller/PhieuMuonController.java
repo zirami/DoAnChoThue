@@ -268,6 +268,7 @@ public class PhieuMuonController {
 		if (result.hasErrors())
 			return home(model, session,rq);
 
+		//kiểm tra ngày trả có hợp lệ hay không.
 		if(phieumuon_sua.getThoigiantra()!=null) {
 		if(phieumuon_sua.tinhKhoangCachHaiNgay_Date(phieumuon_sua.getThoigianmuon(), phieumuon_sua.getThoigiantra()) <= 0) {
 			model.addAttribute("phieumuon_sua",new PHIEUMUON());
@@ -279,6 +280,13 @@ public class PhieuMuonController {
 		Boolean result1 = false;
 		// lấy phiếu mua bằng mã của phiếu mua sửa.
 		PHIEUMUON phieumuon_cansua = new PhieuMuonDAO().getById(phieumuon_sua.getMapm(), factory);
+		
+		//Kiểm tra ngày trả đã có trong database chưa, nếu có rồi thì ko cho chỉnh sửa.
+		if(phieumuon_cansua.getThoigiantra()!=null) {
+			model.addAttribute("phieumuon_sua",new PHIEUMUON());
+			model.addAttribute("update", false);
+			return home(model, session,rq);
+		}
 
 		List<CT_PHIEUMUON> backup = new ArrayList<>();
 		// Xóa hết các ct phiếu mua hiện tại
@@ -426,7 +434,7 @@ public class PhieuMuonController {
 		
 		for(PHIEUMUON elem : list) {
 			if(elem.getThoigiantra()==null) {
-				int songay = elem.laySoNgay_Date( elem.getThoigianmuon() );
+				double songay = elem.laySoNgay_Date( elem.getThoigianmuon() );
 				if(songay>=3) {	
 					String from = "thanhthang32k@gmail.com";
 					String to = elem.getNm().getGmail();

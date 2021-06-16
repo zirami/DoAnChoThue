@@ -47,32 +47,25 @@ h4 {
 						</div>
 
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="phieumuon" class="btn bg-purple text-yellow"
-								type="button">Làm mới </a> <a href="#" id="insert_btn"
-								class="btn bg-purple text-yellow" data-toggle="modal"
-								data-target="#bd-phieumuondatra-modal-lg" type="button">Phiếu
-								mượn đã trả</a> <a href="#" id="insert_btn"
-								class="btn bg-purple text-yellow" data-toggle="modal"
-								data-target="#bd-phieumuonqua3ngay-modal-lg" type="button">Phiếu
-								mượn quá hạn</a> <a href="#" id="insert_btn"
-								class="btn bg-purple text-yellow" data-toggle="modal"
-								data-target="#bd-insert-modal-lg" type="button">Thêm phiếu
-								mượn </a>
+							<a href="phieumuon" class="btn btn-info bg-purple text-yellow" type="button">Làm mới </a> 
+							<a href="#"  class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-phieumuondatra-modal-lg" type="button">Phiếu mượn đã trả</a> 
+							<a href="#"  class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-phieumuonqua3ngay-modal-lg" type="button">Phiếu mượn quá hạn</a>
+							<a href="#" id="insert_btn" class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-insert-modal-lg" type="button">Thêm phiếu mượn </a>
 						</div>
 					</div>
 				</div>
-				<div class="page-body">
+				<div class="page-body" >
 					<!-- Hiển thị danh sách người mượn -->
 					<div class="card-box md-30">
 						<hr>
 						<div>
 							<table
-								class="table nowrap  dataTable collapsed table-hover table-boder-factor"
-								style="width: 100%" id="myTable" role="grid">
+								class="table nowrap  dataTable collapsed table-hover table-boder-factor" id="myTable" role="grid" 
+								style="width: 100%;">
 
 								<thead class="table-info">
 									<tr>
-										<th class="table-plus datatable-nosort">Mã phiếu mượn</th>
+										<th>Mã phiếu mượn</th>
 										<th>Người mượn</th>
 										<th>Nhân viên</th>
 										<th>Phòng</th>
@@ -99,7 +92,7 @@ h4 {
 												<td class="pull-right">
 													<div class="row clearfix btn-list">
 														<form action="phieumuon/edit/${phieumuon.mapm}">
-															<button class="btn btn-info bg-purple" type="submit"
+															<button class="btn btn-info bg-edit" type="submit"
 																data-toggle="tooltip" data-placement="top" title="Sửa">
 																<span class="material-icons ">edit</span>
 															</button>

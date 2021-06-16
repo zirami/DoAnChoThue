@@ -146,15 +146,15 @@ public class PHIEUMUON {
 	    return date1;
 	}
 	
-	public int tinhKhoangCachHaiNgay_Date(Date d1,Date d2) { 
-		int result = 0;
-		result = (int) (d2.getTime()-d1.getTime());
+	public double tinhKhoangCachHaiNgay_Date(Date d1,Date d2) { 
+		double result = 0;
+		result = (double) (d2.getTime()-d1.getTime());
 		result = result / (24 * 60 * 60 * 1000) + 1;
 		return result;
 	}
 	
-	public int laySoNgay_Date(Date d1) {
-		 Date date = new Date();  
+	public double laySoNgay_Date(Date d1) {
+		Date date = new Date();  
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 	    String strDate= formatter.format(date);  
 	    Date date1 = null;
@@ -165,13 +165,13 @@ public class PHIEUMUON {
 			e.printStackTrace();
 		}
 	    
-		int result = 0;
-		result = (int) (date1.getTime()-d1.getTime());
+		double result = 0;
+		result = (double) (date1.getTime()-d1.getTime());
 		result = result / (24 * 60 * 60 * 1000) + 1;
 		return result;
 	}
 	
-	public int laySoNgay(String t1) {
+	public double laySoNgay(String t1) {
 		 Date date = new Date();  
  	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 	    String strDate= formatter.format(date);  
@@ -190,8 +190,8 @@ public class PHIEUMUON {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int result = 0;
-		result = (int) (date1.getTime()-date2.getTime());
+		double result = 0;
+		result = (double) (date1.getTime()-date2.getTime());
 		result = result / (24 * 60 * 60 * 1000) + 1;
 		return result;
 	}

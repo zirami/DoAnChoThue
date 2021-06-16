@@ -42,8 +42,8 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-						<a href="qlnhanvien" class="btn bg-purple text-yellow" type="button">Làm mới</a> 
-							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
+						<a href="qlnhanvien" class="btn btn-info bg-purple text-yellow" type="button">Làm mới</a> 
+							<a href="#" id="insert_btn" class="btn btn-info bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">Thêm nhân viên </a>
 						</div>
@@ -76,10 +76,10 @@
 									<tr>
 										<td><img src="resources/files/${nhanvien.hinh }" style="width: 100px; height: 100px"></td>
 										<td class="table-plus">${nhanvien.manv}</td>
-										<td>${nhanvien.ho}  ${nhanvien.ten}</td>
+										<td><p style="width: 170px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nhanvien.ho}  ${nhanvien.ten}</p></td>
 										<td>${nhanvien.gioitinh}</td>
 										<td>${nhanvien.ngaysinh}</td>
-										<td>${nhanvien.diachi}</td>
+										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${nhanvien.diachi}</p></td>
 										<td>${nhanvien.cmnd}</td>
 										<td>${nhanvien.ql.maql}
 										<td>${nhanvien.acc.username}</td>
@@ -87,7 +87,7 @@
 											<div class="row clearfix btn-list">
 												<!-- 												<div class=""> -->
 												<form action="qlnhanvien/edit/${nhanvien.manv}">
-													<button class="btn bg-purple text-white" type="submit"
+													<button class="btn btn-info bg-edit text-white" type="submit"
 														data-toggle="tooltip" data-placement="top" title="Sửa">
 														<i class="material-icons">edit</i>
 													</button>
@@ -198,8 +198,10 @@
 								<label class="col-sm-12 col-md-3 col-form-label">Mã nhân viên</label>
 								<div class="col-sm-12 col-md-8">
 <%-- 									<form:errors path="manv" /> --%>
-									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên" required="required"/>
+								<input class="form-control" value="${maNhanVien}" readonly />
+
+								<form:input class="form-control" type="text" path="manv" value="${maNhanVien }"
+										placeholder="Nhập mã nhân viên" required="required" style="display: none"/>
 								</div>
 							</div>
 							<div class="form-group row">
