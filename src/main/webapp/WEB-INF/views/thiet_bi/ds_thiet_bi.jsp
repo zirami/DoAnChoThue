@@ -39,11 +39,10 @@
 								<input type="file" hidden="true" name="file" /> <input
 									type="submit" hidden="true">
 							</form>
-							<a href="thiet-bi" class="btn bg-purple text-yellow"
-								type="button">Làm mới </a>
-							<button class="btn bg-purple text-yellow import-excel">Import
+							<a href="thiet-bi" class="btn btn-info bg-purple text-yellow" type="button">Làm mới </a>
+							<button class="btn btn-info bg-purple text-yellow import-excel">Import
 								Excel</button>
-							<a href="#" id="insert_btn" class="btn bg-purple text-yellow"
+							<a href="#" id="insert_btn" class="btn  btn-info bg-purple text-yellow"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">THÊM THIẾT BỊ MỚI </a>
 							<!-- <a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
@@ -74,15 +73,15 @@
 										<td><img src="resources/files/${thietbi.hinh }"
 											style="width: 100px; height: 100px"></td>
 										<td class="table-plus">${thietbi.matb}</td>
-										<td>${thietbi.ten}</td>
+										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${thietbi.ten}</p></td>
 										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
-										<td>${thietbi.ghichu}</td>
+										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${thietbi.ghichu}</p></td>
 										<td class="pull-right">
 											<div class="row clearfix">
 												<div class="col-sm-12 col-md-6">
 													<form action="thiet-bi/edit/${thietbi.matb}">
-														<button class="btn bg-purple text-white" type="submit"
+														<button class="btn  btn-info bg-edit text-white" type="submit"
 															data-toggle="tooltip" data-placement="top" title="Sửa">
 															<i class="material-icons">edit</i>
 														</button>
@@ -158,8 +157,11 @@
 										<label class="col-sm-12 col-md-3 col-form-label">Mã
 											thiết bị</label>
 										<div class="col-sm-12 col-md-9">
-											<form:input path="matb" class="form-control" type="text"
-												placeholder="Nhập mã thiết bị" />
+											<input class="form-control" name="matb_temp"
+												value="${maThietBi}" readonly />
+											<form:input class="form-control" type="text" path="matb"
+												value="${maThietBi}" placeholder="Nhập mã thiết bị"
+												required="required" style="display: none" />
 											<form:errors path="matb" />
 										</div>
 									</div>
@@ -248,8 +250,10 @@
 										<label class="col-sm-12 col-md-3 col-form-label">Mã
 											thiết bị</label>
 										<div class="col-sm-12 col-md-9">
-											<form:input path="matb" class="form-control" type="text"
-												placeholder="Nhập mã thiết bị" />
+											<input class="form-control" value="${thietbi_sua.matb}"
+												readonly />
+											<form:input class="form-control" type="text" path="matb"
+												placeholder="Nhập mã thiết bị" style="display: none" />
 											<form:errors path="matb" />
 										</div>
 									</div>

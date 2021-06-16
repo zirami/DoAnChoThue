@@ -1,21 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/loadcss.jsp"%>
-<div class="left-side-bar">
-	<div class="brand-logo">
-		<a href="home"> <img
-			src="resources/vendors/images/logo-inside.png" alt=""
-			class="dark-logo"> <img
-			src="resources/vendors/images/logo-inside.png" alt=""
-			class="light-logo">
-		</a>
+<div class="left-side-bar" >
+	<div class="brand-logo bg-info">
+		<img src="resources/vendors/images/logo.png" alt="" style="width: 70%;margin-left: 35px; margin-top: 7px;">
 		<div class="close-sidebar" data-toggle="left-sidebar-close">
 			<i class="ion-close-round"></i>
 		</div>
 	</div>
-	<div class="menu-block customscroll">
+	<div >
 		<div class="sidebar-menu">
-			<ul id="accordion-menu">
+			<ul id="accordion-menu" >
 
 				<li class="dropdown" id="qlpm" style="display: none">
 					<div class="dropdown-divider"></div> <a href="phieumuon"
@@ -78,7 +73,7 @@
 					class="dropdown-toggle no-arrow" data-toggle="tooltip"
 					data-placement="right" title=""
 					data-original-title="QUẢN LÍ NHÂN VIÊN"> <span
-						class="micon dw dw-name"></span> <span class="text-yellow"">QUẢN
+						class="micon dw dw-name"></span> <span class="text-yellow">QUẢN
 							LÍ NHÂN VIÊN</span>
 				</a>
 				</li>

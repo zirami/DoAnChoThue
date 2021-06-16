@@ -272,6 +272,7 @@ p {
 .text-light-purple{color: #a683eb;}
 .bg-orange{background-color: #f5956c;}
 .bg-purple{background-color: #432874;}
+.bg-edit{background-color: #167efb;}
 .bg-table{background-color: #0d503c;}
 .bg-red{background-color: #58151c;}
 .text-orange{color: #f5956c;}
@@ -281,6 +282,7 @@ p {
 .text-white{color: #000000;}
 .text-blue-50{color: #62a8ea;}
 .text-red-50{color: #e14e50;}
+.text-purple{color: #432874;}
 .mCSB_inside > .mCSB_container{margin-right: 0;}
 .border-radius-0{
 	-webkit-border-radius: 0px;
@@ -1389,7 +1391,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 }
 .sidebar-menu .dropdown-toggle{
 	display: block;
-	padding: 18px 15px 18px 67px;
+	padding: 10px 10px 10px 35px;
 	font-size: 16px;
 	color: #ffffff;
 	font-weight: 300;
@@ -1423,7 +1425,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 
 .sidebar-menu .dropdown-toggle:hover, .sidebar-menu .show > .dropdown-toggle{
 	background: rgba(0, 0, 0, .4);
-	color: #69daf2;
+	color: #432874;
 }
 .sidebar-menu .dropdown-toggle .micon{
 	position: absolute;
@@ -1434,7 +1436,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #69daf2;
+/* 	color: #69daf2; */
+	color: #432874;
 	background-color: rgba(255,255,255,0);
 	top: 50%;
 	text-align: center;

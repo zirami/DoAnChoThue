@@ -62,6 +62,17 @@ public class NHANVIEN {
 	@Column(name = "HINH")
 	private String hinh;
 	
+	@Column(name = "ISADMIN")
+	private String isadmin;
+	
+	public String getIsadmin() {
+		return isadmin;
+	}
+
+	public void setIsadmin(String isadmin) {
+		this.isadmin = isadmin;
+	}
+
 	public String getHinh() {
 		return hinh;
 	}

@@ -29,8 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.nhom2.DAO.LoaiThietBiDAO;
+import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.LOAITHIETBI;
+import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
 @Transactional
@@ -45,9 +47,22 @@ public class ThietbiController {
 	@Autowired
 	SessionFactory factory;
 
+	public String getRandomMa() {
+		List <THIETBI> list = new ThietBiDAO().getAll(factory);
+		int ma = 1001;
+		for (THIETBI elem : list) {
+			String temp = "tb"+ma;
+			if(elem.getMatb().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "tb" + ma;
+	}
+	
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listThietbi", new ThietBiDAO().getAll(factory));
+		model.addAttribute("maThietBi",getRandomMa());
 		return "thiet_bi/ds_thiet_bi";
 	}
 

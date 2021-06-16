@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhom2.DAO.NguoiMuonDAO;
+import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.entity.NGUOIMUON;
+import com.nhom2.entity.PHIEUMUON;
 
 @Transactional
 @Controller
@@ -34,6 +36,18 @@ public class NguoimuonController {
 //		return new NguoiMuonDAO().getAll(factory);
 //	}
 
+	public String getRandomMa() {
+		List <NGUOIMUON> list = new NguoiMuonDAO().getAll(factory);
+		int ma = 1001;
+		for (NGUOIMUON elem : list) {
+			String temp = "nm"+ma;
+			if(elem.getManm().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "nm" + ma;
+	}
+	
 	@ModelAttribute("nguoimuon_moi")
 	public NGUOIMUON nguoimuon_moi() {
 		return new NGUOIMUON();
@@ -65,6 +79,7 @@ public class NguoimuonController {
 	@RequestMapping(value = "qlnguoimuon", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listNguoiMuon", new NguoiMuonDAO().getAll(factory));
+		model.addAttribute("maNguoiMuon",getRandomMa());
 		return "nguoimuon/ds_nguoimuon";
 	}
 
