@@ -78,11 +78,15 @@
 					<div class="pb-20 container">
 						<c:set var="PM" value="Phiếu Mượn" />
 						<c:set var="TB" value="Thiết Bị" />
+						<c:set var="LNM" value="Loại Người Mượn" />
 						<c:if test="${loaiThongke.equals(PM) }">
 							<%@include file="/WEB-INF/views/thong_ke/thongke_phieumuon.jsp"%>
 						</c:if>
 						<c:if test="${loaiThongke.equals(TB) }">
 							<%@include file="/WEB-INF/views/thong_ke/thongke_thietbi.jsp"%>
+						</c:if>
+						<c:if test="${loaiThongke.equals(LNM) }">
+							<%@include file="/WEB-INF/views/thong_ke/thongke_nguoimuon.jsp"%>
 						</c:if>
 					</div>
 				</div>
@@ -138,25 +142,26 @@
 		    }
 		});
 		
-		if(loaiThongke == 'Người Mượn')
-		Highcharts.chart('chart', {
-			title: {
-				text: 'Thống kê ' + loaiThongke
-			},
-			xAxis: {
-				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			},
-			series: [{
-				type: 'pie',
-				name: 'Lượt mượn',
-				keys: ['name', 'y', 'selected', 'sliced'],
-				data: {
+		if(loaiThongke == 'Loại Người Mượn')
+			Highcharts.chart('chart', {
+				data : {
 					table : 'myTable',
 					switchRowsAndColumns : false
 				},
-				showInLegend: true
-			}]
-		});
+				chart : {
+					type : 'pie'
+				},
+				colors: ['#00ffaa', '#007bff', '#bababa'],
+				title : {
+					text : 'Thống kê ' + loaiThongke
+				},
+				tooltip: {
+			        formatter: function () {
+			            return '<b>' + this.series.name + ': '+ this.point.y+' </b> '
+			                
+			        }
+			    }
+			});
 	</script>
 	<!-- Date range picker -->
 	<script>

@@ -21,6 +21,10 @@
 					<th>${kq[1]}</th>
 				</tr>
 			</c:forEach>
+			<tr>
+				<th>Khác</th>
+				<th>69</th>
+			</tr>
 		</tbody>
 	</table>
 </body>
