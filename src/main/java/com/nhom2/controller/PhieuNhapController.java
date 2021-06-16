@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.PhieuNhapDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.ACCOUNT;
 import com.nhom2.entity.CT_PHIEUNHAP;
 import com.nhom2.entity.NHANVIEN;
+import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.PHIEUNHAP;
 import com.nhom2.entity.THIETBI;
 
@@ -35,7 +37,7 @@ import com.nhom2.entity.THIETBI;
 public class PhieuNhapController {
 	@Autowired
 	SessionFactory factory;
-
+	
 	@ModelAttribute("listThietbi")
 	public List<THIETBI> getListTB() {
 		return new ThietBiDAO().getAll(factory);
@@ -165,7 +167,9 @@ public class PhieuNhapController {
 		PHIEUNHAP phieunhap_sua = new PhieuNhapDAO().getById(id, factory);
 		model.addFlashAttribute("phieunhap_sua", phieunhap_sua);
 
-		model.addFlashAttribute("form_edit", true);
+		if (phieunhap_sua.getTrangthai().equals("daXacNhan"))
+			model.addFlashAttribute("form_info", true);
+		else model.addFlashAttribute("form_edit", true);
 		return new RedirectView("../../phieu-nhap");
 	}
 
@@ -198,7 +202,7 @@ public class PhieuNhapController {
 		if (phieunhap_sua.getTrangthai().equals("daXacNhan")) {
 			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
 				THIETBI thietbi_nhap = ct_pn.getThietbi();
-				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
+				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
 				if (!kq)
 					break;
@@ -219,5 +223,10 @@ public class PhieuNhapController {
 			return "false";
 		String kq = new PhieuNhapDAO().delete(factory, phieunhap).toString();
 		return kq;
+	}
+	@RequestMapping(value = "phieu-nhap/getSoluongton/{matb}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String getSoluongton(@PathVariable String matb) throws Exception {
+		THIETBI thietbi = new ThietBiDAO().getById2nhap(matb, factory);
+		return thietbi.getSoluong().toString();
 	}
 }
