@@ -342,7 +342,7 @@ h4 {
 											<form:select class="selectpicker form-control"
 												path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
 												required="required">
-												<form:option value="" label="Chọn nhân viên"></form:option>
+												<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option>
 												<form:options items="${listNhanViens}" itemValue="manv"
 													itemLabel="ten"></form:options>
 											</form:select>
