@@ -113,6 +113,7 @@ public class LoginController {
 			
 			// Cho Đại người mượn là staff
 			session.setAttribute("role", "staff");
+			session.setAttribute("account_login", account_db);
 			return "redirect: qlnguoimuon";
 		}
 		

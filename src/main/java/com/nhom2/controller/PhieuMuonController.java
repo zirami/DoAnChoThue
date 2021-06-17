@@ -128,7 +128,7 @@ public class PhieuMuonController {
 		session = request.getSession();
 		ACCOUNT account = (ACCOUNT) session.getAttribute("account_login");
 		
-		model.addAttribute("acount_login",account);
+		model.addAttribute("account_login",account);
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
 		model.addAttribute("maphieumuon",getRandomMa());
 		model.addAttribute("indexValue", 0);
