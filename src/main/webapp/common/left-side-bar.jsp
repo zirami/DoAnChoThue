@@ -3,7 +3,7 @@
 <%@include file="/common/loadcss.jsp"%>
 <div class="left-side-bar" >
 	<div class="brand-logo">
-<!-- 		<img src="resources/vendors/images/hinh6.jpg" alt="" style="width: 70%;margin-left: 35px; margin-top: 7px;"> -->
+		<img src="resources/vendors/images/logo-nhom2.png" alt="" style="width: 70%;margin-left: 35px; margin-top: 7px;">
 <!-- 		<img src="resources/files/hinh5.jpg"> -->
 		<div class="close-sidebar" data-toggle="left-sidebar-close">
 			<i class="ion-close-round"></i>

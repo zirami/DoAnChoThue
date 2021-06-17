@@ -121,7 +121,7 @@ public class PhieuNhapController {
 	public RedirectView insert(@ModelAttribute("phieunhap_them") @Valid PHIEUNHAP phieunhap_them, BindingResult result,
 			@RequestParam("matb") List<String> matbs, @RequestParam("soluongnhap") List<Integer> soluongnhaps,
 			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model, HttpSession session) {
-
+		String LOCKED = "locked";
 		// Mặc định là thất bại
 		Boolean kq = false;
 
@@ -146,6 +146,7 @@ public class PhieuNhapController {
 		if (phieunhap_them.getTrangthai().equals("daXacNhan")) {
 			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
 				THIETBI thietbi_nhap = ct_pn.getThietbi();
+				thietbi_nhap.setTrangthai(LOCKED);
 				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
 				if (!kq)
@@ -180,6 +181,7 @@ public class PhieuNhapController {
 			@RequestParam("matb") List<String> matbs, @RequestParam("soluongnhap") List<Integer> soluongnhaps,
 			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model, HttpSession session) {
 		final String choXacNhan = "choXacNhan";
+		String LOCKED = "locked";
 		// Mặc định là thất bại
 		Boolean kq = false;
 
@@ -205,6 +207,7 @@ public class PhieuNhapController {
 		if (phieunhap_sua.getTrangthai().equals("daXacNhan")) {
 			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
 				THIETBI thietbi_nhap = ct_pn.getThietbi();
+				thietbi_nhap.setTrangthai(LOCKED);
 				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
 				if (!kq)

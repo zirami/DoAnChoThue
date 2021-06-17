@@ -164,6 +164,7 @@ public class PhieuMuonController {
 		if (demValue != 0) {
 
 			new PhieuMuonDAO().save(factory, phieumuon_moi);
+			
 		}
 		else {
 //			model.addAttribute("phieumuon_moi",new PHIEUMUON());
@@ -224,10 +225,11 @@ public class PhieuMuonController {
 			
 		}
 		
-
+		String LOCKED = "locked";
 		for (THIETBI ele : list) {
 			CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
-			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);			
+			thietbii.setTrangthai(LOCKED);
 			ct_tb.setThietbi_muon(thietbii);
 			ct_tb.setSoluong(ele.getSoluong());
 			ct_tb.setPhieumuon(phieumuon_moi);
@@ -380,10 +382,11 @@ public class PhieuMuonController {
 			
 		}
 		
-
+		String LOCKED = "locked";
 		for (THIETBI ele : list) {
 			CT_PHIEUMUON ct_tb = new CT_PHIEUMUON();
 			THIETBI thietbii = new ThietBiDAO().getById(ele.getMatb(), factory);
+			thietbii.setTrangthai(LOCKED);
 			ct_tb.setThietbi_muon(thietbii);
 			ct_tb.setSoluong(ele.getSoluong());
 			ct_tb.setPhieumuon(phieumuon_cansua);
