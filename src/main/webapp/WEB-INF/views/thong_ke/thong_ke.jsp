@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
-<body>
+<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -23,7 +23,7 @@
 					<div class="row">
 						<div class="col-2">
 							<div class="title">
-								<h4>Thống Kê</h4>
+								<h3 class="text-purple">Thống Kê</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">

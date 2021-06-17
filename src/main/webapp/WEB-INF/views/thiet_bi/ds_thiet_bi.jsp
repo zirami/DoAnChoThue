@@ -9,7 +9,7 @@
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
 <%@include file="/common/loadcss.jsp"%>
 </head>
-<body>
+<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -20,7 +20,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Danh sách thiết bị</h4>
+								<h3 class="text-purple">Danh sách thiết bị</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
@@ -39,10 +39,10 @@
 								<input type="file" hidden="true" name="file" /> <input
 									type="submit" hidden="true">
 							</form>
-							<a href="thiet-bi" class="btn btn-info bg-purple text-yellow" type="button">Làm mới </a>
-							<button class="btn btn-info bg-purple text-yellow import-excel">Import
+							<a href="thiet-bi" class="btn btn-info" type="button">Làm mới </a>
+							<button class="btn btn-info import-excel">Import
 								Excel</button>
-							<a href="#" id="insert_btn" class="btn  btn-info bg-purple text-yellow"
+							<a href="#" id="insert_btn" class="btn  btn-info"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">THÊM THIẾT BỊ MỚI </a>
 							<!-- <a href="phieu-nhap" class="btn btn-primary" target="_blank" type="button">NHẬP
@@ -134,7 +134,7 @@
 					<div class="pd-20 card-box mb-30">
 						<div class="clearfix">
 							<div class="pull-left">
-								<h4 class="text-blue h4">Thêm thiết bị</h4>
+								<h3 class="text-info h3">Thêm thiết bị</h3>
 								<p class="mb-30">[!] Vui lòng điền đầy đủ thông tin</p>
 							</div>
 						</div>

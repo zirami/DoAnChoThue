@@ -16,7 +16,7 @@ h4 {
 <%@include file="/common/loadcss.jsp"%>
 
 </head>
-<body id="body">
+<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
@@ -33,24 +33,24 @@ h4 {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h3>Danh sách phiếu mượn</h3>
+								<h3 class="text-purple">Danh sách phiếu mượn</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="phieumuon">phieumuon</a>
 									</li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
+									<li class="breadcrumb-item active text-primary" aria-current="page">DataTable</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
 
-						<div class="col-md-6 col-sm-12 text-right">
-							<a href="phieumuon" class="btn btn-info bg-purple text-yellow" type="button">Làm mới </a> 
-							<a href="#"  class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-phieumuondatra-modal-lg" type="button">Phiếu mượn đã trả</a> 
-							<a href="#"  class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-phieumuonqua3ngay-modal-lg" type="button">Phiếu mượn quá hạn</a>
-							<a href="#" id="insert_btn" class="btn btn-info bg-purple text-yellow" data-toggle="modal" data-target="#bd-insert-modal-lg" type="button">Thêm phiếu mượn </a>
+						<div class="col-md-6 col-sm-12 text-right" >
+							<a href="phieumuon" class="btn btn-info   type="button"  >Làm mới </a> 
+							<a href="#"  class="btn btn-info " data-toggle="modal" data-target="#bd-phieumuondatra-modal-lg" type="button" >Phiếu mượn đã trả</a> 
+							<a href="#"  class="btn btn-info " data-toggle="modal" data-target="#bd-phieumuonqua3ngay-modal-lg" type="button" >Phiếu mượn quá hạn</a>
+							<a href="#" id="insert_btn" class="btn btn-info" data-toggle="modal" data-target="#bd-insert-modal-lg" type="button" >Thêm phiếu mượn </a>
 						</div>
 					</div>
 				</div>
@@ -60,8 +60,7 @@ h4 {
 						<hr>
 						<div>
 							<table
-								class="table nowrap  dataTable collapsed table-hover table-boder-factor" id="myTable" role="grid" 
-								style="width: 100%;">
+								class="table nowrap  dataTable collapsed table-hover table-boder-factor" id="myTable" role="grid" >
 
 								<thead class="table-info">
 									<tr>

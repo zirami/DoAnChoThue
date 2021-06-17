@@ -17,7 +17,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -28,7 +28,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Danh sách thiết bị</h4>
+								<h3 class="text-purple">Danh sách thiết bị</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
@@ -42,7 +42,7 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#modal_pn_them" class="btn btn-primary"
+							<a href="#modal_pn_them" class="btn btn-info"
 								data-toggle="modal" type="button">NHẬP THIẾT BỊ</a>
 							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn"></a>
@@ -148,7 +148,7 @@
 			<form action="phieu-thanhly" method="post" class="modal-content">
 				<div class="modal-body">
 					<div class="invoice-header text-center">
-						<h4 class="text-blue h4">THÊM PHIẾU NHẬP</h4>
+						<h4 class="text-info h4">THÊM PHIẾU NHẬP</h4>
 					</div>
 					<!-- Nhập thông tin cơ bản phiếu nhập -->
 					<div class=" row">
