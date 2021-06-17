@@ -38,6 +38,8 @@ public class PhieuThanhLyController {
 	@Autowired
 	SessionFactory factory;
 	
+	public String msg = "Thao tác thất bại";
+	
 	final String daXacNhan = "daXacNhan";
 	final String choXacNhan = "choXacNhan";
 
@@ -62,12 +64,15 @@ public class PhieuThanhLyController {
 	}
 
 	@ModelAttribute("nv")
-	public NHANVIEN getNv(HttpSession session) {
+	public NHANVIEN getNv(HttpSession session, ModelMap model) {
 		ACCOUNT account = (ACCOUNT) session.getAttribute("account_db");
 		System.out.println("username: " + account.getUsername());
 		// return new NhanVienDAO().getByUserName(account.getUsername(), factory);
 		if (account.getNhanviens().isEmpty())
 			return null;
+		if (account.getNhanviens().get(0).getManv().equals("admin")) 
+			model.addAttribute("admin",true);
+		model.addAttribute("current_user",account.getNhanviens().get(0).getManv());
 		return account.getNhanviens().get(0);
 	}
 
@@ -80,8 +85,10 @@ public class PhieuThanhLyController {
 
 	public List<CT_PHIEUTHANHLY> removeDuplicate(List<String> matbs, List<Integer> soluongnhaps, List<Double> dongias,
 			PHIEUTHANHLY phieuthanhly) {
-		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1)
+		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1) {
+			msg += msg.isBlank()?", Vui lòng nhập đầy đủ chi tiết thiết bị !!!":"Vui lòng nhập đầy đủ chi tiết thiết bị !!!";
 			return null;
+		}
 
 		boolean kq = true;
 
@@ -122,8 +129,11 @@ public class PhieuThanhLyController {
 			listCt_ptl.add(ct_ptl);
 		}
 
-		if (!kq)
+		if (!kq) {
+			msg += ", Số lưọng quá lớn !!!";
 			return null;
+		}
+			
 		return listCt_ptl;
 	}
 
@@ -141,6 +151,9 @@ public class PhieuThanhLyController {
 		if (result.hasErrors()) {
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
+			msg += ", "+result.getAllErrors();
+			model.addFlashAttribute("msg", msg);
+			
 			return new RedirectView("phieu-thanhly");
 		}
 
@@ -166,8 +179,7 @@ public class PhieuThanhLyController {
 
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
-
-		System.out.println(phieuthanhly_them);
+		model.addFlashAttribute("msg", msg);
 
 		return new RedirectView("phieu-thanhly");
 	}
@@ -200,6 +212,8 @@ public class PhieuThanhLyController {
 		if (result.hasErrors()) {
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
+			msg += ", "+result.getAllErrors();
+			model.addFlashAttribute("msg", msg);
 			return new RedirectView("../phieu-thanhly");
 		}
 
@@ -212,6 +226,7 @@ public class PhieuThanhLyController {
 			if (!kq) {
 				// Hiển thị thông báo kết quả
 				model.addFlashAttribute("notify", kq);
+				model.addFlashAttribute("msg", msg);
 				return new RedirectView("../phieu-thanhly");
 			}
 
@@ -230,7 +245,7 @@ public class PhieuThanhLyController {
 
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
-
+		model.addFlashAttribute("msg", msg);
 		return new RedirectView("../phieu-thanhly");
 	}
 

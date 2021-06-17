@@ -120,7 +120,7 @@ public class PhieuNhapController {
 	@RequestMapping(value = "phieu-nhap", method = RequestMethod.POST)
 	public RedirectView insert(@ModelAttribute("phieunhap_them") @Valid PHIEUNHAP phieunhap_them, BindingResult result,
 			@RequestParam("matb") List<String> matbs, @RequestParam("soluongnhap") List<Integer> soluongnhaps,
-			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model) {
+			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model, HttpSession session) {
 
 		// Mặc định là thất bại
 		Boolean kq = false;
@@ -138,6 +138,7 @@ public class PhieuNhapController {
 		// Có đủ dữ liệu thì mới thêm
 		if (listCt_pn != null) {
 			phieunhap_them.setCt_phieunhaps(listCt_pn);
+			phieunhap_them.setNhanvien(getNv(session));
 			phieunhap_them.setThoigiannhap(Date.valueOf(LocalDate.now()));
 			kq = new PhieuNhapDAO().saveOrUpdate(factory, phieunhap_them);
 		}
@@ -177,7 +178,7 @@ public class PhieuNhapController {
 	@RequestMapping(value = "phieu-nhap/update", method = RequestMethod.POST)
 	public RedirectView update(@ModelAttribute("phieunhap_them") @Valid PHIEUNHAP phieunhap_sua, BindingResult result,
 			@RequestParam("matb") List<String> matbs, @RequestParam("soluongnhap") List<Integer> soluongnhaps,
-			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model) {
+			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model, HttpSession session) {
 		final String choXacNhan = "choXacNhan";
 		// Mặc định là thất bại
 		Boolean kq = false;
@@ -185,7 +186,7 @@ public class PhieuNhapController {
 		// Kiểm tra PhieuNhap nhận về có đủ dữ liệu cần không
 		// Kiểm tra xem trạng thái PhieuNhap != chờ xác nhận thì không cho sửa
 		// || !phieunhap_sua.getTrangthai().equals(choXacNhan)
-		if (result.hasErrors()) {
+		if (result.hasErrors() || phieunhap_sua.getTrangthai().equals("daXacNhan")) {
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
 			return new RedirectView("../phieu-nhap");
@@ -195,6 +196,8 @@ public class PhieuNhapController {
 		// Có đủ dữ liệu thì mới thêm
 		if (listCt_pn != null) {
 			phieunhap_sua.setCt_phieunhaps(listCt_pn);
+			phieunhap_sua.setNhanvien(getNv(session));
+			phieunhap_sua.setThoigiannhap(Date.valueOf(LocalDate.now()));
 			kq = new PhieuNhapDAO().update(factory, phieunhap_sua);
 		}
 

@@ -19,152 +19,167 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "NGUOIMUON")
 public class NGUOIMUON {
-		@Id
+	@Id
 //		@NotNull(message = "Trường này không được bỏ trống!")
 //		@NotBlank(message = "Vui lòng điền vào trường này !")
-		@Column(name = "MANM")
-		private String manm;
-		
+	@Column(name = "MANM")
+	private String manm;
+
 //		@NotBlank(message = "Trường này không được bỏ trống")
-		@Column(name = "HO")
-		private String ho;
-		
+	@Column(name = "HO")
+	private String ho;
+
 //		@NotBlank(message = "Trường này không được bỏ trống")
-		@Column(name = "TEN")
-		private String ten;
+	@Column(name = "TEN")
+	private String ten;
 
 //		@NotNull(message = "Trường này không được bỏ trống!")
 //		@NotBlank(message = "Vui lòng điền vào trường này !")
-		@Column(name = "GIOITINH")
-		private String gioitinh;
-		
-		@Temporal(TemporalType.DATE)
-		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		@Column(name = "NGAYSINH")
-		private Date ngaysinh;
+	@Column(name = "GIOITINH")
+	private String gioitinh;
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "NGAYSINH")
+	private Date ngaysinh;
 
 //		@NotBlank(message = "Trường này không được bỏ trống")
-		@Column(name = "DIACHI")
-		private String diachi;
-		
+	@Column(name = "DIACHI")
+	private String diachi;
+
 //		@NotBlank(message = "Trường này không được bỏ trống")
-		@Column(name = "CMND")
-		private String cmnd;
-		
-		@Column(name = "GMAIL")
-		private String gmail;
-		
-		@Column(name = "SDT")
-		private String sdt;
-		
+	@Column(name = "CMND")
+	private String cmnd;
 
+	@Column(name = "GMAIL")
+	private String gmail;
 
-		@NotBlank(message = "Trường này không được bỏ trống")
-		@Column(name = "LOAI")
-		private String loai;
-		
-		@Column(name = "GHICHU")
-		private String ghichu;
-		
-		@OneToMany(mappedBy="nm",fetch=FetchType.EAGER)
-		private Collection <PHIEUMUON> phieumuons;
-		
-		public NGUOIMUON() {
-			super();
-		}
-		
-		public NGUOIMUON(String manm, String ho, String ten, String gioitinh, Date ngaysinh, String diachi, String cmnd, String loai, String ghichu,
-				Collection<PHIEUMUON> phieumuons) {
-			super();
-			this.manm = manm;
-			this.ho = ho;
-			this.ten = ten;
-			this.gioitinh = gioitinh;
-			this.ngaysinh = ngaysinh;
-			this.diachi = diachi;
-			this.cmnd = cmnd;
-			this.loai = loai;
-			this.ghichu = ghichu;
-			this.phieumuons = phieumuons;
-		}
-		
-		public String getSdt() {
-			return sdt;
-		}
+	@Column(name = "SDT")
+	private String sdt;
 
-		public void setSdt(String sdt) {
-			this.sdt = sdt;
-		}
+	@NotBlank(message = "Trường này không được bỏ trống")
+	@Column(name = "LOAI")
+	private String loai;
 
-		public String getManm() {
-			return manm;
-		}
-		public void setManm(String manm) {
-			this.manm = manm;
-		}
-		public String getHo() {
-			return ho;
-		}
-		public void setHo(String ho) {
-			this.ho = ho;
-		}
-		public String getTen() {
-			return ten;
-		}
-		public void setTen(String ten) {
-			this.ten = ten;
-		}
-		public String getGioitinh() {
-			return gioitinh;
-		}
-		public void setGioitinh(String gioitinh) {
-			this.gioitinh = gioitinh;
-		}
-		public Date getNgaysinh() {
-			return ngaysinh;
-		}
-		public void setNgaysinh(Date ngaysinh) {
-			this.ngaysinh = ngaysinh;
-		}
-		public String getDiachi() {
-			return diachi;
-		}
-		public void setDiachi(String diachi) {
-			this.diachi = diachi;
-		}
-		public String getCmnd() {
-			return cmnd;
-		}
-		public void setCmnd(String cmnd) {
-			this.cmnd = cmnd;
-		}
-		
-		public String getLoai() {
-			return loai;
-		}
+	@Column(name = "GHICHU")
+	private String ghichu;
 
-		public void setLoai(String loai) {
-			this.loai = loai;
-		}
+	@OneToMany(mappedBy = "nm", fetch = FetchType.EAGER)
+	private Collection<PHIEUMUON> phieumuons;
 
-		public String getGhichu() {
-			return ghichu;
-		}
-		public void setGhichu(String ghichu) {
-			this.ghichu = ghichu;
-		}
-		public Collection<PHIEUMUON> getPhieumuons() {
-			return phieumuons;
-		}
-		public void setPhieumuons(Collection<PHIEUMUON> phieumuons) {
-			this.phieumuons = phieumuons;
-		}
-		public String getGmail() {
-			return gmail;
-		}
+	public NGUOIMUON() {
+		super();
+	}
 
-		public void setGmail(String gmail) {
-			this.gmail = gmail;
-		}
-		
-}	
+	public NGUOIMUON(String manm, String ho, String ten, String gioitinh, Date ngaysinh, String diachi, String cmnd,
+			String loai, String ghichu, Collection<PHIEUMUON> phieumuons) {
+		super();
+		this.manm = manm;
+		this.ho = ho;
+		this.ten = ten;
+		this.gioitinh = gioitinh;
+		this.ngaysinh = ngaysinh;
+		this.diachi = diachi;
+		this.cmnd = cmnd;
+		this.loai = loai;
+		this.ghichu = ghichu;
+		this.phieumuons = phieumuons;
+	}
+
+	public String getSdt() {
+		return sdt;
+	}
+
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+
+	public String getManm() {
+		return manm;
+	}
+
+	public void setManm(String manm) {
+		this.manm = manm;
+	}
+
+	public String getHo() {
+		return ho;
+	}
+
+	public void setHo(String ho) {
+		this.ho = ho;
+	}
+
+	public String getTen() {
+		return ten;
+	}
+
+	public void setTen(String ten) {
+		this.ten = ten;
+	}
+
+	public String getGioitinh() {
+		return gioitinh;
+	}
+
+	public void setGioitinh(String gioitinh) {
+		this.gioitinh = gioitinh;
+	}
+
+	public Date getNgaysinh() {
+		return ngaysinh;
+	}
+
+	public void setNgaysinh(Date ngaysinh) {
+		this.ngaysinh = ngaysinh;
+	}
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getCmnd() {
+		return cmnd;
+	}
+
+	public void setCmnd(String cmnd) {
+		this.cmnd = cmnd;
+	}
+
+	public String getLoai() {
+		return loai;
+	}
+
+	public void setLoai(String loai) {
+		this.loai = loai;
+	}
+
+	public String getGhichu() {
+		return ghichu;
+	}
+
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
+	}
+
+	public Collection<PHIEUMUON> getPhieumuons() {
+		return phieumuons;
+	}
+
+	public void setPhieumuons(Collection<PHIEUMUON> phieumuons) {
+		this.phieumuons = phieumuons;
+	}
+
+	public String getGmail() {
+		return gmail;
+	}
+
+	public void setGmail(String gmail) {
+		this.gmail = gmail;
+	}
+
+}

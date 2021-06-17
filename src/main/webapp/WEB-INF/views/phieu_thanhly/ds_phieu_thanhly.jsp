@@ -69,68 +69,70 @@
 							</thead>
 							<tbody>
 								<c:forEach var="ptl" items="${listPhieuThanhLy}">
-									<tr>
-										<td class="table-plus mapn">${ptl.maptl}</td>
-										<td>${ptl.thoigian}</td>
-										<c:set var="hoten"
-											value="${ptl.nhanvien_thanhly.ho} ${ptl.nhanvien_thanhly.ten}" />
-										<td>${hoten}</td>
-										<!-- Tình trạng -->
-										<td>
-											<c:choose>
-												<c:when test="${ptl.trangthai.equals(choXacNhan)}">
-													<label>Chờ Xác Nhận</label>
-												</c:when>
-												<c:when test="${ptl.trangthai.equals(daXacNhan)}">
-													<label>Đã Xác Nhận</label>
-												</c:when>
-												<c:otherwise>
-													<label>HUỶ</label>
-												</c:otherwise>
-											</c:choose>
-										</td>
-										<td>
-											<!-- Ghi chú -->
-											<c:choose>
-												<c:when
-													test="${ptl.ghichu.isEmpty() || ptl.ghichu.isBlank()}">
-													<label>-</label>
-												</c:when>
-												<c:otherwise>
-													<label>${ptl.ghichu}</label>
-												</c:otherwise>
-											</c:choose>
-										</td>
-										<!-- Hành động -->
-										<td>
-											<div class="row clearfix">
+									<c:if test="${admin || current_user.equals(ptl.nhanvien_thanhly.manv)}">
+										<tr>
+											<td class="table-plus mapn">${ptl.maptl}</td>
+											<td>${ptl.thoigian}</td>
+											<c:set var="hoten"
+												value="${ptl.nhanvien_thanhly.ho} ${ptl.nhanvien_thanhly.ten}" />
+											<td>${hoten}</td>
+											<!-- Tình trạng -->
+											<td>
 												<c:choose>
 													<c:when test="${ptl.trangthai.equals(choXacNhan)}">
-														<div class="col-3">
-															<a class="material-icons" data-toggle="tooltip"
-																href="phieu-thanhly/edit/${ptl.maptl}"
-																data-placement="top" title="Sửa" style="color: blue">edit</a>
-														</div>
-														<div class="col-6 text-center">
-															<!-- XOÁ -->
-															<a class="delete_btn" type="button">
-																<i class="material-icons" data-toggle="tooltip"
-																	data-placement="top" title="Xoá" style="color: red">delete</i>
-															</a>
-														</div>
+														<label>Chờ Xác Nhận</label>
+													</c:when>
+													<c:when test="${ptl.trangthai.equals(daXacNhan)}">
+														<label>Đã Xác Nhận</label>
 													</c:when>
 													<c:otherwise>
-														<div class="col-3">
-															<a class="material-icons" data-toggle="tooltip"
-																href="phieu-thanhly/edit/${ptl.maptl}"
-																data-placement="top" title="Xem chi tiết"
-																style="color: blue">info</a>
-														</div>
+														<label>HUỶ</label>
 													</c:otherwise>
 												</c:choose>
-											</div>
-										</td>
-									</tr>
+											</td>
+											<td>
+												<!-- Ghi chú -->
+												<c:choose>
+													<c:when
+														test="${ptl.ghichu.isEmpty() || ptl.ghichu.isBlank()}">
+														<label>-</label>
+													</c:when>
+													<c:otherwise>
+														<label>${ptl.ghichu}</label>
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<!-- Hành động -->
+											<td>
+												<div class="row clearfix">
+													<c:choose>
+														<c:when test="${ptl.trangthai.equals(choXacNhan)}">
+															<div class="col-3">
+																<a class="material-icons" data-toggle="tooltip"
+																	href="phieu-thanhly/edit/${ptl.maptl}"
+																	data-placement="top" title="Sửa" style="color: blue">edit</a>
+															</div>
+															<div class="col-6 text-center">
+																<!-- XOÁ -->
+																<a class="delete_btn" type="button">
+																	<i class="material-icons" data-toggle="tooltip"
+																		data-placement="top" title="Xoá" style="color: red">delete</i>
+																</a>
+															</div>
+														</c:when>
+														<c:otherwise>
+															<div class="col-3">
+																<a class="material-icons" data-toggle="tooltip"
+																	href="phieu-thanhly/edit/${ptl.maptl}"
+																	data-placement="top" title="Xem chi tiết"
+																	style="color: blue">info</a>
+															</div>
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</td>
+										</tr>
+									</c:if>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -158,7 +160,7 @@
 									thanh lý</label>
 								<div class="col-sm-4 col-md-8">
 									<input class="form-control" type="text" name="maptl"
-										placeholder="Nhập mã phiếu thanh lý" />
+										placeholder="Nhập mã phiếu thanh lý" required />
 								</div>
 							</div>
 							<div class="row">
@@ -187,7 +189,7 @@
 					</div>
 					<hr>
 					<h5 class="h5 invoice-header text-center">DANH SÁCH THIẾT BỊ
-						NHẬP</h5>
+						THANH LÝ</h5>
 					<!-- Nhập thông tin cơ bản phiếu nhập -->
 					<table class="table dsThietbi_table">
 						<thead>
@@ -199,6 +201,13 @@
 							</tr>
 						</thead>
 						<tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th class="tongcong"></th>
+							</tr>
 							<tr id="hidden-row" hidden=true>
 								<td>
 									<select class="form-control" name="matb">
@@ -210,18 +219,18 @@
 								</td>
 								<td>
 									<input type="number" min="1" name="soluong"
-										class=" form-control" onchange="tinhtong(this)"/>
+										class=" form-control" onchange="tinhtong($(this).parents('tbody'))" />
 								</td>
 								<td>
 									<input type="number" min="0" step="0.01" name="dongia"
-										class=" form-control" onchange="tinhtong(this)"/>
+										class=" form-control" onchange="tinhtong($(this).parents('tbody'))" />
 								</td>
 								<td>
 									<a class="material-icons text-info btn-close-item  text-right"
 										type="button"> delete_sweep </a>
 								</td>
 							</tr>
-						</tbody>
+						</tfoot>
 					</table>
 					<div class="row form-group them-tb-nhap">
 						<button type='button' class="form-control text-info ">
@@ -265,21 +274,22 @@
 			$(document).ready(function() {
 				$('#update_modal_btn').click();
 				console.log("Hiển thị edit form")
-				tinhtong()
+				tinhtong($('#modal_pn_sua').find('tbody'))
 				
 			});
 		</script>
 	</c:if>
 	<!-- Dùng để tính tổng tiền chi tiết phiếu -->
 	<script type="text/javascript">
-		function tinhtong(){
+		function tinhtong(e){
 			let soluong = $(this).parents('tr').find("input[name='soluong']").val()
 			let dongia = $(this).parents('tr').find("input[name='dongia']").val()
 			if (dongia < 0 || soluong < 0) return false;
 			
 			
 			let tongcong = 0;
-			$('form#phieuthanhly_sua').find('tbody tr').each(function(index, tr) {
+			console.log(e)
+			e.find('tr').each(function(index, tr) {
 			      let soluong = $(this).find("input[name='soluong']").val()
 			      let dongia = $(this).find("input[name='dongia']").val()
 			      
@@ -288,6 +298,10 @@
 			
 			$('.tongcong').text('Tổng cộng: ' + tongcong + ' VNĐ');
 		}
+		
+		$("a[href='#modal_pn_them']").on('click',function(){
+			tinhtong($('#modal_pn_them').find('tbody'))
+		})
 		
 	</script>
 	<!-- DÙNG ĐỂ SHOW FORM DELETE -->
@@ -320,7 +334,7 @@
 			                		currentRow.remove()
 									show_success('Xoá')
 			                	}
-			                	else show_error('Xoá')		                	
+			                	else show_error('Xoá thất bại')		                	
 			        		}
 						
 			            });
@@ -336,7 +350,7 @@
 			if(${notify}){
 				show_success();
 			}
-			else show_error();
+			else show_error('${msg}');
 		})
 	</script>
 	<script type="text/javascript">
@@ -360,18 +374,11 @@
 			},
 		});
 		
-		
-		
-		
-		//CLICK THÊM DÒNG MỚI
-		
+		//CLICK THÊM DÒNG MỚI		
 		$('.them-tb-nhap').on('click', function(){	
-			console.log($(this).parent().find('tbody'))
 			let new_row = document.createElement('tr');
 			new_row.innerHTML = $('#hidden-row').html()
-			$(this).parent().find('tbody').append(new_row);
-			console.log(1)
-			
+			$(this).parent().find('tbody').append(new_row);	
 		})
 		
 		//ClICK XOÁ 1 DÒNG THIẾT BỊ
@@ -405,49 +412,13 @@
 		}
 		
 		//THÔNG BÁO LỖI
-		function show_error(content="Thao tác") {
+		function show_error(content) {
 			Swal.fire({
 				title: 'THẤT BẠI',
-				text: content+" thất bại!",
+				text: content,
 				icon: 'error',
 			})
 		}
-	</script>
-	<!-- Lấy số lượng tối đa của thiết bị -->
-	<select id="listThietbi" hidden="true">
-		<c:forEach items="${listThietbi}" var="tb">
-			<option value="${tb.matb}">${tb.matb}</option>
-		</c:forEach>
-	</select>
-	<script type="text/javascript">
-	function thietbi(matb, soluongton){
-		this.matb = matb;
-		this.soluongton = soluongton;
-	}
-	
-	let listSoluongton = [];
-	$('#listThietbi option').each(function(){
-		let matb = $(this).val();
-		listSoluongton.push(new thietbi(matb, 0))
-		getSoluongton(matb)
-	})
-
-	function getSoluongton(matb){
-		$.ajax({
-            type: "GET",
-            url: "${pageContext.servletContext.contextPath}/phieu-thanhly/getSoluongton/" + matb,    
-            success: function(data){
-            	listSoluongton.forEach(function(item, i){
-            		if(item.matb == matb) listSoluongton[i].soluongton = data
-            	})
-            	
-            }
-    	})
-	}
-		
-	</script>
-	<script type="text/javascript">
-		console.log(listSoluongton)
 	</script>
 </body>
 </html>

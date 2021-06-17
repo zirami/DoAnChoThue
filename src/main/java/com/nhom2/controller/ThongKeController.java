@@ -34,7 +34,7 @@ public class ThongKeController {
 
 	@ModelAttribute("loaiThongkes")
 	public List<String> getLoaiThongke() {
-		List<String> loaiThongkes = Arrays.asList("Phiếu Mượn", "Thiết Bị");
+		List<String> loaiThongkes = Arrays.asList("Phiếu Mượn", "Thiết Bị", "Loại Người Mượn");
 		return loaiThongkes;
 	}
 
@@ -62,7 +62,7 @@ public class ThongKeController {
 			@RequestParam("ngayketthuc") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayketthuc, ModelMap model) {
 		final String case1 = "Phiếu Mượn";
 		final String case2 = "Thiết Bị";
-		final String case3 = "Phiếu Nhập";
+		final String case3 = "Loại Người Mượn";
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		List<Object[]> kqThongke = null;
@@ -81,6 +81,12 @@ public class ThongKeController {
 			break;
 		}
 
+		// Nếu là Người Mượn
+		case case3: {
+			kqThongke = getKqThongkeNM(ngaybatdau, ngayketthuc);
+			break;
+		}
+
 		default:
 			model.addAttribute("error", true);
 			model.addAttribute("msg", "Loại thiết bị không xác định !!!");
@@ -96,6 +102,54 @@ public class ThongKeController {
 		model.addAttribute("kqThongke", kqThongke);
 
 		return home(model);
+	}
+
+	private List<Object[]> getKqThongkeNM(Date ngaybatdau, Date ngayketthuc) {
+		List<Object[]> listKq = new ArrayList<Object[]>();
+		Session session;
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			session = factory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = factory.openSession();
+		}
+		
+		Object[] kq = { null, null };
+		
+		String hql = "select nm.loai, count(*) from PHIEUMUON "
+				+ "where thoigianmuon between :ngaybatdau and :ngayketthuc "
+				+ "group by nm.loai";
+		Query<Object[]> q = session.createQuery(hql);
+		q.setParameter("ngaybatdau", ngaybatdau);
+		q.setParameter("ngayketthuc", ngayketthuc);
+		
+		for (Object[] row: q.list()) {
+			listKq.add(row);
+		}
+		
+//		for (long i = ngaybatdau.getTime(); i <= ngayketthuc.getTime(); i += 86400000) {
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+//			System.out.println(formatter.format(i));
+//			Object[] kq = { null, null };
+//
+//			hql = "select nm.loai, count(*) from PHIEUMUON " + "where thoigianmuon = :thoigianmuon "
+//					+ "and nm.loai = :loainguoimuon " + "group by nm.loai";
+//			Query<Object[]> q = session.createQuery(hql);
+//			q.setParameter("thoigianmuon", new Date(i));
+//			q.setParameter("loainguoimuon", "Sinh viên");
+//
+//			if (!q.list().isEmpty()) {
+//				kq[0] = q.list().get(0)[0];
+//			}
+//
+//			hql = "select nm.loai, count(*) from PHIEUMUON " + "where thoigianmuon = :thoigianmuon "
+//					+ "and nm.loai = :loainguoimuon " + "group by nm.loai";
+//			q = session.createQuery(hql);
+//			q.setParameter("loainguoimuon", "Giáo viên");
+//			q.setParameter("thoigianmuon", new Date(i));
+//
+//		}
+		return listKq;
 	}
 
 	// KẾT QUẢ THỐNG KÊ PHIẾU MƯỢN
@@ -164,50 +218,41 @@ public class ThongKeController {
 		for (long i = ngaybatdau.getTime(); i <= ngayketthuc.getTime(); i += 86400000) {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 			System.out.println(formatter.format(i));
-			Object[] kq = { null, null, null };
-			
+			Object[] kq = { null, 0, 0 };
+
 			/* THIẾT BỊ NHẬP VỀ */
-			hql = "from PHIEUNHAP where trangthai = 'daXacNhan' "
-				+ "and thoigiannhap = :thoigiannhap";
-			Query<PHIEUNHAP> listPn = session.createQuery(hql);
+			hql = "select pn.thoigiannhap, sum(ct_pn.soluongnhap) from CT_PHIEUNHAP ct_pn, PHIEUNHAP pn "
+					+ "where ct_pn.phieunhap.mapn = pn.mapn "
+					+ "and pn.trangthai = 'daXacNhan' "
+					+ "and pn.thoigiannhap = :thoigiannhap "
+					+ "group by pn.thoigiannhap";
+			Query<Object[]> listPn = session.createQuery(hql);
 			listPn.setParameter("thoigiannhap", new Date(i));
 
 			if (!listPn.list().isEmpty()) {
-				int tong = 0;
-				for(CT_PHIEUNHAP ct_pn: listPn.list().get(0).getCt_phieunhaps()) {
-					tong+=ct_pn.getSoluongnhap();
-				}
-				kq[0] = listPn.list().get(0).getThoigiannhap(); //Ngày
-				kq[1] = tong; // soluong nhập về
-
+				kq[0] = formatter.format(new Date(i)); // Ngày
+				kq[1] = listPn.list().get(0)[1]; // soluong nhập về
 			}
-			
+
 			/* THIẾT BỊ BỊ THANH LÝ (HỎNG) */
-			hql = "from PHIEUTHANHLY " + "where trangthai = 'daXacNhan' "
-				+ "and thoigian = :thoigian";
-			Query<PHIEUTHANHLY> listPtl = session.createQuery(hql);
+			hql = "select ptl.thoigian, sum(ct_ptl.soluong) from CT_PHIEUTHANHLY ct_ptl, PHIEUTHANHLY ptl "
+					+ "where ct_ptl.phieuthanhly.maptl = ptl.maptl "
+					+ "and ptl.trangthai = 'daXacNhan' "
+					+ "and ptl.thoigian = :thoigian " 
+					+ "group by ptl.thoigian";
+			Query<Object[]> listPtl = session.createQuery(hql);
 			listPtl.setParameter("thoigian", new Date(i));
 
 			if (!listPtl.list().isEmpty()) {
-				int tong = 0;
-				for(CT_PHIEUTHANHLY ct_ptl: listPtl.list().get(0).getCt_phieuthanhlys()) {
-					tong+=ct_ptl.getSoluong();
-				}
-				kq[0] = listPtl.list().get(0).getThoigian(); //Ngày
-				kq[2] = tong; // soluong hỏng
-
+				kq[0] = formatter.format(new Date(i));; // Ngày
+				kq[2] = listPtl.list().get(0)[1]; // soluong thanh lý
 			}
 
-			if (kq[0] != null ) {
-				if (kq[1] == null)
-					kq[1] = 0;
-				if (kq[2] == null)
-					kq[2] = 0;
+			if (kq[0] != null) {
 				listKq.add(kq);
 			}
 
 		}
-
 		return listKq;
 	}
 
