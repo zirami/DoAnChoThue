@@ -9,8 +9,8 @@
 			<i class="ion-close-round"></i>
 		</div>
 	</div>
-	<div >
-		<div class="sidebar-menu bg-edit" >
+	<div class="" >
+		<div class="sidebar-menu" >
 			<ul id="accordion-menu">
 
 				<li class="dropdown" id="qlpm" style="display: none">
