@@ -49,7 +49,7 @@ public class ThietbiController {
 
 	public String getRandomMa() {
 		List<THIETBI> list = new ThietBiDAO().getAll(factory);
-		int ma = 0;
+		int ma = 1001;
 		for (THIETBI elem : list) {
 			String temp = "tb" + ma;
 			if (elem.getMatb().compareTo(temp) == 0) {
