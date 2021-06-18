@@ -1394,7 +1394,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 }
 .sidebar-menu .dropdown-toggle{
 	display: block;
-	padding: 10px 10px 10px 35px;
+	padding: 18px 15px 18px 67px;
 	font-size: 16px;
 	color: #ffffff;
 	font-weight: 300;
@@ -1439,8 +1439,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
 	display: flex;
 	align-items: center;
 	justify-content: center;
-/* 	color: #69daf2; */
-	color: #432874;
+	color: #69daf2;
 	background-color: rgba(255,255,255,0);
 	top: 50%;
 	text-align: center;

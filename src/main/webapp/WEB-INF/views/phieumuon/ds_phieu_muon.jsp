@@ -329,8 +329,10 @@ h4 {
 											<form:select class="selectpicker form-control" path="nm.manm"
 												style="width: 100%;height: 38px;" required="required">
 												<form:option value="" label="Chọn người mượn"></form:option>
-												<form:options items="${listNguoiMuons}" itemValue="manm"
-													itemLabel="ten"></form:options>
+												<c:forEach var="nm" items="${listNguoiMuons}">
+													<form:option value="${nm.manm }" label="${nm.ho } ${nm.ten }"></form:option>
+												</c:forEach>
+												
 											</form:select>
 										</div>
 									</div>
@@ -339,13 +341,26 @@ h4 {
 											viên</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="nhanvien_pm.manv" />
-											<form:select class="selectpicker form-control"
-												path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
-												required="required">
-												<form:option value="" label="Chọn nhân viên"></form:option>
-												<form:options items="${listNhanViens}" itemValue="manv"
-													itemLabel="ten"></form:options>
-											</form:select>
+											
+											<c:if test="${account_login.nhanviens.get(0).isadmin!=null}">
+												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
+					
+													<<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option>
+													<c:forEach var="nv" items="${listNhanViens}">
+													<form:option value="${nv.manv }" label="${nv.ho } ${nv.ten }"></form:option>
+													</c:forEach> 
+												</form:select>
+											</c:if>
+											<c:if test="${account_login.nhanviens.get(0).isadmin==null}">
+												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
+					
+													<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}" ></form:option>
+												
+											
+												</form:select>
+											</c:if>
+											
+											
 										</div>
 									</div>
 									<div class="form-group row">
@@ -398,7 +413,7 @@ h4 {
 													style="width: 100%; height: 45px;">
 													<option value="">Chọn thiết bị</option>
 													<c:forEach var="tb1" items="${loaiThietBis}">
-														<option value="${tb1.matb}">${tb1.matb}</option>
+														<option value="${tb1.matb}">${tb1.ten}</option>
 													</c:forEach>
 												</select>
 												<%-- 														<form:errors path="loai.id" /> --%>
@@ -483,13 +498,20 @@ h4 {
 												placeholder="Nhập mã phiếu mượn" style="display: none" />
 										</div>
 									</div>
+									
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Người
 											mượn</label>
 										<div class="col-sm-4 col-md-8">
+											<!-- 											Đối tượng này dễ sai khi không .manm -->
+											<form:errors path="nm" />
 											<form:select class="selectpicker form-control" path="nm.manm"
-												style="width: 100%; height: 38px;" items="${listNguoiMuons}"
-												itemValue="manm" itemLabel="ten">
+												style="width: 100%;height: 38px;" required="required">
+<%-- 												<form:option value="${phieumuon_sua.nm.manm}" label="${phieumuon_sua.nm.ho} ${phieumuon_sua.nm.ten}"></form:option> --%>
+												<c:forEach var="nm" items="${listNguoiMuons}">
+													<form:option value="${nm.manm }" label="${nm.ho } ${nm.ten }"></form:option>
+												</c:forEach>
+												
 											</form:select>
 										</div>
 									</div>
@@ -497,13 +519,33 @@ h4 {
 										<label class="col-sm-4 col-md-4 col-form-label">Nhân
 											viên</label>
 										<div class="col-sm-4 col-md-8">
-											<form:select path="nhanvien_pm.manv" items="${listNhanViens}"
-												itemLabel="ten" itemValue="manv"
-												class="selectpicker form-control"
-												style="width: 100%; height: 38px;">
-											</form:select>
+											<form:errors path="nhanvien_pm.manv" />
+											
+											<c:if test="${account_login.nhanviens.get(0).isadmin!=null}">
+												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
+					
+<%-- 													<<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option> --%>
+													<c:forEach var="nv" items="${listNhanViens}">
+													<form:option value="${nv.manv }" label="${nv.ho } ${nv.ten }"></form:option>
+													</c:forEach> 
+												</form:select>
+											</c:if>
+											<c:if test="${account_login.nhanviens.get(0).isadmin==null}">
+												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
+					
+													<form:option value="${phieumuon_sua.nhanvien_pm.manv}" label="${phieumuon_sua.nhanvien_pm.ho} ${phieumuon_sua.nhanvien_pm.ten}" ></form:option>
+
+											
+												</form:select>
+											</c:if>
+											
+											
 										</div>
 									</div>
+									
+									
+									
+									
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
 										<div class="col-sm-4 col-md-8">
@@ -550,7 +592,7 @@ h4 {
 													style="width: 100%; height: 45px;">
 													<option value="">Chọn thiết bị</option>
 													<c:forEach var="tb1" items="${loaiThietBis}">
-														<option value="${tb1.matb}">${tb1.matb}</option>
+														<option value="${tb1.matb}">${tb1.ten}</option>
 													</c:forEach>
 												</select>
 												<%-- 														<form:errors path="loai.id" /> --%>
@@ -912,7 +954,12 @@ h4 {
 	
 	<script type="text/javascript">
 		//LOAD TABLE 
-		$('#myTable').DataTable();
+		$('#myTable').DataTable({
+			scrollCollapse: true,
+			autoWidth: false,
+			responsive: true,
+			order: [[0,"desc"]]
+		});
 		$(".tablePhieuMuonQua3Ngay").DataTable();
 		
 		//NẾU CLICK NÚT XOÁ
@@ -1058,7 +1105,7 @@ h4 {
 	 			var valueTenTbMoi = 'value='+'"${sl.thietbi_muon.matb}"'
 	 			
 	 			var tenTbCu = 'Chọn thiết bị'
-	 			var tenTbMoi = '${sl.thietbi_muon.matb}'
+	 			var tenTbMoi = '${sl.thietbi_muon.ten}'
 	 			
 	 			var tenSlCu= 'Số lượng'
 	 			var tenSlMoi = '${sl.soluong}'

@@ -128,7 +128,7 @@ public class PhieuMuonController {
 		session = request.getSession();
 		ACCOUNT account = (ACCOUNT) session.getAttribute("account_login");
 		
-		model.addAttribute("acount_login",account);
+		model.addAttribute("account_login",account);
 		model.addAttribute("listPhieuMuon", new PhieuMuonDAO().getAll(factory));
 		model.addAttribute("maphieumuon",getRandomMa());
 		model.addAttribute("indexValue", 0);
@@ -175,6 +175,8 @@ public class PhieuMuonController {
 		Boolean result = false;
 
 //		// Thêm từng cái CT_ThietBi
+		
+
 
 		int i = 1;
 		List<THIETBI> list = new ArrayList<>();
@@ -208,6 +210,12 @@ public class PhieuMuonController {
 					list.add(tb_them);
 			}
 
+		}
+		
+		if(list.isEmpty()) {
+			model.addAttribute("phieumuon_moi",phieumuon_moi);
+			model.addAttribute("emptyThietBi", true);
+			return home(model, session,rq);
 		}
 		
 		///Kiểm tra có thiết bị nào âm không
