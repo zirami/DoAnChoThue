@@ -76,11 +76,13 @@
 						</td>
 						<td>
 							<input type="number" min="1" name="soluong"
-								value="${ct_ptl.soluong}" class=" form-control" onchange="tinhtong($(this).parents('tbody'))"/>
+								value="${ct_ptl.soluong}" class=" form-control"
+								onchange="tinhtong($(this).parents('tbody'))" required/>
 						</td>
 						<td>
 							<input type="number" min="0" step="0.01" name="dongia"
-								value="${ct_ptl.dongia}" class=" form-control" onchange="tinhtong($(this).parents('tbody'))"/>
+								value="${ct_ptl.dongia}" class=" form-control"
+								onchange="tinhtong($(this).parents('tbody'))" required/>
 						</td>
 						<td>
 							<a class="material-icons text-info btn-close-item  text-right"
@@ -108,8 +110,8 @@
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 		<input type="hidden" name="trangthai" />
 		<button type="submit" class="btn btn-primary luu-btn">Lưu tạm</button>
-		<button type="submit" class="btn btn-success them-btn">Xác
-			Nhận</button>
+		<input type="submit" hidden="hidden" />
+		<button type="button" class="btn btn-success them-btn">Xác nhận</button>
 	</div>
 </body>
 </html>

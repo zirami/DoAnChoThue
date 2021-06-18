@@ -17,7 +17,8 @@
 }
 </style>
 </head>
-<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
+<body
+	style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -42,8 +43,8 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#modal_pn_them" class="btn btn-info"
-								data-toggle="modal" type="button">NHẬP THIẾT BỊ</a>
+							<a href="#modal_pn_them" class="btn btn-info" data-toggle="modal"
+								type="button">NHẬP THIẾT BỊ</a>
 							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn"></a>
 						</div>
@@ -55,7 +56,6 @@
 					<div class="pb-20">
 						<c:set var="choXacNhan" value="choXacNhan" />
 						<c:set var="daXacNhan" value="daXacNhan" />
-						<c:set var="huy" value="huy" />
 						<table class="data-table table stripe hover nowrap" id="myTable">
 							<thead>
 								<tr>
@@ -104,20 +104,20 @@
 										</td>
 										<!-- Hành động -->
 										<c:choose>
-												<c:when
-													test="${ptl.ghichu.isEmpty() || ptl.ghichu.isBlank()}">
-													<label>-</label>
-												</c:when>
-												<c:otherwise>
-													<label>${ptl.ghichu}</label>
-												</c:otherwise>
-											</c:choose>
+											<c:when
+												test="${ptl.ghichu.isEmpty() || ptl.ghichu.isBlank()}">
+												<label>-</label>
+											</c:when>
+											<c:otherwise>
+												<label>${ptl.ghichu}</label>
+											</c:otherwise>
+										</c:choose>
 										</td>
 										<!-- Hành động -->
 										<td>
 											<div class="row clearfix">
 												<c:choose>
-													<c:when test="${ptl.trangthai.equals(choXacNhan)}">
+													<c:when test="${pn.trangthai.equals(choXacNhan)}">
 														<div class="col-3">
 															<a class="material-icons" data-toggle="tooltip"
 																href="phieu-nhap/edit/${pn.mapn}"
@@ -133,7 +133,7 @@
 													</c:when>
 													<c:otherwise>
 														<div class="col-3">
-															<a class="material-icons " data-toggle="tooltip"
+															<a class="material-icons" data-toggle="tooltip"
 																href="phieu-nhap/edit/${pn.mapn}"
 																data-placement="top" title="Xem chi tiết"
 																style="color: blue">info</a>
@@ -169,8 +169,7 @@
 								<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
 									nhập</label>
 								<div class="col-sm-4 col-md-8">
-									<input class="form-control" type="text" name="mapn"
-										placeholder="Nhập mã phiếu nhập" />
+									<input class="form-control" type="text" name="mapn" value="${newID}" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="row">
@@ -187,8 +186,7 @@
 								<label class="col-sm-6 col-md-4 col-form-label">Nhân
 									Viên xử lý:</label>
 								<input class="col-sm-4 col-md-8 form-control" type="text"
-									name="nhanvien.manv" value="${nv.manv}"
-									readonly="readonly" />
+									name="nhanvien.manv" value="${nv.manv}" readonly="readonly" />
 							</div>
 							<div class="row">
 								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
@@ -214,7 +212,6 @@
 							<tr id="hidden-row" hidden=true>
 								<td>
 									<select class="form-control" name="matb">
-										<option value="">-Chọn thiết bị-</option>
 										<c:forEach var="tb" items="${listThietbi}">
 											<option value="${tb.matb}">${tb.ten}</option>
 										</c:forEach>
@@ -222,11 +219,11 @@
 								</td>
 								<td>
 									<input type="number" min="1" name="soluongnhap"
-										class=" form-control" onchange="tinhtong(this)"/>
+										class=" form-control" onchange="tinhtong(this)" required/>
 								</td>
 								<td>
 									<input type="number" min="0" step="0.01" name="dongia"
-										class=" form-control" onchange="tinhtong(this)"/>
+										class=" form-control" onchange="tinhtong(this)" required/>
 								</td>
 								<td>
 									<a class="material-icons text-info btn-close-item  text-right"
@@ -248,7 +245,8 @@
 					<input type="hidden" name="trangthai" />
 					<button type="submit" class="btn btn-primary luu-btn">Lưu
 						tạm</button>
-					<button type="submit" class="btn btn-success them-btn">Thêm</button>
+					<input type="submit" hidden="hidden" />
+					<button type="button" class="btn btn-success them-btn">Thêm</button>
 				</div>
 			</form>
 		</div>
@@ -315,10 +313,11 @@
 					text: "Dữ liệu không thể khôi phục sau thao tác này!",
 					icon: 'warning',
 					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
+					confirmButtonColor: '#28a745',
 					cancelButtonColor: '#d33',
-					confirmButtonText: 'Xoá',
-					cancelButtonText: 'Huỷ'
+					reverseButtons: true,
+					cancelButtonText: 'Huỷ',
+					confirmButtonText: 'Xoá'
 				}).then((result) => {
 					//Nếu nút đồng ý được nhấn
 					if (result.isConfirmed) {
@@ -326,17 +325,14 @@
 			                type: "GET",
 			                url: "${pageContext.servletContext.contextPath}/phieu-thanhly/delete/" + ten,
 			              
-			                success: function (data)
-			        		{
+			                success: function (data){
 			                	if(data){
 			                		currentRow.remove()
 									show_success('Xoá')
 			                	}
 			                	else show_error('Xoá')		                	
-			        		}
-						
-			            });
-						
+			        		}						
+			            });						
 					}
 				})
 			}) 			
@@ -357,6 +353,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
+			order: [[ 1, "desc" ]],
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,
@@ -394,9 +391,25 @@
 		//CLICK NÚT THÊM PHIẾU NHẬP
 		$('.them-btn').on('click', function(){		
 			let trangthai = $(this).parent().find("input[name='trangthai']")
-			trangthai.val("daXacNhan")
-			$('#hidden-row').remove()
-			console.log(trangthai.val())
+			Swal.fire({
+				title: 'Xác nhận hoàn thành phiếu?',
+				text: "Dữ liệu sau khi xác nhận sẽ không thể chỉnh sửa!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#28a745',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Huỷ',
+				confirmButtonText: 'Xác Nhận',
+				reverseButtons: true
+			}).then((result) => {
+				//Nếu nút đồng ý được nhấn
+				if (result.isConfirmed) {
+					trangthai.val("duocXacNhan")
+					$('#hidden-row').remove()	
+					$(this).parent().find("input[type='submit']").click();
+					console.log(trangthai.val())
+				}
+			})
 		})
 		
 		//CLICK LƯU PHIẾU NHẬP
@@ -431,35 +444,6 @@
 			<option value="${tb.matb}">${tb.matb}</option>
 		</c:forEach>
 	</select>
-	<script type="text/javascript">
-	function thietbi(matb, soluongton){
-		this.matb = matb;
-		this.soluongton = soluongton;
-	}
 	
-	let listSoluongton = [];
-	$('#listThietbi option').each(function(){
-		let matb = $(this).val();
-		listSoluongton.push(new thietbi(matb, 0))
-		getSoluongton(matb)
-	})
-
-	function getSoluongton(matb){
-		$.ajax({
-            type: "GET",
-            url: "${pageContext.servletContext.contextPath}/phieu-nhap/getSoluongton/" + matb,    
-            success: function(data){
-            	listSoluongton.forEach(function(item, i){
-            		if(item.matb == matb) listSoluongton[i].soluongton = data
-            	})
-            	
-            }
-    	})
-	}
-		
-	</script>
-	<script type="text/javascript">
-		console.log(listSoluongton)
-	</script>
 </body>
 </html>

@@ -48,21 +48,21 @@ public class ThietbiController {
 	SessionFactory factory;
 
 	public String getRandomMa() {
-		List <THIETBI> list = new ThietBiDAO().getAll(factory);
-		int ma = 1001;
+		List<THIETBI> list = new ThietBiDAO().getAll(factory);
+		int ma = 0;
 		for (THIETBI elem : list) {
-			String temp = "tb"+ma;
-			if(elem.getMatb().compareTo(temp)==0) {
-				ma=ma+1;
+			String temp = "tb" + ma;
+			if (elem.getMatb().compareTo(temp) == 0) {
+				ma = ma + 1;
 			}
 		}
 		return "tb" + ma;
 	}
-	
+
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listThietbi", new ThietBiDAO().getAll(factory));
-		model.addAttribute("maThietBi",getRandomMa());
+		model.addAttribute("maThietBi", getRandomMa());
 		return "thiet_bi/ds_thiet_bi";
 	}
 
@@ -96,39 +96,39 @@ public class ThietbiController {
 
 	// THÊM
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.POST)
-	public String insert(ModelMap model, @Valid @ModelAttribute("thietbi_moi") THIETBI thietbi_moi, HttpServletRequest rq, @RequestParam("photo") MultipartFile photo,
-			BindingResult reusult) {
-		String UNLOCKED = "unlocked"; //Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
-		String  CONTOT = "Còn tốt"; // Tình trạng mặc định là Tốt
-		
+	public String insert(ModelMap model, @Valid @ModelAttribute("thietbi_moi") THIETBI thietbi_moi,
+			HttpServletRequest rq, @RequestParam("photo") MultipartFile photo, BindingResult reusult) {
+		String UNLOCKED = "unlocked"; // Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
+		String LOCKED = "locked"; // Trạng thái mở khoá của THIẾT BỊ khi không dính PHIẾU MƯỢN, PHIẾU NHẬP
+		String CONTOT = "Còn tốt"; // Tình trạng mặc định là Tốt
+
 		System.out.println("has error: " + reusult.hasErrors());
 		model.addAttribute("them_saidinhdang", reusult.hasErrors());
 		model.addAttribute("thietbi_moi", thietbi_moi);
-
 		if (reusult.hasErrors())
 			return home(model);
-		try {
+		String path = rq.getServletContext().getRealPath("");
+		path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
+				+ "\\src\\main\\webapp\\resources\\files\\";
+		if (!photo.isEmpty()) {
+			try {
 
-			String photoPath = rq.getServletContext().getRealPath("/resources/files/" + photo.getOriginalFilename());
+				String photoPath = rq.getServletContext()
+						.getRealPath("/resources/files/" + photo.getOriginalFilename());
 
-			photo.transferTo(new File(photoPath));
-			thietbi_moi.setHinh(photo.getOriginalFilename());
-			
-			thietbi_moi.setTrangthai(UNLOCKED);
-			thietbi_moi.setTinhtrang(CONTOT);
-			thietbi_moi.setSoluong(0); // THIẾT BỊ MỚI THÌ PHẢI NHẬP VỀ MỚI CÓ SỐ LƯỢNG
-			model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi)); // Xử lý thông báo thêm thành công
-			model.addAttribute("thietbi_moi",new THIETBI());
-			return home(model);
+				photo.transferTo(new File(photoPath));
+				photo.transferTo(new File(path + photo.getOriginalFilename()));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("insert", false);
-			model.addAttribute("thietbi_moi", thietbi_moi);
-			return home(model);
+				thietbi_moi.setHinh(photo.getOriginalFilename());
+
+			} catch (Exception e) {
+				model.addAttribute("update", false);
+				e.printStackTrace();
+				return home(model);
+			}
 		}
-
-
+		model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi));
+		return home(model);
 	}
 
 	// LẤY RA THIẾT BỊ BẰNG ID ĐỂ SHOW FORM EDIT
@@ -143,36 +143,39 @@ public class ThietbiController {
 
 	// UPDATE
 	@RequestMapping(value = "thiet-bi/update", method = RequestMethod.POST)
-	public String update(ModelMap model, @Valid @ModelAttribute("thietbi_sua") THIETBI thietbi_sua,
-			HttpServletRequest rq, @RequestParam("photo") MultipartFile photo, BindingResult reusult) {
+	public RedirectView update(@Valid @ModelAttribute("thietbi_sua") THIETBI thietbi_sua, HttpServletRequest rq,
+			@RequestParam("photo") MultipartFile photo, BindingResult reusult, RedirectAttributes model) {
 		System.out.println("has error: " + reusult.getFieldErrors().toString());
-		model.addAttribute("sua_saidinhdang", reusult.hasErrors());
-		model.addAttribute("thietbi_sua", thietbi_sua);
+		model.addFlashAttribute("sua_saidinhdang", reusult.hasErrors());
+		model.addFlashAttribute("thietbi_sua", thietbi_sua);
 		if (reusult.hasErrors())
-			return home(model);
+			return new RedirectView("../thiet-bi");
+		String path = rq.getServletContext().getRealPath("");
+		path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
+				+ "\\src\\main\\webapp\\resources\\files\\";
+		if (!photo.isEmpty()) {
+			try {
 
-		if (photo.isEmpty()) {
-			model.addAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm thành công
-			model.addAttribute("thietbi_sua",new THIETBI());
-			return home(model);
-		} else {
-		try {
+				String photoPath = rq.getServletContext()
+						.getRealPath("/resources/files/" + photo.getOriginalFilename());
 
-			String photoPath = rq.getServletContext().getRealPath("/resources/files/" + photo.getOriginalFilename());
-			
-			photo.transferTo(new File(photoPath));
+				photo.transferTo(new File(photoPath));
+				photo.transferTo(new File(path + photo.getOriginalFilename()));
 
-			thietbi_sua.setHinh(photo.getOriginalFilename());
-			model.addAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm thành công
-			model.addAttribute("thietbi_sua",new THIETBI());
-			return home(model);
+				thietbi_sua.setHinh(photo.getOriginalFilename());
 
-		} catch (Exception e) {
-			model.addAttribute("update", false);
-			model.addAttribute("thietbi_sua", thietbi_sua);
-			return home(model);
+			} catch (Exception e) {
+				model.addFlashAttribute("update", false);
+				e.printStackTrace();
+				return new RedirectView("../thiet-bi");
+			}
 		}
-		}
+
+		model.addFlashAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm
+		// thành
+		// công
+		model.addFlashAttribute("thietbi_sua", new THIETBI());
+		return new RedirectView("../thiet-bi");
 	}
 
 	// DELETE

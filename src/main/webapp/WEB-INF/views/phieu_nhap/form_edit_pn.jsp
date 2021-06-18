@@ -79,11 +79,11 @@
 						</td>
 						<td>
 							<input type="number" min="1" name="soluongnhap"
-								value="${ct_pn.soluongnhap}" class=" form-control" />
+								value="${ct_pn.soluongnhap}" class=" form-control" required/>
 						</td>
 						<td>
 							<input type="number" min="0" step="0.01" name="dongia"
-								value="${ct_pn.dongia}" class=" form-control" />
+								value="${ct_pn.dongia}" class=" form-control" required/>
 						</td>
 						<td>
 							<a class="material-icons text-info btn-close-item  text-right"
@@ -111,7 +111,8 @@
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 		<input type="hidden" name="trangthai" />
 		<button type="submit" class="btn btn-primary luu-btn">Lưu tạm</button>
-		<button type="submit" class="btn btn-success them-btn">Xác
+		<input type="submit" hidden="hidden"/>
+		<button type="button" class="btn btn-success them-btn">Xác
 			Nhận</button>
 	</div>
 </body>

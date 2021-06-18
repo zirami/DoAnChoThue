@@ -38,6 +38,8 @@ public class PhieuNhapController {
 	@Autowired
 	SessionFactory factory;
 	
+	public String msg = "Thao tác thất bại";
+	
 	@ModelAttribute("listThietbi")
 	public List<THIETBI> getListTB() {
 		return new ThietBiDAO().getAll(factory);
@@ -67,6 +69,19 @@ public class PhieuNhapController {
 			return null;
 		return account.getNhanviens().get(0);
 	}
+	
+	@ModelAttribute("newID")
+	public String getRandomMa() {
+		List <PHIEUNHAP> list = new PhieuNhapDAO().getAll(factory);
+		int ma = 1;
+		for (PHIEUNHAP elem : list) {
+			String temp = "pn"+ma;
+			if(elem.getMapn().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "pn" + ma;
+	}
 
 	@RequestMapping("phieu-nhap")
 	public String home(ModelMap model) {
@@ -77,9 +92,10 @@ public class PhieuNhapController {
 
 	public List<CT_PHIEUNHAP> removeDuplicate(List<String> matbs, List<Integer> soluongnhaps, List<Double> dongias,
 			PHIEUNHAP phieunhap) {
-		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1)
+		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1) {
+			msg += ", Vui lòng nhập đầy đủ chi tiết thiết bị !!!";
 			return null;
-		boolean kq = true;
+		}
 		// Gop phan tu bi trung ten
 		// Duyet tat ca phan tu
 		for (int i = 0; i < matbs.size() - 1; i++)
@@ -110,9 +126,7 @@ public class PhieuNhapController {
 			ct_pn.setDongia(dongias.get(i));
 			listCt_pn.add(ct_pn);
 		}
-
-		if (!kq)
-			return null;
+			
 		return listCt_pn;
 	}
 
@@ -130,6 +144,8 @@ public class PhieuNhapController {
 			System.out.println("khong du truong");
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
+			msg+= ", " + result.getAllErrors();
+			model.addFlashAttribute("msg", msg);
 			return new RedirectView("phieu-nhap");
 		}
 
@@ -149,15 +165,18 @@ public class PhieuNhapController {
 				thietbi_nhap.setTrangthai(LOCKED);
 				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
-				if (!kq)
+				if (!kq) {
+					msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 					break;
+				}
+					
 			}
 
 		}
 
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
-
+		model.addFlashAttribute("msg", msg);
 		System.out.println(phieunhap_them.getThoigiannhap());
 
 		return new RedirectView("phieu-nhap");
@@ -180,7 +199,6 @@ public class PhieuNhapController {
 	public RedirectView update(@ModelAttribute("phieunhap_them") @Valid PHIEUNHAP phieunhap_sua, BindingResult result,
 			@RequestParam("matb") List<String> matbs, @RequestParam("soluongnhap") List<Integer> soluongnhaps,
 			@RequestParam("dongia") List<Double> dongias, final RedirectAttributes model, HttpSession session) {
-		final String choXacNhan = "choXacNhan";
 		String LOCKED = "locked";
 		// Mặc định là thất bại
 		Boolean kq = false;
@@ -210,15 +228,17 @@ public class PhieuNhapController {
 				thietbi_nhap.setTrangthai(LOCKED);
 				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
-				if (!kq)
+				if (!kq) {
+					msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 					break;
+				}
 			}
 
 		}
 
 		// Hiển thị thông báo kết quả
 		model.addFlashAttribute("notify", kq);
-
+		model.addFlashAttribute("msg", msg);
 		return new RedirectView("../phieu-nhap");
 	}
 
@@ -229,10 +249,5 @@ public class PhieuNhapController {
 			return "false";
 		String kq = new PhieuNhapDAO().delete(factory, phieunhap).toString();
 		return kq;
-	}
-	@RequestMapping(value = "phieu-nhap/getSoluongton/{matb}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String getSoluongton(@PathVariable String matb) throws Exception {
-		THIETBI thietbi = new ThietBiDAO().getById2nhap(matb, factory);
-		return thietbi.getSoluong().toString();
 	}
 }

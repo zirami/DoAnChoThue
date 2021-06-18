@@ -17,7 +17,8 @@
 }
 </style>
 </head>
-<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
+<body
+	style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -42,8 +43,8 @@
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
-							<a href="#modal_pn_them" class="btn btn-info"
-								data-toggle="modal" type="button">NHẬP THIẾT BỊ</a>
+							<a href="#modal_pn_them" class="btn btn-info" data-toggle="modal"
+								type="button">NHẬP THIẾT BỊ</a>
 							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn"></a>
 						</div>
@@ -69,7 +70,8 @@
 							</thead>
 							<tbody>
 								<c:forEach var="ptl" items="${listPhieuThanhLy}">
-									<c:if test="${admin || current_user.equals(ptl.nhanvien_thanhly.manv)}">
+									<c:if
+										test="${admin || current_user.equals(ptl.nhanvien_thanhly.manv)}">
 										<tr>
 											<td class="table-plus mapn">${ptl.maptl}</td>
 											<td>${ptl.thoigian}</td>
@@ -160,7 +162,7 @@
 									thanh lý</label>
 								<div class="col-sm-4 col-md-8">
 									<input class="form-control" type="text" name="maptl"
-										placeholder="Nhập mã phiếu thanh lý" required />
+										value="${newID}" readonly="readonly" />
 								</div>
 							</div>
 							<div class="row">
@@ -211,7 +213,6 @@
 							<tr id="hidden-row" hidden=true>
 								<td>
 									<select class="form-control" name="matb">
-										<option value="">-Chọn thiết bị-</option>
 										<c:forEach var="tb" items="${listThietbi}">
 											<option value="${tb.matb}">${tb.ten}</option>
 										</c:forEach>
@@ -219,11 +220,13 @@
 								</td>
 								<td>
 									<input type="number" min="1" name="soluong"
-										class=" form-control" onchange="tinhtong($(this).parents('tbody'))" />
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
 								</td>
 								<td>
 									<input type="number" min="0" step="0.01" name="dongia"
-										class=" form-control" onchange="tinhtong($(this).parents('tbody'))" />
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
 								</td>
 								<td>
 									<a class="material-icons text-info btn-close-item  text-right"
@@ -245,7 +248,8 @@
 					<input type="hidden" name="trangthai" />
 					<button type="submit" class="btn btn-primary luu-btn">Lưu
 						tạm</button>
-					<button type="submit" class="btn btn-success them-btn">Thêm</button>
+					<input type="submit" hidden="hidden" />
+					<button type="button" class="btn btn-success them-btn">Thêm</button>
 				</div>
 			</form>
 		</div>
@@ -359,6 +363,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
+			order: [[ 1, "desc" ]],
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,
@@ -389,9 +394,25 @@
 		//CLICK NÚT THÊM PHIẾU NHẬP
 		$('.them-btn').on('click', function(){		
 			let trangthai = $(this).parent().find("input[name='trangthai']")
-			trangthai.val("daXacNhan")
-			$('#hidden-row').remove()
-			console.log(trangthai.val())
+			Swal.fire({
+				title: 'Xác nhận hoàn thành phiếu?',
+				text: "Dữ liệu sau khi xác nhận sẽ không thể chỉnh sửa!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#28a745',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Huỷ',
+				confirmButtonText: 'Xác Nhận',
+				reverseButtons: true
+			}).then((result) => {
+				//Nếu nút đồng ý được nhấn
+				if (result.isConfirmed) {
+					trangthai.val("duocXacNhan")
+					$('#hidden-row').remove()	
+					$(this).parent().find("input[type='submit']").click();
+					console.log(trangthai.val())
+				}
+			})
 		})
 		
 		//CLICK LƯU PHIẾU NHẬP
@@ -419,6 +440,36 @@
 				icon: 'error',
 			})
 		}
+	</script>
+	<script type="text/javascript">
+	function thietbi(matb, soluongton){
+		this.matb = matb;
+		this.soluongton = soluongton;
+	}
+	
+	let listSoluongton = [];
+	$('#listThietbi option').each(function(){
+		let matb = $(this).val();
+		listSoluongton.push(new thietbi(matb, 0))
+		getSoluongton(matb)
+	})
+
+	function getSoluongton(matb){
+		$.ajax({
+            type: "GET",
+            url: "${pageContext.servletContext.contextPath}/phieu-thanhly/getSoluongton/" + matb,    
+            success: function(data){
+            	listSoluongton.forEach(function(item, i){
+            		if(item.matb == matb) listSoluongton[i].soluongton = data
+            	})
+            	
+            }
+    	})
+	}
+		
+	</script>
+	<script type="text/javascript">
+		console.log(listSoluongton)
 	</script>
 </body>
 </html>

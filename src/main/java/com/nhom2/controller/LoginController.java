@@ -97,7 +97,7 @@ public class LoginController {
 		}
 		
 		//Sau các bước trên không lỗi thì đã đăng nhập thành công
-		model.addAttribute("failLogin", false);
+		model.remove("failLogin");
 		session.setAttribute("account_db", account_db);
 		//Nếu là admin thì đẩy về phieumuon
 		if (account_db.getPhanquyen().getMapq().equals("admin")) {

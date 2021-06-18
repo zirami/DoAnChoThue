@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.nhom2.DAO.PhieuNhapDAO;
 import com.nhom2.DAO.PhieuThanhLyDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.ACCOUNT;
@@ -75,6 +76,19 @@ public class PhieuThanhLyController {
 		model.addAttribute("current_user",account.getNhanviens().get(0).getManv());
 		return account.getNhanviens().get(0);
 	}
+	
+	@ModelAttribute("newID")
+	public String getRandomMa() {
+		List <PHIEUTHANHLY> list = new PhieuThanhLyDAO().getAll(factory);
+		int ma = 1;
+		for (PHIEUTHANHLY elem : list) {
+			String temp = "ptl"+ma;
+			if(elem.getMaptl().compareTo(temp)==0) {
+				ma=ma+1;
+			}
+		}
+		return "ptl" + ma;
+	}
 
 	@RequestMapping("phieu-thanhly")
 	public String home(ModelMap model) {
@@ -86,7 +100,7 @@ public class PhieuThanhLyController {
 	public List<CT_PHIEUTHANHLY> removeDuplicate(List<String> matbs, List<Integer> soluongnhaps, List<Double> dongias,
 			PHIEUTHANHLY phieuthanhly) {
 		if (matbs.size() < 1 || soluongnhaps.size() < 1 || dongias.size() < 1) {
-			msg += msg.isBlank()?", Vui lòng nhập đầy đủ chi tiết thiết bị !!!":"Vui lòng nhập đầy đủ chi tiết thiết bị !!!";
+			msg += ", Vui lòng nhập đầy đủ chi tiết thiết bị !!!";
 			return null;
 		}
 
@@ -170,8 +184,10 @@ public class PhieuThanhLyController {
 					THIETBI thietbi_thanhly = ct_ptl.getThietbi_thanhly();
 					thietbi_thanhly.setSoluong(thietbi_thanhly.getSoluong() - ct_ptl.getSoluong());
 					kq = new ThietBiDAO().update(factory, thietbi_thanhly);
-					if (!kq)
+					if (!kq) {
+						msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 						break;
+					}
 				}
 
 			}
@@ -236,8 +252,10 @@ public class PhieuThanhLyController {
 					THIETBI thietbi_thanhly = ct_ptl.getThietbi_thanhly();
 					thietbi_thanhly.setSoluong(thietbi_thanhly.getSoluong() - ct_ptl.getSoluong());
 					kq = new ThietBiDAO().update(factory, thietbi_thanhly);
-					if (!kq)
+					if (!kq) {
+						msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 						break;
+					}
 				}
 
 			}
