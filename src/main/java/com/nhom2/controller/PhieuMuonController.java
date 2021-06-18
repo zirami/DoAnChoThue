@@ -176,7 +176,8 @@ public class PhieuMuonController {
 
 //		// Thêm từng cái CT_ThietBi
 		
-
+		//Trường hợp có số lượng nhưng không chọn thiết bị, thông báo
+		boolean isEmptyThietBi=false;
 
 		int i = 1;
 		List<THIETBI> list = new ArrayList<>();
@@ -209,10 +210,22 @@ public class PhieuMuonController {
 				if (check == false)
 					list.add(tb_them);
 			}
+			if(thietBi == "" && slTB != null) {
+				isEmptyThietBi = true;
+				break;
+			}
 
 		}
 		
+		//Xử lí phần thiết bị rỗng hoặc ko có thiết bị
+		if(isEmptyThietBi) {
+			new PhieuMuonDAO().delete(factory, phieumuon_moi);
+			model.addAttribute("phieumuon_moi",phieumuon_moi);
+			model.addAttribute("emptyThietBi", true);
+			return home(model, session,rq);
+		}
 		if(list.isEmpty()) {
+			new PhieuMuonDAO().delete(factory, phieumuon_moi);
 			model.addAttribute("phieumuon_moi",phieumuon_moi);
 			model.addAttribute("emptyThietBi", true);
 			return home(model, session,rq);
@@ -321,6 +334,9 @@ public class PhieuMuonController {
 			return home(model, session,rq);
 		}
 		
+		//Trường hợp có số lượng nhưng không chọn thiết bị, thông báo
+		boolean isEmptyThietBi=false;
+		
 
         // Thêm từng cái CT_ThietBi
 		int i = 1;
@@ -354,6 +370,20 @@ public class PhieuMuonController {
 				if (check == false)
 					list.add(tb_them);
 			}
+			if(thietBi == "" && slTB != null) {
+				isEmptyThietBi = true;
+				break;
+			}
+
+		}
+		
+		//Xử lí phần thiết bị rỗng hoặc ko có thiết bị
+		if(isEmptyThietBi) {
+			model.addAttribute("emptyThietBi", true);
+		}
+		if(list.isEmpty()) {
+
+			model.addAttribute("emptyThietBi", true);
 
 		}
 		

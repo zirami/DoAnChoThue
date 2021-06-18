@@ -473,7 +473,12 @@
 
 	<script type="text/javascript">
 		//LOAD TABLE 
-		$('#myTable').DataTable();
+		$('#myTable').DataTable({
+			scrollCollapse: true,
+			autoWidth: false,
+			responsive: true,
+			order: [[0,"desc"]]
+		});
 			
 		
 		//NẾU CLICK NÚT XOÁ

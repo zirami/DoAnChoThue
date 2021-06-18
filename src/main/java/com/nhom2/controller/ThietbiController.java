@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -31,10 +30,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.nhom2.DAO.LoaiThietBiDAO;
-import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.LOAITHIETBI;
-import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
 @Transactional
@@ -51,7 +48,7 @@ public class ThietbiController {
 
 	public String getRandomMa() {
 		List<THIETBI> list = new ThietBiDAO().getAll(factory);
-		int ma = 0;
+		int ma = 1001;
 		for (THIETBI elem : list) {
 			String temp = "tb" + ma;
 			if (elem.getMatb().compareTo(temp) == 0) {
