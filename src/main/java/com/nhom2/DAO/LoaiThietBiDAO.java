@@ -97,7 +97,7 @@ public class LoaiThietBiDAO {
 	}
 
 	/* TÌM THIẾT BỊ BẰNG ID */
-	public LOAITHIETBI getById(String id, SessionFactory factory) {
+	public LOAITHIETBI getById(int i, SessionFactory factory) {
 		Session session;
 
 		/* Nếu chưa có session nào thì tạo session mới */
@@ -106,12 +106,12 @@ public class LoaiThietBiDAO {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "from LOAITHIETBI where matb = :id";
+		String hql = "from LOAITHIETBI where id = :id";
 
 		/* Bắt đầu quá trình truy vấn vào DB */
 
 		Query<LOAITHIETBI> query = session.createQuery(hql);
-		query.setParameter("id", id.toString());
+		query.setParameter("id", i);
 		LOAITHIETBI list = query.list().get(0); // Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 thiết bị
 		return list;
 	}

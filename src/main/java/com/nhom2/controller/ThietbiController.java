@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +46,8 @@ public class ThietbiController {
 
 	@Autowired
 	SessionFactory factory;
+
+	String msg = "Thao tác thất bại";
 
 	public String getRandomMa() {
 		List<THIETBI> list = new ThietBiDAO().getAll(factory);
@@ -203,39 +206,37 @@ public class ThietbiController {
 		Row row;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		boolean kq = true;
-		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+		for (int i = 1; i < sheet.getLastRowNum(); i++) {
 			row = (Row) sheet.getRow(i);
-			THIETBI thietbi = new THIETBI();
-			System.out.println(row.getCell(0));
-			System.out.println(row.getCell(1));
-			System.out.println(row.getCell(2));
+			THIETBI thietbi_them = new THIETBI();
+			thietbi_them.setMatb(getRandomMa());
+			thietbi_them.setTen(row.getCell(0).toString());
+			thietbi_them.setLoai(new LoaiThietBiDAO().getById((int) row.getCell(1).getNumericCellValue(), factory));
+			thietbi_them.setHinh(row.getCell(2).toString());
+			thietbi_them.setGhichu(row.getCell(3).toString());
+			thietbi_them.setSoluong(0);
+			thietbi_them.setTinhtrang("Còn Tốt");
+			thietbi_them.setTrangthai("unlocked");
 
-//			product.setProduct_id(getNewId());
-//			product.setNhanvien_id(nhanvien.getUsers_id());
-//			product.setProduct_name(row.getCell(0).toString());
-//			product.setProduct_price((int) row.getCell(1).getNumericCellValue());
-//			product.setProduct_discount((int) row.getCell(2).getNumericCellValue());
-//			product.setProduct_danhmuc((int) row.getCell(3).getNumericCellValue());
-//			product.setProduct_image(row.getCell(4).toString());
-//			product.setProduct_soluongtonkho((int) row.getCell(5).getNumericCellValue());
-//			product.setProduct_thuonghieu(row.getCell(6).toString());
-//			product.setProduct_sanxuat(row.getCell(7).toString());
-//			product.setProduct_thanhphan(row.getCell(8).toString());
-//			product.setProduct_thetich(row.getCell(9).toString());
-//			product.setProduct_baoquan(row.getCell(10).toString());
-//			product.setProduct_sudung(row.getCell(11).toString());
-//			product.setProduct_nsx(row.getCell(12).getLocalDateTimeCellValue().format(formatter).toString());
-//			product.setProduct_hsd(row.getCell(13).getLocalDateTimeCellValue().format(formatter).toString());
-//			product.setMaNCC((int) Double.parseDouble(row.getCell(14).toString()));
-//			product.setProduct_content(row.getCell(15).toString());
-//			kq = _pro.save(product);
-//			if (kq)
-//				new phieunhapDao().themVaoPhieuNhap(product);
-//			else
-//				break;
+			if (checkThietbi(thietbi_them)) {
+				kq = false;
+				break;
+			}
+
+			kq = new ThietBiDAO().save(factory, thietbi_them);
+			System.out.println(thietbi_them);
+			if (!kq)
+				break;
 		}
 		model.addFlashAttribute("insert", kq);
+		model.addFlashAttribute("msg", msg);
 		return new RedirectView("thiet-bi");
+	}
+
+	private boolean checkThietbi(THIETBI thietbi) {
+		if (thietbi.getTen().isBlank() || thietbi.getLoai().getId().equals(null) || thietbi.getHinh().isBlank())
+			return true;
+		return false;
 	}
 
 }
