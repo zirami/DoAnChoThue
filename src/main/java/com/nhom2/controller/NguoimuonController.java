@@ -93,6 +93,12 @@ public class NguoimuonController {
 
 		if (reusult.hasErrors())
 			return home(model);
+		if(nguoimuon_moi.getSdt().length()>10||nguoimuon_moi.getSdt().length()<10 ||
+				nguoimuon_moi.getCmnd().length()>12 || nguoimuon_moi.getCmnd().length()<9) {
+			model.addAttribute("nguoimuon_moi", nguoimuon_moi);
+			model.addAttribute("insert", false);
+			return home(model);
+		}
 
 		model.addAttribute("insert", new NguoiMuonDAO().save(factory, nguoimuon_moi)); // Xử lý thông báo thêm thành
 																						// công
@@ -120,6 +126,14 @@ public class NguoimuonController {
 			if (reusult.hasErrors())
 				return home(model);
 
+			if(nguoimuon_sua.getSdt().length()>10||nguoimuon_sua.getSdt().length()<10 ||
+					nguoimuon_sua.getCmnd().length()>12 || nguoimuon_sua.getCmnd().length()<9) {
+				model.addAttribute("nguoimuon_sua", nguoimuon_sua);
+				model.addAttribute("insert", false);
+				return home(model);
+			}
+			
+			
 			model.addAttribute("update", new NguoiMuonDAO().update(factory, nguoimuon_sua));
 			return home(model);
 		}

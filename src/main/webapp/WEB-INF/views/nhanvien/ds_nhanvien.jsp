@@ -188,7 +188,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-3 col-form-label">SDT</label>
 								<div class="col-sm-12 col-md-8">
-									<input name="sdt" class="form-control" type="text"
+									<input name="sdt" class="form-control" type="number" onkeydown="limit_sdt(this);" onkeyup="limit_sdt(this);"
 										placeholder="Số điện thoại" required="required"/>
 								</div>
 							</div>
@@ -254,7 +254,7 @@
 								<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
 								<div class="col-sm-12 col-md-8">
 <%-- 									<form:errors path="cmnd" /> --%>
-									<form:input path="cmnd" class="form-control" type="text"
+									<form:input path="cmnd" class="form-control" type="number" onkeydown="limit_cmnd(this);" onkeyup="limit_cmnd(this);"
 										placeholder="Nhập chứng minh nhân dân" required="required"/>
 								</div>
 							</div>
@@ -395,7 +395,7 @@
 								<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="cmnd" />
-									<form:input path="cmnd" class="form-control" type="text"
+									<form:input path="cmnd" class="form-control" type="number" onkeydown="limit_cmnd(this);" onkeyup="limit_cmnd(this);"
 										placeholder="Nhập chứng minh nhân dân" />
 								</div>
 							</div>
@@ -412,7 +412,7 @@
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-3 col-form-label">SDT</label>
 								<div class="col-sm-12 col-md-8">
-									<form:input path="acc.sdt" class="form-control" type="text"
+									<form:input path="acc.sdt" class="form-control" type="number" onkeydown="limit_sdt(this);" onkeyup="limit_sdt(this);"
 										placeholder="Số điện thoại" />
 								</div>
 							</div>
@@ -541,6 +541,22 @@
 				text: content+" đã tồn tại!",
 				icon: 'error',
 			})
+		}
+		function limit_cmnd(element)
+		{
+		    var max_chars = 12;
+
+		    if(element.value.length > max_chars) {
+		        element.value = element.value.substr(0, max_chars);
+		    }
+		}
+		function limit_sdt(element)
+		{
+		    var max_chars = 10;
+
+		    if(element.value.length > max_chars) {
+		        element.value = element.value.substr(0, max_chars);
+		    }
 		}
 	</script>
 </body>

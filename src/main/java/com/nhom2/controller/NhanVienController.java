@@ -89,6 +89,13 @@ public class NhanVienController {
 		model.addAttribute("nhanvien_moi", nhanvien_moi);
 		if (reusult.hasErrors())
 			return home(model);
+		
+		if(nhanvien_moi.getCmnd().length()>12 || nhanvien_moi.getCmnd().length()<9 || sdt.length()>10 || sdt.length()<10) {
+			model.addAttribute("nhanvien_moi", nhanvien_moi);
+			model.addAttribute("insert", false);
+			return home(model);
+		}
+		
 		if (photo.isEmpty()) {
 			model.addAttribute("insert", false);
 			model.addAttribute("nhanvien_moi", nhanvien_moi);
@@ -154,6 +161,13 @@ public class NhanVienController {
 		model.addAttribute("nhanvien_sua", nhanvien_sua);
 		if (reusult.hasErrors())
 			return home(model);
+		
+		if(nhanvien_sua.getCmnd().length()>12 || nhanvien_sua.getCmnd().length()<9 || nhanvien_sua.getAcc().getSdt().length()>10 || nhanvien_sua.getAcc().getSdt().length()<10) {
+			model.addAttribute("nhanvien_sua", nhanvien_sua);
+			model.addAttribute("insert", false);
+			return home(model);
+		}
+		
 		if (photo.isEmpty()) {
 			ACCOUNT account_sua = nhanvien_sua.getAcc();
 			account_sua.setGmail(nhanvien_sua.getAcc().getGmail());
