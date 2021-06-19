@@ -223,12 +223,12 @@
 										<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="cmnd" />
-											<form:input path="cmnd" class="form-control" type="text"
+											<form:input path="cmnd" class="form-control" type="number" onkeydown="limit_cmnd(this);" onkeyup="limit_cmnd(this);"
 												placeholder="Nhập chứng minh nhân dân" required="required" />
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-12 col-md-3 col-form-label">email</label>
+										<label class="col-sm-12 col-md-3 col-form-label">Email</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="gmail" />
 											<form:input path="gmail" class="form-control" type="email"
@@ -240,7 +240,7 @@
 											điện thoại</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="sdt" />
-											<form:input path="sdt" class="form-control" type="text"
+											<form:input path="sdt" class="form-control" type="number" onkeydown="limit_sdt(this);" onkeyup="limit_sdt(this);"
 												placeholder="Nhập số điện thoại" required="required" />
 										</div>
 									</div>
@@ -370,7 +370,7 @@
 										<label class="col-sm-12 col-md-3 col-form-label">CMND</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="cmnd" />
-											<form:input path="cmnd" class="form-control" type="text"
+											<form:input path="cmnd" class="form-control" type="number" onkeydown="limit_cmnd(this);" onkeyup="limit_cmnd(this);"
 												placeholder="Nhập chứng minh nhân dân" required="required" />
 										</div>
 									</div>
@@ -387,7 +387,7 @@
 											điện thoại</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="sdt" />
-											<form:input path="sdt" class="form-control" type="text"
+											<form:input path="sdt" class="form-control" type="number" onkeydown="limit_sdt(this);" onkeyup="limit_sdt(this);"
 												placeholder="Nhập số điện thoại" required="required" />
 										</div>
 									</div>
@@ -519,6 +519,22 @@
 				text: content+" thất bại!",
 				icon: 'error',
 			})
+		}
+		function limit_cmnd(element)
+		{
+		    var max_chars = 12;
+
+		    if(element.value.length > max_chars) {
+		        element.value = element.value.substr(0, max_chars);
+		    }
+		}
+		function limit_sdt(element)
+		{
+		    var max_chars = 10;
+
+		    if(element.value.length > max_chars) {
+		        element.value = element.value.substr(0, max_chars);
+		    }
 		}
 	</script>
 </body>

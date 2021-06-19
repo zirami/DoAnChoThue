@@ -1,6 +1,8 @@
 package com.nhom2.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,14 +94,18 @@ public class NhanVienController {
 			model.addAttribute("nhanvien_moi", nhanvien_moi);
 			return home(model);
 		} else {
-			try {
 
-				String photoPath = rq.getServletContext()
-						.getRealPath("/resources/files/" + photo.getOriginalFilename());
+				String path = rq.getServletContext().getRealPath("");
+				path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
+						+ "\\src\\main\\webapp\\resources\\files\\";
+				saveFile(path, photo, rq);
+//				String photoPath = rq.getServletContext()
+//						.getRealPath("/resources/files/" + photo.getOriginalFilename());
 
-				photo.transferTo(new File(photoPath));
+//				photo.transferTo(new File(photoPath));
 
 //				model.addAttribute("photo_name", photo.getOriginalFilename());
+				
 				nhanvien_moi.setHinh(photo.getOriginalFilename());
 				ACCOUNT account_moi = new ACCOUNT();
 				account_moi.setGmail(gmail);
@@ -125,11 +131,6 @@ public class NhanVienController {
 																								// thành công
 				return home(model);
 
-			} catch (Exception e) {
-				model.addAttribute("insert", false);
-				model.addAttribute("nhanvien_moi", nhanvien_moi);
-				return home(model);
-			}
 		}
 	}
 
@@ -160,7 +161,7 @@ public class NhanVienController {
 			
 			PHANQUYEN qp = new PHANQUYEN();
 
-			if(nhanvien_sua.getIsadmin().compareTo("yes")==0) {
+			if(nhanvien_sua.getIsadmin()!=null) {
 				qp.setMapq("admin");
 			}
 			else {
@@ -177,13 +178,14 @@ public class NhanVienController {
 			model.addAttribute("nhanvien_sua", new NHANVIEN());
 			return home(model);
 		} else {
-			try {
 
-				String photoPath = rq.getServletContext().getRealPath("/resources/files/" + photo.getOriginalFilename());
-				photo.transferTo(new File(photoPath));
+				String path = rq.getServletContext().getRealPath("");
 
-//			model.addAttribute("photo_name", photo.getOriginalFilename());
-				nhanvien_sua.setHinh(photo.getOriginalFilename());
+				path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
+						+ "\\src\\main\\webapp\\resources\\files\\";
+				int kqSave = saveFile(path, photo, rq);
+				if (kqSave > 0)
+					nhanvien_sua.setHinh(photo.getOriginalFilename());
 				ACCOUNT account_sua = nhanvien_sua.getAcc();
 				account_sua.setGmail(nhanvien_sua.getAcc().getGmail());
 				account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
@@ -200,11 +202,6 @@ public class NhanVienController {
 				model.addAttribute("nhanvien_sua", new NHANVIEN());
 				return home(model);
 
-			} catch (Exception e) {
-				model.addAttribute("update", false);
-				model.addAttribute("nhanvien_sua", nhanvien_sua);
-				return home(model);
-			}
 		}
 	}
 
@@ -215,5 +212,25 @@ public class NhanVienController {
 		nhanvien_xoa.setManv(manv);
 		model.addAttribute("delete", new NhanVienDAO().del(factory, nhanvien_xoa));
 		return home(model);
+	}
+	private int saveFile(String path, MultipartFile photo, HttpServletRequest rq) {
+		if (!photo.isEmpty()) {
+			try {
+
+				String photoPath = rq.getServletContext()
+						.getRealPath("/resources/files/" + photo.getOriginalFilename());
+				byte[] bytes = photo.getBytes();
+				BufferedOutputStream outstream = new BufferedOutputStream(new FileOutputStream(new File(photoPath)));
+				outstream.write(bytes);
+				outstream.flush();
+				outstream.close();
+				photo.transferTo(new File(path + photo.getOriginalFilename()));
+				return 1; // thành công
+			} catch (Exception e) {
+				e.printStackTrace();
+				return -1; // lỗi
+			}
+		}
+		return 0; // edit không chọn hình thì giữ lại hình gốc
 	}
 }

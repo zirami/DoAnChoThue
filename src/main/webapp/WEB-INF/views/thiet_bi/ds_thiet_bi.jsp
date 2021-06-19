@@ -60,7 +60,7 @@
 							<thead class="table-info">
 								<tr>
 									<th>Hình ảnh</th>
-									<th class="table-plus datatable-nosort">Mã thiết bị</th>
+									<th class="table-plus">Mã thiết bị</th>
 									<th>Tên Thiết Bị</th>
 									<th>Loại</th>
 									<th>Số Lượng tồn</th>
