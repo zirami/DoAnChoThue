@@ -117,6 +117,23 @@ public class NguoiMuonDAO {
 		// Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 thiết bị
 		return list;
 	}
+	public String chuanHoa(String str) {
+        str = str.trim();
+        str = str.replaceAll("\\s+", " ");
+        return str;
+    }
+	public String chuanHoaTen(String str) {
+
+		  str = chuanHoa(str);
+	        String temp[] = str.split(" ");
+	        str = ""; // ? ^-^
+	        for (int i = 0; i < temp.length; i++) {
+	            str += String.valueOf(temp[i].charAt(0)).toUpperCase() + temp[i].substring(1).toLowerCase();
+	            if (i < temp.length - 1) // ? ^-^
+	                str += " ";
+	        }
+	        return str;
+	}
 
 }
 

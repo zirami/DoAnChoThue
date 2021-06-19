@@ -88,6 +88,7 @@ public class ThietbiController {
 	}
 
 	// DANH SÁCH TÌNH TRẠNG ĐỂ SELECT
+
 	@ModelAttribute("tinhTrangs")
 	public List<String> getTinhTrangs() {
 		List<String> list = new ArrayList<>();

@@ -86,9 +86,9 @@ public class LoginController {
 			System.out.println("username không tồn tại");
 			return login(model, session);
 		}
-		
+		String passwordHash = new AccountDAO().getMd5(account_login.getPassword());
 		//Nếu sai mật khẩu
-		if (account_login.getPassword().equals(account_db.getPassword()) == false) {
+		if (passwordHash.equals(account_db.getPassword()) == false) {
 			//Thông báo ngoài view - chưa làm
 			model.addAttribute("message", "Mật khẩu không chính xác !");
 			model.addAttribute("failLogin", true);
@@ -195,6 +195,9 @@ public class LoginController {
 			@RequestParam("confirmPassword") String confirmPassword) {
 		if (modify_account.getPassword().compareTo(confirmPassword) == 0) {
 			modify_account = new AccountDAO().getById(modify_account.getUsername(), factory);
+			
+			confirmPassword = new AccountDAO().getMd5(confirmPassword);
+			
 			modify_account.setPassword(confirmPassword);
 			Session session = factory.openSession();
 			Transaction t = session.beginTransaction();

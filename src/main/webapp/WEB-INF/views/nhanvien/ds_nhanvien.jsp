@@ -152,7 +152,7 @@
 								<label class="col-sm-12 col-md-3 col-form-label">Mã QL</label>
 								<div class="col-sm-12 col-md-8">
 <%-- 									<form:errors path="ql.maql" /> --%>
-									<form:input path="ql.maql" class="form-control" type="text"
+									<form:input path="ql.maql" class="form-control" type="text" value="${maQuanLi }"
 										placeholder="Nhập mã quản lí" required="required"/>
 								</div>
 							</div>
@@ -179,7 +179,7 @@
 								<label class="col-sm-12 col-md-3 col-form-label">Gmail
 									</label>
 								<div class="col-sm-12 col-md-8">
-									<input name="gmail" class="form-control" type="text"
+									<input name="gmail" class="form-control" type="email"
 										placeholder="Nhập Gmail" required="required"/>
 <%-- 									<form:errors path="gmail" /> --%>
 								</div>
@@ -304,7 +304,7 @@
 									<img src="resources/files/${nhanvien_sua.hinh}"	>
 									<input name="photo" class="form-control" type="file" placeholder="Chọn ảnh khác"/>
 									<form:input path="hinh" class="form-control"
-												style="display: none" />
+												style="display: none"/>
 								</div>
 							</div>
 							
@@ -322,7 +322,7 @@
 									</label>
 								<div class="col-sm-12 col-md-8">
 									<form:input path="acc.password" class="form-control" type="password"
-										placeholder="Nhập password" />
+										placeholder="Nhập password" required="required"/>
 <%-- 									<form:errors path="password" /> --%>
 								</div>
 							</div>
@@ -331,7 +331,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="ql.maql" />
 									<form:input path="ql.maql" class="form-control" type="text"
-										placeholder="Nhập mã quản lí"/>
+										placeholder="Nhập mã quản lí" required="required"/>
 								</div>
 							</div>
 							</div>
@@ -341,7 +341,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="manv" />
 									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên"  style="display: none"/>
+										placeholder="Nhập mã nhân viên"  style="display: none" required="required"/>
 									<input class="form-control" type="text" placeholder="${nhanvien_sua.manv}" readonly>
 								</div>
 							</div>
@@ -350,7 +350,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="ho" />
 									<form:input class="form-control" type="text" path="ho"
-										placeholder="Nhập họ và chữ lót" />
+										placeholder="Nhập họ và chữ lót" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -358,7 +358,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="ten" />
 									<form:input class="form-control" type="text" path="ten"
-										placeholder="Nhập tên" />
+										placeholder="Nhập tên" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -367,7 +367,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="gioitinh" />
 									<form:select path="gioitinh" class="selectpicker form-control"
-										style="width: 100%; height: 38px;">
+										style="width: 100%; height: 38px;" required="required">
 										<form:option value="" label="-Vui lòng chọn 1-" />
 										<form:options items="${gioiTinhs}" />
 									</form:select>
@@ -380,7 +380,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="ngaysinh" />
 									<form:input class="form-control" path="ngaysinh"
-										placeholder="Chọn ngày sinh" type="date" />
+										placeholder="Chọn ngày sinh" type="date" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -388,7 +388,7 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="diachi" />
 									<form:input class="form-control" type="text" path="diachi"
-										placeholder="Nhập địa chỉ" />
+										placeholder="Nhập địa chỉ" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -396,15 +396,15 @@
 								<div class="col-sm-12 col-md-8">
 									<form:errors path="cmnd" />
 									<form:input path="cmnd" class="form-control" type="number" onkeydown="limit_cmnd(this);" onkeyup="limit_cmnd(this);"
-										placeholder="Nhập chứng minh nhân dân" />
+										placeholder="Nhập chứng minh nhân dân" required="required"/>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-3 col-form-label">Gmail
 									</label>
 								<div class="col-sm-12 col-md-8">
-									<form:input path="acc.gmail" class="form-control" type="text"
-										placeholder="Nhập Gmail" />
+									<form:input path="acc.gmail" class="form-control" type="email"
+										placeholder="Nhập Gmail" required="required"/>
 <%-- 									<form:errors path="gmail" /> --%>
 								</div>
 							</div>
@@ -413,7 +413,7 @@
 								<label class="col-sm-12 col-md-3 col-form-label">SDT</label>
 								<div class="col-sm-12 col-md-8">
 									<form:input path="acc.sdt" class="form-control" type="number" onkeydown="limit_sdt(this);" onkeyup="limit_sdt(this);"
-										placeholder="Số điện thoại" />
+										placeholder="Số điện thoại" required="required"/>
 								</div>
 							</div>
 							</div>

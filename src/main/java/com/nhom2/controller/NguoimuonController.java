@@ -99,6 +99,9 @@ public class NguoimuonController {
 			model.addAttribute("insert", false);
 			return home(model);
 		}
+		
+		nguoimuon_moi.setTen( new NguoiMuonDAO().chuanHoaTen(nguoimuon_moi.getTen()));
+		nguoimuon_moi.setHo( new NguoiMuonDAO().chuanHoaTen(nguoimuon_moi.getHo()));
 
 		model.addAttribute("insert", new NguoiMuonDAO().save(factory, nguoimuon_moi)); // Xử lý thông báo thêm thành
 																						// công
@@ -117,26 +120,27 @@ public class NguoimuonController {
 		return home(model);
 	}
 
-		// UPDATE
-		@RequestMapping(value = "qlnguoimuon/update", method = RequestMethod.POST)
-		public String update(ModelMap model, @Valid @ModelAttribute("nguoimuon_sua") NGUOIMUON nguoimuon_sua, BindingResult reusult) {
-			System.out.println("has error: " + reusult.getFieldErrors().toString());
-			model.addAttribute("sua_saidinhdang", reusult.hasErrors());
-			model.addAttribute("nguoimuon_sua", nguoimuon_sua);
-			if (reusult.hasErrors())
-				return home(model);
+	// UPDATE
+	@RequestMapping(value = "qlnguoimuon/update", method = RequestMethod.POST)
+	public String update(ModelMap model, @Valid @ModelAttribute("nguoimuon_sua") NGUOIMUON nguoimuon_sua, BindingResult reusult) {
+		System.out.println("has error: " + reusult.getFieldErrors().toString());
+		model.addAttribute("sua_saidinhdang", reusult.hasErrors());
+		model.addAttribute("nguoimuon_sua", nguoimuon_sua);
+		if (reusult.hasErrors())
+			return home(model);
 
-			if(nguoimuon_sua.getSdt().length()>10||nguoimuon_sua.getSdt().length()<10 ||
-					nguoimuon_sua.getCmnd().length()>12 || nguoimuon_sua.getCmnd().length()<9) {
-				model.addAttribute("nguoimuon_sua", nguoimuon_sua);
-				model.addAttribute("insert", false);
-				return home(model);
-			}
-			
-			
-			model.addAttribute("update", new NguoiMuonDAO().update(factory, nguoimuon_sua));
+		if(nguoimuon_sua.getSdt().length()>10||nguoimuon_sua.getSdt().length()<10 ||
+				nguoimuon_sua.getCmnd().length()>12 || nguoimuon_sua.getCmnd().length()<9) {
+			model.addAttribute("nguoimuon_sua", nguoimuon_sua);
+			model.addAttribute("insert", false);
 			return home(model);
 		}
+		nguoimuon_sua.setTen( new NguoiMuonDAO().chuanHoaTen(nguoimuon_sua.getTen()));
+		nguoimuon_sua.setHo( new NguoiMuonDAO().chuanHoaTen(nguoimuon_sua.getHo()));
+		
+		model.addAttribute("update", new NguoiMuonDAO().update(factory, nguoimuon_sua));
+		return home(model);
+	}
 
 	@RequestMapping(value = "qlnguoimuon/delete", method = RequestMethod.POST)
 	public String del(ModelMap model, @RequestParam("manm") String manm) {

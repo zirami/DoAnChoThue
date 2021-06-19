@@ -108,8 +108,13 @@ public class AccountController {
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword,
 			HttpSession session) {
 		ACCOUNT testAccount = new AccountDAO().getById(accountChange.getUsername(), factory);
+		
+		String passwordHash = new AccountDAO().getMd5(accountChange.getPassword());
+		
 		if(testAccount!=null) {
-			if(confirmPassword.compareTo(newPassword)==0 && testAccount.getPassword().compareTo(accountChange.getPassword())==0) {
+			if(confirmPassword.compareTo(newPassword)==0 && testAccount.getPassword().compareTo(passwordHash)==0) {
+				confirmPassword = new AccountDAO().getMd5(confirmPassword);
+						
 				testAccount.setPassword(confirmPassword);
 				new AccountDAO().update(factory, testAccount);
 				model.addAttribute("changeSuccess", true);

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nhom2.DAO.AccountDAO;
+import com.nhom2.DAO.NguoiMuonDAO;
 import com.nhom2.DAO.NhanVienDAO;
 import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
@@ -55,6 +56,12 @@ public class NhanVienController {
 	@ModelAttribute("nhanvien_moi")
 	public NHANVIEN nhanvien_moi() {
 		return new NHANVIEN();
+	}
+	
+	@ModelAttribute("maQuanLi")
+	public String maQuanLi() {
+		
+		return "ql1";
 	}
 
 	@ModelAttribute("nhanvien_sua")
@@ -116,6 +123,7 @@ public class NhanVienController {
 				nhanvien_moi.setHinh(photo.getOriginalFilename());
 				ACCOUNT account_moi = new ACCOUNT();
 				account_moi.setGmail(gmail);
+				password = new AccountDAO().getMd5(password);
 				account_moi.setPassword(password);
 				PHANQUYEN qp = new PHANQUYEN();
 				//Do chỉ có 1 admin nên chỗ này sẽ set là staff. Sau này thêm nhiều quản lí thì sẽ thêm tính năng setMapq
@@ -134,6 +142,9 @@ public class NhanVienController {
 				new AccountDAO().save(factory, account_moi);
 
 				nhanvien_moi.setAcc(account_moi);
+				nhanvien_moi.setTen( new NguoiMuonDAO().chuanHoaTen(nhanvien_moi.getTen()));
+				nhanvien_moi.setHo( new NguoiMuonDAO().chuanHoaTen(nhanvien_moi.getHo()));
+				
 				model.addAttribute("insert", new NhanVienDAO().save(factory, nhanvien_moi)); // Xử lý thông báo thêm
 																								// thành công
 				return home(model);
@@ -168,15 +179,24 @@ public class NhanVienController {
 			return home(model);
 		}
 		
+		NHANVIEN nhanvien_db = new NhanVienDAO().getById(nhanvien_sua.getManv(), factory);
+		
 		if (photo.isEmpty()) {
 			ACCOUNT account_sua = nhanvien_sua.getAcc();
 			account_sua.setGmail(nhanvien_sua.getAcc().getGmail());
-			account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
+			if(nhanvien_db.getAcc().getPassword().compareTo(nhanvien_sua.getAcc().getPassword())==0){
+				account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
+			}
+			else {
+				String password = new AccountDAO().getMd5(nhanvien_sua.getAcc().getPassword());
+				account_sua.setPassword(password);
+			}
 			
 			PHANQUYEN qp = new PHANQUYEN();
 
-			if(nhanvien_sua.getIsadmin()!=null) {
+			if(nhanvien_db.getIsadmin()!=null) {
 				qp.setMapq("admin");
+				nhanvien_sua.setIsadmin("yes");
 			}
 			else {
 				qp.setMapq("staff");
@@ -188,6 +208,10 @@ public class NhanVienController {
 			new AccountDAO().update(factory, account_sua);
 
 			nhanvien_sua.setAcc(account_sua);
+			
+			nhanvien_sua.setTen( new NguoiMuonDAO().chuanHoaTen(nhanvien_sua.getTen()));
+			nhanvien_sua.setHo( new NguoiMuonDAO().chuanHoaTen(nhanvien_sua.getHo()));
+			
 			model.addAttribute("update", new NhanVienDAO().update(factory, nhanvien_sua)); // Xử lý thông báo thêm thành																			// công
 			model.addAttribute("nhanvien_sua", new NHANVIEN());
 			return home(model);
@@ -202,9 +226,23 @@ public class NhanVienController {
 					nhanvien_sua.setHinh(photo.getOriginalFilename());
 				ACCOUNT account_sua = nhanvien_sua.getAcc();
 				account_sua.setGmail(nhanvien_sua.getAcc().getGmail());
-				account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
+				
+				if(nhanvien_db.getAcc().getPassword().compareTo(nhanvien_sua.getAcc().getPassword())==0){
+					account_sua.setPassword(nhanvien_sua.getAcc().getPassword());
+				}
+				else {
+					String password = new AccountDAO().getMd5(nhanvien_sua.getAcc().getPassword());
+					account_sua.setPassword(password);
+				}
+				
 				PHANQUYEN qp = new PHANQUYEN();
-				qp.setMapq("staff");
+				if(nhanvien_db.getIsadmin()!=null) {
+					qp.setMapq("admin");
+					nhanvien_sua.setIsadmin("yes");
+				}
+				else {
+					qp.setMapq("staff");
+				}
 				account_sua.setPhanquyen(qp);
 				account_sua.setSdt(nhanvien_sua.getAcc().getSdt());
 				account_sua.setUsername(nhanvien_sua.getAcc().getUsername());
@@ -212,6 +250,10 @@ public class NhanVienController {
 				new AccountDAO().update(factory, account_sua);
 
 				nhanvien_sua.setAcc(account_sua);
+				
+				nhanvien_sua.setTen( new NguoiMuonDAO().chuanHoaTen(nhanvien_sua.getTen()));
+				nhanvien_sua.setHo( new NguoiMuonDAO().chuanHoaTen(nhanvien_sua.getHo()));
+				
 				model.addAttribute("update", new NhanVienDAO().update(factory, nhanvien_sua));
 				model.addAttribute("nhanvien_sua", new NHANVIEN());
 				return home(model);
@@ -222,11 +264,20 @@ public class NhanVienController {
 	@RequestMapping(value = "qlnhanvien/delete", method = RequestMethod.POST)
 	public String del(ModelMap model, @RequestParam("manv") String manv) {
 		System.out.println("manv = " + manv);
+		
 		NHANVIEN nhanvien_xoa = new NHANVIEN();
 		nhanvien_xoa.setManv(manv);
+		NHANVIEN nhanvien = new NHANVIEN();
+		nhanvien = new NhanVienDAO().getById(manv, factory);
+		ACCOUNT account_xoa = new ACCOUNT();
+		account_xoa.setUsername(nhanvien.getAcc().getUsername());
 		model.addAttribute("delete", new NhanVienDAO().del(factory, nhanvien_xoa));
+
+		model.addAttribute("delete", new AccountDAO().del(factory, account_xoa));
+		
 		return home(model);
 	}
+	
 	private int saveFile(String path, MultipartFile photo, HttpServletRequest rq) {
 		if (!photo.isEmpty()) {
 			try {
