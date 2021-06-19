@@ -1,13 +1,14 @@
 package com.nhom2.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -29,10 +30,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.nhom2.DAO.LoaiThietBiDAO;
-import com.nhom2.DAO.PhieuMuonDAO;
 import com.nhom2.DAO.ThietBiDAO;
 import com.nhom2.entity.LOAITHIETBI;
-import com.nhom2.entity.PHIEUMUON;
 import com.nhom2.entity.THIETBI;
 
 @Transactional
@@ -110,23 +109,16 @@ public class ThietbiController {
 		String path = rq.getServletContext().getRealPath("");
 		path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
 				+ "\\src\\main\\webapp\\resources\\files\\";
-		if (!photo.isEmpty()) {
-			try {
-
-				String photoPath = rq.getServletContext()
-						.getRealPath("/resources/files/" + photo.getOriginalFilename());
-
-				photo.transferTo(new File(photoPath));
-				photo.transferTo(new File(path + photo.getOriginalFilename()));
-
-				thietbi_moi.setHinh(photo.getOriginalFilename());
-
-			} catch (Exception e) {
-				model.addAttribute("update", false);
-				e.printStackTrace();
-				return home(model);
-			}
+		int kqSave = saveFile(path, photo, rq);
+		if (kqSave > 0)
+			thietbi_moi.setHinh(photo.getOriginalFilename());
+		else if (kqSave < 0 || photo.isEmpty()) {
+			model.addAttribute("insert", false); // Xử lý thông báo thất bại
+			return home(model);
 		}
+		thietbi_moi.setSoluong(0);
+		thietbi_moi.setTrangthai(UNLOCKED);
+		thietbi_moi.setTinhtrang("Còn Tốt");
 		model.addAttribute("insert", new ThietBiDAO().save(factory, thietbi_moi));
 		return home(model);
 	}
@@ -151,31 +143,40 @@ public class ThietbiController {
 		if (reusult.hasErrors())
 			return new RedirectView("../thiet-bi");
 		String path = rq.getServletContext().getRealPath("");
+
 		path = path.substring(0, path.indexOf(".metadata")) + "\\" + rq.getServletContext().getContextPath()
 				+ "\\src\\main\\webapp\\resources\\files\\";
+		int kqSave = saveFile(path, photo, rq);
+		if (kqSave > 0)
+			thietbi_sua.setHinh(photo.getOriginalFilename());
+		else if (kqSave < 0) {
+			model.addFlashAttribute("update", false); // Xử lý thông báo thất bại
+			return new RedirectView("../thiet-bi");
+		}
+		model.addFlashAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thành công
+
+		return new RedirectView("../thiet-bi");
+	}
+
+	private int saveFile(String path, MultipartFile photo, HttpServletRequest rq) {
 		if (!photo.isEmpty()) {
 			try {
 
 				String photoPath = rq.getServletContext()
 						.getRealPath("/resources/files/" + photo.getOriginalFilename());
-
-				photo.transferTo(new File(photoPath));
+				byte[] bytes = photo.getBytes();
+				BufferedOutputStream outstream = new BufferedOutputStream(new FileOutputStream(new File(photoPath)));
+				outstream.write(bytes);
+				outstream.flush();
+				outstream.close();
 				photo.transferTo(new File(path + photo.getOriginalFilename()));
-
-				thietbi_sua.setHinh(photo.getOriginalFilename());
-
+				return 1; // thành công
 			} catch (Exception e) {
-				model.addFlashAttribute("update", false);
 				e.printStackTrace();
-				return new RedirectView("../thiet-bi");
+				return -1; // lỗi
 			}
 		}
-
-		model.addFlashAttribute("update", new ThietBiDAO().update(factory, thietbi_sua)); // Xử lý thông báo thêm
-		// thành
-		// công
-		model.addFlashAttribute("thietbi_sua", new THIETBI());
-		return new RedirectView("../thiet-bi");
+		return 0; // edit không chọn hình thì giữ lại hình gốc
 	}
 
 	// DELETE

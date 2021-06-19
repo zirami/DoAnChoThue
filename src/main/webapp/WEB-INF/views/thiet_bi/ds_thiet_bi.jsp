@@ -9,7 +9,8 @@
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
 <%@include file="/common/loadcss.jsp"%>
 </head>
-<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
+<body
+	style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
 	<div class="mobile-menu-overlay"></div>
@@ -25,7 +26,8 @@
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
 									</li>
 									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
@@ -36,12 +38,12 @@
 						<div class="col-md-6 col-sm-12 text-right">
 							<form action="import-excel" method="post"
 								enctype="multipart/form-data">
-								<input type="file" hidden="true" name="file" /> <input
-									type="submit" hidden="true">
+								<input type="file" hidden="true" name="file" />
+								<input type="submit" hidden="true">
 							</form>
-							<a href="thiet-bi" class="btn btn-info" type="button">Làm mới </a>
-							<button class="btn btn-info import-excel">Import
-								Excel</button>
+							<a href="thiet-bi" class="btn btn-info" type="button">Làm mới
+							</a>
+							<button class="btn btn-info import-excel">Import Excel</button>
 							<a href="#" id="insert_btn" class="btn  btn-info"
 								data-toggle="modal" data-target="#bd-example-modal-lg"
 								type="button">THÊM THIẾT BỊ MỚI </a>
@@ -56,7 +58,6 @@
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap" id="myTable">
 							<thead class="table-info">
-							
 								<tr>
 									<th>Hình ảnh</th>
 									<th class="table-plus datatable-nosort">Mã thiết bị</th>
@@ -70,19 +71,28 @@
 							<tbody>
 								<c:forEach var="thietbi" items="${listThietbi}">
 									<tr>
-										<td><img src="resources/files/${thietbi.hinh }"
-											style="width: 100px; height: 100px"></td>
+										<td>
+											<img src="resources/files/${thietbi.hinh }"
+												style="width: 100px; height: 100px">
+										</td>
 										<td class="table-plus">${thietbi.matb}</td>
-										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${thietbi.ten}</p></td>
+										<td>
+											<p
+												style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${thietbi.ten}</p>
+										</td>
 										<td>${thietbi.loai.ten}</td>
 										<td>${thietbi.soluong}</td>
-										<td><p style="width: 150px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">${thietbi.ghichu}</p></td>
+										<td>
+											<p
+												style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${thietbi.ghichu}</p>
+										</td>
 										<td class="pull-right">
 											<div class="row clearfix">
 												<div class="col-sm-12 col-md-6">
 													<form action="thiet-bi/edit/${thietbi.matb}">
-														<button class="btn  btn-info bg-edit text-white" type="submit"
-															data-toggle="tooltip" data-placement="top" title="Sửa">
+														<button class="btn  btn-info bg-edit text-white"
+															type="submit" data-toggle="tooltip" data-placement="top"
+															title="Sửa">
 															<i class="material-icons">edit</i>
 														</button>
 														<!--  -->
@@ -105,13 +115,13 @@
 														</button>
 													</c:if>
 													<c:if test="${!thietbi.trangthai.equals(unlocked)}">
-													<button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Xoá" type="button">
-													<i class="material-icons">delete</i>
-													</button>
+														<button class="btn btn-secondary" data-toggle="tooltip"
+															data-placement="top" title="Xoá" type="button">
+															<i class="material-icons">delete</i>
+														</button>
 													</c:if>
 												</div>
 											</div>
-
 										</td>
 									</tr>
 								</c:forEach>
@@ -150,7 +160,6 @@
 												placeholder="Chọn ảnh thiết bị" required="required" />
 										</div>
 									</div>
-
 								</div>
 								<div class="col-sm-12 col-md-6">
 									<div class="form-group row">
@@ -231,19 +240,17 @@
 							<div class="row">
 								<div class="col-sm-12 col-md-6">
 									<div class="form-group row">
-
 										<label class="col-sm-12 col-md-3 col-form-label">Chọn
 											ảnh</label>
 										<div class="col-sm-12 col-md-8">
 											<img src="resources/files/${thietbi_sua.hinh}"
-												style="width: 250px; height: 200px" /> <input name="photo"
-												class="form-control" type="file"
+												style="width: 250px; height: 200px" />
+											<input name="photo" class="form-control" type="file"
 												placeholder="Chọn ảnh thiết bị" />
 											<form:input path="hinh" class="form-control"
 												style="display: none" />
 										</div>
 									</div>
-
 								</div>
 								<div class="col-sm-12 col-md-6">
 									<div class="form-group row">
@@ -281,7 +288,6 @@
 									<form:input style="display: none" path="soluong" />
 									<form:input style="display: none" path="tinhtrang" />
 									<form:input style="display: none" path="trangthai" />
-
 									<div class="form-group row">
 										<label class="col-sm-12 col-md-3 col-form-label">Ghi
 											chú</label>
@@ -296,7 +302,6 @@
 										<button type="submit" class="btn btn-info">Sửa</button>
 									</div>
 								</div>
-
 							</div>
 						</form:form>
 					</div>
