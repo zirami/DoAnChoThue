@@ -176,6 +176,8 @@ public class PhieuThanhLyController {
 		if (listCt_ptl != null) {
 			phieuthanhly_them.setCt_phieuthanhlys(listCt_ptl);
 			phieuthanhly_them.setThoigian(Date.valueOf(LocalDate.now()));
+			if (phieuthanhly_them.getTrangthai().equals("duocXacNhan"))
+				phieuthanhly_them.setTrangthai("daXacNhan");
 			kq = new PhieuThanhLyDAO().saveOrUpdate(factory, phieuthanhly_them);
 
 			// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ giảm
@@ -237,6 +239,8 @@ public class PhieuThanhLyController {
 		// Có đủ dữ liệu thì mới thêm
 		if (listCt_ptl != null) {
 			phieuthanhly_sua.setCt_phieuthanhlys(listCt_ptl);
+			if (phieuthanhly_sua.getTrangthai().equals("duocXacNhan"))
+				phieuthanhly_sua.setTrangthai("daXacNhan");
 			kq = new PhieuThanhLyDAO().update(factory, phieuthanhly_sua);
 
 			if (!kq) {

@@ -120,8 +120,8 @@
 													<c:when test="${pn.trangthai.equals(choXacNhan)}">
 														<div class="col-3">
 															<a class="material-icons" data-toggle="tooltip"
-																href="phieu-nhap/edit/${pn.mapn}"
-																data-placement="top" title="Sửa" style="color: blue">edit</a>
+																href="phieu-nhap/edit/${pn.mapn}" data-placement="top"
+																title="Sửa" style="color: blue">edit</a>
 														</div>
 														<div class="col-6 text-center">
 															<!-- XOÁ -->
@@ -134,9 +134,8 @@
 													<c:otherwise>
 														<div class="col-3">
 															<a class="material-icons" data-toggle="tooltip"
-																href="phieu-nhap/edit/${pn.mapn}"
-																data-placement="top" title="Xem chi tiết"
-																style="color: blue">info</a>
+																href="phieu-nhap/edit/${pn.mapn}" data-placement="top"
+																title="Xem chi tiết" style="color: blue">info</a>
 														</div>
 													</c:otherwise>
 												</c:choose>
@@ -169,7 +168,8 @@
 								<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
 									nhập</label>
 								<div class="col-sm-4 col-md-8">
-									<input class="form-control" type="text" name="mapn" value="${newID}" readonly="readonly"/>
+									<input class="form-control" type="text" name="mapn"
+										value="${newID}" readonly="readonly" />
 								</div>
 							</div>
 							<div class="row">
@@ -209,6 +209,13 @@
 							</tr>
 						</thead>
 						<tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th class="tongcong"></th>
+							</tr>
 							<tr id="hidden-row" hidden=true>
 								<td>
 									<select class="form-control" name="matb">
@@ -219,18 +226,20 @@
 								</td>
 								<td>
 									<input type="number" min="1" name="soluongnhap"
-										class=" form-control" onchange="tinhtong(this)" required/>
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
 								</td>
 								<td>
 									<input type="number" min="0" step="0.01" name="dongia"
-										class=" form-control" onchange="tinhtong(this)" required/>
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
 								</td>
 								<td>
 									<a class="material-icons text-info btn-close-item  text-right"
 										type="button"> delete_sweep </a>
 								</td>
 							</tr>
-						</tbody>
+						</tfoot>
 					</table>
 					<div class="row form-group them-tb-nhap">
 						<button type='button' class="form-control text-info ">
@@ -275,29 +284,34 @@
 			$(document).ready(function() {
 				$('#update_modal_btn').click();
 				console.log("Hiển thị edit form")
-				tinhtong()
+				tinhtong($('#modal_pn_sua').find('tbody'))
 				
 			});
 		</script>
 	</c:if>
 	<!-- Dùng để tính tổng tiền chi tiết phiếu -->
 	<script type="text/javascript">
-		function tinhtong(){
-			let soluongnhap = $(this).parents('tr').find("input[name='soluongnhap']").val()
+		function tinhtong(e){
+			let soluong = $(this).parents('tr').find("input[name='soluongnhap']").val()
 			let dongia = $(this).parents('tr').find("input[name='dongia']").val()
-			if (dongia < 0 || soluongnhap < 0) return false;
+			if (dongia < 0 || soluong < 0) return false;
 			
 			
 			let tongcong = 0;
-			$('form#phieunhap_sua').find('tbody tr').each(function(index, tr) {
-			      let soluongnhap = $(this).find("input[name='soluongnhap']").val()
+			console.log(e)
+			e.find('tr').each(function(index, tr) {
+			      let soluong = $(this).find("input[name='soluongnhap']").val()
 			      let dongia = $(this).find("input[name='dongia']").val()
 			      
-			      tongcong += soluongnhap * dongia
+			      tongcong += soluong * dongia
 			});
 			
 			$('.tongcong').text('Tổng cộng: ' + tongcong + ' VNĐ');
 		}
+		
+		$("a[href='#modal_pn_them']").on('click',function(){
+			tinhtong($('#modal_pn_them').find('tbody'))
+		})
 		
 	</script>
 	<!-- DÙNG ĐỂ SHOW FORM DELETE -->
@@ -444,6 +458,5 @@
 			<option value="${tb.matb}">${tb.matb}</option>
 		</c:forEach>
 	</select>
-	
 </body>
 </html>
