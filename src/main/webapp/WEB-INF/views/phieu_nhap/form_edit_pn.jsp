@@ -79,11 +79,11 @@
 						</td>
 						<td>
 							<input type="number" min="1" name="soluongnhap"
-								value="${ct_pn.soluongnhap}" class=" form-control" required/>
+								value="${ct_pn.soluongnhap}" class=" form-control" onchange="tinhtong($(this).parents('tbody'))" required/>
 						</td>
 						<td>
 							<input type="number" min="0" step="0.01" name="dongia"
-								value="${ct_pn.dongia}" class=" form-control" required/>
+								value="${ct_pn.dongia}" class=" form-control" onchange="tinhtong($(this).parents('tbody'))" required/>
 						</td>
 						<td>
 							<a class="material-icons text-info btn-close-item  text-right"

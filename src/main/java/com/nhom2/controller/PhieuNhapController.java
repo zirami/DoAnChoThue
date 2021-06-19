@@ -37,9 +37,9 @@ import com.nhom2.entity.THIETBI;
 public class PhieuNhapController {
 	@Autowired
 	SessionFactory factory;
-	
+
 	public String msg = "Thao tác thất bại";
-	
+
 	@ModelAttribute("listThietbi")
 	public List<THIETBI> getListTB() {
 		return new ThietBiDAO().getAll(factory);
@@ -69,15 +69,15 @@ public class PhieuNhapController {
 			return null;
 		return account.getNhanviens().get(0);
 	}
-	
+
 	@ModelAttribute("newID")
 	public String getRandomMa() {
-		List <PHIEUNHAP> list = new PhieuNhapDAO().getAll(factory);
+		List<PHIEUNHAP> list = new PhieuNhapDAO().getAll(factory);
 		int ma = 1;
 		for (PHIEUNHAP elem : list) {
-			String temp = "pn"+ma;
-			if(elem.getMapn().compareTo(temp)==0) {
-				ma=ma+1;
+			String temp = "pn" + ma;
+			if (elem.getMapn().compareTo(temp) == 0) {
+				ma = ma + 1;
 			}
 		}
 		return "pn" + ma;
@@ -126,7 +126,7 @@ public class PhieuNhapController {
 			ct_pn.setDongia(dongias.get(i));
 			listCt_pn.add(ct_pn);
 		}
-			
+
 		return listCt_pn;
 	}
 
@@ -144,7 +144,7 @@ public class PhieuNhapController {
 			System.out.println("khong du truong");
 			// Hiển thị thông báo kết quả
 			model.addFlashAttribute("notify", kq);
-			msg+= ", " + result.getAllErrors();
+			msg += ", " + result.getAllErrors();
 			model.addFlashAttribute("msg", msg);
 			return new RedirectView("phieu-nhap");
 		}
@@ -156,6 +156,8 @@ public class PhieuNhapController {
 			phieunhap_them.setCt_phieunhaps(listCt_pn);
 			phieunhap_them.setNhanvien(getNv(session));
 			phieunhap_them.setThoigiannhap(Date.valueOf(LocalDate.now()));
+			if (phieunhap_them.getTrangthai().equals("duocXacNhan"))
+				phieunhap_them.setTrangthai("daXacNhan");
 			kq = new PhieuNhapDAO().saveOrUpdate(factory, phieunhap_them);
 		}
 		// Nếu trạng thái = đã Xác nhận thì số lượng bên Thietbi sẽ tăng
@@ -166,10 +168,10 @@ public class PhieuNhapController {
 				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
 				if (!kq) {
-					msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
+					msg += ", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 					break;
 				}
-					
+
 			}
 
 		}
@@ -190,7 +192,8 @@ public class PhieuNhapController {
 
 		if (phieunhap_sua.getTrangthai().equals("daXacNhan"))
 			model.addFlashAttribute("form_info", true);
-		else model.addFlashAttribute("form_edit", true);
+		else
+			model.addFlashAttribute("form_edit", true);
 		return new RedirectView("../../phieu-nhap");
 	}
 
@@ -218,6 +221,8 @@ public class PhieuNhapController {
 			phieunhap_sua.setCt_phieunhaps(listCt_pn);
 			phieunhap_sua.setNhanvien(getNv(session));
 			phieunhap_sua.setThoigiannhap(Date.valueOf(LocalDate.now()));
+			if (phieunhap_sua.getTrangthai().equals("duocXacNhan"))
+				phieunhap_sua.setTrangthai("daXacNhan");
 			kq = new PhieuNhapDAO().update(factory, phieunhap_sua);
 		}
 
@@ -226,10 +231,10 @@ public class PhieuNhapController {
 			for (CT_PHIEUNHAP ct_pn : listCt_pn) {
 				THIETBI thietbi_nhap = ct_pn.getThietbi();
 				thietbi_nhap.setTrangthai(LOCKED);
-				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + + ct_pn.getSoluongnhap());
+				thietbi_nhap.setSoluong(thietbi_nhap.getSoluong() + +ct_pn.getSoluongnhap());
 				kq = new ThietBiDAO().update(factory, thietbi_nhap);
 				if (!kq) {
-					msg+=", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
+					msg += ", Cập nhật số lượng tồn kho thiết bị thất bại !!!";
 					break;
 				}
 			}
