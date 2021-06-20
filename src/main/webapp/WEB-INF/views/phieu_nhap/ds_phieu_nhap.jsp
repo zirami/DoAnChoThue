@@ -29,7 +29,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h3 class="text-purple">Danh sách thiết bị</h3>
+								<h3 class="text-purple">Danh sách phiếu nhập</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
@@ -37,7 +37,7 @@
 									<li class="breadcrumb-item">
 										<a href="index.html">Home</a>
 									</li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
+									<li class="breadcrumb-item active" aria-current="page">Quản lý phiếu nhập</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
@@ -61,7 +61,6 @@
 								<tr>
 									<th class="table-plus datatable-nosort">Mã Phiếu Nhập</th>
 									<th>Ngày Nhập</th>
-									<th>Nhà Cung Cấp</th>
 									<th>Nhân Viên Nhập</th>
 									<th>Tình Trạng</th>
 									<th>Ghi chú</th>
@@ -73,7 +72,6 @@
 									<tr>
 										<td class="table-plus mapn">${pn.mapn}</td>
 										<td>${pn.thoigiannhap}</td>
-										<td>${pn.ncc.ten}</td>
 										<c:set var="hoten"
 											value="${pn.nhanvien.ho} ${pn.nhanvien.ten}" />
 										<td>${hoten}</td>
@@ -337,7 +335,7 @@
 					if (result.isConfirmed) {
 						$.ajax({
 			                type: "GET",
-			                url: "${pageContext.servletContext.contextPath}/phieu-thanhly/delete/" + ten,
+			                url: "${pageContext.servletContext.contextPath}/phieu-nhap/delete/" + ten,
 			              
 			                success: function (data){
 			                	if(data){
@@ -367,11 +365,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			order: [[ 1, "desc" ]],
-			columnDefs: [{
-				targets: "datatable-nosort",
-				orderable: false,
-			}],
+			"aaSorting": [],
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 			"language": {
 				"info": "_START_-_END_ of _TOTAL_ entries",

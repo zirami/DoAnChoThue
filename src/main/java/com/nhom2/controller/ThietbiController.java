@@ -52,13 +52,12 @@ public class ThietbiController {
 	public String getRandomMa() {
 		List<THIETBI> list = new ThietBiDAO().getAll(factory);
 		int ma = 1001;
-		for (THIETBI elem : list) {
-			String temp = "tb" + ma;
-			if (elem.getMatb().compareTo(temp) == 0) {
-				ma = ma + 1;
-			}
+		String id = "tb" + ma;
+		while (list.contains(new ThietBiDAO().getById(id, factory))) {
+			ma++;
+			id = "tb" + ma;
 		}
-		return "tb" + ma;
+		return id;
 	}
 
 	@RequestMapping(value = "thiet-bi", method = RequestMethod.GET)
@@ -207,14 +206,14 @@ public class ThietbiController {
 		Row row;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		boolean kq = true;
-		for (int i = 1; i < sheet.getLastRowNum(); i++) {
+		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			row = (Row) sheet.getRow(i);
 			THIETBI thietbi_them = new THIETBI();
 			thietbi_them.setMatb(getRandomMa());
-			thietbi_them.setTen(row.getCell(0).toString());
-			thietbi_them.setLoai(new LoaiThietBiDAO().getById((int) row.getCell(1).getNumericCellValue(), factory));
-			thietbi_them.setHinh(row.getCell(2).toString());
-			thietbi_them.setGhichu(row.getCell(3).toString());
+			thietbi_them.setTen(row.getCell(1).toString());
+			thietbi_them.setLoai(new LoaiThietBiDAO().getById((int) row.getCell(2).getNumericCellValue(), factory));
+			thietbi_them.setHinh(row.getCell(3).toString());
+			thietbi_them.setGhichu(row.getCell(4).toString());
 			thietbi_them.setSoluong(0);
 			thietbi_them.setTinhtrang("Còn Tốt");
 			thietbi_them.setTrangthai("unlocked");

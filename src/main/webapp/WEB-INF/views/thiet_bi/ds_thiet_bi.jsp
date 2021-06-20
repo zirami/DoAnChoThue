@@ -313,7 +313,23 @@
 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<!-- kích hoạt table -->
-	<script src="resources/vendors/scripts/datatable-setting.js"></script>
+	<script>
+		$('.data-table').DataTable({
+			scrollCollapse: true,
+			autoWidth: false,
+			responsive: true,
+			"aaSorting": [],
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+			"language": {
+				"info": "_START_-_END_ of _TOTAL_ entries",
+				searchPlaceholder: "Search...",
+				paginate: {
+					next: '<i class="ion-chevron-right"></i>',
+					previous: '<i class="ion-chevron-left"></i>'  
+				}
+			},
+		});
+	</script>
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">

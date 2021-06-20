@@ -27,7 +27,7 @@ public class PhieuThanhLyDAO {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "from PHIEUTHANHLY";
+		String hql = "from PHIEUTHANHLY order by trangthai, thoigian desc, maptl desc";
 		/* Bắt đầu quá trình truy vấn vào DB */
 
 		Query<PHIEUTHANHLY> query = session.createQuery(hql);

@@ -23,7 +23,7 @@ public class ThietBiDAO {
 		} catch (HibernateException e) {
 			session = factory.openSession();
 		}
-		String hql = "from THIETBI";
+		String hql = "from THIETBI order by matb desc";
 		/* Bắt đầu quá trình truy vấn vào DB */
 
 		Query<THIETBI> query = session.createQuery(hql);
@@ -114,6 +114,7 @@ public class ThietBiDAO {
 
 		Query<THIETBI> query = session.createQuery(hql);		
 		query.setParameter("id", id.toString()	);
+		if (query.list().isEmpty()) return null;
 		THIETBI list = query.list().get(0); //Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 thiết bị
 		return list;
 	}

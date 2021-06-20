@@ -14,54 +14,68 @@ h4 {
 }
 </style>
 <%@include file="/common/loadcss.jsp"%>
-
 </head>
-<body style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
-
+<body
+	style="background-image: url('${pageContext.servletContext.contextPath}/resources/files/hinh11.jpg')">
 	<%@include file="/common/header.jsp"%>
 	<%@include file="/common/left-side-bar.jsp"%>
-
 	<div class="mobile-menu-overlay"></div>
 	<!-- 	Popup -->
 	<!-- 	================================ Hiển thị danh sách Phiếu Mượn ================================ -->
-
-
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				<div class="page-header">
 					<div class="row">
-						<div class="col-md-6 col-sm-12">
+						<div class="col-md-4 col-sm-12">
 							<div class="title">
 								<h3 class="text-purple">Danh sách phiếu mượn</h3>
 							</div>
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="phieumuon">phieumuon</a>
+									<li class="breadcrumb-item">
+										<a href="phieumuon">phieumuon</a>
 									</li>
-									<li class="breadcrumb-item active text-primary" aria-current="page">DataTable</li>
+									<li class="breadcrumb-item active text-primary"
+										aria-current="page">DataTable</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
-
-						<div class="col-md-6 col-sm-12 text-right" >
-							<a href="phieumuon" class="btn btn-info   type="button"  >Làm mới </a> 
-							<a href="#"  class="btn btn-info " data-toggle="modal" data-target="#bd-phieumuondatra-modal-lg" type="button" >Phiếu mượn đã trả</a> 
-							<a href="#"  class="btn btn-info " data-toggle="modal" data-target="#bd-phieumuonqua3ngay-modal-lg" type="button" >Phiếu mượn quá hạn</a>
-							<a href="#" id="insert_btn" class="btn btn-info" data-toggle="modal" data-target="#bd-insert-modal-lg" type="button" >Thêm phiếu mượn </a>
+						<div class="col-md-8 col-sm-12 text-right">
+							<a href="phieumuon" class="btn btn-info   type="button"  >Làm
+								mới </a>
+							<form action="phieumuon/import-excel" method="post"
+								enctype="multipart/form-data" style="display: none">
+								<input type="file" hidden="true" name="file" />
+								<input type="submit" hidden="true">
+							</form>
+							<button class="btn btn-info import-excel">Import Excel</button>
+							<a class="btn btn-info dropdown-toggle" href="#" role="button"
+								data-toggle="dropdown"> Phiếu mượn... </a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a href="#" class="dropdown-item " data-toggle="modal"
+									data-target="#bd-phieumuondatra-modal-lg" type="button">Phiếu
+									mượn đã trả</a>
+								<a href="#" class="dropdown-item" data-toggle="modal"
+									data-target="#bd-phieumuonqua3ngay-modal-lg" type="button">Phiếu
+									mượn quá hạn</a>
+							</div>
+							<a href="#" id="insert_btn" class="btn btn-info"
+								data-toggle="modal" data-target="#bd-insert-modal-lg"
+								type="button">Thêm phiếu mượn </a>
 						</div>
 					</div>
 				</div>
-				<div class="page-body" >
+				<div class="page-body">
 					<!-- Hiển thị danh sách người mượn -->
 					<div class="card-box md-30">
 						<hr>
 						<div>
 							<table
-								class="table nowrap  dataTable collapsed table-hover table-boder-factor" id="myTable" role="grid" >
-
+								class="table nowrap  dataTable collapsed table-hover table-boder-factor"
+								id="myTable" role="grid">
 								<thead class="table-info">
 									<tr>
 										<th>Mã phiếu mượn</th>
@@ -86,8 +100,10 @@ h4 {
 												<td>${phieumuon.phong }</td>
 												<td>${phieumuon.thoigianmuon}</td>
 												<td>${phieumuon.thoigiantra}</td>
-												<td><p
-														style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
+												<td>
+													<p
+														style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p>
+												</td>
 												<td class="pull-right">
 													<div class="row clearfix btn-list">
 														<form action="phieumuon/edit/${phieumuon.mapm}">
@@ -121,40 +137,30 @@ h4 {
 						</div>
 					</div>
 				</div>
-
 				<!-- Simple Datatable End -->
 			</div>
 		</div>
 		<!-- 		=========================================================================  Danh sách các phiếu mượn quá 3 ngày ========================================================================== -->
-
 		<div class="modal fade bs-example-modal-lg"
 			id="bd-phieumuonqua3ngay-modal-lg" tabindex="-1" role="dialog"
 			aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-							<div class="row">
-									<h3 class="text-info">Gửi mail cảnh báo cho người mượn</h3>
-								
-
-							</div>
-
+						<div class="row">
+							<h3 class="text-info">Gửi mail cảnh báo cho người mượn</h3>
+						</div>
 					</div>
 					<div class="modal-body">
-					
-						
 						<!-- Default Basic Forms Start -->
 						<div class="pd-20 card-box mb-30">
-							
 							<a href="#" class="btn bg-purple text-yellow pull-right"
-										data-toggle="modal" data-target="#bd-mail-modal-lg"
-										type="button">Gửi mail </a>
-
+								data-toggle="modal" data-target="#bd-mail-modal-lg"
+								type="button">Gửi mail </a>
 							<!-- 						<div class="col-md-12 col-sm-12 text-center"> -->
 							<table
 								class="table nowrap  dataTable collapsed table-hover table-boder-factor tablePhieuMuonQua3Ngay"
 								style="width: 100%; border-collapse: collapse;" role="grid">
-
 								<thead class="table-info">
 									<tr>
 										<th>Mã phiếu mượn</th>
@@ -174,33 +180,32 @@ h4 {
 												test="${phieumuon_moi.laySoNgay(phieumuon.thoigianmuon)>=3 }">
 												<tr>
 													<td class="table-plus">${phieumuon.mapm}</td>
-													<td>${phieumuon.nm.ho} ${phieumuon.nm.ten}</td>
-													<td>${phieumuon.nhanvien_pm.ho} ${phieumuon.nhanvien_pm.ten}</td>
+													<td>${phieumuon.nm.ho}${phieumuon.nm.ten}</td>
+													<td>${phieumuon.nhanvien_pm.ho}
+														${phieumuon.nhanvien_pm.ten}</td>
 													<td>${phieumuon.phong }</td>
 													<td>${phieumuon.thoigianmuon}</td>
 													<td>${phieumuon.thoigiantra}</td>
-													<td><p
-															style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
-
+													<td>
+														<p
+															style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p>
+													</td>
 												</tr>
 											</c:if>
 										</c:if>
 									</c:forEach>
 								</tbody>
 							</table>
-
 						</div>
 						<!-- Default Basic Forms Start -->
 					</div>
 					<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Đóng</button>
-
-							</div>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Đóng</button>
+					</div>
 				</div>
 			</div>
 		</div>
-
 		<!-- 		=========================================================================  Danh sách các phiếu mượn đã trả ========================================================================== -->
 		<div class="modal fade bs-example-modal-lg"
 			id="bd-phieumuondatra-modal-lg" tabindex="-1" role="dialog"
@@ -208,7 +213,6 @@ h4 {
 			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="clearfix">
 					<div class="modal-content">
-
 						<div class="modal-header">
 							<div class="clearfix">
 								<div class="pull-left">
@@ -220,11 +224,9 @@ h4 {
 						<div class="modal-body">
 							<!-- Default Basic Forms Start -->
 							<div class="pd-20 card-box mb-30">
-
 								<table
 									class="table nowrap  dataTable collapsed table-hover table-boder-factor tablePhieuMuonQua3Ngay"
 									style="width: 100%; border-collapse: collapse;" role="grid">
-
 									<thead class="table-info">
 										<tr>
 											<th>Mã phiếu mượn</th>
@@ -241,47 +243,45 @@ h4 {
 										<c:forEach var="phieumuon" items="${listPhieuMuon}"
 											varStatus="row">
 											<c:if test="${phieumuon.thoigiantra!=null}">
-													<tr>
-														<td class="table-plus">${phieumuon.mapm}</td>
-														<td>${phieumuon.nm.ho}${phieumuon.nm.ten}</td>
-														<td>${phieumuon.nhanvien_pm.ho}
-															${phieumuon.nhanvien_pm.ten}</td>
-														<td>${phieumuon.phong }</td>
-														<td>${phieumuon.thoigianmuon}</td>
-														<td>${phieumuon.thoigiantra}</td>
-														<td><p
-																style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p></td>
-														<td class="pull-right">
-															<div class="row clearfix btn-list">
-																<form action="phieumuon/detail/${phieumuon.mapm}">
-																	<button class="btn btn-info bg-purple" type="submit"
-																		data-toggle="tooltip" data-placement="top"
-																		title="Xem chi tiết">
-																		<span class="icon-copy fa fa-info" aria-hidden="true"></span>
-
-																	</button>
-																</form>
-															</div>
-														</td>
-													</tr>
+												<tr>
+													<td class="table-plus">${phieumuon.mapm}</td>
+													<td>${phieumuon.nm.ho}${phieumuon.nm.ten}</td>
+													<td>${phieumuon.nhanvien_pm.ho}
+														${phieumuon.nhanvien_pm.ten}</td>
+													<td>${phieumuon.phong }</td>
+													<td>${phieumuon.thoigianmuon}</td>
+													<td>${phieumuon.thoigiantra}</td>
+													<td>
+														<p
+															style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${phieumuon.ghichu }</p>
+													</td>
+													<td class="pull-right">
+														<div class="row clearfix btn-list">
+															<form action="phieumuon/detail/${phieumuon.mapm}">
+																<button class="btn btn-info bg-purple" type="submit"
+																	data-toggle="tooltip" data-placement="top"
+																	title="Xem chi tiết">
+																	<span class="icon-copy fa fa-info" aria-hidden="true"></span>
+																</button>
+															</form>
+														</div>
+													</td>
+												</tr>
 											</c:if>
 										</c:forEach>
 									</tbody>
 								</table>
-
 							</div>
 							<!-- Default Basic Forms Start -->
 						</div>
 						<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Đóng</button>
-
-							</div>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Đóng</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<br>
 	</div>
 	<!-- 	</div> -->
@@ -302,7 +302,6 @@ h4 {
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-
 						<form:form action="phieumuon" modelAttribute="phieumuon_moi"
 							method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
@@ -330,9 +329,9 @@ h4 {
 												style="width: 100%;height: 38px;" required="required">
 												<form:option value="" label="Chọn người mượn"></form:option>
 												<c:forEach var="nm" items="${listNguoiMuons}">
-													<form:option value="${nm.manm }" label="${nm.ho } ${nm.ten }"></form:option>
+													<form:option value="${nm.manm }"
+														label="${nm.ho } ${nm.ten }"></form:option>
 												</c:forEach>
-												
 											</form:select>
 										</div>
 									</div>
@@ -341,26 +340,27 @@ h4 {
 											viên</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="nhanvien_pm.manv" />
-											
 											<c:if test="${account_login.nhanviens.get(0).isadmin!=null}">
-												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
+												<form:select class="selectpicker form-control"
+													path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
+													required="required">
 					
-													<<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option>
+													<<form:option value="${account_db.nhanviens.get(0).manv}"
+														label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option>
 													<c:forEach var="nv" items="${listNhanViens}">
-													<form:option value="${nv.manv }" label="${nv.ho } ${nv.ten }"></form:option>
-													</c:forEach> 
+														<form:option value="${nv.manv }"
+															label="${nv.ho } ${nv.ten }"></form:option>
+													</c:forEach>
 												</form:select>
 											</c:if>
 											<c:if test="${account_login.nhanviens.get(0).isadmin==null}">
-												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
-					
-													<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}" ></form:option>
-												
-											
+												<form:select class="selectpicker form-control"
+													path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
+													required="required">
+													<form:option value="${account_db.nhanviens.get(0).manv}"
+														label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option>
 												</form:select>
 											</c:if>
-											
-											
 										</div>
 									</div>
 									<div class="form-group row">
@@ -401,13 +401,11 @@ h4 {
 								</div>
 								<!-- 							====================================== Cột 2 =================================================== -->
 								<div class="col-sm-12 col-md-6" id='parent-element'>
-
 									<div class="hidden-element" style="display: none">
 										<div class="form-group row">
 											<label class="col-sm-4 col-md-2 col-form-label">Thiết
 												bị </label>
 											<div class="col-md-5">
-
 												<select class="form-control"
 													name="${listThietBi[indexValue]}"
 													style="width: 100%; height: 45px;">
@@ -419,21 +417,16 @@ h4 {
 												<%-- 														<form:errors path="loai.id" /> --%>
 											</div>
 											<div class="col-md-3">
-
 												<input type="number" value="1" min=""
 													name="${listSoLuong[indexValue]}" class="form-control"
 													placeholder="Số lượng" style="width: 100%; height: 45px;" />
-
 											</div>
-
 											<div class="col-md-2">
-
 												<a class="material-icons text-info btn-close-item"
 													type="button"> delete_sweep </a>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 							<div class="row">
@@ -445,15 +438,15 @@ h4 {
 										Thêm thiết bị mượn
 									</button>
 								</div>
-
 							</div>
 							<hr>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Đóng</button>
 								<input type="hidden" name="indexValue" id="input-index-submit"
-									value='0' /> <input type="hidden" name="demValue"
-									id="input-dem-submit" value='0' />
+									value='0' />
+								<input type="hidden" name="demValue" id="input-dem-submit"
+									value='0' />
 								<button type="submit" class="btn btn-info">Thêm</button>
 							</div>
 						</form:form>
@@ -498,7 +491,6 @@ h4 {
 												placeholder="Nhập mã phiếu mượn" style="display: none" />
 										</div>
 									</div>
-									
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Người
 											mượn</label>
@@ -507,11 +499,11 @@ h4 {
 											<form:errors path="nm" />
 											<form:select class="selectpicker form-control" path="nm.manm"
 												style="width: 100%;height: 38px;" required="required">
-<%-- 												<form:option value="${phieumuon_sua.nm.manm}" label="${phieumuon_sua.nm.ho} ${phieumuon_sua.nm.ten}"></form:option> --%>
+												<%-- 												<form:option value="${phieumuon_sua.nm.manm}" label="${phieumuon_sua.nm.ho} ${phieumuon_sua.nm.ten}"></form:option> --%>
 												<c:forEach var="nm" items="${listNguoiMuons}">
-													<form:option value="${nm.manm }" label="${nm.ho } ${nm.ten }"></form:option>
+													<form:option value="${nm.manm }"
+														label="${nm.ho } ${nm.ten }"></form:option>
 												</c:forEach>
-												
 											</form:select>
 										</div>
 									</div>
@@ -520,32 +512,27 @@ h4 {
 											viên</label>
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="nhanvien_pm.manv" />
-											
 											<c:if test="${account_login.nhanviens.get(0).isadmin!=null}">
-												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
-					
-<%-- 													<<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option> --%>
+												<form:select class="selectpicker form-control"
+													path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
+													required="required">
+													<%-- 													<<form:option value="${account_db.nhanviens.get(0).manv}" label="${account_db.nhanviens.get(0).ho} ${account_db.nhanviens.get(0).ten}"></form:option> --%>
 													<c:forEach var="nv" items="${listNhanViens}">
-													<form:option value="${nv.manv }" label="${nv.ho } ${nv.ten }"></form:option>
-													</c:forEach> 
+														<form:option value="${nv.manv }"
+															label="${nv.ho } ${nv.ten }"></form:option>
+													</c:forEach>
 												</form:select>
 											</c:if>
 											<c:if test="${account_login.nhanviens.get(0).isadmin==null}">
-												<form:select class="selectpicker form-control" path="nhanvien_pm.manv" style="width: 100%;height: 38px;" required="required">
-					
-													<form:option value="${phieumuon_sua.nhanvien_pm.manv}" label="${phieumuon_sua.nhanvien_pm.ho} ${phieumuon_sua.nhanvien_pm.ten}" ></form:option>
-
-											
+												<form:select class="selectpicker form-control"
+													path="nhanvien_pm.manv" style="width: 100%;height: 38px;"
+													required="required">
+													<form:option value="${phieumuon_sua.nhanvien_pm.manv}"
+														label="${phieumuon_sua.nhanvien_pm.ho} ${phieumuon_sua.nhanvien_pm.ten}"></form:option>
 												</form:select>
 											</c:if>
-											
-											
 										</div>
 									</div>
-									
-									
-									
-									
 									<div class="form-group row">
 										<label class="col-sm-4 col-md-4 col-form-label">Phòng</label>
 										<div class="col-sm-4 col-md-8">
@@ -597,28 +584,20 @@ h4 {
 												</select>
 												<%-- 														<form:errors path="loai.id" /> --%>
 											</div>
-
 											<div class="col-md-3">
 												<input type="number" value="0" name="slThietBi0"
 													class="form-control" placeholder="Số lượng"
 													style="width: 100%; height: 45px;" />
-
 											</div>
-
 											<div class="col-md-2">
-
 												<a class="material-icons text-info btn-close-item"
 													type="button"> delete_sweep </a>
 											</div>
-
-
 										</div>
 									</div>
 								</div>
 							</div>
-
 							<div class="row">
-
 								<div class="col-sm-12 col-md-6"></div>
 								<div class="col-sm-12 col-md-6 align-self-end">
 									<button type='button' class="form-control text-info "
@@ -627,18 +606,16 @@ h4 {
 										Thêm thiết bị mượn
 									</button>
 								</div>
-
-
 							</div>
 							<div class="modal-footer">
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
 								<input type="hidden" name="indexValue"
-									id="input-index-submit-edit" value='0' /> <input type="hidden"
-									name="demValue" id="input-dem-submit-edit" value='0' />
+									id="input-index-submit-edit" value='0' />
+								<input type="hidden" name="demValue" id="input-dem-submit-edit"
+									value='0' />
 								<button type="submit" class="btn btn-info">Sửa</button>
 							</div>
-
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
@@ -646,9 +623,7 @@ h4 {
 			</div>
 		</div>
 	</div>
-
 	<!-- 	=========================================================== Gửi mail cảnh báo ===================================================================================== -->
-
 	<div class="modal fade bs-example-modal-lg" id="bd-mail-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
@@ -665,7 +640,6 @@ h4 {
 				<div class="modal-body">
 					<!-- Default Basic Forms Start -->
 					<div class="pd-20 card-box mb-30">
-
 						<form:form action="phieumuon/mail" method="post">
 							<!-- 							=================================== cột 1 ========================================= -->
 							<div class="col-sm-12 col-md-12">
@@ -673,7 +647,6 @@ h4 {
 									<label class="col-sm-4 col-md-3 col-form-label">Tiêu đề
 									</label>
 									<div class="col-sm-8 col-md-9">
-
 										<input class="form-control form-control-lg" type="text"
 											name="tieude_mail" value="${tieude_mail }"
 											placeholder="Nhập tiêu đề" required="required" />
@@ -689,10 +662,8 @@ h4 {
 											placeholder="${noidung_mail }" required="required" />
 									</div>
 								</div>
-
 							</div>
 							<!-- 							====================================== Cột 2 =================================================== -->
-
 							<hr>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
@@ -706,8 +677,6 @@ h4 {
 			</div>
 		</div>
 	</div>
-
-
 	<!-- 	========================================================================================  Show Info ============================================================================================== -->
 	<button hidden="true" id="detail_modal_btn" data-toggle="modal"
 		data-target="#bd-detail-modal-lg"></button>
@@ -816,28 +785,20 @@ h4 {
 												</select>
 												<%-- 														<form:errors path="loai.id" /> --%>
 											</div>
-
 											<div class="col-md-3">
 												<input type="number" value="0" name="slThietBi0"
 													class="form-control" placeholder="Số lượng"
 													style="width: 100%; height: 45px;" />
-
 											</div>
-
 											<div class="col-md-2">
-
 												<a class="material-icons text-info btn-close-item"
 													type="button"> delete_sweep </a>
 											</div>
-
-
 										</div>
 									</div>
 								</div>
 							</div>
-
 							<div class="row">
-
 								<div class="col-sm-12 col-md-6"></div>
 								<div class="col-sm-12 col-md-6 align-self-end">
 									<button type='button' class="form-control text-info "
@@ -846,19 +807,16 @@ h4 {
 										Thêm thiết bị mượn
 									</button>
 								</div>
-
-
 							</div>
 							<div class="modal-footer">
 								<hr>
 								<button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
 								<input type="hidden" name="indexValue"
-									id="input-index-submit-detail" value='0' /> <input
-									type="hidden" name="demValue" id="input-dem-submit-detail"
-									value='0' />
+									id="input-index-submit-detail" value='0' />
+								<input type="hidden" name="demValue"
+									id="input-dem-submit-detail" value='0' />
 								<!-- 								<button type="submit" class="btn btn-info">Sửa</button> -->
 							</div>
-
 						</form:form>
 					</div>
 					<!-- Default Basic Forms Start -->
@@ -866,17 +824,11 @@ h4 {
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 	<!-- 	<!-- js -->
 	<%@include file="/common/footer.jsp"%>
 	<%-- 	<c:if test="${admin}"> --%>
 	<%-- 		<%@include file="/common/left-side-bar-admin.jsp"%> --%>
 	<%-- 	</c:if> --%>
-
 	<!-- DÙNG ĐỂ SHOW FORM EDIT -->
 	<c:if test="${form_edit}">
 		<script type="text/javascript">
@@ -886,7 +838,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-
 	<c:if test="${form_detail}">
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -895,7 +846,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-
 	<!-- HIỂN THỊ THÔNG BÁO KHI SAI ĐỊNH DẠNG DỮ LIỆU LÚC SỬA -->
 	<c:if test="${sua_saidinhdang}">
 		<script type="text/javascript">
@@ -932,8 +882,7 @@ h4 {
 			});
 		</script>
 	</c:if>
-	
-		<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI NGAY TRẢ XẢY RA-->
+	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI NGAY TRẢ XẢY RA-->
 	<c:if test="${failDate}">
 		<script type="text/javascript">
 			$(document).ready(function() {	
@@ -941,7 +890,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-	
 	<!-- HIỂN THỊ THÔNG BÁO CÓ LỖI KHÔNG CHỌN THIẾT BỊ XẢY RA-->
 	<c:if test="${emptyThietBi}">
 		<script type="text/javascript">
@@ -950,8 +898,6 @@ h4 {
 			});
 		</script>
 	</c:if>
-	
-	
 	<script type="text/javascript">
 		//LOAD TABLE 
 		$('#myTable').DataTable({
@@ -1018,14 +964,10 @@ h4 {
 		}
 		
 	</script>
-
 	<script>
 		var index=0;
 		var dem = 0;
 	</script>
-
-
-
 	<!-- 		Thêm 1 dòng thiết bị mỗi lần click -->
 	<script>
 									
@@ -1082,10 +1024,8 @@ h4 {
 		})
 			
 		</script>
-
 	<!-- 	Thêm một dòng thiết bị mỗi lần click trong update -->
 	<!-- 	====================================================== SCRIPT UPDATE ================================================================== -->
-
 	<!-- 	Thêm thiết bị khi click edit phiếu mượn -->
 	<c:if test="${slThietBiSua!=0}">
 		<c:forEach var="sl" items="${phieumuon_sua.ct_phieumuons}">
@@ -1155,12 +1095,9 @@ h4 {
 		
 	</script>
 		</c:forEach>
-
 	</c:if>
-
 	<!-- 	Thêm một dòng thiết bị mỗi lần click trong detail -->
 	<!-- 	====================================================== SCRIPT DETAIL ================================================================== -->
-
 	<!-- 	Thêm thiết bị khi click detail phiếu mượn -->
 	<c:if test="${slThietBiChiTiet!=0}">
 		<c:forEach var="sl" items="${phieumuon_chitiet.ct_phieumuons}">
@@ -1223,11 +1160,7 @@ h4 {
 		
 	</script>
 		</c:forEach>
-
 	</c:if>
-
-
-
 	<script>
 									
 		const btn1 = document.getElementById('btn-add-element-edit')
@@ -1289,6 +1222,17 @@ h4 {
 			
 		})
 	</script>
-
+	<!-- ẤN nút import excel -->
+	<script type="text/javascript">
+		$('.import-excel').on('click', function(){
+			let inputFile = $(this).parent().find("input[type='file']")
+			let btnSubmit = $(this).parent().find("input[type='submit']")
+			
+			inputFile.on('change', function(){
+				btnSubmit.click()
+			})
+			inputFile.click();
+		})
+	</script>
 </body>
 </html>

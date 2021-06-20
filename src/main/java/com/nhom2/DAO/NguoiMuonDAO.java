@@ -134,6 +134,26 @@ public class NguoiMuonDAO {
 	        }
 	        return str;
 	}
+	
+	/* TÌM BẰNG CMND */
+	public NGUOIMUON getByCMND(String cmnd, SessionFactory factory) {
+		Session session;
+
+		/* Nếu chưa có session nào thì tạo session mới */
+		try {
+			session = factory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = factory.openSession();
+		}
+		String hql = "from NGUOIMUON where cmnd = :cmnd";
+//		
+//		/* Bắt đầu quá trình truy vấn vào DB */
+
+		Query<NGUOIMUON> query = session.createQuery(hql);		
+		query.setParameter("cmnd", cmnd);
+		if (query.list().isEmpty()) return null;
+		return query.list().get(0);
+	}
 
 }
 

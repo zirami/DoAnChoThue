@@ -42,15 +42,14 @@ public class NhanVienController {
 	SessionFactory factory;
 
 	public String getRandomMa() {
-		List <NHANVIEN> list = new NhanVienDAO().getAll(factory);
+		List<NHANVIEN> list = new NhanVienDAO().getAll(factory);
 		int ma = 1001;
-		for (NHANVIEN elem : list) {
-			String temp = "nv"+ma;
-			if(elem.getManv().compareTo(temp)==0) {
-				ma=ma+1;
-			}
+		String id = "tb" + ma;
+		while (list.contains(new NhanVienDAO().getById(id, factory))) {
+			ma++;
+			id = "tb" + ma;
 		}
-		return "nv" + ma;
+		return id;
 	}
 	
 	@ModelAttribute("nhanvien_moi")

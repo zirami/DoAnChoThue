@@ -66,6 +66,7 @@ public class PhieuMuonDAO {
 
 		Query<PHIEUMUON> query = session.createQuery(hql);		
 		query.setParameter("id", id.toString()	);
+		if (query.list().isEmpty()) return null;
 		PHIEUMUON list = query.list().get(0); //Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 phiếu mượn
 		return list;
 	}

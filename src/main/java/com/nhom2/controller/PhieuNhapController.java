@@ -73,16 +73,14 @@ public class PhieuNhapController {
 	@ModelAttribute("newID")
 	public String getRandomMa() {
 		List<PHIEUNHAP> list = new PhieuNhapDAO().getAll(factory);
-		int ma = 1;
-		for (PHIEUNHAP elem : list) {
-			String temp = "pn" + ma;
-			if (elem.getMapn().compareTo(temp) == 0) {
-				ma = ma + 1;
-			}
+		int ma = 1001;
+		String id = "tb" + ma;
+		while (list.contains(new PhieuNhapDAO().getById(id, factory))) {
+			ma++;
+			id = "tb" + ma;
 		}
-		return "pn" + ma;
+		return id;
 	}
-
 	@RequestMapping("phieu-nhap")
 	public String home(ModelMap model) {
 		model.addAttribute("listPhieuNhap", new PhieuNhapDAO().getAll(factory));

@@ -71,7 +71,7 @@ public class PhieuThanhLyController {
 		// return new NhanVienDAO().getByUserName(account.getUsername(), factory);
 		if (account.getNhanviens().isEmpty())
 			return null;
-		if (account.getNhanviens().get(0).getManv().equals("admin")) 
+		if (account.getUsername().equals("admin")) 
 			model.addAttribute("admin",true);
 		model.addAttribute("current_user",account.getNhanviens().get(0).getManv());
 		return account.getNhanviens().get(0);
@@ -79,21 +79,20 @@ public class PhieuThanhLyController {
 	
 	@ModelAttribute("newID")
 	public String getRandomMa() {
-		List <PHIEUTHANHLY> list = new PhieuThanhLyDAO().getAll(factory);
-		int ma = 1;
-		for (PHIEUTHANHLY elem : list) {
-			String temp = "ptl"+ma;
-			if(elem.getMaptl().compareTo(temp)==0) {
-				ma=ma+1;
-			}
+		List<PHIEUTHANHLY> list = new PhieuThanhLyDAO().getAll(factory);
+		int ma = 1001;
+		String id = "tb" + ma;
+		while (list.contains(new PhieuThanhLyDAO().getById(id, factory))) {
+			ma++;
+			id = "tb" + ma;
 		}
-		return "ptl" + ma;
+		return id;
 	}
 
 	@RequestMapping("phieu-thanhly")
 	public String home(ModelMap model) {
 		model.addAttribute("listPhieuThanhLy", new PhieuThanhLyDAO().getAll(factory));
-
+		System.out.println(new PhieuThanhLyDAO().getAll(factory));
 		return "phieu_thanhly/ds_phieu_thanhly";
 	}
 
@@ -144,7 +143,7 @@ public class PhieuThanhLyController {
 		}
 
 		if (!kq) {
-			msg += ", Số lưọng quá lớn !!!";
+			msg += ", Số lưọng lớn hơn tồn kho !!!";
 			return null;
 		}
 			

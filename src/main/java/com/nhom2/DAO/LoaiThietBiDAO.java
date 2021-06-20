@@ -112,6 +112,7 @@ public class LoaiThietBiDAO {
 
 		Query<LOAITHIETBI> query = session.createQuery(hql);
 		query.setParameter("id", i);
+		if (query.list().isEmpty()) return null;
 		LOAITHIETBI list = query.list().get(0); // Lấy ra phần tử đầu tiên vì chắc chắn 1 id chỉ cho ra 1 thiết bị
 		return list;
 	}
