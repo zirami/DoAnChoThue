@@ -161,11 +161,11 @@
 											người mượn</label>
 										<div class="col-sm-12 col-md-9">
 											<form:errors path="manm" />
-											<input class="form-control" value="${maNguoiMuon}"
-												readonly />
+<%-- 											<input class="form-control" value="${maNguoiMuon}" --%>
+<!-- 												readonly /> -->
 											<form:input class="form-control" type="text" path="manm"
 												value="${maNguoiMuon}" placeholder="Nhập mã người mượn"
-												required="required" style="display: none" />
+												required="required" />
 										</div>
 									</div>
 									<div class="form-group row">
