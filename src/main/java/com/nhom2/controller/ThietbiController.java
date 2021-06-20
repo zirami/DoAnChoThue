@@ -86,6 +86,18 @@ public class ThietbiController {
 		return list;
 	}
 
+	// LOẠI THIẾT BỊ ĐỂ THÊM
+	@ModelAttribute("loaithietbi_moi")
+	public LOAITHIETBI loaithietbi_moi() {
+		return new LOAITHIETBI();
+	}
+
+	// LOẠI THIẾT BỊ ĐỂ SỬA
+	@ModelAttribute("loaithietbi_sua")
+	public LOAITHIETBI loaithietbi_sua() {
+		return new LOAITHIETBI();
+	}
+
 	// DANH SÁCH TÌNH TRẠNG ĐỂ SELECT
 
 	@ModelAttribute("tinhTrangs")
@@ -189,6 +201,49 @@ public class ThietbiController {
 		THIETBI thietbi_xoa = new THIETBI();
 		thietbi_xoa.setMatb(id);
 		model.addAttribute("delete", new ThietBiDAO().del(factory, thietbi_xoa));
+		return home(model);
+	}
+
+	// INSERT LOẠI THIẾT BỊ
+	@RequestMapping(value = "loaiTB", method = RequestMethod.POST)
+	public RedirectView themLoai(RedirectAttributes model, @ModelAttribute("loaithietbi_moi") LOAITHIETBI ltb) {
+		model.addFlashAttribute("insert", new LoaiThietBiDAO().save(factory, ltb));
+		return new RedirectView("thiet-bi");
+	}
+
+	// UPDATE LOẠI THIẾT BI GET
+	@RequestMapping(value = "loaiTB/edit/{id}", method = RequestMethod.GET)
+	public String show_form_edit_loaiTB(ModelMap model, @ModelAttribute("loaithietbi_sua") LOAITHIETBI loaithietbi_sua,
+			@PathVariable Integer id) {
+
+		model.addAttribute("form_edit_loaiTB", true);
+		model.addAttribute("loaithietbi_sua", new LoaiThietBiDAO().getById(id, factory));
+		return home(model);
+	}
+
+	// UPDATE LOẠI THIẾT BI POST
+	@RequestMapping(value = "loaiTB/update", method = RequestMethod.POST)
+	public RedirectView updateLoaiTB(@Valid @ModelAttribute("loaithietbi_sua") LOAITHIETBI loaithietbi_sua,
+			BindingResult reusult, RedirectAttributes model) {
+		System.out.println("has error: " + reusult.getFieldErrors().toString());
+		model.addFlashAttribute("sua_saidinhdang", reusult.hasErrors());
+		model.addFlashAttribute("loaithietbi_sua", loaithietbi_sua);
+		if (reusult.hasErrors())
+			return new RedirectView("../thiet-bi");
+
+		model.addFlashAttribute("update", new LoaiThietBiDAO().update(factory, loaithietbi_sua)); // Xử lý thông báo
+																									// thành công
+
+		return new RedirectView("../thiet-bi");
+	}
+
+	// DELETE LOAI THIẾT BỊ
+	@RequestMapping(value = "loaiTB/delete", method = RequestMethod.POST)
+	public String loaiTBdel(ModelMap model, @RequestParam("id") Integer id) {
+		System.out.println("id = " + id);
+		LOAITHIETBI loaithietbi_xoa = new LOAITHIETBI();
+		loaithietbi_xoa.setId(id);
+		model.addAttribute("delete", new LoaiThietBiDAO().del(factory, loaithietbi_xoa));
 		return home(model);
 	}
 

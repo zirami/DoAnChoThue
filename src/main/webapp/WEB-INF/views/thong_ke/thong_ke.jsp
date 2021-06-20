@@ -56,12 +56,17 @@
 									</select>
 								</div> --%>
 								<div class="col text-center">
-									<input name="date" type="text"
-										placeholder="Chọn khoảng thời gian">
-									<input hidden="true" id="ngaybatdau" name="ngaybatdau"
-										type="date" />
-									<input hidden="true" id="ngayketthuc" name="ngayketthuc"
-										type="date" />
+									<div class="form-group row">
+										
+										<label class="col-sm-2 col-md-2 col-form-label text-purple">Thời gian</label>
+
+											<input name="date" type="text"
+												placeholder="Chọn khoảng thời gian">
+											<input hidden="true" id="ngaybatdau" name="ngaybatdau"
+												type="date" />
+											<input hidden="true" id="ngayketthuc" name="ngayketthuc"
+												type="date" />
+									</div>
 								</div>
 								<input type="submit" hidden="true" />
 							</div>

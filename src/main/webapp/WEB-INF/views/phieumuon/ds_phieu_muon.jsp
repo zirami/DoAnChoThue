@@ -377,7 +377,7 @@ h4 {
 										<div class="col-sm-4 col-md-8">
 											<form:errors path="thoigianmuon" />
 											<form:input class="form-control" path="thoigianmuon"
-												placeholder="Chọn thời gian mượn" type="date"
+												value="${today}" readonly="true" type="date"
 												required="required" />
 										</div>
 									</div>
@@ -547,7 +547,7 @@ h4 {
 										<div class="col-sm-4 col-md-8">
 											<%-- 											<form:errors path="thoigianmuon" /> --%>
 											<form:input class="form-control" path="thoigianmuon"
-												placeholder="Chọn thời gian mượn" type="date" />
+												readonly="true" type="date" />
 										</div>
 									</div>
 									<div class="form-group row">
