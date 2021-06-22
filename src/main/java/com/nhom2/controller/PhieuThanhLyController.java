@@ -91,10 +91,10 @@ public class PhieuThanhLyController {
 		return id;
 	}
 
-	@RequestMapping("phieu-thanhly")
+	@RequestMapping(value = "phieu-thanhly", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listPhieuThanhLy", new PhieuThanhLyDAO().getAll(factory));
-		System.out.println(new PhieuThanhLyDAO().getAll(factory));
+		model.addAttribute("maPhieuThanhLy", getRandomMa());
 		return "phieu_thanhly/ds_phieu_thanhly";
 	}
 

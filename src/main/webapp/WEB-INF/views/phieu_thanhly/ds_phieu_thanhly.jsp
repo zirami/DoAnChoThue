@@ -449,7 +449,6 @@
 		listSoluongton.push(new thietbi(matb, 0))
 		getSoluongton(matb)
 	})
-
 	function getSoluongton(matb){
 		$.ajax({
             type: "GET",
