@@ -11,29 +11,29 @@
 			<h4 class="text-blue h4">CHI TIẾT PHIẾU THANH LÝ</h4>
 		</div>
 		<!-- Nhập thông tin cơ bản phiếu nhập -->
-		<div class="row">
-			<div class="col-sm-12 col-md-6">
-				<div class="form-group row">
+		<div class=" row">
+			<div class="col form-group">
+				<div class="row">
 					<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
-						mượn </label>
+						thanh lý</label>
 					<div class="col-sm-4 col-md-8">
 						<form:input class="form-control" type="text" path="maptl"
-							placeholder="Nhập mã phiếu mượn" />
+							placeholder="Nhập mã phiếu mượn" readonly="true" />
 					</div>
 				</div>
 				<div class="row">
 					<label class="col-sm-4 col-md-4 col-form-label">Ngày thanh
 						lý: </label>
 					<div class="col-sm-4 col-md-8">
-						<form:input path="thoigian" class="form-control" readonly="true"
-							type="date" />
+						<form:input path="thoigian" class="form-control"
+							readonly="true" type="date" />
 					</div>
 				</div>
 			</div>
 			<div class=" col form-group">
 				<div class="row">
-					<label class="col-sm-6 col-md-4 col-form-label">Nhân Viên
-						xử lý:</label> <input class="col-sm-4 col-md-8 form-control" type="text"
+					<label class="col-sm-6 col-md-4 col-form-label">Nhân Viên xử lý:</label>
+					<input class="col-sm-4 col-md-8 form-control" type="text"
 						name="nhanvien_thanhly.manv"
 						value="${phieuthanhly_sua.nhanvien_thanhly.manv}"
 						readonly="readonly" />
@@ -61,13 +61,17 @@
 			<tbody>
 				<c:forEach items="${phieuthanhly_sua.ct_phieuthanhlys}" var="ct_ptl">
 					<tr>
-						<td><input type="text" class=" form-control" name="matb"
-							value="${ct_ptl.thietbi_thanhly.matb}" readonly="readonly" /></td>
-						<td><input type="number" min="1" name="soluong"
-							value="${ct_ptl.soluong}" class=" form-control" readonly="true" />
+						<td>
+							<input type="text" class=" form-control" name="matb"
+								value="${ct_ptl.thietbi_thanhly.matb}" readonly="readonly" />
 						</td>
-						<td><input type="number" min="0" step="0.01" name="dongia"
-							value="${ct_ptl.dongia}" class=" form-control" readonly="true" />
+						<td>
+							<input type="number" min="1" name="soluong"
+								value="${ct_ptl.soluong}" class=" form-control" readonly="true"/>
+						</td>
+						<td>
+							<input type="number" min="0" step="0.01" name="dongia"
+								value="${ct_ptl.dongia}" class=" form-control" readonly="true"/>
 						</td>
 					</tr>
 				</c:forEach>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <%
-session = request.getSession();
+	session = request.getSession();
 %>
 <!DOCTYPE html>
 <html>
@@ -34,18 +34,18 @@ session = request.getSession();
 							<!-- Đường dẫn -->
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a>
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
 									</li>
-									<li class="breadcrumb-item active" aria-current="page">Quản
-										lý phiếu thanh lý</li>
+									<li class="breadcrumb-item active" aria-current="page">Quản lý phiếu thanh lý</li>
 								</ol>
 							</nav>
 							<!-- END Đường dẫn -->
 						</div>
 						<div class="col-md-6 col-sm-12 text-right">
 							<a href="#modal_pn_them" class="btn btn-info" data-toggle="modal"
-								type="button">NHẬP DANH SÁCH THANH LÝ</a> <a
-								href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
+								type="button">NHẬP DANH SÁCH THANH LÝ</a>
+							<a href="#modal_pn_sua" hidden="hidden" data-toggle="modal"
 								type="button" id="update_modal_btn"></a>
 						</div>
 					</div>
@@ -73,13 +73,14 @@ session = request.getSession();
 									<c:if
 										test="${admin || current_user.equals(ptl.nhanvien_thanhly.manv)}">
 										<tr>
-											<td class="table-plus maptl">${ptl.maptl}</td>
+											<td class="table-plus mapn">${ptl.maptl}</td>
 											<td>${ptl.thoigian}</td>
 											<c:set var="hoten"
 												value="${ptl.nhanvien_thanhly.ho} ${ptl.nhanvien_thanhly.ten}" />
 											<td>${hoten}</td>
 											<!-- Tình trạng -->
-											<td><c:choose>
+											<td>
+												<c:choose>
 													<c:when test="${ptl.trangthai.equals(choXacNhan)}">
 														<label>Chờ Xác Nhận</label>
 													</c:when>
@@ -89,9 +90,11 @@ session = request.getSession();
 													<c:otherwise>
 														<label>HUỶ</label>
 													</c:otherwise>
-												</c:choose></td>
+												</c:choose>
+											</td>
 											<td>
-												<!-- Ghi chú --> <c:choose>
+												<!-- Ghi chú -->
+												<c:choose>
 													<c:when
 														test="${ptl.ghichu.isEmpty() || ptl.ghichu.isBlank()}">
 														<label>-</label>
@@ -113,9 +116,9 @@ session = request.getSession();
 															</div>
 															<div class="col-6 text-center">
 																<!-- XOÁ -->
-																<a class="delete_btn" type="button"> <i
-																	class="material-icons" data-toggle="tooltip"
-																	data-placement="top" title="Xoá" style="color: red">delete</i>
+																<a class="delete_btn" type="button">
+																	<i class="material-icons" data-toggle="tooltip"
+																		data-placement="top" title="Xoá" style="color: red">delete</i>
 																</a>
 															</div>
 														</c:when>
@@ -152,98 +155,104 @@ session = request.getSession();
 						<h4 class="text-info h4">THÊM PHIẾU THANH LÝ</h4>
 					</div>
 					<!-- Nhập thông tin cơ bản phiếu nhập -->
-					<div class="col-sm-12 col-md-6">
-						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 col-form-label">Mã phiếu
-								thanh lý</label>
-							<div class="col-sm-12 col-md-9">
-								<form:errors path="maptl" />
-								<%-- 											<input class="form-control" value="${maPhieuThanhLy}" --%>
-								<!-- 												readonly /> -->
-								<form:input class="form-control" type="text" path="maptl"
-									value="${maPhieuThanhLy}" placeholder="Nhập mã phiếu thanh lý"
-									required="required" />
+					<div class=" row">
+						<div class="col form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Mã phiếu
+									thanh lý</label>
+								<div class="col-sm-4 col-md-8">
+									<input class="form-control" type="text" name="maptl"
+										value="${newID}" readonly="readonly" />
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Ngày
+									thanh lý: </label>
+								<div class="col-sm-4 col-md-8">
+									<input name="thoigian" class="form-control" type="date"
+										value="${today}" readonly="readonly" />
+								</div>
 							</div>
 						</div>
-						<div class="row">
-							<label class="col-sm-4 col-md-4 col-form-label">Ngày
-								thanh lý: </label>
-							<div class="col-sm-4 col-md-8">
-								<input name="thoigian" class="form-control" type="date"
-									value="${today}" readonly="readonly" />
+						<div class=" col form-group">
+							<div class="row">
+								<label class="col-sm-6 col-md-4 col-form-label">Nhân
+									Viên xử lý:</label>
+								<input class="col-sm-4 col-md-8 form-control" type="text"
+									name="nhanvien_thanhly.manv" value="${nv.manv}"
+									readonly="readonly" />
+							</div>
+							<div class="row">
+								<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
+								<input class="form-control col-sm-4 col-md-8" name="ghichu"
+									placeholder="Nhập ghi chú" />
 							</div>
 						</div>
 					</div>
-					<div class=" col form-group">
-						<div class="row">
-							<label class="col-sm-6 col-md-4 col-form-label">Nhân Viên
-								xử lý:</label> <input class="col-sm-4 col-md-8 form-control" type="text"
-								name="nhanvien_thanhly.manv" value="${nv.manv}"
-								readonly="readonly" />
-						</div>
-						<div class="row">
-							<label class="col-sm-4 col-md-4 col-form-label">Ghi chú:</label>
-							<input class="form-control col-sm-4 col-md-8" name="ghichu"
-								placeholder="Nhập ghi chú" />
-						</div>
+					<hr>
+					<h5 class="h5 invoice-header text-center">DANH SÁCH THIẾT BỊ
+						THANH LÝ</h5>
+					<!-- Nhập thông tin cơ bản phiếu nhập -->
+					<table class="table dsThietbi_table">
+						<thead>
+							<tr>
+								<th>Thiết bị</th>
+								<th>Số lượng</th>
+								<th>Đơn giá</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th class="tongcong"></th>
+							</tr>
+							<tr id="hidden-row" hidden=true>
+								<td>
+									<select class="form-control" name="matb">
+										<c:forEach var="tb" items="${listThietbi}">
+											<option value="${tb.matb}">${tb.ten}</option>
+										</c:forEach>
+									</select>
+								</td>
+								<td>
+									<input type="number" min="1" name="soluong"
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
+								</td>
+								<td>
+									<input type="number" min="0" step="0.01" name="dongia"
+										class=" form-control"
+										onchange="tinhtong($(this).parents('tbody'))" required />
+								</td>
+								<td>
+									<a class="material-icons text-info btn-close-item  text-right"
+										type="button"> delete_sweep </a>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<div class="row form-group them-tb-nhap">
+						<button type='button' class="form-control text-info ">
+							<span class="material-icons text-info">add_circle_outline</span>
+							Thêm thiết bị nhập
+						</button>
 					</div>
 				</div>
-				<hr>
-				<h5 class="h5 invoice-header text-center">DANH SÁCH THIẾT BỊ
-					THANH LÝ</h5>
-				<!-- Nhập thông tin cơ bản phiếu nhập -->
-				<table class="table dsThietbi_table">
-					<thead>
-						<tr>
-							<th>Thiết bị</th>
-							<th>Số lượng</th>
-							<th>Đơn giá</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th></th>
-							<th></th>
-							<th class="tongcong"></th>
-						</tr>
-						<tr id="hidden-row" hidden=true>
-							<td><select class="form-control" name="matb">
-									<c:forEach var="tb" items="${listThietbi}">
-										<option value="${tb.matb}">${tb.ten}</option>
-									</c:forEach>
-							</select></td>
-							<td><input type="number" min="1" name="soluong"
-								class=" form-control"
-								onchange="tinhtong($(this).parents('tbody'))" required /></td>
-							<td><input type="number" min="0" step="0.01" name="dongia"
-								class=" form-control"
-								onchange="tinhtong($(this).parents('tbody'))" required /></td>
-							<td><a
-								class="material-icons text-info btn-close-item  text-right"
-								type="button"> delete_sweep </a></td>
-						</tr>
-					</tfoot>
-				</table>
-				<div class="row form-group them-tb-nhap">
-					<button type='button' class="form-control text-info ">
-						<span class="material-icons text-info">add_circle_outline</span>
-						Thêm thiết bị nhập
-					</button>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Đóng</button>
+					<input type="hidden" name="trangthai" />
+					<button type="submit" class="btn btn-primary luu-btn">Lưu
+						tạm</button>
+					<input type="submit" hidden="hidden" />
+					<button type="button" class="btn btn-success them-btn">Thêm</button>
 				</div>
+			</form>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-			<input type="hidden" name="trangthai" />
-			<button type="submit" class="btn btn-primary luu-btn">Lưu
-				tạm</button>
-			<input type="submit" hidden="hidden" />
-			<button type="button" class="btn btn-success them-btn">Thêm</button>
-		</div>
-		</form>
-	</div>
 	</div>
 	<!--====================================SỬA PHIẾU NHẬP==================================== -->
 	<div class="modal fade bs-example-modal-lg" id="modal_pn_sua"
