@@ -81,10 +81,12 @@ public class PhieuThanhLyController {
 	public String getRandomMa() {
 		List<PHIEUTHANHLY> list = new PhieuThanhLyDAO().getAll(factory);
 		int ma = 1001;
-		String id = "tb" + ma;
-		while (list.contains(new PhieuThanhLyDAO().getById(id, factory))) {
+		String id = "ptl" + ma;
+		PHIEUTHANHLY ptl = new PhieuThanhLyDAO().getById(id, factory);
+		while (ptl != null) {
 			ma++;
-			id = "tb" + ma;
+			id = "ptl" + ma;
+			ptl = new PhieuThanhLyDAO().getById(id, factory);
 		}
 		return id;
 	}
