@@ -44,10 +44,10 @@ public class NhanVienController {
 	public String getRandomMa() {
 		List<NHANVIEN> list = new NhanVienDAO().getAll(factory);
 		int ma = 1001;
-		String id = "tb" + ma;
+		String id = "nv" + ma;
 		while (list.contains(new NhanVienDAO().getById(id, factory))) {
 			ma++;
-			id = "tb" + ma;
+			id = "nv" + ma;
 		}
 		return id;
 	}

@@ -194,16 +194,18 @@
 							</div>
 							</div>
 							<div class = "col-sm-12 col-md-6">
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-3 col-form-label">Mã nhân viên</label>
-								<div class="col-sm-12 col-md-8">
-<%-- 									<form:errors path="manv" /> --%>
-								<input class="form-control" value="${maNhanVien}" readonly />
-
-								<form:input class="form-control" type="text" path="manv" value="${maNhanVien }"
-										placeholder="Nhập mã nhân viên" required="required" style="display: none"/>
-								</div>
-							</div>
+									<div class="form-group row">
+										<label class="col-sm-12 col-md-3 col-form-label">Mã
+											nhân viên</label>
+										<div class="col-sm-12 col-md-9">
+											<form:errors path="manv" />
+<%-- 											<input class="form-control" value="${maNguoiMuon}" --%>
+<!-- 												readonly /> -->
+											<form:input class="form-control" type="text" path="manv"
+												value="${maNhanVien}" placeholder="Nhập mã nhân viên"
+												required="required" />
+										</div>
+									</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-3 col-form-label">Họ và chữ lót</label>
 								<div class="col-sm-12 col-md-8">
@@ -337,14 +339,16 @@
 							</div>
 							<div class = "col-sm-12 col-md-6">
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-3 col-form-label">Mã nhân viên</label>
-								<div class="col-sm-12 col-md-8">
-									<form:errors path="manv" />
-									<form:input class="form-control" type="text" path="manv"
-										placeholder="Nhập mã nhân viên"  style="display: none" required="required"/>
-									<input class="form-control" type="text" placeholder="${nhanvien_sua.manv}" readonly>
-								</div>
-							</div>
+										<label class="col-sm-12 col-md-3 col-form-label">Mã
+											nhân viên</label>
+										<div class="col-sm-12 col-md-9">
+											<form:errors path="manv" />
+											<input class="form-control" value="${nhanvien_sua.manv}"
+												readonly />
+											<form:input class="form-control" type="text" path="manv"  placeholder="Nhập mã nhân viên"
+												required="required" style="display: none" />
+										</div>
+									</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-3 col-form-label">Họ và chữ lót</label>
 								<div class="col-sm-12 col-md-8">

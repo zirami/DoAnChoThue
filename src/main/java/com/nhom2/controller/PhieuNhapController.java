@@ -74,10 +74,10 @@ public class PhieuNhapController {
 	public String getRandomMa() {
 		List<PHIEUNHAP> list = new PhieuNhapDAO().getAll(factory);
 		int ma = 1001;
-		String id = "tb" + ma;
+		String id = "pn" + ma;
 		while (list.contains(new PhieuNhapDAO().getById(id, factory))) {
 			ma++;
-			id = "tb" + ma;
+			id = "pn" + ma;
 		}
 		return id;
 	}

@@ -81,18 +81,18 @@ public class PhieuThanhLyController {
 	public String getRandomMa() {
 		List<PHIEUTHANHLY> list = new PhieuThanhLyDAO().getAll(factory);
 		int ma = 1001;
-		String id = "tb" + ma;
+		String id = "ptl" + ma;
 		while (list.contains(new PhieuThanhLyDAO().getById(id, factory))) {
 			ma++;
-			id = "tb" + ma;
+			id = "ptl" + ma;
 		}
 		return id;
 	}
 
-	@RequestMapping("phieu-thanhly")
+	@RequestMapping(value = "phieu-thanhly", method = RequestMethod.GET)
 	public String home(ModelMap model) {
 		model.addAttribute("listPhieuThanhLy", new PhieuThanhLyDAO().getAll(factory));
-		System.out.println(new PhieuThanhLyDAO().getAll(factory));
+		model.addAttribute("maPhieuThanhLy", getRandomMa());
 		return "phieu_thanhly/ds_phieu_thanhly";
 	}
 
