@@ -477,7 +477,25 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			order: [[0,"desc"]]
+			order: [[0,"desc"]],
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tất cả"]],
+			"language": {
+				"decimal":        "",
+			    "emptyTable":     "Không có dữ liệu",
+			    "info":           "Đang hiện _START_ đến _END_ của _TOTAL_ dòng",
+			    "infoEmpty":      "Đang hiện 0 đến 0 của 0 dòng",
+			    "infoFiltered":   "(đã lọc từ _MAX_ dòng)",
+			    "thousands":      ",",
+			    "lengthMenu":     "Hiện _MENU_ dòng",
+			    "loadingRecords": "Đang tải...",
+			    "processing":     "Đang xử lý...",
+			    "search":         "Tìm kiếm:",
+			    "zeroRecords":    "Không có kết quả nào phù hợp",
+				paginate: {
+					next: '<i class="ion-chevron-right"></i>',
+					previous: '<i class="ion-chevron-left"></i>'  
+				}
+			}
 		});
 			
 		

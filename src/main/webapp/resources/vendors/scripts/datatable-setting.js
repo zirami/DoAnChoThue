@@ -1,4 +1,4 @@
-$('document').ready(function(){
+$('document').ready(function() {
 	$('.data-table').DataTable({
 		scrollCollapse: true,
 		autoWidth: false,
@@ -7,15 +7,24 @@ $('document').ready(function(){
 			targets: "datatable-nosort",
 			orderable: false,
 		}],
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tất cả"]],
 		"language": {
-			"info": "_START_-_END_ of _TOTAL_ entries",
-			searchPlaceholder: "Search",
+			"decimal": "",
+			"emptyTable": "Không có dữ liệu",
+			"info": "Đang hiện _START_ đến _END_ của _TOTAL_ dòng",
+			"infoEmpty": "Đang hiện 0 đến 0 của 0 dòng",
+			"infoFiltered": "(đã lọc từ _MAX_ dòng)",
+			"thousands": ",",
+			"lengthMenu": "Hiện _MENU_ dòng",
+			"loadingRecords": "Đang tải...",
+			"processing": "Đang xử lý...",
+			"search": "Tìm kiếm:",
+			"zeroRecords": "Không có kết quả nào phù hợp",
 			paginate: {
 				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'  
+				previous: '<i class="ion-chevron-left"></i>'
 			}
-		},
+		}
 	});
 
 	$('.data-table-export').DataTable({
@@ -26,13 +35,22 @@ $('document').ready(function(){
 			targets: "datatable-nosort",
 			orderable: false,
 		}],
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tất cả"]],
 		"language": {
-			"info": "_START_-_END_ of _TOTAL_ entries",
-			searchPlaceholder: "Search",
+			"decimal": "",
+			"emptyTable": "Không có dữ liệu",
+			"info": "Đang hiện _START_ đến _END_ của _TOTAL_ dòng",
+			"infoEmpty": "Đang hiện 0 đến 0 của 0 dòng",
+			"infoFiltered": "(đã lọc từ _MAX_ dòng)",
+			"thousands": ",",
+			"lengthMenu": "Hiện _MENU_ dòng",
+			"loadingRecords": "Đang tải...",
+			"processing": "Đang xử lý...",
+			"search": "Tìm kiếm:",
+			"zeroRecords": "Không có kết quả nào phù hợp",
 			paginate: {
 				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'  
+				previous: '<i class="ion-chevron-left"></i>'
 			}
 		},
 		dom: 'Bfrtp',
@@ -42,7 +60,7 @@ $('document').ready(function(){
 	});
 
 	var table = $('.select-row').DataTable();
-	$('.select-row tbody').on('click', 'tr', function () {
+	$('.select-row tbody').on('click', 'tr', function() {
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
 		}
@@ -53,7 +71,7 @@ $('document').ready(function(){
 	});
 
 	var multipletable = $('.multiple-select-row').DataTable();
-	$('.multiple-select-row tbody').on('click', 'tr', function () {
+	$('.multiple-select-row tbody').on('click', 'tr', function() {
 		$(this).toggleClass('selected');
 	});
 	var table = $('.checkbox-datatable').DataTable({
@@ -66,7 +84,7 @@ $('document').ready(function(){
 			searchPlaceholder: "Search",
 			paginate: {
 				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'  
+				previous: '<i class="ion-chevron-left"></i>'
 			}
 		},
 		'columnDefs': [{
@@ -74,22 +92,22 @@ $('document').ready(function(){
 			'searchable': false,
 			'orderable': false,
 			'className': 'dt-body-center',
-			'render': function (data, type, full, meta){
+			'render': function(data, type, full, meta) {
 				return '<div class="dt-checkbox"><input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '"><span class="dt-checkbox-label"></span></div>';
 			}
 		}],
 		'order': [[1, 'asc']]
 	});
 
-	$('#example-select-all').on('click', function(){
+	$('#example-select-all').on('click', function() {
 		var rows = table.rows({ 'search': 'applied' }).nodes();
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
-	$('.checkbox-datatable tbody').on('change', 'input[type="checkbox"]', function(){
-		if(!this.checked){
+	$('.checkbox-datatable tbody').on('change', 'input[type="checkbox"]', function() {
+		if (!this.checked) {
 			var el = $('#example-select-all').get(0);
-			if(el && el.checked && ('indeterminate' in el)){
+			if (el && el.checked && ('indeterminate' in el)) {
 				el.indeterminate = true;
 			}
 		}
